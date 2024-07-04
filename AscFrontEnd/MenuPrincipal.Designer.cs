@@ -29,21 +29,22 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.entidadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fornecedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vendaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.armazemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cadastroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.armazemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cadastroToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.listaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contaCorrenteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fornecedorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.clienteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.vendaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -55,18 +56,31 @@
             this.menuStrip1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contaCorrenteToolStripMenuItem,
-            this.armazemToolStripMenuItem,
             this.entidadeToolStripMenuItem,
+            this.vendaToolStripMenuItem,
             this.compraToolStripMenuItem,
             this.stockToolStripMenuItem,
-            this.vendaToolStripMenuItem});
+            this.armazemToolStripMenuItem,
+            this.contaCorrenteToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menuStrip1.Size = new System.Drawing.Size(123, 450);
+            this.menuStrip1.Size = new System.Drawing.Size(135, 450);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(24)))), ((int)(((byte)(229)))));
+            this.pictureBox1.Image = global::AscFrontEnd.Properties.Resources.asc;
+            this.pictureBox1.Location = new System.Drawing.Point(136, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(717, 514);
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
             // 
             // entidadeToolStripMenuItem
             // 
@@ -74,30 +88,46 @@
             this.clienteToolStripMenuItem,
             this.fornecedorToolStripMenuItem});
             this.entidadeToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
+            this.entidadeToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_boss_64;
             this.entidadeToolStripMenuItem.Name = "entidadeToolStripMenuItem";
-            this.entidadeToolStripMenuItem.Size = new System.Drawing.Size(116, 23);
+            this.entidadeToolStripMenuItem.Size = new System.Drawing.Size(128, 23);
             this.entidadeToolStripMenuItem.Text = "Entidade";
             // 
             // clienteToolStripMenuItem
             // 
+            this.clienteToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_client_80;
             this.clienteToolStripMenuItem.Name = "clienteToolStripMenuItem";
-            this.clienteToolStripMenuItem.Size = new System.Drawing.Size(149, 24);
+            this.clienteToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.clienteToolStripMenuItem.Text = "Cliente";
             this.clienteToolStripMenuItem.Click += new System.EventHandler(this.clienteToolStripMenuItem_Click);
             // 
             // fornecedorToolStripMenuItem
             // 
+            this.fornecedorToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_supplier_80;
             this.fornecedorToolStripMenuItem.Name = "fornecedorToolStripMenuItem";
-            this.fornecedorToolStripMenuItem.Size = new System.Drawing.Size(149, 24);
+            this.fornecedorToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.fornecedorToolStripMenuItem.Text = "Fornecedor";
             this.fornecedorToolStripMenuItem.Click += new System.EventHandler(this.fornecedorToolStripMenuItem_Click);
+            // 
+            // vendaToolStripMenuItem
+            // 
+            this.vendaToolStripMenuItem.BackColor = System.Drawing.Color.White;
+            this.vendaToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
+            this.vendaToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_sell_40;
+            this.vendaToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.White;
+            this.vendaToolStripMenuItem.Name = "vendaToolStripMenuItem";
+            this.vendaToolStripMenuItem.Size = new System.Drawing.Size(128, 23);
+            this.vendaToolStripMenuItem.Text = "Venda";
+            this.vendaToolStripMenuItem.Click += new System.EventHandler(this.vendaToolStripMenuItem_Click);
             // 
             // compraToolStripMenuItem
             // 
             this.compraToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Menu;
+            this.compraToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_buy_48;
             this.compraToolStripMenuItem.Name = "compraToolStripMenuItem";
-            this.compraToolStripMenuItem.Size = new System.Drawing.Size(116, 23);
+            this.compraToolStripMenuItem.Size = new System.Drawing.Size(128, 23);
             this.compraToolStripMenuItem.Text = "Compra";
+            this.compraToolStripMenuItem.Click += new System.EventHandler(this.compraToolStripMenuItem_Click);
             // 
             // stockToolStripMenuItem
             // 
@@ -105,22 +135,14 @@
             this.cadastroToolStripMenuItem,
             this.listaToolStripMenuItem});
             this.stockToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
+            this.stockToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_stock_48;
             this.stockToolStripMenuItem.Name = "stockToolStripMenuItem";
-            this.stockToolStripMenuItem.Size = new System.Drawing.Size(116, 23);
+            this.stockToolStripMenuItem.Size = new System.Drawing.Size(128, 23);
             this.stockToolStripMenuItem.Text = "Stock";
-            // 
-            // armazemToolStripMenuItem
-            // 
-            this.armazemToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cadastroToolStripMenuItem1,
-            this.listaToolStripMenuItem1});
-            this.armazemToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
-            this.armazemToolStripMenuItem.Name = "armazemToolStripMenuItem";
-            this.armazemToolStripMenuItem.Size = new System.Drawing.Size(116, 23);
-            this.armazemToolStripMenuItem.Text = "Armazem";
             // 
             // cadastroToolStripMenuItem
             // 
+            this.cadastroToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_box_80;
             this.cadastroToolStripMenuItem.Name = "cadastroToolStripMenuItem";
             this.cadastroToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.cadastroToolStripMenuItem.Text = "Artigo";
@@ -128,15 +150,28 @@
             // 
             // listaToolStripMenuItem
             // 
+            this.listaToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_stock_48;
             this.listaToolStripMenuItem.Name = "listaToolStripMenuItem";
             this.listaToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.listaToolStripMenuItem.Text = "Inventario";
+            // 
+            // armazemToolStripMenuItem
+            // 
+            this.armazemToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cadastroToolStripMenuItem1,
+            this.listaToolStripMenuItem1});
+            this.armazemToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
+            this.armazemToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_store_48;
+            this.armazemToolStripMenuItem.Name = "armazemToolStripMenuItem";
+            this.armazemToolStripMenuItem.Size = new System.Drawing.Size(128, 23);
+            this.armazemToolStripMenuItem.Text = "Armazem";
             // 
             // cadastroToolStripMenuItem1
             // 
             this.cadastroToolStripMenuItem1.Name = "cadastroToolStripMenuItem1";
             this.cadastroToolStripMenuItem1.Size = new System.Drawing.Size(134, 24);
             this.cadastroToolStripMenuItem1.Text = "Cadastro";
+            this.cadastroToolStripMenuItem1.Click += new System.EventHandler(this.cadastroToolStripMenuItem1_Click);
             // 
             // listaToolStripMenuItem1
             // 
@@ -150,49 +185,47 @@
             this.fornecedorToolStripMenuItem1,
             this.clienteToolStripMenuItem1});
             this.contaCorrenteToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
+            this.contaCorrenteToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_debt_48;
             this.contaCorrenteToolStripMenuItem.Name = "contaCorrenteToolStripMenuItem";
-            this.contaCorrenteToolStripMenuItem.Size = new System.Drawing.Size(116, 23);
+            this.contaCorrenteToolStripMenuItem.Size = new System.Drawing.Size(128, 23);
             this.contaCorrenteToolStripMenuItem.Text = "Conta Corrente";
             // 
             // fornecedorToolStripMenuItem1
             // 
+            this.fornecedorToolStripMenuItem1.Image = global::AscFrontEnd.Properties.Resources.icons8_supplier_80;
             this.fornecedorToolStripMenuItem1.Name = "fornecedorToolStripMenuItem1";
-            this.fornecedorToolStripMenuItem1.Size = new System.Drawing.Size(149, 24);
+            this.fornecedorToolStripMenuItem1.Size = new System.Drawing.Size(180, 24);
             this.fornecedorToolStripMenuItem1.Text = "Fornecedor";
             this.fornecedorToolStripMenuItem1.Click += new System.EventHandler(this.fornecedorToolStripMenuItem1_Click);
             // 
             // clienteToolStripMenuItem1
             // 
+            this.clienteToolStripMenuItem1.Image = global::AscFrontEnd.Properties.Resources.icons8_client_80;
             this.clienteToolStripMenuItem1.Name = "clienteToolStripMenuItem1";
-            this.clienteToolStripMenuItem1.Size = new System.Drawing.Size(149, 24);
+            this.clienteToolStripMenuItem1.Size = new System.Drawing.Size(180, 24);
             this.clienteToolStripMenuItem1.Text = "Cliente";
             this.clienteToolStripMenuItem1.Click += new System.EventHandler(this.clienteToolStripMenuItem1_Click);
             // 
-            // vendaToolStripMenuItem
+            // label1
             // 
-            this.vendaToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
-            this.vendaToolStripMenuItem.Name = "vendaToolStripMenuItem";
-            this.vendaToolStripMenuItem.Size = new System.Drawing.Size(116, 23);
-            this.vendaToolStripMenuItem.Text = "Venda";
-            this.vendaToolStripMenuItem.Click += new System.EventHandler(this.vendaToolStripMenuItem_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Image = global::AscFrontEnd.Properties.Resources.asc;
-            this.pictureBox1.Location = new System.Drawing.Point(136, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(717, 514);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(0, 368);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(135, 73);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "asc";
             // 
             // MenuPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(24)))), ((int)(((byte)(229)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -226,5 +259,6 @@
         private System.Windows.Forms.ToolStripMenuItem clienteToolStripMenuItem1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripMenuItem vendaToolStripMenuItem;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -69,5 +69,40 @@ namespace AscFrontEnd
             ArtigoListagem artigoListagem = new ArtigoListagem();
             artigoListagem.ShowDialog();
         }
+
+        private void createPicture_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            OpcaoDialog opcao = new OpcaoDialog();
+            opcao.ShowDialog();
+        }
+
+        private void listagem_MouseMove(object sender, MouseEventArgs e)
+        {
+            listagem.BackColor = Color.White;
+            listagem.ForeColor = Color.Black;
+        }
+
+        private void listagem_MouseLeave(object sender, EventArgs e)
+        {
+            listagem.BackColor = Color.FromArgb(64,64,64);
+            listagem.ForeColor = Color.White;
+        }
+
+        private void button3_MouseLeave(object sender, EventArgs e)
+        {
+            button3.BackColor = Color.FromArgb(64,64,64);
+            button3.ForeColor = Color.White;
+        }
+
+        private void button3_MouseMove(object sender, MouseEventArgs e)
+        {
+            button3.BackColor = Color.White;
+            button3.ForeColor = Color.Black;
+        }
     }
 }

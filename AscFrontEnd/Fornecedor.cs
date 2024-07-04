@@ -111,5 +111,40 @@ namespace AscFrontEnd
         {
             this.Close();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_MouseUp(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void button1_MouseMove(object sender, MouseEventArgs e)
+        {
+            button1.BackColor = Color.White;
+            button1.ForeColor = Color.Black;
+                
+        }
+
+        private void button1_MouseLeave(object sender, EventArgs e)
+        {
+            button1.BackColor = Color.Transparent;
+            button1.ForeColor = Color.White;
+        }
+
+        private void button2_MouseLeave(object sender, EventArgs e)
+        {
+            button2.BackColor = Color.FromArgb(64,64,64);
+            button2.ForeColor = Color.White;
+        }
+
+        private void button2_MouseMove(object sender, MouseEventArgs e)
+        {
+            button2.BackColor = Color.White;
+            button2.ForeColor = Color.Black;
+        }
     }
 }

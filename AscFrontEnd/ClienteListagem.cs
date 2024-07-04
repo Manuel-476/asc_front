@@ -1,4 +1,5 @@
 ﻿using AscFrontEnd.DTOs.Cliente;
+using AscFrontEnd.DTOs.StaticsDto;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -84,11 +85,10 @@ namespace AscFrontEnd
             {
                 // Obtém o valor da célula clicada
                 string id = tabelaCliente.Rows[e.RowIndex].Cells[0].Value.ToString();
+                string nome = tabelaCliente.Rows[e.RowIndex].Cells[1].Value.ToString();
 
-                ClienteDTO.clienteId = int.Parse(id);
-     
-
-
+                StaticProperty.entityId = int.Parse(id);
+                StaticProperty.nome = nome;
             }
         }
     }

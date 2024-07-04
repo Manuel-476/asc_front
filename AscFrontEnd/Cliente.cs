@@ -71,24 +71,56 @@ namespace AscFrontEnd
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            var client = new HttpClient();
-            var response = await client.GetAsync($"https://localhost:7200/api/Cliente/DownloadExcel");
+            exportar exp = new exportar();
+            exp.ShowDialog();
+            //var client = new HttpClient();
+            //var response = await client.GetAsync($"https://localhost:7200/api/Cliente/DownloadExcel");
 
-            if (response.IsSuccessStatusCode)
-            {
-                using (var streamContent = await response.Content.ReadAsStreamAsync())
-                {
-                    // Define o caminho onde o arquivo será salvo
-                    var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Download.xlsx"); // Altere o nome do arquivo conforme necessário
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    using (var streamContent = await response.Content.ReadAsStreamAsync())
+            //    {
+            //        // Define o caminho onde o arquivo será salvo
+            //        var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Download.xlsx"); // Altere o nome do arquivo conforme necessário
 
-                    // Salva o conteúdo da resposta em um arquivo local
-                    using (var fileStream = File.Create(filePath))
-                    {
-                        await streamContent.CopyToAsync(fileStream);
-                    }
-                    MessageBox.Show("Excel Gerado", "Feito Com Sucesso", MessageBoxButtons.OK);
-                }
+            //        // Salva o conteúdo da resposta em um arquivo local
+            //        using (var fileStream = File.Create(filePath))
+            //        {
+            //            await streamContent.CopyToAsync(fileStream);
+            //        }
+            //        MessageBox.Show("Excel Gerado", "Feito Com Sucesso", MessageBoxButtons.OK);
+            //    }
             }
+
+        private void button2_MouseMove(object sender, MouseEventArgs e)
+        {
+            button2.BackColor = Color.White;
+            button2.ForeColor = Color.Black;
+        }
+
+        private void button2_MouseLeave(object sender, EventArgs e)
+        {
+            button2.BackColor = Color.Transparent;
+            button2.ForeColor = Color.White;
+        }
+
+        private void button1_MouseLeave(object sender, EventArgs e)
+        {
+            button1.BackColor = Color.FromArgb(64,64,64);
+            button1.ForeColor = Color.White;
+        }
+
+        private void button1_MouseMove(object sender, MouseEventArgs e)
+        {
+            button1.BackColor = Color.White;
+            button1.ForeColor = Color.Black;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ClientesTable cl = new ClientesTable();
+            cl.ShowDialog();
         }
     }
+    
 }

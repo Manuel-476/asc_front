@@ -1,5 +1,6 @@
 ﻿using AscFrontEnd.DTOs.Cliente;
 using AscFrontEnd.DTOs.Fornecedor;
+using AscFrontEnd.DTOs.StaticsDto;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -45,8 +46,22 @@ namespace AscFrontEnd
                 {
                     dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
 
-                    tabelaCliente.DataSource = dt;
+                    tabelaFornecedor.DataSource = dt;
                 }
+            }
+        }
+
+
+        private void tabelaFornecedor_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                // Obtém o valor da célula clicada
+                string id = tabelaFornecedor.Rows[e.RowIndex].Cells[0].Value.ToString();
+                string nome = tabelaFornecedor.Rows[e.RowIndex].Cells[1].Value.ToString();
+
+                StaticProperty.entityId = int.Parse(id);
+                StaticProperty.nome = nome;
             }
         }
     }

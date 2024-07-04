@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace AscFrontEnd.DTOs.Fornecedor
 {
-    internal class FornecedorDTO
+    public class FornecedorDTO
     {
         public static int fornecedorId {  get; set; } 
+        public static string nome { get; set; }
         public int id { get; set; }
         public string nome_fantasia { get; set; } = string.Empty;
         public string razao_social { get; set; } = string.Empty;

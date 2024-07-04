@@ -51,5 +51,17 @@ namespace AscFrontEnd
             Artigo cadastro = new Artigo();
             cadastro.ShowDialog();
         }
+
+        private void compraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Compra compra = new Compra();
+            compra.ShowDialog();
+        }
+
+        private void cadastroToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Armazem armazem = new Armazem();
+            armazem.ShowDialog();
+        }
     }
 }

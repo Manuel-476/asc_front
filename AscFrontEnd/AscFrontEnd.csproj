@@ -12,6 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,17 +35,69 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=3.0.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.3.0.2\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml.Framework, Version=3.0.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.Framework.3.0.2\lib\net46\DocumentFormat.OpenXml.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.4, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.4\lib\net461\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.6.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.6.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.6.0.0\lib\net461\Microsoft.Extensions.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\lib\net461\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.6.0.0\lib\net461\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.6.0.0\lib\net461\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp, Version=6.1.0.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.6.1.0\lib\netstandard2.0\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=6.1.0.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.6.1.0\lib\netstandard2.0\PdfSharp.Charting.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Quality, Version=6.1.0.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.6.1.0\lib\netstandard2.0\PdfSharp.Quality.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Snippets, Version=6.1.0.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.6.1.0\lib\netstandard2.0\PdfSharp.Snippets.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.System, Version=6.1.0.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.6.1.0\lib\netstandard2.0\PdfSharp.System.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.WPFonts, Version=6.1.0.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.6.1.0\lib\netstandard2.0\PdfSharp.WPFonts.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.6.0.0\lib\net461\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -75,8 +129,15 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Armazem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Armazem.Designer.cs">
+      <DependentUpon>Armazem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Artigo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,28 +162,34 @@
     <Compile Include="ClienteListagem.Designer.cs">
       <DependentUpon>ClienteListagem.cs</DependentUpon>
     </Compile>
+    <Compile Include="ClientesTable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientesTable.Designer.cs">
+      <DependentUpon>ClientesTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Compra.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Compra.Designer.cs">
       <DependentUpon>Compra.cs</DependentUpon>
     </Compile>
-    <Compile Include="Compra\CotacaoArtigoDTO.cs" />
-    <Compile Include="Compra\CotacaoDTO.cs" />
-    <Compile Include="Compra\EcfArtigoDTO.cs" />
-    <Compile Include="Compra\EncomendaFornecedorDTO.cs" />
-    <Compile Include="Compra\PedidoCotacaoArtigoDTO.cs" />
-    <Compile Include="Compra\PedidoCotacaoDTO.cs" />
-    <Compile Include="Compra\VfrArtigoDTO.cs" />
-    <Compile Include="Compra\VfrDTO.cs" />
-    <Compile Include="Compra\VftArtigoDTO.cs" />
-    <Compile Include="Compra\VftDTO.cs" />
-    <Compile Include="Compra\VgtArtigoDTO.cs" />
-    <Compile Include="Compra\VgtDTO.cs" />
-    <Compile Include="Compra\VncArtigoDTO.cs" />
-    <Compile Include="Compra\VncDTO.cs" />
-    <Compile Include="Compra\VndArtigoDTO.cs" />
-    <Compile Include="Compra\VndDTO.cs" />
+    <Compile Include="DTOs\Compra\CotacaoArtigoDTO.cs" />
+    <Compile Include="DTOs\Compra\CotacaoDTO.cs" />
+    <Compile Include="DTOs\Compra\EcfArtigoDTO.cs" />
+    <Compile Include="DTOs\Compra\EncomendaFornecedorDTO.cs" />
+    <Compile Include="DTOs\Compra\PedidoCotacaoArtigoDTO.cs" />
+    <Compile Include="DTOs\Compra\PedidoCotacaoDTO.cs" />
+    <Compile Include="DTOs\Compra\VfrArtigoDTO.cs" />
+    <Compile Include="DTOs\Compra\VfrDTO.cs" />
+    <Compile Include="DTOs\Compra\VftArtigoDTO.cs" />
+    <Compile Include="DTOs\Compra\VftDTO.cs" />
+    <Compile Include="DTOs\Compra\VgtArtigoDTO.cs" />
+    <Compile Include="DTOs\Compra\VgtDTO.cs" />
+    <Compile Include="DTOs\Compra\VncArtigoDTO.cs" />
+    <Compile Include="DTOs\Compra\VncDTO.cs" />
+    <Compile Include="DTOs\Compra\VndArtigoDTO.cs" />
+    <Compile Include="DTOs\Compra\VndDTO.cs" />
     <Compile Include="DTOs\Artigo\ArtigoDTO.cs" />
     <Compile Include="DTOs\Artigo\FamiliaArtigoDTO.cs" />
     <Compile Include="DTOs\Artigo\MarcaDTO.cs" />
@@ -132,10 +199,16 @@
     <Compile Include="DTOs\Cliente\ClienteFilialDTO.cs" />
     <Compile Include="DTOs\Cliente\ClientePhoneDTO.cs" />
     <Compile Include="DTOs\Cliente\FilialPhoneDTO.cs" />
+    <Compile Include="DTOs\ContasCorrentes\NpDTO.cs" />
+    <Compile Include="DTOs\ContasCorrentes\ReciboDTO.cs" />
     <Compile Include="DTOs\Fornecedor\FornecedorDTO.cs" />
     <Compile Include="DTOs\Fornecedor\FornecedorFilialDTO.cs" />
     <Compile Include="DTOs\Fornecedor\FornecedorPhoneDTO.cs" />
     <Compile Include="DTOs\Fornecedor\FornFilialPhoneDTO.cs" />
+    <Compile Include="DTOs\StaticsDto\StaticProperty.cs" />
+    <Compile Include="DTOs\Stock\ArmazemDTO.cs" />
+    <Compile Include="DTOs\Stock\LocationArtigoDTO.cs" />
+    <Compile Include="DTOs\Stock\LocationStoreDTO.cs" />
     <Compile Include="DTOs\Venda\EclArtigoDTO.cs" />
     <Compile Include="DTOs\Venda\EncomendaClienteDTO.cs" />
     <Compile Include="DTOs\Venda\FaturaProformaArtigoDTO.cs" />
@@ -150,6 +223,18 @@
     <Compile Include="DTOs\Venda\NcDTO.cs" />
     <Compile Include="DTOs\Venda\NdArtigoDTO.cs" />
     <Compile Include="DTOs\Venda\NdDTO.cs" />
+    <Compile Include="exportar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="exportar.Designer.cs">
+      <DependentUpon>exportar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FamiliaArtigo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FamiliaArtigo.Designer.cs">
+      <DependentUpon>FamiliaArtigo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Fornecedor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,20 +247,47 @@
     <Compile Include="FornecedorListagem.Designer.cs">
       <DependentUpon>FornecedorListagem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Marca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Marca.Designer.cs">
+      <DependentUpon>Marca.cs</DependentUpon>
+    </Compile>
     <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MenuPrincipal.Designer.cs">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="ModeloArtigo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModeloArtigo.Designer.cs">
+      <DependentUpon>ModeloArtigo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OpcaoDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OpcaoDialog.Designer.cs">
+      <DependentUpon>OpcaoDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubFamilaArtigo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubFamilaArtigo.Designer.cs">
+      <DependentUpon>SubFamilaArtigo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Venda.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Venda.Designer.cs">
       <DependentUpon>Venda.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Armazem.resx">
+      <DependentUpon>Armazem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Artigo.resx">
       <DependentUpon>Artigo.cs</DependentUpon>
     </EmbeddedResource>
@@ -188,8 +300,17 @@
     <EmbeddedResource Include="ClienteListagem.resx">
       <DependentUpon>ClienteListagem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ClientesTable.resx">
+      <DependentUpon>ClientesTable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Compra.resx">
       <DependentUpon>Compra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="exportar.resx">
+      <DependentUpon>exportar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FamiliaArtigo.resx">
+      <DependentUpon>FamiliaArtigo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Fornecedor.resx">
       <DependentUpon>Fornecedor.cs</DependentUpon>
@@ -197,8 +318,17 @@
     <EmbeddedResource Include="FornecedorListagem.resx">
       <DependentUpon>FornecedorListagem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Marca.resx">
+      <DependentUpon>Marca.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MenuPrincipal.resx">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModeloArtigo.resx">
+      <DependentUpon>ModeloArtigo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OpcaoDialog.resx">
+      <DependentUpon>OpcaoDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -210,6 +340,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SubFamilaArtigo.resx">
+      <DependentUpon>SubFamilaArtigo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Venda.resx">
       <DependentUpon>Venda.cs</DependentUpon>
     </EmbeddedResource>
@@ -228,10 +361,48 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Files\icons8-add-40.png" />
+    <Content Include="Files\icons8-add-user-male-40.png" />
+    <Content Include="Files\icons8-boss-64.png" />
+    <Content Include="Files\icons8-box-80.png" />
+    <Content Include="Files\icons8-box.gif" />
+    <Content Include="Files\icons8-brand-58.png" />
+    <Content Include="Files\icons8-bullet-list-50.png" />
+    <Content Include="Files\icons8-buy-48.png" />
+    <Content Include="Files\icons8-client-80.png" />
+    <Content Include="Files\icons8-create-50.png" />
+    <Content Include="Files\icons8-create-60.png" />
+    <Content Include="Files\icons8-debt-48.png" />
+    <Content Include="Files\icons8-delete-48.png" />
+    <Content Include="Files\icons8-edit-40.png" />
+    <Content Include="Files\icons8-excel-80.png" />
+    <Content Include="Files\icons8-pdf-60.png" />
+    <Content Include="Files\icons8-product-50-family.png" />
+    <Content Include="Files\icons8-product-50.png" />
+    <Content Include="Files\icons8-prototype-50.png" />
+    <Content Include="Files\icons8-sell-100.png" />
+    <Content Include="Files\icons8-sell-30.png" />
+    <Content Include="Files\icons8-sell-40.png" />
+    <Content Include="Files\icons8-stock-48.png" />
+    <Content Include="Files\icons8-store-48.png" />
+    <Content Include="Files\icons8-supplier-64.png" />
+    <Content Include="Files\icons8-supplier-80.png" />
+    <Content Include="Files\icons8-transformation-48.png" />
+    <Content Include="Files\icons8-truck-80.png" />
+    <Content Include="Files\icons8-two-hands-64.png" />
     <Content Include="Files\img\asc.gif" />
     <Content Include="Files\img\ascPng.png" />
     <Content Include="Files\img\ascwhite.png" />
+    <Content Include="Files\img\icons8-prototype-50.png" />
     <Content Include="Files\img\parcel.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este projeto faz referência a pacotes do NuGet que não estão presentes neste computador. Use a Restauração de Pacotes do NuGet para baixá-los.  Para obter mais informações, consulte http://go.microsoft.com/fwlink/?LinkID=322105. O arquivo ausente é {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets'))" />
+  </Target>
 </Project>
