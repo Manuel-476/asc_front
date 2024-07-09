@@ -34,6 +34,7 @@ namespace AscFrontEnd
         List<NcArtigoDTO> ncArtigos;
         List<NdArtigoDTO> ndArtigos;
         List<ArtigoDTO> dados;
+        ClienteDTO clienteResult;
 
         List<vendaArtigo> vendaArtigos;
         List<int> idVenda;
@@ -66,6 +67,7 @@ namespace AscFrontEnd
             dtVenda = new DataTable();
             idVenda = new List<int>();
             dtVenda = new DataTable();
+            clienteResult = new ClienteDTO();
         }
 
         private async void Venda_Load(object sender, EventArgs e)
@@ -142,6 +144,7 @@ namespace AscFrontEnd
         {
             HttpResponseMessage response = null;
             var client = new HttpClient();
+            var clientGet = new HttpClient();
             // Configuração do HttpClient
             client.BaseAddress = new Uri("https://sua-api.com/");
             client.DefaultRequestHeaders.Accept.Clear();
@@ -359,7 +362,16 @@ namespace AscFrontEnd
                 // Envio dos dados para a API
                 response = await client.PostAsync("https://localhost:7200/api/Venda/Nd", new StringContent(json, Encoding.UTF8, "application/json"));
             }
-            Imprimir.Print();
+
+            var responseGet = await clientGet.GetAsync($"https://localhost:7200/api/Cliente/{StaticProperty.entityId}");
+
+            if (responseGet.IsSuccessStatusCode)
+            {
+                var content = await responseGet.Content.ReadAsStringAsync();
+                clienteResult = JsonConvert.DeserializeObject<ClienteDTO>(content);
+            }
+
+             Imprimir.Print();
              vendaArtigos.Clear();
 
             if (response.IsSuccessStatusCode)
@@ -682,40 +694,44 @@ namespace AscFrontEnd
             clientetxt.Text = $"Cliente: {StaticProperty.nome}";
         }
 
-        private async void Imprimir_PrintPage(object sender, PrintPageEventArgs e)
+        private void Imprimir_PrintPage(object sender, PrintPageEventArgs e)
         {
-            try { 
-                var client = new HttpClient();
-
-                var response = await client.GetAsync($"https://localhost:7200/api/Cliente/{StaticProperty.entityId}");
-
-                if (response.IsSuccessStatusCode)
-                {
-
-                    var content = await response.Content.ReadAsStringAsync();
-                    var cliente = JsonConvert.DeserializeObject<ClienteDTO>(content);
-
-                    if (!string.IsNullOrEmpty(cliente.nome_fantasia))
-                    {
-                        Font fontNormal = new Font("Arial", 12, FontStyle.Regular,GraphicsUnit.Pixel);
-                        Brush cor = new SolidBrush(Color.Black);
-                        PointF ponto = new PointF(200, 200);
-
-                        e.Graphics.DrawString("Smart Entity", fontNormal,cor,ponto);
-                    }
-                    else
-                    {
-                        // Trate o caso em que nome_fantasia é null ou vazio
-                        Console.WriteLine("Nome fantasia é null ou vazio.");
-                    }
-                }
-            }
-            catch(Exception ex) 
+            try
             {
-                throw new Exception("Erro: " + ex.Message);
+                // Testar com valores fixos para desenhar uma string
+                Font fontNormal = new Font("Arial", 12, FontStyle.Regular, GraphicsUnit.Pixel);
+                Brush cor = new SolidBrush(Color.Black);
+                PointF ponto = new PointF(200, 200);
+
+                // Adicionar logs para verificação
+                Console.WriteLine("Font e Brush criados com sucesso.");
+                Console.WriteLine($"Ponto de desenho: {ponto.X}, {ponto.Y}");
+
+                // Verificar se e.Graphics é válido
+                if (e.Graphics == null)
+                {
+                    throw new Exception("O objeto e.Graphics é nulo.");
+                }
+
+                // Desenhar a string
+                e.Graphics.DrawString(clienteResult.nome_fantasia, fontNormal, cor, ponto);
+                Console.WriteLine("Texto desenhado com sucesso.");
+
+                // Liberar recursos
+                fontNormal.Dispose();
+                cor.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro: {ex.Message}");
+                throw new Exception("Erro ao desenhar a string: " + ex.Message);
             }
         }
 
-        
+
+
+
+
+
     }
 }
