@@ -20,6 +20,7 @@ using System.IO;
 using ERP_Seller.Application.DTOs.Documentos;
 using AscFrontEnd.DTOs.StaticsDto;
 using System.Drawing.Printing;
+using DocumentFormat.OpenXml.Drawing.Wordprocessing;
 
 
 namespace AscFrontEnd
@@ -376,6 +377,8 @@ namespace AscFrontEnd
 
             if (response.IsSuccessStatusCode)
             {
+                dtVenda.Rows.Clear();
+                
                 MessageBox.Show("Venda Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
             }
             else
@@ -429,8 +432,24 @@ namespace AscFrontEnd
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             try
             {
+                if (StaticProperty.entityId <=0) 
+                {
+                    MessageBox.Show("Precisas Selecionar o cliente","Atencao",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    return;
+                }
+                if (artigoId <= 0) 
+                {
+                    MessageBox.Show("Nenhum Artigo Foi Selecionado", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(documento.Text.ToString())) 
+                {
+                    MessageBox.Show("Selecione um documento de Venda", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
                 string codigo;
                 int idVendaArtigo = tabelaVenda.Rows.Count;
                 List<vendaArtigo> refreshVendaArtigo = new List<vendaArtigo>();
@@ -700,12 +719,33 @@ namespace AscFrontEnd
             {
                 // Testar com valores fixos para desenhar uma string
                 Font fontNormal = new Font("Arial", 12, FontStyle.Regular, GraphicsUnit.Pixel);
+                Font fontNormalNegrito = new Font("Arial", 12, FontStyle.Bold, GraphicsUnit.Pixel);
+                Font fontCabecalho = new Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel);
+                Font fontCabecalhoNegrito = new Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel);
                 Brush cor = new SolidBrush(Color.Black);
-                PointF ponto = new PointF(200, 200);
 
-                // Adicionar logs para verificação
-                Console.WriteLine("Font e Brush criados com sucesso.");
-                Console.WriteLine($"Ponto de desenho: {ponto.X}, {ponto.Y}");
+                PointF ponto = new PointF(50, 150);
+                PointF pontoRight = new PointF(750, 150);
+
+                StringFormat formatToRight = new StringFormat();
+                formatToRight.Alignment = StringAlignment.Far;
+
+                StringFormat formatToLeft = new StringFormat();
+                formatToLeft.Alignment = StringAlignment.Near;
+
+                string empresaNome = "Smart Entity\n";
+                string empresaCabecalho = $"Zango2, Viana\nContribuente: 005899553LA042\n" +
+                                          $"Email: SmartEntity476@gmail.com\nTel: 944720430";
+
+                string clienteCabecalho = $"{clienteResult.nome_fantasia}\n";
+                string clienteOutros = $"Cliente Nº {clienteResult.id}\nEndereco: {clienteResult.localizacao}\nContribuente: {clienteResult.nif}\n" +
+                                          $"Email: {clienteResult.email}\nTel: {clienteResult.phones.First().telefone}";
+
+                Pen caneta = new Pen(Color.Black, 2); // Define a cor e a largura da linha
+                float linhaInicioX = 550; // Ponto X de início da linha
+                float linhaInicioY = 136; // Ajuste conforme necessário para a posição vertical da linha
+                float linhaFimX = 750; // Ponto X de fim da linha
+                
 
                 // Verificar se e.Graphics é válido
                 if (e.Graphics == null)
@@ -714,7 +754,17 @@ namespace AscFrontEnd
                 }
 
                 // Desenhar a string
-                e.Graphics.DrawString(clienteResult.nome_fantasia, fontNormal, cor, ponto);
+                e.Graphics.DrawString(empresaNome, fontCabecalhoNegrito, cor, new PointF(50,135), formatToLeft);
+                e.Graphics.DrawString(empresaCabecalho, fontCabecalho, cor, ponto,formatToLeft);
+
+                e.Graphics.DrawLine(caneta, linhaInicioX, linhaInicioY, linhaFimX, linhaInicioY);
+                e.Graphics.DrawString(clienteCabecalho, fontNormalNegrito, cor, new PointF(750,135), formatToRight);
+                e.Graphics.DrawString(clienteOutros, fontNormal, cor, pontoRight, formatToRight);
+
+                
+
+                 e.Graphics.DrawString("Contribuente\t\tDesc. Cli\t\tData Emissao\t\tData Vencimento", fontNormalNegrito, cor, new Rectangle(50, 300, 750, 310));
+
                 Console.WriteLine("Texto desenhado com sucesso.");
 
                 // Liberar recursos
@@ -727,10 +777,6 @@ namespace AscFrontEnd
                 throw new Exception("Erro ao desenhar a string: " + ex.Message);
             }
         }
-
-
-
-
 
 
     }
