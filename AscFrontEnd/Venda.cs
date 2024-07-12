@@ -728,8 +728,12 @@ namespace AscFrontEnd
             {
                 float totalLiquido = 0f;
                 float totalIva = 0f;
+                float ivaValorTotal = 0f;
                 float total = 0f;
-
+                string basePath = AppDomain.CurrentDomain.BaseDirectory;
+                string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
+                string imagePathEmpresa = Path.Combine(projectPath, "Files", "Smart_Entity.png");
+                string imagePathAsc = Path.Combine(projectPath, "Files", "asc.png");
                 // Testar com valores fixos para desenhar uma string
                 Font fontNormal = new Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel);
                 Font fontNormalNegrito = new Font("Arial", 12, FontStyle.Bold, GraphicsUnit.Pixel);
@@ -746,6 +750,9 @@ namespace AscFrontEnd
                 StringFormat formatToLeft = new StringFormat();
                 formatToLeft.Alignment = StringAlignment.Near;
 
+                StringFormat formatToCenter = new StringFormat();
+                formatToCenter.Alignment = StringAlignment.Near;
+
                 string empresaNome = "Smart Entity\n".ToUpper();
                 string empresaCabecalho = $"Zango2, Viana\nContribuente: 005899553LA042\n" +
                                           $"Email: SmartEntity476@gmail.com\nTel: 944720430";
@@ -754,7 +761,7 @@ namespace AscFrontEnd
                 string clienteOutros = $"Cliente Nº {clienteResult.id}\nEndereco: {clienteResult.localizacao}\nContribuente: {clienteResult.nif}\n" +
                                           $"Email: {clienteResult.email}\nTel: {clienteResult.phones.First().telefone}";
 
-                Pen caneta = new Pen(Color.Black, 3); // Define a cor e a largura da linha
+                Pen caneta = new Pen(Color.Black, 2); // Define a cor e a largura da linha
                 Pen canetaFina = new Pen(Color.Black, 1);
                 float linhaInicioX = 550; // Ponto X de início da linha
                 float linhaInicioY = 136; // Ajuste conforme necessário para a posição vertical da linha
@@ -767,6 +774,7 @@ namespace AscFrontEnd
                     throw new Exception("O objeto e.Graphics é nulo.");
                 }
 
+                e.Graphics.DrawImage(Image.FromFile(imagePathEmpresa), new Rectangle(40, 50, 100, 100));
                 // Desenhar a string
                 e.Graphics.DrawString(empresaNome, fontCabecalhoNegrito, cor, new PointF(50,135), formatToLeft);
                 e.Graphics.DrawString(empresaCabecalho, fontCabecalho, cor, ponto,formatToLeft);
@@ -776,7 +784,7 @@ namespace AscFrontEnd
                 e.Graphics.DrawString(clienteCabecalho, fontNormalNegrito, cor, new PointF(550,138), formatToLeft);
                 e.Graphics.DrawString(clienteOutros, fontCabecalho, cor, pontoRight, formatToLeft);
 
-                e.Graphics.DrawString($"{descricaoDocumento} {codigoDocumento.Text}", fontNormalNegrito, cor, new PointF(50,280), formatToLeft);
+                e.Graphics.DrawString($"Factura  {codigoDocumento.Text}", fontNormalNegrito, cor, new PointF(50,280), formatToLeft);
                 e.Graphics.DrawLine(canetaFina, 50, 295, 250, 295);
                 e.Graphics.DrawString("Contribuente", fontNormalNegrito, cor, new Rectangle(50, 300, 200, 310));
                 e.Graphics.DrawString("Desc. Cli", fontNormalNegrito, cor, new Rectangle(200, 300, 350, 310));
@@ -806,21 +814,62 @@ namespace AscFrontEnd
                 e.Graphics.DrawString($"Valor", fontNormalNegrito, cor, new Rectangle(650, 400, 750, 420));
                 e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
                 int i = 15;
-                foreach (vendaArtigo va in vendaArtigos) 
-                {
-                   
-                    totalIva += va.iva * float.Parse(va.qtd.ToString());
-                    totalLiquido += va.preco - (va.preco*(va.iva / 100));
+                foreach (vendaArtigo va in vendaArtigos)
+                {    
+                    totalIva += va.iva ;
                     total += va.preco * float.Parse(va.qtd.ToString());
 
                     e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410+i, 200, 425+i));
                     e.Graphics.DrawString($"{dados.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410+i, 350, 425+i));
                     e.Graphics.DrawString($"{va.qtd}", fontNormal, cor, new Rectangle(350, 410 + i, 450, 425 + i));
-                    e.Graphics.DrawString($"{va.preco}", fontNormal, cor, new Rectangle(450, 410 + i, 550, 425 + i));
-                    e.Graphics.DrawString($"{va.iva} %", fontNormal, cor, new Rectangle(550, 410 + i, 650, 425 + i));
-                    e.Graphics.DrawString($"{va.preco * float.Parse(va.qtd.ToString())}", fontNormal, cor, new Rectangle(650, 410 + i, 750, 425 + i));
+                    e.Graphics.DrawString($"{va.preco.ToString("F2")}", fontNormal, cor, new Rectangle(450, 410 + i, 550, 425 + i));
+                    e.Graphics.DrawString($"{(va.iva).ToString("F2")} %", fontNormal, cor, new Rectangle(550, 410 + i, 650, 425 + i));
+                    e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(650, 410 + i, 750, 425 + i));
                     i = i + 15;
                 }
+
+                totalLiquido += total - (total * (totalIva / 100));
+
+                string mercadoria = $"Mercadoria/Serviço:";
+                string iva = $"Iva:{totalIva.ToString("F2")}";
+                string totalIvaValor = $"Total Iva:";
+                string totalFinal = $"TOTAL";
+
+
+                e.Graphics.DrawRectangle(caneta,new Rectangle(540,520+i,210,65+i));
+
+                e.Graphics.DrawString(mercadoria, fontCabecalho, cor, new PointF(550, 530+i), formatToLeft);
+                e.Graphics.DrawString(totalLiquido.ToString("F2"), fontCabecalho, cor, new PointF(680, 530 + i), formatToLeft);
+                e.Graphics.DrawString(iva, fontCabecalho, cor, new PointF(550, 540 + i), formatToLeft);
+                e.Graphics.DrawString(totalIva.ToString("F2"), fontCabecalho, cor, new PointF(680, 540 + i), formatToLeft);
+                e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 550 + i), formatToLeft);
+                e.Graphics.DrawString((total * (totalIva / 100)).ToString("F2"), fontCabecalho, cor, new PointF(680, 550 + i), formatToLeft);
+
+                e.Graphics.DrawLine(canetaFina, 550, 565+i, 740, 565+i);
+                e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 575 + i), formatToLeft);
+                e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 575 + i), formatToLeft);
+
+                string conta = $"Conta nº";
+                string iban = $"IBAN ";
+                string banco = $"Banco Angolano de Investimento";
+                
+
+                e.Graphics.DrawString("Dados Bancários", new Font("Arial", 10, FontStyle.Underline, GraphicsUnit.Pixel), cor, new PointF(50, 530 + i), formatToLeft);
+                e.Graphics.DrawString(banco, fontCabecalhoNegrito, cor, new PointF(50, 540 + i), formatToLeft);
+                e.Graphics.DrawString(conta, fontCabecalho, cor, new PointF(50, 550 + i), formatToLeft);
+                e.Graphics.DrawString($"24347216720012", fontCabecalho, cor, new PointF(95, 550 + i), formatToLeft);
+                e.Graphics.DrawString(iban, fontCabecalho, cor, new PointF(50, 560 + i), formatToLeft);
+                e.Graphics.DrawString("0040.0000.0305.4378,1012.4", fontCabecalho, cor, new PointF(95, 560 + i), formatToLeft);
+
+                e.Graphics.DrawString($"Precessadp por programa válido nº{"41/AGT/2020"} Asc - Smart Entity", fontCabecalho, cor, new PointF(280, 700 + i),formatToCenter);
+
+
+
+                // Verificando se o arquivo existe
+
+                // Desenhando a imagem no documento
+                e.Graphics.DrawImage(Image.FromFile(imagePathAsc), new Rectangle(10, 900, 200, 90));
+                
 
                 Console.WriteLine("Texto desenhado com sucesso.");
 

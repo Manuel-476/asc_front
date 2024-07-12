@@ -361,6 +361,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Files\asc.png" />
     <Content Include="Files\icons8-add-40.png" />
     <Content Include="Files\icons8-add-user-male-40.png" />
     <Content Include="Files\icons8-boss-64.png" />
@@ -395,6 +396,7 @@
     <Content Include="Files\img\ascwhite.png" />
     <Content Include="Files\img\icons8-prototype-50.png" />
     <Content Include="Files\img\parcel.png" />
+    <Content Include="Files\Smart_Entity.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -166,7 +166,7 @@
             // codigoDocumento
             // 
             this.codigoDocumento.AutoSize = true;
-            this.codigoDocumento.Location = new System.Drawing.Point(475, 118);
+            this.codigoDocumento.Location = new System.Drawing.Point(538, 136);
             this.codigoDocumento.Name = "codigoDocumento";
             this.codigoDocumento.Size = new System.Drawing.Size(0, 13);
             this.codigoDocumento.TabIndex = 11;
@@ -305,7 +305,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1084, 461);
+            this.ClientSize = new System.Drawing.Size(1028, 461);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.eliminarBtn);
             this.Controls.Add(this.tabelaVenda);
