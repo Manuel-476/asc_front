@@ -36,6 +36,8 @@ namespace AscFrontEnd
         List<NdArtigoDTO> ndArtigos;
         List<ArtigoDTO> dados;
         ClienteDTO clienteResult;
+        string descricaoDocumento = string.Empty;
+   
 
         List<vendaArtigo> vendaArtigos;
         List<int> idVenda;
@@ -428,6 +430,13 @@ namespace AscFrontEnd
 
                 codigoDocumento.Text = dados;
             }
+            if (documento.Text == "FR") { descricaoDocumento = "Factura Recibo"; }
+            else if (documento.Text == "FT") { descricaoDocumento = "Factura"; }
+            else if(documento.Text == "ECL") { descricaoDocumento = "Encomenda a Cliente"; }
+            else if (documento.Text == "GT") { descricaoDocumento = "Guia de Transporte"; }
+            else if (documento.Text == "FP") { descricaoDocumento = "Factura Proforma"; }
+            else if (documento.Text == "NC") { descricaoDocumento = "Nota Credito"; }
+            else if (documento.Text == "ND") { descricaoDocumento = "Nota Debito"; }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -717,15 +726,19 @@ namespace AscFrontEnd
         {
             try
             {
+                float totalLiquido = 0f;
+                float totalIva = 0f;
+                float total = 0f;
+
                 // Testar com valores fixos para desenhar uma string
-                Font fontNormal = new Font("Arial", 12, FontStyle.Regular, GraphicsUnit.Pixel);
+                Font fontNormal = new Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel);
                 Font fontNormalNegrito = new Font("Arial", 12, FontStyle.Bold, GraphicsUnit.Pixel);
                 Font fontCabecalho = new Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel);
                 Font fontCabecalhoNegrito = new Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel);
                 Brush cor = new SolidBrush(Color.Black);
 
                 PointF ponto = new PointF(50, 150);
-                PointF pontoRight = new PointF(750, 150);
+                PointF pontoRight = new PointF(550, 150);
 
                 StringFormat formatToRight = new StringFormat();
                 formatToRight.Alignment = StringAlignment.Far;
@@ -733,15 +746,16 @@ namespace AscFrontEnd
                 StringFormat formatToLeft = new StringFormat();
                 formatToLeft.Alignment = StringAlignment.Near;
 
-                string empresaNome = "Smart Entity\n";
+                string empresaNome = "Smart Entity\n".ToUpper();
                 string empresaCabecalho = $"Zango2, Viana\nContribuente: 005899553LA042\n" +
                                           $"Email: SmartEntity476@gmail.com\nTel: 944720430";
 
-                string clienteCabecalho = $"{clienteResult.nome_fantasia}\n";
+                string clienteCabecalho = $"{clienteResult.nome_fantasia.ToUpper()}\n";
                 string clienteOutros = $"Cliente Nº {clienteResult.id}\nEndereco: {clienteResult.localizacao}\nContribuente: {clienteResult.nif}\n" +
                                           $"Email: {clienteResult.email}\nTel: {clienteResult.phones.First().telefone}";
 
-                Pen caneta = new Pen(Color.Black, 2); // Define a cor e a largura da linha
+                Pen caneta = new Pen(Color.Black, 3); // Define a cor e a largura da linha
+                Pen canetaFina = new Pen(Color.Black, 1);
                 float linhaInicioX = 550; // Ponto X de início da linha
                 float linhaInicioY = 136; // Ajuste conforme necessário para a posição vertical da linha
                 float linhaFimX = 750; // Ponto X de fim da linha
@@ -757,13 +771,56 @@ namespace AscFrontEnd
                 e.Graphics.DrawString(empresaNome, fontCabecalhoNegrito, cor, new PointF(50,135), formatToLeft);
                 e.Graphics.DrawString(empresaCabecalho, fontCabecalho, cor, ponto,formatToLeft);
 
+                e.Graphics.DrawString("Original", fontNormal, cor, new PointF(750, 120), formatToRight);
                 e.Graphics.DrawLine(caneta, linhaInicioX, linhaInicioY, linhaFimX, linhaInicioY);
-                e.Graphics.DrawString(clienteCabecalho, fontNormalNegrito, cor, new PointF(750,135), formatToRight);
-                e.Graphics.DrawString(clienteOutros, fontNormal, cor, pontoRight, formatToRight);
+                e.Graphics.DrawString(clienteCabecalho, fontNormalNegrito, cor, new PointF(550,138), formatToLeft);
+                e.Graphics.DrawString(clienteOutros, fontCabecalho, cor, pontoRight, formatToLeft);
 
-                
+                e.Graphics.DrawString($"{descricaoDocumento} {codigoDocumento.Text}", fontNormalNegrito, cor, new PointF(50,280), formatToLeft);
+                e.Graphics.DrawLine(canetaFina, 50, 295, 250, 295);
+                e.Graphics.DrawString("Contribuente", fontNormalNegrito, cor, new Rectangle(50, 300, 200, 310));
+                e.Graphics.DrawString("Desc. Cli", fontNormalNegrito, cor, new Rectangle(200, 300, 350, 310));
+                e.Graphics.DrawString("Data Emissão", fontNormalNegrito, cor, new Rectangle(350, 300, 500, 310));
+                e.Graphics.DrawString("Data Vencimento", fontNormalNegrito, cor, new Rectangle(500, 300, 650, 310));
+                e.Graphics.DrawLine(caneta, 50, 315, 750, 315);
 
-                 e.Graphics.DrawString("Contribuente\t\tDesc. Cli\t\tData Emissao\t\tData Vencimento", fontNormalNegrito, cor, new Rectangle(50, 300, 750, 310));
+                e.Graphics.DrawString($"{clienteResult.nif}", fontNormal, cor, new Rectangle(50, 330, 200, 340));
+                e.Graphics.DrawString("0,00", fontNormal, cor, new Rectangle(200, 330, 350, 340));
+                e.Graphics.DrawString($"{DateTime.Now.Date.ToString()}", fontNormal, cor, new Rectangle(350, 330, 450, 340));
+
+                if (documento.Text.Equals("FR") || documento.Text.Equals("GT")) 
+                {
+                    e.Graphics.DrawString($"{DateTime.Now.Date}", fontNormal, cor, new Rectangle(500, 330, 650, 340));
+                    
+                }
+                else 
+                {
+                    e.Graphics.DrawString($"-", fontNormal, cor, new Rectangle(500, 330, 650, 340));
+                }
+
+                e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
+                e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 350, 420));
+                e.Graphics.DrawString($"Qtd", fontNormalNegrito, cor, new Rectangle(350, 400, 450, 420));
+                e.Graphics.DrawString($"Preco", fontNormalNegrito, cor, new Rectangle(450, 400, 550, 420));
+                e.Graphics.DrawString("Iva %", fontNormalNegrito, cor, new Rectangle(550, 400, 650, 420));
+                e.Graphics.DrawString($"Valor", fontNormalNegrito, cor, new Rectangle(650, 400, 750, 420));
+                e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
+                int i = 15;
+                foreach (vendaArtigo va in vendaArtigos) 
+                {
+                   
+                    totalIva += va.iva * float.Parse(va.qtd.ToString());
+                    totalLiquido += va.preco - (va.preco*(va.iva / 100));
+                    total += va.preco * float.Parse(va.qtd.ToString());
+
+                    e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410+i, 200, 425+i));
+                    e.Graphics.DrawString($"{dados.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410+i, 350, 425+i));
+                    e.Graphics.DrawString($"{va.qtd}", fontNormal, cor, new Rectangle(350, 410 + i, 450, 425 + i));
+                    e.Graphics.DrawString($"{va.preco}", fontNormal, cor, new Rectangle(450, 410 + i, 550, 425 + i));
+                    e.Graphics.DrawString($"{va.iva} %", fontNormal, cor, new Rectangle(550, 410 + i, 650, 425 + i));
+                    e.Graphics.DrawString($"{va.preco * float.Parse(va.qtd.ToString())}", fontNormal, cor, new Rectangle(650, 410 + i, 750, 425 + i));
+                    i = i + 15;
+                }
 
                 Console.WriteLine("Texto desenhado com sucesso.");
 
