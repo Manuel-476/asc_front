@@ -262,3 +262,4 @@ C:\Users\Devs\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.cspro
 C:\Users\Devs\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFront.B658B33A.Up2Date
 C:\Users\Devs\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.exe
 C:\Users\Devs\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.pdb
+C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.Stock.resources

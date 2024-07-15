@@ -63,5 +63,11 @@ namespace AscFrontEnd
             Armazem armazem = new Armazem();
             armazem.ShowDialog();
         }
+
+        private void listaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Stock stock = new Stock();
+            stock.ShowDialog();
+        }
     }
 }

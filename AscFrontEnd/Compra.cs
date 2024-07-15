@@ -918,11 +918,11 @@ namespace AscFrontEnd
                 e.Graphics.DrawString("Dados Bancários", new Font("Arial", 10, FontStyle.Underline, GraphicsUnit.Pixel), cor, new PointF(50, 530 + i), formatToLeft);
                 e.Graphics.DrawString(banco, fontCabecalhoNegrito, cor, new PointF(50, 540 + i), formatToLeft);
                 e.Graphics.DrawString(conta, fontCabecalho, cor, new PointF(50, 550 + i), formatToLeft);
-                e.Graphics.DrawString($"24347216720012", fontCabecalho, cor, new PointF(95, 550 + i), formatToLeft);
+                e.Graphics.DrawString($"24347216720012", fontCabecalho, cor, new PointF(115, 550 + i), formatToLeft);
                 e.Graphics.DrawString(iban, fontCabecalho, cor, new PointF(50, 560 + i), formatToLeft);
                 e.Graphics.DrawString("0040.0000.0305.4378,1012.4", fontCabecalho, cor, new PointF(95, 560 + i), formatToLeft);
 
-                e.Graphics.DrawString($"Precessadp por programa válido nº{"41/AGT/2020"} Asc - Smart Entity", fontCabecalho, cor, new PointF(280, 700 + i), formatToCenter);
+                e.Graphics.DrawString($"Precessado por programa válido nº{"41/AGT/2020"} Asc - Smart Entity", fontCabecalho, cor, new PointF(280, 700 + i), formatToCenter);
 
 
 
