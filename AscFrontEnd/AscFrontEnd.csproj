@@ -405,7 +405,10 @@
     <Content Include="Files\img\ascwhite.png" />
     <Content Include="Files\img\icons8-prototype-50.png" />
     <Content Include="Files\img\parcel.png" />
+    <Content Include="Files\remove.png" />
     <Content Include="Files\Smart_Entity.png" />
+    <Content Include="Files\transfer.png" />
+    <Content Include="Files\warehouse.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
