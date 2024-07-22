@@ -131,7 +131,7 @@
             // 
             this.cadastroToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_box_80;
             this.cadastroToolStripMenuItem.Name = "cadastroToolStripMenuItem";
-            this.cadastroToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.cadastroToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
             this.cadastroToolStripMenuItem.Text = "Artigo";
             this.cadastroToolStripMenuItem.Click += new System.EventHandler(this.cadastroToolStripMenuItem_Click);
             // 
@@ -139,7 +139,7 @@
             // 
             this.listaToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_stock_48;
             this.listaToolStripMenuItem.Name = "listaToolStripMenuItem";
-            this.listaToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.listaToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
             this.listaToolStripMenuItem.Text = "Inventario";
             this.listaToolStripMenuItem.Click += new System.EventHandler(this.listaToolStripMenuItem_Click);
             // 
@@ -177,12 +177,13 @@
             this.contaCorrenteToolStripMenuItem.Name = "contaCorrenteToolStripMenuItem";
             this.contaCorrenteToolStripMenuItem.Size = new System.Drawing.Size(128, 23);
             this.contaCorrenteToolStripMenuItem.Text = "Conta Corrente";
+            this.contaCorrenteToolStripMenuItem.Click += new System.EventHandler(this.contaCorrenteToolStripMenuItem_Click);
             // 
             // fornecedorToolStripMenuItem1
             // 
             this.fornecedorToolStripMenuItem1.Image = global::AscFrontEnd.Properties.Resources.icons8_supplier_80;
             this.fornecedorToolStripMenuItem1.Name = "fornecedorToolStripMenuItem1";
-            this.fornecedorToolStripMenuItem1.Size = new System.Drawing.Size(149, 24);
+            this.fornecedorToolStripMenuItem1.Size = new System.Drawing.Size(180, 24);
             this.fornecedorToolStripMenuItem1.Text = "Fornecedor";
             this.fornecedorToolStripMenuItem1.Click += new System.EventHandler(this.fornecedorToolStripMenuItem1_Click);
             // 
@@ -190,7 +191,7 @@
             // 
             this.clienteToolStripMenuItem1.Image = global::AscFrontEnd.Properties.Resources.icons8_client_80;
             this.clienteToolStripMenuItem1.Name = "clienteToolStripMenuItem1";
-            this.clienteToolStripMenuItem1.Size = new System.Drawing.Size(149, 24);
+            this.clienteToolStripMenuItem1.Size = new System.Drawing.Size(180, 24);
             this.clienteToolStripMenuItem1.Text = "Cliente";
             this.clienteToolStripMenuItem1.Click += new System.EventHandler(this.clienteToolStripMenuItem1_Click);
             // 

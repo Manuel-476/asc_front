@@ -69,5 +69,11 @@ namespace AscFrontEnd
             Stock stock = new Stock();
             stock.ShowDialog();
         }
+
+        private void contaCorrenteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ContasCorrentes ccForm = new ContasCorrentes();
+            ccForm.ShowDialog();
+        }
     }
 }

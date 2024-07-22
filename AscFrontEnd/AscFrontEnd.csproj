@@ -174,6 +174,12 @@
     <Compile Include="Compra.Designer.cs">
       <DependentUpon>Compra.cs</DependentUpon>
     </Compile>
+    <Compile Include="ContasCorrentes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContasCorrentes.Designer.cs">
+      <DependentUpon>ContasCorrentes.cs</DependentUpon>
+    </Compile>
     <Compile Include="DTOs\Compra\CotacaoArtigoDTO.cs" />
     <Compile Include="DTOs\Compra\CotacaoDTO.cs" />
     <Compile Include="DTOs\Compra\EcfArtigoDTO.cs" />
@@ -312,6 +318,9 @@
     <EmbeddedResource Include="Compra.resx">
       <DependentUpon>Compra.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ContasCorrentes.resx">
+      <DependentUpon>ContasCorrentes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="exportar.resx">
       <DependentUpon>exportar.cs</DependentUpon>
     </EmbeddedResource>
@@ -379,10 +388,14 @@
     <Content Include="Files\icons8-brand-58.png" />
     <Content Include="Files\icons8-bullet-list-50.png" />
     <Content Include="Files\icons8-buy-48.png" />
+    <Content Include="Files\icons8-chain-48.png" />
     <Content Include="Files\icons8-client-80.png" />
     <Content Include="Files\icons8-create-50.png" />
     <Content Include="Files\icons8-create-60.png" />
+    <Content Include="Files\icons8-credit-60.png" />
+    <Content Include="Files\icons8-credit.gif" />
     <Content Include="Files\icons8-debt-48.png" />
+    <Content Include="Files\icons8-debt-50.png" />
     <Content Include="Files\icons8-delete-48.png" />
     <Content Include="Files\icons8-edit-40.png" />
     <Content Include="Files\icons8-excel-80.png" />
