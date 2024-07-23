@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AscFrontEnd.DTOs.ContasCorrentes
 {
-    internal class ReciboDTO
+    public class ReciboDTO
     {
         public int id { get; set; }
         public string documento { get; set; }

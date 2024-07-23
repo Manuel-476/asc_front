@@ -34,21 +34,26 @@ namespace AscFrontEnd
         private void pictureBox2_MouseEnter(object sender, EventArgs e)
         {
             pictureBox2.BackColor = Color.DeepSkyBlue;
+            label5.ForeColor = Color.DeepSkyBlue;
         }
 
         private void pictureBox2_MouseLeave(object sender, EventArgs e)
         {
-            pictureBox2.BackColor = Color.FromArgb(0, 120, 215); ;
+            pictureBox2.BackColor = Color.FromArgb(0, 120, 215);
+            label5.ForeColor = Color.FromArgb(0, 120, 215);
+
         }
 
         private void pictureBox3_MouseEnter(object sender, EventArgs e)
         {
             pictureBox3.BackColor = Color.DeepSkyBlue;
+            label6.ForeColor = Color.DeepSkyBlue;
         }
 
         private void pictureBox3_MouseLeave(object sender, EventArgs e)
         {
-            pictureBox3.BackColor = Color.FromArgb(0, 120, 215); 
+            pictureBox3.BackColor = Color.FromArgb(0, 120, 215);
+            label6.ForeColor = Color.FromArgb(0, 120, 215);
         }
 
         private void label5_Click(object sender, EventArgs e)
@@ -58,8 +63,6 @@ namespace AscFrontEnd
 
         private async void ContasCorrentes_Load(object sender, EventArgs e)
         {
-
-
             var client = new HttpClient();
 
             var response = await client.GetAsync($"https://localhost:7200/api/Compra/VftByRelations");
@@ -68,7 +71,7 @@ namespace AscFrontEnd
             {
                 var content = await response.Content.ReadAsStringAsync();
                 dados = JsonConvert.DeserializeObject<List<VftDTO>>(content);
-                dados.OrderBy(vft => vft.fornecedorId);
+                dados.GroupBy(vft => vft.fornecedorId);
 
                 entidadeTable.Columns.Add("id", typeof(int));
                 entidadeTable.Columns.Add("Entidade", typeof(string));
@@ -88,6 +91,11 @@ namespace AscFrontEnd
                 }
 
             }
+        }
+
+        private void correnteTable_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

@@ -30,29 +30,29 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.radioFornecedor = new System.Windows.Forms.RadioButton();
             this.radioCliente = new System.Windows.Forms.RadioButton();
             this.correnteTable = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.adiantamentoResult = new System.Windows.Forms.Label();
+            this.liqResult = new System.Windows.Forms.Label();
+            this.dividaResult = new System.Windows.Forms.Label();
+            this.entidadeResult = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.entidadeResult = new System.Windows.Forms.Label();
-            this.dividaResult = new System.Windows.Forms.Label();
-            this.liqResult = new System.Windows.Forms.Label();
-            this.adiantamentoResult = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.correnteTable)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -75,6 +75,16 @@
             this.label2.Size = new System.Drawing.Size(243, 33);
             this.label2.TabIndex = 1;
             this.label2.Text = "Contas Correntes";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_chain_48;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox1.Location = new System.Drawing.Point(37, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(55, 83);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // radioFornecedor
             // 
@@ -106,8 +116,12 @@
             this.correnteTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.correnteTable.Location = new System.Drawing.Point(12, 132);
             this.correnteTable.Name = "correnteTable";
+            this.correnteTable.ReadOnly = true;
+            this.correnteTable.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.correnteTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.correnteTable.Size = new System.Drawing.Size(562, 306);
             this.correnteTable.TabIndex = 3;
+            this.correnteTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.correnteTable_CellClick);
             // 
             // groupBox1
             // 
@@ -127,15 +141,65 @@
             this.groupBox1.Text = "Detalhes";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
-            // label1
+            // adiantamentoResult
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label1.Location = new System.Drawing.Point(6, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Entidade: ";
+            this.adiantamentoResult.AutoSize = true;
+            this.adiantamentoResult.ForeColor = System.Drawing.Color.Green;
+            this.adiantamentoResult.Location = new System.Drawing.Point(82, 104);
+            this.adiantamentoResult.Name = "adiantamentoResult";
+            this.adiantamentoResult.Size = new System.Drawing.Size(28, 13);
+            this.adiantamentoResult.TabIndex = 7;
+            this.adiantamentoResult.Text = "0,00";
+            // 
+            // liqResult
+            // 
+            this.liqResult.AutoSize = true;
+            this.liqResult.BackColor = System.Drawing.SystemColors.Control;
+            this.liqResult.ForeColor = System.Drawing.Color.Green;
+            this.liqResult.Location = new System.Drawing.Point(68, 77);
+            this.liqResult.Name = "liqResult";
+            this.liqResult.Size = new System.Drawing.Size(28, 13);
+            this.liqResult.TabIndex = 6;
+            this.liqResult.Text = "0,00";
+            // 
+            // dividaResult
+            // 
+            this.dividaResult.AutoSize = true;
+            this.dividaResult.ForeColor = System.Drawing.Color.Red;
+            this.dividaResult.Location = new System.Drawing.Point(68, 53);
+            this.dividaResult.Name = "dividaResult";
+            this.dividaResult.Size = new System.Drawing.Size(28, 13);
+            this.dividaResult.TabIndex = 5;
+            this.dividaResult.Text = "0,00";
+            // 
+            // entidadeResult
+            // 
+            this.entidadeResult.AutoSize = true;
+            this.entidadeResult.Location = new System.Drawing.Point(67, 25);
+            this.entidadeResult.Name = "entidadeResult";
+            this.entidadeResult.Size = new System.Drawing.Size(89, 13);
+            this.entidadeResult.TabIndex = 4;
+            this.entidadeResult.Text = "Não Selecionado";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label7.Location = new System.Drawing.Point(7, 104);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(78, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "Adiantamento: ";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label4.Location = new System.Drawing.Point(7, 77);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(59, 13);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Liquidado: ";
             // 
             // label3
             // 
@@ -147,15 +211,15 @@
             this.label3.TabIndex = 1;
             this.label3.Text = "Por Pagar: ";
             // 
-            // label4
+            // label1
             // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label4.Location = new System.Drawing.Point(7, 77);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(59, 13);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Liquidado: ";
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label1.Location = new System.Drawing.Point(6, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Entidade: ";
             // 
             // label5
             // 
@@ -206,66 +270,6 @@
             this.pictureBox2.MouseEnter += new System.EventHandler(this.pictureBox2_MouseEnter);
             this.pictureBox2.MouseLeave += new System.EventHandler(this.pictureBox2_MouseLeave);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_chain_48;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox1.Location = new System.Drawing.Point(37, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(55, 83);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label7.Location = new System.Drawing.Point(7, 104);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(78, 13);
-            this.label7.TabIndex = 3;
-            this.label7.Text = "Adiantamento: ";
-            // 
-            // entidadeResult
-            // 
-            this.entidadeResult.AutoSize = true;
-            this.entidadeResult.Location = new System.Drawing.Point(67, 25);
-            this.entidadeResult.Name = "entidadeResult";
-            this.entidadeResult.Size = new System.Drawing.Size(89, 13);
-            this.entidadeResult.TabIndex = 4;
-            this.entidadeResult.Text = "Não Selecionado";
-            // 
-            // dividaResult
-            // 
-            this.dividaResult.AutoSize = true;
-            this.dividaResult.ForeColor = System.Drawing.Color.Red;
-            this.dividaResult.Location = new System.Drawing.Point(68, 53);
-            this.dividaResult.Name = "dividaResult";
-            this.dividaResult.Size = new System.Drawing.Size(28, 13);
-            this.dividaResult.TabIndex = 5;
-            this.dividaResult.Text = "0,00";
-            // 
-            // liqResult
-            // 
-            this.liqResult.AutoSize = true;
-            this.liqResult.BackColor = System.Drawing.SystemColors.Control;
-            this.liqResult.ForeColor = System.Drawing.Color.Green;
-            this.liqResult.Location = new System.Drawing.Point(68, 77);
-            this.liqResult.Name = "liqResult";
-            this.liqResult.Size = new System.Drawing.Size(28, 13);
-            this.liqResult.TabIndex = 6;
-            this.liqResult.Text = "0,00";
-            // 
-            // adiantamentoResult
-            // 
-            this.adiantamentoResult.AutoSize = true;
-            this.adiantamentoResult.ForeColor = System.Drawing.Color.Green;
-            this.adiantamentoResult.Location = new System.Drawing.Point(82, 104);
-            this.adiantamentoResult.Name = "adiantamentoResult";
-            this.adiantamentoResult.Size = new System.Drawing.Size(28, 13);
-            this.adiantamentoResult.TabIndex = 7;
-            this.adiantamentoResult.Text = "0,00";
-            // 
             // ContasCorrentes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -290,12 +294,12 @@
             this.Load += new System.EventHandler(this.ContasCorrentes_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.correnteTable)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

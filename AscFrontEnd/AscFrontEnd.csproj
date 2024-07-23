@@ -150,6 +150,12 @@
     <Compile Include="ArtigoListagem.Designer.cs">
       <DependentUpon>ArtigoListagem.cs</DependentUpon>
     </Compile>
+    <Compile Include="CarregamentoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CarregamentoForm.Designer.cs">
+      <DependentUpon>CarregamentoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -305,6 +311,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ArtigoListagem.resx">
       <DependentUpon>ArtigoListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CarregamentoForm.resx">
+      <DependentUpon>CarregamentoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cliente.resx">
       <DependentUpon>Cliente.cs</DependentUpon>

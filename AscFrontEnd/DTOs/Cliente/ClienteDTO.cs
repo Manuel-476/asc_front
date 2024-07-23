@@ -7,7 +7,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace AscFrontEnd.DTOs.Cliente
 {
-    internal class ClienteDTO
+    public class ClienteDTO
     {
         public static int clienteId = 0;
         public int id { get; set; }

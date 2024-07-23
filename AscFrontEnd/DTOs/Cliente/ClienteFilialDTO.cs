@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AscFrontEnd.DTOs.Cliente
 {
-    internal class ClienteFilialDTO
+    public class ClienteFilialDTO
     {
         public int id { get; set; }
         public string codigo { get; set; } = string.Empty;
