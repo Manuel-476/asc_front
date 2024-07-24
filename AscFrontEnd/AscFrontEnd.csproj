@@ -213,6 +213,7 @@
     <Compile Include="DTOs\Cliente\FilialPhoneDTO.cs" />
     <Compile Include="DTOs\ContasCorrentes\NpDTO.cs" />
     <Compile Include="DTOs\ContasCorrentes\ReciboDTO.cs" />
+    <Compile Include="DTOs\Enums\Enums.cs" />
     <Compile Include="DTOs\Fornecedor\FornecedorDTO.cs" />
     <Compile Include="DTOs\Fornecedor\FornecedorFilialDTO.cs" />
     <Compile Include="DTOs\Fornecedor\FornecedorPhoneDTO.cs" />

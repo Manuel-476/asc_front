@@ -1,4 +1,5 @@
-﻿using AscFrontEnd.DTOs.StaticsDto;
+﻿using AscFrontEnd.DTOs.Enums;
+using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.DTOs.Stock;
 using ERP_Buyer.Application.DTOs.Documentos;
 using Newtonsoft.Json;
@@ -19,6 +20,7 @@ namespace AscFrontEnd
     {
         List<VftDTO> dados;
         DataTable entidadeTable;
+        public int id;
         public ContasCorrentes()
         {
             InitializeComponent();
@@ -63,20 +65,13 @@ namespace AscFrontEnd
 
         private async void ContasCorrentes_Load(object sender, EventArgs e)
         {
-            var client = new HttpClient();
+            StaticProperty.vfts.GroupBy(vft => vft.fornecedorId);
 
-            var response = await client.GetAsync($"https://localhost:7200/api/Compra/VftByRelations");
+            entidadeTable.Columns.Add("Codigo Entidade", typeof(int));
+            entidadeTable.Columns.Add("Entidade", typeof(string));
+            entidadeTable.Columns.Add("Por Pagar", typeof(float));
+            entidadeTable.Columns.Add("Estado", typeof(float));
 
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                dados = JsonConvert.DeserializeObject<List<VftDTO>>(content);
-                dados.GroupBy(vft => vft.fornecedorId);
-
-                entidadeTable.Columns.Add("id", typeof(int));
-                entidadeTable.Columns.Add("Entidade", typeof(string));
-                entidadeTable.Columns.Add("Por Pagar", typeof(float));
-                entidadeTable.Columns.Add("Estado", typeof(float));
 
                 // Adicionando linhas ao DataTable
                 foreach (var vft in dados)
@@ -85,17 +80,69 @@ namespace AscFrontEnd
 
                     float result = vft.vftArtigo.Sum(vt => vt.preco);
 
-                    entidadeTable.Rows.Add(vft.id, vft.fornecedorId, result, status);
+                    string nomeFornecedor = StaticProperty.fornecedores.Where(f => f.id == vft.fornecedorId).First().nome_fantasia;
+
+                    entidadeTable.Rows.Add(vft.fornecedorId, nomeFornecedor, result, status);
 
                     correnteTable.DataSource = entidadeTable;
                 }
-
-            }
+                aprovaBtn.Enabled = false;
         }
 
         private void correnteTable_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            float divida = 0;
+            float regulado = 0;
+            float adianta = 0;
 
+            try
+            {
+                if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+                {
+                    // Obtém o valor da célula clicada
+                    string id = correnteTable.Rows[e.RowIndex].Cells[0].Value.ToString();
+
+                    this.id = int.Parse(id);
+                }
+
+                if(radioFornecedor.Checked)
+                {
+                    var result = StaticProperty.vfts.Where(vft => vft.fornecedorId == id).ToList();
+                    
+
+                    foreach (var item in result)
+                    {
+                        if(item.pago == Enums.OpcaoBinaria.Nao) 
+                        {
+                             divida += item.vftArtigo.Sum(d => d.preco * d.qtd);
+                             regulado += StaticProperty.nps.Where(np => np.vftId == item.id).Sum(np => np.quantia);
+                        }
+                    }        
+                }
+                else 
+                {
+                    var result = StaticProperty.fts.Where(ft => ft.clienteId == id).ToList();
+
+
+                    foreach (var item in result)
+                    {
+                        if (item.pago == Enums.OpcaoBinaria.Nao)
+                        {
+                            divida += item.ftArtigo.Sum(d => d.preco * d.qtd);
+                            regulado += StaticProperty.recibos.Where(re => re.ftId == item.id).Sum(re => re.quantia);
+                        }
+                    }
+                }
+
+                dividaResult.Text = divida.ToString("F2");
+                liqResult.Text = regulado.ToString("F2");
+
+                aprovaBtn.Enabled = true;
+            }
+            catch 
+            { 
+                return; 
+            }
         }
     }
 }

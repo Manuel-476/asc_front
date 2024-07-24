@@ -47,6 +47,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.aprovaBtn = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.correnteTable)).BeginInit();
@@ -58,6 +59,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.Controls.Add(this.aprovaBtn);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Location = new System.Drawing.Point(-2, -2);
@@ -270,6 +272,18 @@
             this.pictureBox2.MouseEnter += new System.EventHandler(this.pictureBox2_MouseEnter);
             this.pictureBox2.MouseLeave += new System.EventHandler(this.pictureBox2_MouseLeave);
             // 
+            // aprovaBtn
+            // 
+            this.aprovaBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.aprovaBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.aprovaBtn.ForeColor = System.Drawing.Color.White;
+            this.aprovaBtn.Location = new System.Drawing.Point(635, 53);
+            this.aprovaBtn.Name = "aprovaBtn";
+            this.aprovaBtn.Size = new System.Drawing.Size(164, 33);
+            this.aprovaBtn.TabIndex = 25;
+            this.aprovaBtn.Text = "Aprovações";
+            this.aprovaBtn.UseVisualStyleBackColor = false;
+            // 
             // ContasCorrentes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -326,5 +340,6 @@
         private System.Windows.Forms.Label entidadeResult;
         private System.Windows.Forms.Label adiantamentoResult;
         private System.Windows.Forms.Label liqResult;
+        private System.Windows.Forms.Button aprovaBtn;
     }
 }

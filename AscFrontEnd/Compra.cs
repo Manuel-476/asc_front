@@ -175,7 +175,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = FornecedorDTO.fornecedorId,
                     vftArtigo = vftArtigos,
-                    status = 1,
+                    status = DTOs.Enums.Enums.OpcaoBinaria.Sim,
                 };
 
                 // Configuração do HttpClient

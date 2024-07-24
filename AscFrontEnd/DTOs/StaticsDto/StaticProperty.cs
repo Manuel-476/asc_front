@@ -50,5 +50,7 @@ namespace AscFrontEnd.DTOs.StaticsDto
         // Contas Correntes
         public static List<NpDTO> nps { get; set; }
         public static List<ReciboDTO> recibos { get; set; }
+        public static object contaCorrenteFornecedor { get; set; }
+        public static object contaCorrenteCliente { get; set; }
     }
 }
