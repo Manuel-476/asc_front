@@ -45,6 +45,7 @@
             this.clienteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.criacaoSerieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -61,7 +62,8 @@
             this.compraToolStripMenuItem,
             this.stockToolStripMenuItem,
             this.armazemToolStripMenuItem,
-            this.contaCorrenteToolStripMenuItem});
+            this.contaCorrenteToolStripMenuItem,
+            this.criacaoSerieToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -157,14 +159,14 @@
             // cadastroToolStripMenuItem1
             // 
             this.cadastroToolStripMenuItem1.Name = "cadastroToolStripMenuItem1";
-            this.cadastroToolStripMenuItem1.Size = new System.Drawing.Size(134, 24);
+            this.cadastroToolStripMenuItem1.Size = new System.Drawing.Size(180, 24);
             this.cadastroToolStripMenuItem1.Text = "Cadastro";
             this.cadastroToolStripMenuItem1.Click += new System.EventHandler(this.cadastroToolStripMenuItem1_Click);
             // 
             // listaToolStripMenuItem1
             // 
             this.listaToolStripMenuItem1.Name = "listaToolStripMenuItem1";
-            this.listaToolStripMenuItem1.Size = new System.Drawing.Size(134, 24);
+            this.listaToolStripMenuItem1.Size = new System.Drawing.Size(180, 24);
             this.listaToolStripMenuItem1.Text = "Lista";
             // 
             // contaCorrenteToolStripMenuItem
@@ -183,7 +185,7 @@
             // 
             this.fornecedorToolStripMenuItem1.Image = global::AscFrontEnd.Properties.Resources.icons8_supplier_80;
             this.fornecedorToolStripMenuItem1.Name = "fornecedorToolStripMenuItem1";
-            this.fornecedorToolStripMenuItem1.Size = new System.Drawing.Size(180, 24);
+            this.fornecedorToolStripMenuItem1.Size = new System.Drawing.Size(149, 24);
             this.fornecedorToolStripMenuItem1.Text = "Fornecedor";
             this.fornecedorToolStripMenuItem1.Click += new System.EventHandler(this.fornecedorToolStripMenuItem1_Click);
             // 
@@ -191,7 +193,7 @@
             // 
             this.clienteToolStripMenuItem1.Image = global::AscFrontEnd.Properties.Resources.icons8_client_80;
             this.clienteToolStripMenuItem1.Name = "clienteToolStripMenuItem1";
-            this.clienteToolStripMenuItem1.Size = new System.Drawing.Size(180, 24);
+            this.clienteToolStripMenuItem1.Size = new System.Drawing.Size(149, 24);
             this.clienteToolStripMenuItem1.Text = "Cliente";
             this.clienteToolStripMenuItem1.Click += new System.EventHandler(this.clienteToolStripMenuItem1_Click);
             // 
@@ -220,6 +222,13 @@
             this.label1.Size = new System.Drawing.Size(135, 73);
             this.label1.TabIndex = 2;
             this.label1.Text = "asc";
+            // 
+            // criacaoSerieToolStripMenuItem
+            // 
+            this.criacaoSerieToolStripMenuItem.Name = "criacaoSerieToolStripMenuItem";
+            this.criacaoSerieToolStripMenuItem.Size = new System.Drawing.Size(128, 23);
+            this.criacaoSerieToolStripMenuItem.Text = "Criacao Serie";
+            this.criacaoSerieToolStripMenuItem.Click += new System.EventHandler(this.criacaoSerieToolStripMenuItem_Click);
             // 
             // MenuPrincipal
             // 
@@ -262,5 +271,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripMenuItem vendaToolStripMenuItem;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripMenuItem criacaoSerieToolStripMenuItem;
     }
 }

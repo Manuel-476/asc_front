@@ -2,6 +2,7 @@
 using AscFrontEnd.DTOs.Cliente;
 using AscFrontEnd.DTOs.ContasCorrentes;
 using AscFrontEnd.DTOs.Fornecedor;
+using AscFrontEnd.DTOs.Serie;
 using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.DTOs.Stock;
 using AscFrontEnd.DTOs.Venda;
@@ -218,6 +219,14 @@ namespace AscFrontEnd
                     var contentCCc = await responseCCc.Content.ReadAsStringAsync();
                     StaticProperty.contaCorrenteCliente = JsonConvert.DeserializeObject<object>(contentCCc);
                 }
+
+                var responseSerie = await client.GetAsync($"https://localhost:7200/api/Serie");
+
+                if (responseSerie.IsSuccessStatusCode)
+                {
+                    var contentSerie = await responseSerie.Content.ReadAsStringAsync();
+                    StaticProperty.series = JsonConvert.DeserializeObject<List<SerieDTO>>(contentSerie);
+                }
             }
             catch (Exception ex)
             {
@@ -231,7 +240,7 @@ namespace AscFrontEnd
             {
                 MenuPrincipal menuForm = new MenuPrincipal();
                 menuForm.ShowDialog();
-                this.Close();
+                this.Hide();
             }
         }
     }

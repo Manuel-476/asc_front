@@ -112,8 +112,15 @@ namespace AscFrontEnd
 
         private async void salvarBtn_Click(object sender, EventArgs e)
         {
+
             HttpResponseMessage response = null;
             var clientGet = new HttpClient();
+
+            if (StaticProperty.series == null)
+            {
+                MessageBox.Show("Nenhuma Serie Foi Criada", "Precisa de uma Serie", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
             if (documento.Text == "VFR")
             {
@@ -448,6 +455,11 @@ namespace AscFrontEnd
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (StaticProperty.series == null)
+            {
+                MessageBox.Show("Nenhuma Serie Foi Criada", "Precisa de uma Serie", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             try
             {
                 if (StaticProperty.entityId <= 0)
@@ -657,6 +669,13 @@ namespace AscFrontEnd
         private async void documento_SelectedIndexChanged(object sender, EventArgs e)
         {
             var client = new HttpClient();
+
+            if(StaticProperty.series == null) 
+            {
+                MessageBox.Show("Nenhuma Serie Foi Criada","Precisa de uma Serie",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                return;
+            }
+
             var response = await client.GetAsync($"https://localhost:7200/api/serie/codigoDocumento/{documento.Text}");
 
             if (response.IsSuccessStatusCode)

@@ -218,6 +218,7 @@
     <Compile Include="DTOs\Fornecedor\FornecedorFilialDTO.cs" />
     <Compile Include="DTOs\Fornecedor\FornecedorPhoneDTO.cs" />
     <Compile Include="DTOs\Fornecedor\FornFilialPhoneDTO.cs" />
+    <Compile Include="DTOs\Serie\SerieDTO.cs" />
     <Compile Include="DTOs\StaticsDto\StaticProperty.cs" />
     <Compile Include="DTOs\Stock\ArmazemDTO.cs" />
     <Compile Include="DTOs\Stock\LocationArtigoDTO.cs" />
@@ -247,6 +248,12 @@
     </Compile>
     <Compile Include="FamiliaArtigo.Designer.cs">
       <DependentUpon>FamiliaArtigo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SerieForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SerieForm.Designer.cs">
+      <DependentUpon>SerieForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Fornecedor.cs">
       <SubType>Form</SubType>
@@ -336,6 +343,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FamiliaArtigo.resx">
       <DependentUpon>FamiliaArtigo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SerieForm.resx">
+      <DependentUpon>SerieForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Fornecedor.resx">
       <DependentUpon>Fornecedor.cs</DependentUpon>

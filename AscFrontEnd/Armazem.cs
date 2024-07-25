@@ -83,7 +83,7 @@ namespace AscFrontEnd
             string json = System.Text.Json.JsonSerializer.Serialize(armazem);
 
             // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync("https://localhost:7200/api/Armazem", new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Armazem/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Armazem Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);

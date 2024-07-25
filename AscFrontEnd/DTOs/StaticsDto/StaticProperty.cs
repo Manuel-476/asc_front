@@ -1,6 +1,7 @@
 ﻿using AscFrontEnd.DTOs.Cliente;
 using AscFrontEnd.DTOs.ContasCorrentes;
 using AscFrontEnd.DTOs.Fornecedor;
+using AscFrontEnd.DTOs.Serie;
 using AscFrontEnd.DTOs.Stock;
 using AscFrontEnd.DTOs.Venda;
 using EAscFrontEnd;
@@ -52,5 +53,8 @@ namespace AscFrontEnd.DTOs.StaticsDto
         public static List<ReciboDTO> recibos { get; set; }
         public static object contaCorrenteFornecedor { get; set; }
         public static object contaCorrenteCliente { get; set; }
+
+        // Serie
+        public static List<SerieDTO> series { get; set; }
     }
 }

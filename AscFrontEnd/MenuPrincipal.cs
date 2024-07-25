@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AscFrontEnd.Files;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -74,6 +75,12 @@ namespace AscFrontEnd
         {
             ContasCorrentes ccForm = new ContasCorrentes();
             ccForm.ShowDialog();
+        }
+
+        private void criacaoSerieToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SerieForm serie = new SerieForm();
+            serie.ShowDialog();
         }
     }
 }

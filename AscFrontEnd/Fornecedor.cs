@@ -96,7 +96,7 @@ namespace AscFrontEnd
             string json = JsonSerializer.Serialize(fornecedor);
 
             // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync("https://localhost:7200/api/Fornecedor", new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Fornecedor/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Fornecedor Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
@@ -145,6 +145,11 @@ namespace AscFrontEnd
         {
             button2.BackColor = Color.White;
             button2.ForeColor = Color.Black;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
