@@ -31,7 +31,6 @@ namespace AscFrontEnd
         List<VgtArtigoDTO> vgtArtigos;
         List<VncArtigoDTO> vncArtigos;
         List<VndArtigoDTO> vndArtigos;
-        List<ArtigoDTO> dados;
         List<compraArtigo> compraArtigos;
         List<int> idCompra; 
         static int artigoId = 0;
@@ -58,7 +57,6 @@ namespace AscFrontEnd
             vncArtigos = new List<VncArtigoDTO>();
             vndArtigos = new List<VndArtigoDTO>();
             compraArtigos = new List<compraArtigo>();
-            dados = new List<ArtigoDTO>();
             dtCompra = new DataTable();
             idCompra = new List<int>();
             fornecedorResult = new FornecedorDTO();
@@ -72,7 +70,6 @@ namespace AscFrontEnd
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                dados = JsonConvert.DeserializeObject<List<ArtigoDTO>>(content);
 
                 dtCompra.Columns.Add("id", typeof(int));
                 dtCompra.Columns.Add("Artigo", typeof(string));
@@ -87,7 +84,7 @@ namespace AscFrontEnd
                 dt.Columns.Add("preco", typeof(float));
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in dados)
+                foreach (var item in StaticProperty.artigos.ToList())
                 {
                     dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario);
 
@@ -139,7 +136,7 @@ namespace AscFrontEnd
 
                 VfrDTO vfrs = new VfrDTO()
                 {
-                    documento = codigoDocumento.Text,
+                    documento = codigoDocumentotxt.Text,
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     vfrArtigo = artigos,
@@ -157,7 +154,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(vfrs);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync("https://localhost:7200/api/Compra/Vfr", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Compra/Vfr/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "VFT")
@@ -178,9 +175,9 @@ namespace AscFrontEnd
 
                 VftDTO vfts = new VftDTO()
                 {
-                    documento = codigoDocumento.Text,
+                    documento = codigoDocumentotxt.Text,
                     data = DateTime.Now,
-                    fornecedorId = FornecedorDTO.fornecedorId,
+                    fornecedorId = StaticProperty.entityId,
                     vftArtigo = vftArtigos,
                     status = DTOs.Enums.Enums.OpcaoBinaria.Sim,
                 };
@@ -195,7 +192,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(vfts);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync("https://localhost:7200/api/Compra/Vft", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Compra/Vft/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "VGT")
@@ -215,9 +212,9 @@ namespace AscFrontEnd
 
                 VgtDTO vgts = new VgtDTO()
                 {
-                    documento = codigoDocumento.Text,
+                    documento = codigoDocumentotxt.Text,
                     data = DateTime.Now,
-                    fornecedorId = FornecedorDTO.fornecedorId,
+                    fornecedorId = StaticProperty.entityId,
                     vgtArtigo = vgtArtigos,
                     status = 1,
                 };
@@ -254,9 +251,9 @@ namespace AscFrontEnd
 
                 EncomendaFornecedorDTO ecfs = new EncomendaFornecedorDTO()
                 {
-                    documento = codigoDocumento.Text,
+                    documento = codigoDocumentotxt.Text,
                     data = DateTime.Now,
-                    fornecedorId = FornecedorDTO.fornecedorId,
+                    fornecedorId = StaticProperty.entityId,
                     ecfArtigo = ecfArtigos,
                     status = 1,
                 };
@@ -291,9 +288,9 @@ namespace AscFrontEnd
 
                 VncDTO vncs = new VncDTO()
                 {
-                    documento = codigoDocumento.Text,
+                    documento = codigoDocumentotxt.Text,
                     data = DateTime.Now,
-                    fornecedorId = FornecedorDTO.fornecedorId,
+                    fornecedorId = StaticProperty.entityId,
                     vncArtigo = vncArtigos,
                     status = 1,
                 };
@@ -317,9 +314,9 @@ namespace AscFrontEnd
             {
                 VndDTO vncs = new VndDTO()
                 {
-                    documento = codigoDocumento.Text,
+                    documento = codigoDocumentotxt.Text,
                     data = DateTime.Now,
-                    fornecedorId = FornecedorDTO.fornecedorId,
+                    fornecedorId = StaticProperty.entityId,
                     vndArtigo = vndArtigos,
                     status = 1,
                 };
@@ -365,9 +362,9 @@ namespace AscFrontEnd
 
                 PedidoCotacaoDTO pcos = new PedidoCotacaoDTO()
                 {
-                    documento = codigoDocumento.Text,
+                    documento = codigoDocumentotxt.Text,
                     data = DateTime.Now,
-                    fornecedorId = FornecedorDTO.fornecedorId,
+                    fornecedorId = StaticProperty.entityId,
                     pcArtigo = pcoArtigos,
                     status = 1,
                     
@@ -404,9 +401,9 @@ namespace AscFrontEnd
 
                 CotacaoDTO cots = new CotacaoDTO()
                 {
-                    documento = codigoDocumento.Text,
+                    documento = codigoDocumentotxt.Text,
                     data = DateTime.Now,
-                    fornecedorId = FornecedorDTO.fornecedorId,
+                    fornecedorId = StaticProperty.entityId,
                     cArtigo = cotArtigos,
                     status = 1,
                 };
@@ -486,7 +483,7 @@ namespace AscFrontEnd
                 dtCompra.Rows.Clear();
                 tabelaCompra.DataSource = dtCompra;
 
-                codigo = dados.Where(art => art.id == artigoId).First().codigo;
+                codigo = StaticProperty.artigos.Where(art => art.id == artigoId).First().codigo;
 
                 foreach (var ca in compraArtigos) 
                 {
@@ -900,7 +897,7 @@ namespace AscFrontEnd
                     total += va.preco * float.Parse(va.qtd.ToString());
 
                     e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
-                    e.Graphics.DrawString($"{dados.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 350, 425 + i));
+                    e.Graphics.DrawString($"{StaticProperty.artigos.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 350, 425 + i));
                     e.Graphics.DrawString($"{va.qtd}", fontNormal, cor, new Rectangle(350, 410 + i, 450, 425 + i));
                     e.Graphics.DrawString($"{va.preco.ToString("F2")}", fontNormal, cor, new Rectangle(450, 410 + i, 550, 425 + i));
                     e.Graphics.DrawString($"{(va.iva).ToString("F2")} %", fontNormal, cor, new Rectangle(550, 410 + i, 650, 425 + i));

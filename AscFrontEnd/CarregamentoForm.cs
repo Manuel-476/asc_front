@@ -158,20 +158,20 @@ namespace AscFrontEnd
                 }
 
                 // Fornecedor
-                var responseFornecedor = await client.GetAsync($"https://localhost:7200/api/Fornecedor/FornecedoresByRelations");
+                var responseFornecedor = await client.GetAsync($"https://localhost:7200/api/Fornecedor/FornecedoresByRelation");
 
                 if (responseFornecedor.IsSuccessStatusCode)
                 {
-                    var contentFornecedor = await responseCliente.Content.ReadAsStringAsync();
+                    var contentFornecedor = await responseFornecedor.Content.ReadAsStringAsync();
                     StaticProperty.fornecedores = JsonConvert.DeserializeObject<List<FornecedorDTO>>(contentFornecedor);
                 }
 
                 // Artigo
-                var responseArtigo = await client.GetAsync($"https://localhost:7200/api/Com/ArtigoByRelations");
+                var responseArtigo = await client.GetAsync($"https://localhost:7200/api/Artigo");
 
                 if (responseArtigo.IsSuccessStatusCode)
                 {
-                    var contentArtigo = await responseCliente.Content.ReadAsStringAsync();
+                    var contentArtigo = await responseArtigo.Content.ReadAsStringAsync();
                     StaticProperty.artigos = JsonConvert.DeserializeObject<List<ArtigoDTO>>(contentArtigo);
                 }
 
@@ -229,8 +229,7 @@ namespace AscFrontEnd
                 }
             }
             catch (Exception ex)
-            {
-               
+            {          
                 if (MessageBox.Show( $"{ex.Message}", "Erro na Abertura do Sistema", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Warning)==DialogResult.Abort)
                 {
                     Application.Exit();
@@ -238,9 +237,10 @@ namespace AscFrontEnd
             }
             finally 
             {
+                this.Hide();
                 MenuPrincipal menuForm = new MenuPrincipal();
                 menuForm.ShowDialog();
-                this.Hide();
+             
             }
         }
     }

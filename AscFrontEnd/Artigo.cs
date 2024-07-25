@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.Json;
+using static AscFrontEnd.DTOs.Enums.Enums;
 
 namespace AscFrontEnd
 {
@@ -32,8 +33,8 @@ namespace AscFrontEnd
               subFamiliaId = 1,
               marcaId = 1,
               modeloId = 1,
-              mov_stock = checkBox1.Checked?1:0,
-              mov_lote = checkBox1.Checked?1:0,
+              mov_stock = checkBox1.Checked?OpcaoBinaria.Sim:OpcaoBinaria.Nao,
+              mov_lote = checkBox1.Checked?OpcaoBinaria.Sim:OpcaoBinaria.Nao,
               localizacaoArtigoId = 0,
 
             };
@@ -48,7 +49,7 @@ namespace AscFrontEnd
             string json = JsonSerializer.Serialize(artigo);
 
             // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync("https://localhost:7200/api/Artigo", new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Artigo/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Artigo Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);

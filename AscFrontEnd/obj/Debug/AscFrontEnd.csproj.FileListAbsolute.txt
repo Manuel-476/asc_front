@@ -269,3 +269,6 @@ C:\Users\Devs\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.Carre
 C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.CarregamentoForm.resources
 C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.ContasCorrentes.resources
 C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.Files.SerieForm.resources
+C:\Users\Devs\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.Files.SerieForm.resources
+C:\Users\Devs\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.ListasContasCorrentes.resources
+C:\Users\Devs\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.DocumentosDetalhesForm.resources

@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.aprovaBtn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.radioFornecedor = new System.Windows.Forms.RadioButton();
             this.radioCliente = new System.Windows.Forms.RadioButton();
             this.correnteTable = new System.Windows.Forms.DataGridView();
@@ -47,13 +47,13 @@
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.aprovaBtn = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.correnteTable)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -67,6 +67,18 @@
             this.panel1.Size = new System.Drawing.Size(812, 89);
             this.panel1.TabIndex = 0;
             // 
+            // aprovaBtn
+            // 
+            this.aprovaBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.aprovaBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.aprovaBtn.ForeColor = System.Drawing.Color.White;
+            this.aprovaBtn.Location = new System.Drawing.Point(635, 53);
+            this.aprovaBtn.Name = "aprovaBtn";
+            this.aprovaBtn.Size = new System.Drawing.Size(164, 33);
+            this.aprovaBtn.TabIndex = 25;
+            this.aprovaBtn.Text = "Aprovações";
+            this.aprovaBtn.UseVisualStyleBackColor = false;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -77,16 +89,6 @@
             this.label2.Size = new System.Drawing.Size(243, 33);
             this.label2.TabIndex = 1;
             this.label2.Text = "Contas Correntes";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_chain_48;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox1.Location = new System.Drawing.Point(37, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(55, 83);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
             // 
             // radioFornecedor
             // 
@@ -99,6 +101,7 @@
             this.radioFornecedor.TabStop = true;
             this.radioFornecedor.Text = "Fornecedor";
             this.radioFornecedor.UseVisualStyleBackColor = true;
+            this.radioFornecedor.CheckedChanged += new System.EventHandler(this.radioFornecedor_CheckedChanged);
             // 
             // radioCliente
             // 
@@ -111,9 +114,11 @@
             this.radioCliente.TabStop = true;
             this.radioCliente.Text = "Cliente";
             this.radioCliente.UseVisualStyleBackColor = true;
+            this.radioCliente.CheckedChanged += new System.EventHandler(this.radioCliente_CheckedChanged);
             // 
             // correnteTable
             // 
+            this.correnteTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.correnteTable.BackgroundColor = System.Drawing.Color.White;
             this.correnteTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.correnteTable.Location = new System.Drawing.Point(12, 132);
@@ -124,6 +129,7 @@
             this.correnteTable.Size = new System.Drawing.Size(562, 306);
             this.correnteTable.TabIndex = 3;
             this.correnteTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.correnteTable_CellClick);
+            this.correnteTable.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.correnteTable_CellDoubleClick);
             // 
             // groupBox1
             // 
@@ -272,17 +278,15 @@
             this.pictureBox2.MouseEnter += new System.EventHandler(this.pictureBox2_MouseEnter);
             this.pictureBox2.MouseLeave += new System.EventHandler(this.pictureBox2_MouseLeave);
             // 
-            // aprovaBtn
+            // pictureBox1
             // 
-            this.aprovaBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.aprovaBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.aprovaBtn.ForeColor = System.Drawing.Color.White;
-            this.aprovaBtn.Location = new System.Drawing.Point(635, 53);
-            this.aprovaBtn.Name = "aprovaBtn";
-            this.aprovaBtn.Size = new System.Drawing.Size(164, 33);
-            this.aprovaBtn.TabIndex = 25;
-            this.aprovaBtn.Text = "Aprovações";
-            this.aprovaBtn.UseVisualStyleBackColor = false;
+            this.pictureBox1.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_chain_48;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox1.Location = new System.Drawing.Point(37, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(55, 83);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // ContasCorrentes
             // 
@@ -308,12 +312,12 @@
             this.Load += new System.EventHandler(this.ContasCorrentes_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.correnteTable)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

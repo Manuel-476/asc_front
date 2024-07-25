@@ -30,6 +30,11 @@ namespace AscFrontEnd.DTOs.Enums
             inactivo = 0,
             activo
         }
+        public enum Entidade
+        {
+            cliente = 1,
+            fornecedor
+        }
         public enum TransferenciaResult
         {
             qtdInsuficiente = 0,

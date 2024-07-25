@@ -186,6 +186,12 @@
     <Compile Include="ContasCorrentes.Designer.cs">
       <DependentUpon>ContasCorrentes.cs</DependentUpon>
     </Compile>
+    <Compile Include="DocumentosDetalhesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DocumentosDetalhesForm.Designer.cs">
+      <DependentUpon>DocumentosDetalhesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DTOs\Compra\CotacaoArtigoDTO.cs" />
     <Compile Include="DTOs\Compra\CotacaoDTO.cs" />
     <Compile Include="DTOs\Compra\EcfArtigoDTO.cs" />
@@ -248,6 +254,12 @@
     </Compile>
     <Compile Include="FamiliaArtigo.Designer.cs">
       <DependentUpon>FamiliaArtigo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListasContasCorrentes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListasContasCorrentes.Designer.cs">
+      <DependentUpon>ListasContasCorrentes.cs</DependentUpon>
     </Compile>
     <Compile Include="SerieForm.cs">
       <SubType>Form</SubType>
@@ -338,11 +350,17 @@
     <EmbeddedResource Include="ContasCorrentes.resx">
       <DependentUpon>ContasCorrentes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DocumentosDetalhesForm.resx">
+      <DependentUpon>DocumentosDetalhesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="exportar.resx">
       <DependentUpon>exportar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FamiliaArtigo.resx">
       <DependentUpon>FamiliaArtigo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListasContasCorrentes.resx">
+      <DependentUpon>ListasContasCorrentes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SerieForm.resx">
       <DependentUpon>SerieForm.cs</DependentUpon>

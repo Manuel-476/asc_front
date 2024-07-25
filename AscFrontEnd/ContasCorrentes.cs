@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static AscFrontEnd.DTOs.Enums.Enums;
 
 namespace AscFrontEnd
 {
@@ -65,27 +66,26 @@ namespace AscFrontEnd
 
         private async void ContasCorrentes_Load(object sender, EventArgs e)
         {
-            StaticProperty.vfts.GroupBy(vft => vft.fornecedorId);
+            var vftResult = StaticProperty.vfts.GroupBy(vft => vft.fornecedorId);
 
             entidadeTable.Columns.Add("Codigo Entidade", typeof(int));
             entidadeTable.Columns.Add("Entidade", typeof(string));
             entidadeTable.Columns.Add("Por Pagar", typeof(float));
-            entidadeTable.Columns.Add("Estado", typeof(float));
+            entidadeTable.Columns.Add("Estado", typeof(string));
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var vft in dados)
+                foreach (var vft in vftResult)
                 {
-                    string status = vft.status == 0 ? "Não Regulada" : "Regulada";
+                    float result = vft.Sum(vt=>vt.vftArtigo.Sum(va=>va.preco*va.qtd));
 
-                    float result = vft.vftArtigo.Sum(vt => vt.preco);
+                    string nomeFornecedor = StaticProperty.fornecedores.Where(f => f.id == vft.Key).First().nome_fantasia;
 
-                    string nomeFornecedor = StaticProperty.fornecedores.Where(f => f.id == vft.fornecedorId).First().nome_fantasia;
-
-                    entidadeTable.Rows.Add(vft.fornecedorId, nomeFornecedor, result, status);
+                    entidadeTable.Rows.Add(vft.Key, nomeFornecedor, result, "Não regulada");
 
                     correnteTable.DataSource = entidadeTable;
                 }
+
                 aprovaBtn.Enabled = false;
         }
 
@@ -119,7 +119,7 @@ namespace AscFrontEnd
                         }
                     }        
                 }
-                else 
+                else if(radioCliente.Checked)
                 {
                     var result = StaticProperty.fts.Where(ft => ft.clienteId == id).ToList();
 
@@ -142,6 +142,106 @@ namespace AscFrontEnd
             catch 
             { 
                 return; 
+            }
+        }
+
+        private void correnteTable_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try 
+            {
+                if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+                {
+                    // Obtém o valor da célula clicada
+                    string id = correnteTable.Rows[e.RowIndex].Cells[0].Value.ToString();
+                  
+                    this.id = int.Parse(id);
+
+                    if (radioCliente.Checked)
+                    { 
+                        ListasContasCorrentes lcCorrente = new ListasContasCorrentes(this.id, Entidade.cliente);
+                        lcCorrente.ShowDialog();
+                    }
+                    else if (radioFornecedor.Checked)
+                    { 
+                        ListasContasCorrentes lcCorrente = new ListasContasCorrentes(this.id, Entidade.fornecedor);
+                        lcCorrente.ShowDialog();
+                    }
+                }
+              
+            }
+            catch 
+            {
+                return;
+            }
+
+        }
+
+        private void radioFornecedor_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (radioCliente.Checked) 
+            {
+                if (StaticProperty.fts == null)
+                {
+                    MessageBox.Show("Nenhum Documento Encontrado!", "Vazio", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    radioFornecedor.Checked = true;
+                    return;
+                }
+
+                DataTable dataTable = (DataTable)correnteTable.DataSource;
+
+                if (dataTable != null)
+                {
+                    dataTable.Clear(); // Limpa todas as linhas da fonte de dados
+                }
+
+                var ftResult = StaticProperty.fts.GroupBy(ft => ft.clienteId);
+
+                // Adicionando linhas ao DataTable
+                foreach (var ft in ftResult)
+                {
+                    float result = ft.Sum(vt => vt.ftArtigo.Sum(va => va.preco * va.qtd));
+
+                    string nomeCliente = StaticProperty.clientes.Where(c => c.id == ft.Key).First().nome_fantasia;
+
+                    entidadeTable.Rows.Add(ft.Key, nomeCliente, result, "Não regulada");
+
+                    correnteTable.DataSource = entidadeTable;
+                }
+            }
+        }
+
+        private void radioCliente_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (radioFornecedor.Checked)
+            {
+                if (StaticProperty.vfts == null)
+                {
+                    MessageBox.Show("Nenhum Documento Encontrado!", "Vazio", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    radioCliente.Checked = true;
+                    return;
+                }
+                DataTable dataTable = (DataTable)correnteTable.DataSource;
+
+                if (dataTable != null)
+                {
+                    dataTable.Clear(); // Limpa todas as linhas da fonte de dados
+                }
+
+                var vftResult = StaticProperty.vfts.GroupBy(vft => vft.fornecedorId);
+
+                // Adicionando linhas ao DataTable
+                foreach (var vft in vftResult)
+                {
+                    float result = vft.Sum(vt => vt.vftArtigo.Sum(va => va.preco * va.qtd));
+
+                    string nomeFornecedor = StaticProperty.fornecedores.Where(f => f.id == vft.Key).First().nome_fantasia;
+
+                    entidadeTable.Rows.Add(vft.Key, nomeFornecedor, result, "Não regulada");
+
+                    correnteTable.DataSource = entidadeTable;
+                }
             }
         }
     }
