@@ -330,7 +330,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1028, 461);
+            this.ClientSize = new System.Drawing.Size(1081, 461);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.eliminarBtn);
             this.Controls.Add(this.tabelaCompra);

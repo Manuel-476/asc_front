@@ -82,5 +82,22 @@ namespace AscFrontEnd
             SerieForm serie = new SerieForm();
             serie.ShowDialog();
         }
+
+        private void funcionarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FuncionarioForm funcionario = new FuncionarioForm();
+            funcionario.ShowDialog();
+        }
+
+        private void empresaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EmpresaForm empresaForm = new EmpresaForm();    
+            empresaForm.ShowDialog();
+        }
+
+        private void sairToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

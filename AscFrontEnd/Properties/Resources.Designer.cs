@@ -103,6 +103,16 @@ namespace AscFrontEnd.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_bank_64 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-bank-64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_boss_64 {
             get {
                 object obj = ResourceManager.GetObject("icons8-boss-64", resourceCulture);
@@ -146,6 +156,16 @@ namespace AscFrontEnd.Properties {
         internal static System.Drawing.Bitmap icons8_buy_48 {
             get {
                 object obj = ResourceManager.GetObject("icons8-buy-48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_cash_64 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-cash-64", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -253,6 +273,46 @@ namespace AscFrontEnd.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_employee_60 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-employee-60", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_enterprise_48 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-enterprise-48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_enterprise_96T1 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-enterprise-96T1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_enterprise_96T2 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-enterprise-96T2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_excel_80 {
             get {
                 object obj = ResourceManager.GetObject("icons8-excel-80", resourceCulture);
@@ -263,9 +323,39 @@ namespace AscFrontEnd.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_folder_48 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-folder-48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_key_200 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-key-200", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_pdf_60 {
             get {
                 object obj = ResourceManager.GetObject("icons8-pdf-60", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_printer_60 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-printer-60", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

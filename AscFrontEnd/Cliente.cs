@@ -53,7 +53,7 @@ namespace AscFrontEnd
             string json = JsonSerializer.Serialize(cliente);
 
             // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync("https://localhost:7200/api/Cliente", new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Cliente/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Cliente Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK); 

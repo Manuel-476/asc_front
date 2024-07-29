@@ -114,7 +114,8 @@ namespace AscFrontEnd
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            FornecedorTable fornecedorTable = new FornecedorTable();
+            fornecedorTable.ShowDialog();
         }
 
         private void button1_MouseUp(object sender, MouseEventArgs e)

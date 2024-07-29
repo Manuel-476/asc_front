@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pesqText = new System.Windows.Forms.TextBox();
@@ -36,13 +37,12 @@
             this.transformar = new System.Windows.Forms.PictureBox();
             this.eliminarPicture = new System.Windows.Forms.PictureBox();
             this.editarPicture = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaCliente)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.transformar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eliminarPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.editarPicture)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -54,6 +54,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(803, 86);
             this.panel1.TabIndex = 7;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_client_80;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox1.Location = new System.Drawing.Point(13, 11);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 69);
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
             // 
             // label2
             // 
@@ -104,6 +114,7 @@
             this.transformar.Size = new System.Drawing.Size(71, 50);
             this.transformar.TabIndex = 10;
             this.transformar.TabStop = false;
+            this.transformar.Click += new System.EventHandler(this.transformar_Click);
             // 
             // eliminarPicture
             // 
@@ -124,16 +135,6 @@
             this.editarPicture.Size = new System.Drawing.Size(71, 50);
             this.editarPicture.TabIndex = 8;
             this.editarPicture.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_client_80;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox1.Location = new System.Drawing.Point(13, 11);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 69);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
             // 
             // ClientesTable
             // 
@@ -156,11 +157,11 @@
             this.Load += new System.EventHandler(this.ClientesTable_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaCliente)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.transformar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eliminarPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.editarPicture)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

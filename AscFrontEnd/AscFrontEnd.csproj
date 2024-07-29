@@ -150,6 +150,18 @@
     <Compile Include="ArtigoListagem.Designer.cs">
       <DependentUpon>ArtigoListagem.cs</DependentUpon>
     </Compile>
+    <Compile Include="BancoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BancoForm.Designer.cs">
+      <DependentUpon>BancoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CaixaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CaixaForm.Designer.cs">
+      <DependentUpon>CaixaForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CarregamentoForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,6 +204,7 @@
     <Compile Include="DocumentosDetalhesForm.Designer.cs">
       <DependentUpon>DocumentosDetalhesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DTOs\Actividades\ActividadeDTO.cs" />
     <Compile Include="DTOs\Compra\CotacaoArtigoDTO.cs" />
     <Compile Include="DTOs\Compra\CotacaoDTO.cs" />
     <Compile Include="DTOs\Compra\EcfArtigoDTO.cs" />
@@ -219,11 +232,19 @@
     <Compile Include="DTOs\Cliente\FilialPhoneDTO.cs" />
     <Compile Include="DTOs\ContasCorrentes\NpDTO.cs" />
     <Compile Include="DTOs\ContasCorrentes\ReciboDTO.cs" />
+    <Compile Include="DTOs\Deposito\BancoDTO.cs" />
+    <Compile Include="DTOs\Deposito\CaixaDTO.cs" />
+    <Compile Include="DTOs\Empresa\EmpresaDTO.cs" />
     <Compile Include="DTOs\Enums\Enums.cs" />
     <Compile Include="DTOs\Fornecedor\FornecedorDTO.cs" />
     <Compile Include="DTOs\Fornecedor\FornecedorFilialDTO.cs" />
     <Compile Include="DTOs\Fornecedor\FornecedorPhoneDTO.cs" />
     <Compile Include="DTOs\Fornecedor\FornFilialPhoneDTO.cs" />
+    <Compile Include="DTOs\Funcionario\FuncionarioDTO.cs" />
+    <Compile Include="DTOs\Funcionario\FuncionarioPhoneDTO.cs" />
+    <Compile Include="DTOs\Funcionario\PhoneDTO.cs" />
+    <Compile Include="DTOs\Funcionario\UserDTO.cs" />
+    <Compile Include="DTOs\Pessoa\PessoaDTO.cs" />
     <Compile Include="DTOs\Serie\SerieDTO.cs" />
     <Compile Include="DTOs\StaticsDto\StaticProperty.cs" />
     <Compile Include="DTOs\Stock\ArmazemDTO.cs" />
@@ -243,6 +264,12 @@
     <Compile Include="DTOs\Venda\NcDTO.cs" />
     <Compile Include="DTOs\Venda\NdArtigoDTO.cs" />
     <Compile Include="DTOs\Venda\NdDTO.cs" />
+    <Compile Include="EmpresaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmpresaForm.Designer.cs">
+      <DependentUpon>EmpresaForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="exportar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -255,11 +282,28 @@
     <Compile Include="FamiliaArtigo.Designer.cs">
       <DependentUpon>FamiliaArtigo.cs</DependentUpon>
     </Compile>
+    <Compile Include="FornecedorTable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FornecedorTable.Designer.cs">
+      <DependentUpon>FornecedorTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FuncionarioForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FuncionarioForm.Designer.cs">
+      <DependentUpon>FuncionarioForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ListasContasCorrentes.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ListasContasCorrentes.Designer.cs">
       <DependentUpon>ListasContasCorrentes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SerieForm.cs">
       <SubType>Form</SubType>
@@ -317,6 +361,12 @@
     <Compile Include="SubFamilaArtigo.Designer.cs">
       <DependentUpon>SubFamilaArtigo.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserForm.Designer.cs">
+      <DependentUpon>UserForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Venda.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -331,6 +381,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ArtigoListagem.resx">
       <DependentUpon>ArtigoListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BancoForm.resx">
+      <DependentUpon>BancoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CaixaForm.resx">
+      <DependentUpon>CaixaForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CarregamentoForm.resx">
       <DependentUpon>CarregamentoForm.cs</DependentUpon>
@@ -353,11 +409,20 @@
     <EmbeddedResource Include="DocumentosDetalhesForm.resx">
       <DependentUpon>DocumentosDetalhesForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EmpresaForm.resx">
+      <DependentUpon>EmpresaForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="exportar.resx">
       <DependentUpon>exportar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FamiliaArtigo.resx">
       <DependentUpon>FamiliaArtigo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FornecedorTable.resx">
+      <DependentUpon>FornecedorTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FuncionarioForm.resx">
+      <DependentUpon>FuncionarioForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ListasContasCorrentes.resx">
       <DependentUpon>ListasContasCorrentes.cs</DependentUpon>
@@ -385,19 +450,17 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="Stock.resx">
       <DependentUpon>Stock.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubFamilaArtigo.resx">
       <DependentUpon>SubFamilaArtigo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserForm.resx">
+      <DependentUpon>UserForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Venda.resx">
       <DependentUpon>Venda.cs</DependentUpon>
@@ -420,12 +483,14 @@
     <Content Include="Files\asc.png" />
     <Content Include="Files\icons8-add-40.png" />
     <Content Include="Files\icons8-add-user-male-40.png" />
+    <Content Include="Files\icons8-bank-64.png" />
     <Content Include="Files\icons8-boss-64.png" />
     <Content Include="Files\icons8-box-80.png" />
     <Content Include="Files\icons8-box.gif" />
     <Content Include="Files\icons8-brand-58.png" />
     <Content Include="Files\icons8-bullet-list-50.png" />
     <Content Include="Files\icons8-buy-48.png" />
+    <Content Include="Files\icons8-cash-64.png" />
     <Content Include="Files\icons8-chain-48.png" />
     <Content Include="Files\icons8-client-80.png" />
     <Content Include="Files\icons8-create-50.png" />
@@ -436,8 +501,13 @@
     <Content Include="Files\icons8-debt-50.png" />
     <Content Include="Files\icons8-delete-48.png" />
     <Content Include="Files\icons8-edit-40.png" />
+    <Content Include="Files\icons8-employee-60.png" />
+    <Content Include="Files\icons8-enterprise-96T.png" />
     <Content Include="Files\icons8-excel-80.png" />
+    <Content Include="Files\icons8-folder-48.png" />
+    <Content Include="Files\icons8-key-200.png" />
     <Content Include="Files\icons8-pdf-60.png" />
+    <Content Include="Files\icons8-printer-60.png" />
     <Content Include="Files\icons8-product-50-family.png" />
     <Content Include="Files\icons8-product-50.png" />
     <Content Include="Files\icons8-prototype-50.png" />

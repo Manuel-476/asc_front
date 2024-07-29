@@ -31,13 +31,17 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.codigoDocumento = new System.Windows.Forms.Label();
-            this.serieDocumento = new System.Windows.Forms.Label();
+            this.dataDocumento = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.numDocumento = new System.Windows.Forms.Label();
+            this.serieDocumento = new System.Windows.Forms.Label();
+            this.codigoDocumento = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.precos = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.ivas = new System.Windows.Forms.Label();
             this.qtds = new System.Windows.Forms.Label();
             this.artigos = new System.Windows.Forms.Label();
@@ -45,10 +49,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.dataDocumento = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.precos = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -57,6 +57,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(-6, -3);
             this.panel1.Name = "panel1";
@@ -67,6 +68,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial Narrow", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(18, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(125, 31);
@@ -91,25 +93,51 @@
             this.groupBox1.Text = "Sobre Documento";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
-            // label2
+            // dataDocumento
             // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label2.Location = new System.Drawing.Point(6, 28);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Documento:";
+            this.dataDocumento.AutoSize = true;
+            this.dataDocumento.Location = new System.Drawing.Point(77, 114);
+            this.dataDocumento.Name = "dataDocumento";
+            this.dataDocumento.Size = new System.Drawing.Size(28, 13);
+            this.dataDocumento.TabIndex = 7;
+            this.dataDocumento.Text = "data";
             // 
-            // label3
+            // label11
             // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label3.Location = new System.Drawing.Point(6, 59);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(34, 13);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Serie:";
+            this.label11.AutoSize = true;
+            this.label11.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label11.Location = new System.Drawing.Point(6, 114);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(33, 13);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "Data:";
+            // 
+            // numDocumento
+            // 
+            this.numDocumento.AutoSize = true;
+            this.numDocumento.Location = new System.Drawing.Point(77, 85);
+            this.numDocumento.Name = "numDocumento";
+            this.numDocumento.Size = new System.Drawing.Size(42, 13);
+            this.numDocumento.TabIndex = 5;
+            this.numDocumento.Text = "numero";
+            // 
+            // serieDocumento
+            // 
+            this.serieDocumento.AutoSize = true;
+            this.serieDocumento.Location = new System.Drawing.Point(77, 59);
+            this.serieDocumento.Name = "serieDocumento";
+            this.serieDocumento.Size = new System.Drawing.Size(29, 13);
+            this.serieDocumento.TabIndex = 4;
+            this.serieDocumento.Text = "serie";
+            // 
+            // codigoDocumento
+            // 
+            this.codigoDocumento.AutoSize = true;
+            this.codigoDocumento.Location = new System.Drawing.Point(77, 28);
+            this.codigoDocumento.Name = "codigoDocumento";
+            this.codigoDocumento.Size = new System.Drawing.Size(60, 13);
+            this.codigoDocumento.TabIndex = 3;
+            this.codigoDocumento.Text = "documento";
             // 
             // label4
             // 
@@ -121,32 +149,25 @@
             this.label4.TabIndex = 2;
             this.label4.Text = "Numero:";
             // 
-            // codigoDocumento
+            // label3
             // 
-            this.codigoDocumento.AutoSize = true;
-            this.codigoDocumento.Location = new System.Drawing.Point(77, 28);
-            this.codigoDocumento.Name = "codigoDocumento";
-            this.codigoDocumento.Size = new System.Drawing.Size(60, 13);
-            this.codigoDocumento.TabIndex = 3;
-            this.codigoDocumento.Text = "documento";
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label3.Location = new System.Drawing.Point(6, 59);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(34, 13);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Serie:";
             // 
-            // serieDocumento
+            // label2
             // 
-            this.serieDocumento.AutoSize = true;
-            this.serieDocumento.Location = new System.Drawing.Point(77, 59);
-            this.serieDocumento.Name = "serieDocumento";
-            this.serieDocumento.Size = new System.Drawing.Size(29, 13);
-            this.serieDocumento.TabIndex = 4;
-            this.serieDocumento.Text = "serie";
-            // 
-            // numDocumento
-            // 
-            this.numDocumento.AutoSize = true;
-            this.numDocumento.Location = new System.Drawing.Point(77, 85);
-            this.numDocumento.Name = "numDocumento";
-            this.numDocumento.Size = new System.Drawing.Size(42, 13);
-            this.numDocumento.TabIndex = 5;
-            this.numDocumento.Text = "numero";
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label2.Location = new System.Drawing.Point(6, 28);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Documento:";
             // 
             // groupBox2
             // 
@@ -166,32 +187,47 @@
             this.groupBox2.Text = "Artigos";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
+            // precos
+            // 
+            this.precos.AutoSize = true;
+            this.precos.Location = new System.Drawing.Point(152, 50);
+            this.precos.Name = "precos";
+            this.precos.Size = new System.Drawing.Size(0, 13);
+            this.precos.TabIndex = 7;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label6.Location = new System.Drawing.Point(152, 28);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(38, 13);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "Preço:";
+            // 
             // ivas
             // 
             this.ivas.AutoSize = true;
             this.ivas.Location = new System.Drawing.Point(111, 50);
             this.ivas.Name = "ivas";
-            this.ivas.Size = new System.Drawing.Size(21, 13);
+            this.ivas.Size = new System.Drawing.Size(0, 13);
             this.ivas.TabIndex = 5;
-            this.ivas.Text = "iva";
             // 
             // qtds
             // 
             this.qtds.AutoSize = true;
             this.qtds.Location = new System.Drawing.Point(67, 50);
             this.qtds.Name = "qtds";
-            this.qtds.Size = new System.Drawing.Size(22, 13);
+            this.qtds.Size = new System.Drawing.Size(0, 13);
             this.qtds.TabIndex = 4;
-            this.qtds.Text = "qtd";
             // 
             // artigos
             // 
             this.artigos.AutoSize = true;
             this.artigos.Location = new System.Drawing.Point(7, 50);
             this.artigos.Name = "artigos";
-            this.artigos.Size = new System.Drawing.Size(38, 13);
+            this.artigos.Size = new System.Drawing.Size(0, 13);
             this.artigos.TabIndex = 3;
-            this.artigos.Text = "artigos";
             // 
             // label8
             // 
@@ -225,50 +261,14 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.SpringGreen;
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_printer_60;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox1.Location = new System.Drawing.Point(448, 76);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(38, 34);
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
-            // 
-            // dataDocumento
-            // 
-            this.dataDocumento.AutoSize = true;
-            this.dataDocumento.Location = new System.Drawing.Point(77, 114);
-            this.dataDocumento.Name = "dataDocumento";
-            this.dataDocumento.Size = new System.Drawing.Size(28, 13);
-            this.dataDocumento.TabIndex = 7;
-            this.dataDocumento.Text = "data";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label11.Location = new System.Drawing.Point(6, 114);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(33, 13);
-            this.label11.TabIndex = 6;
-            this.label11.Text = "Data:";
-            // 
-            // precos
-            // 
-            this.precos.AutoSize = true;
-            this.precos.Location = new System.Drawing.Point(152, 50);
-            this.precos.Name = "precos";
-            this.precos.Size = new System.Drawing.Size(21, 13);
-            this.precos.TabIndex = 7;
-            this.precos.Text = "iva";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label6.Location = new System.Drawing.Point(152, 28);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(38, 13);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "Preço:";
             // 
             // DocumentosDetalhesForm
             // 

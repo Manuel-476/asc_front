@@ -68,7 +68,7 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(0, index);
+                    serie = documentoDados.documento.Substring(indexSpace,(index-indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;

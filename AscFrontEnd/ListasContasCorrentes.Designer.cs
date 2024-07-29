@@ -70,6 +70,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(-1, -1);
             this.panel1.Name = "panel1";
@@ -80,6 +81,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial Narrow", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(10, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(123, 31);
@@ -89,9 +91,10 @@
             // entidadeText
             // 
             this.entidadeText.AutoSize = true;
-            this.entidadeText.Location = new System.Drawing.Point(458, 74);
+            this.entidadeText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.entidadeText.Location = new System.Drawing.Point(433, 70);
             this.entidadeText.Name = "entidadeText";
-            this.entidadeText.Size = new System.Drawing.Size(49, 13);
+            this.entidadeText.Size = new System.Drawing.Size(81, 20);
             this.entidadeText.TabIndex = 8;
             this.entidadeText.Text = "Entidade";
             // 

@@ -1,6 +1,10 @@
-﻿using AscFrontEnd.DTOs.Cliente;
+﻿using AscFrontEnd.DTOs.Actividades;
+using AscFrontEnd.DTOs.Cliente;
 using AscFrontEnd.DTOs.ContasCorrentes;
+using AscFrontEnd.DTOs.Deposito;
+using AscFrontEnd.DTOs.Empresa;
 using AscFrontEnd.DTOs.Fornecedor;
+using AscFrontEnd.DTOs.Funcionario;
 using AscFrontEnd.DTOs.Serie;
 using AscFrontEnd.DTOs.Stock;
 using AscFrontEnd.DTOs.Venda;
@@ -22,8 +26,12 @@ namespace AscFrontEnd.DTOs.StaticsDto
         public static string nome { get; set; }
         public static string codigo { get; set; }
         public static string descricao { get; set; }
+
+
         public static List<ClienteDTO> clientes { get; set; }
+        public static List<ClienteFilialDTO> clienteFiliais { get; set; }
         public static List<FornecedorDTO> fornecedores { get; set; }
+        public static List<FornecedorFilialDTO> fornFilais { get; set; }
         public static List<ArtigoDTO> artigos { get; set; }
 
         // Compra
@@ -56,5 +64,19 @@ namespace AscFrontEnd.DTOs.StaticsDto
 
         // Serie
         public static List<SerieDTO> series { get; set; }
+
+        // Funcionario
+        public static List<FuncionarioDTO> funcionarios { get; set; }
+        public static UserDTO user { get; set; }
+
+        // Actividade
+        public static List<ActividadeDTO> actividades { get; set; }
+
+        // Depositos
+        public static List<BancoDTO> bancos { get; set; }
+        public static List<CaixaDTO> caixas { get; set; }
+
+        // Empresa
+        public static List<EmpresaDTO> empresas { get; set; }
     }
 }

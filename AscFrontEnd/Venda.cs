@@ -181,7 +181,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(frs);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync("https://localhost:7200/api/Venda/Fr", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Venda/Fr/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
 
             }
 
@@ -212,7 +212,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(fts);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync("https://localhost:7200/api/Venda/Ft", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Venda/Ft/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
 
             }
 
