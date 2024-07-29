@@ -108,6 +108,7 @@
             this.Name = "Marca";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Marca";
+            this.Load += new System.EventHandler(this.Marca_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

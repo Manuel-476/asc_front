@@ -108,6 +108,7 @@
             this.Name = "FamiliaArtigo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FamiliaArtigo";
+            this.Load += new System.EventHandler(this.FamiliaArtigo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

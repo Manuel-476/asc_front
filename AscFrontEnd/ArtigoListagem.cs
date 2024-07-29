@@ -1,4 +1,5 @@
 ﻿using AscFrontEnd.DTOs.Cliente;
+using AscFrontEnd.DTOs.StaticsDto;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,14 +23,6 @@ namespace AscFrontEnd
 
         private async void ArtigoListagem_Load(object sender, EventArgs e)
         {
-            var client = new HttpClient();
-            var response = await client.GetAsync("https://localhost:7200/api/Cliente");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                var dados = JsonConvert.DeserializeObject<List<ArtigoDTO>>(content);
-
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Codigo", typeof(string));
@@ -40,13 +33,12 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in dados)
+                foreach (var item in StaticProperty.artigos)
                 {
                     dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario, item.mov_stock, item.mov_lote);
 
                     dataGridView1.DataSource = dt;
-                }
-            }
+                }     
         }
 
         private async void pesqText_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)

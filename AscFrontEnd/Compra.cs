@@ -52,7 +52,7 @@ namespace AscFrontEnd
             vftArtigos = new List<VftArtigoDTO>();
             pcoArtigos = new List<PedidoCotacaoArtigoDTO>();
             cotArtigos = new List<CotacaoArtigoDTO> ();
-           ecfArtigos = new List<EcfArtigoDTO>();
+            ecfArtigos = new List<EcfArtigoDTO>();
             vgtArtigos = new List<VgtArtigoDTO>();
             vncArtigos = new List<VncArtigoDTO>();
             vndArtigos = new List<VndArtigoDTO>();
@@ -64,13 +64,8 @@ namespace AscFrontEnd
         }
         private async void Compra_Load(object sender, EventArgs e)
         {
-            var client = new HttpClient();
-            var response = await client.GetAsync("https://localhost:7200/api/Artigo");
 
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-
+           
                 dtCompra.Columns.Add("id", typeof(int));
                 dtCompra.Columns.Add("Artigo", typeof(string));
                 dtCompra.Columns.Add("Preco", typeof(float));
@@ -102,7 +97,7 @@ namespace AscFrontEnd
 
                 eliminarBtn.Enabled = false;
 
-            }
+            
 
             timerRefresh.Start();
         }
@@ -437,6 +432,73 @@ namespace AscFrontEnd
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Compra Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+
+                // Actualizar a propriedade estatica de compras
+                var client = new HttpClient();
+                // Compra
+                var responseVft = await client.GetAsync($"https://localhost:7200/api/Compra/VftByRelations");
+
+                if (responseVft.IsSuccessStatusCode)
+                {
+                    var contentVft = await responseVft.Content.ReadAsStringAsync();
+                    StaticProperty.vfts = JsonConvert.DeserializeObject<List<VftDTO>>(contentVft);
+                }
+
+                var responseVfr = await client.GetAsync($"https://localhost:7200/api/Compra/VfrByRelations");
+
+                if (responseVfr.IsSuccessStatusCode)
+                {
+                    var contentVfr = await responseVft.Content.ReadAsStringAsync();
+                    StaticProperty.vfrs = JsonConvert.DeserializeObject<List<VfrDTO>>(contentVfr);
+                }
+
+                var responseVgt = await client.GetAsync($"https://localhost:7200/api/Compra/VgtByRelations");
+
+                if (responseVgt.IsSuccessStatusCode)
+                {
+                    var contentVgt = await responseVgt.Content.ReadAsStringAsync();
+                    StaticProperty.vgts = JsonConvert.DeserializeObject<List<VgtDTO>>(contentVgt);
+                }
+
+                var responsePco = await client.GetAsync($"https://localhost:7200/api/Compra/PcoByRelations");
+
+                if (responsePco.IsSuccessStatusCode)
+                {
+                    var contentPco = await responsePco.Content.ReadAsStringAsync();
+                    StaticProperty.pcos = JsonConvert.DeserializeObject<List<PedidoCotacaoDTO>>(contentPco);
+                }
+
+                var responseCot = await client.GetAsync($"https://localhost:7200/api/Compra/CotByRelations");
+
+                if (responseCot.IsSuccessStatusCode)
+                {
+                    var contentCot = await responseCot.Content.ReadAsStringAsync();
+                    StaticProperty.cots = JsonConvert.DeserializeObject<List<CotacaoDTO>>(contentCot);
+                }
+
+                var responseEcf = await client.GetAsync($"https://localhost:7200/api/Compra/EcfByRelations");
+
+                if (responseEcf.IsSuccessStatusCode)
+                {
+                    var contentEcf = await responseEcf.Content.ReadAsStringAsync();
+                    StaticProperty.ecfs = JsonConvert.DeserializeObject<List<EncomendaFornecedorDTO>>(contentEcf);
+                }
+
+                var responseVnc = await client.GetAsync($"https://localhost:7200/api/Compra/VncByRelations");
+
+                if (responseVnc.IsSuccessStatusCode)
+                {
+                    var contentVnc = await responseVnc.Content.ReadAsStringAsync();
+                    StaticProperty.vncs = JsonConvert.DeserializeObject<List<VncDTO>>(contentVnc);
+                }
+
+                var responseVnd = await client.GetAsync($"https://localhost:7200/api/Compra/VndByRelations");
+
+                if (responseVnd.IsSuccessStatusCode)
+                {
+                    var contentVnd = await responseVnd.Content.ReadAsStringAsync();
+                    StaticProperty.vnds = JsonConvert.DeserializeObject<List<VndDTO>>(contentVnd);
+                }
             }
             else
             {

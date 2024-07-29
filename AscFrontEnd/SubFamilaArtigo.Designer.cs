@@ -108,6 +108,7 @@
             this.Name = "SubFamilaArtigo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SubFamilaArtigo";
+            this.Load += new System.EventHandler(this.SubFamilaArtigo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

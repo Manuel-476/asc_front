@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.Json;
 using static AscFrontEnd.DTOs.Enums.Enums;
+using AscFrontEnd.DTOs.StaticsDto;
+
 
 namespace AscFrontEnd
 {
@@ -53,6 +55,15 @@ namespace AscFrontEnd
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Artigo Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+
+                // Artigo
+                var responseArtigo = await client.GetAsync($"https://localhost:7200/api/Artigo");
+
+                if (responseArtigo.IsSuccessStatusCode)
+                {
+                    var contentArtigo = await responseArtigo.Content.ReadAsStringAsync();
+                    StaticProperty.artigos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ArtigoDTO>>(contentArtigo);
+                }
             }
             else
             {
@@ -104,6 +115,11 @@ namespace AscFrontEnd
         {
             button3.BackColor = Color.White;
             button3.ForeColor = Color.Black;
+        }
+
+        private void Artigo_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

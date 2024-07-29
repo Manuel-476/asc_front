@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AscFrontEnd.DTOs.Fornecedor;
 using Newtonsoft.Json;
+using AscFrontEnd.DTOs.StaticsDto;
 
 namespace AscFrontEnd.Files
 {
@@ -45,11 +46,25 @@ namespace AscFrontEnd.Files
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Serie Salva", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Serie
+                var responseSerie = await client.GetAsync($"https://localhost:7200/api/Serie");
+
+                if (responseSerie.IsSuccessStatusCode)
+                {
+                    var contentSerie = await responseSerie.Content.ReadAsStringAsync();
+                    StaticProperty.series = JsonConvert.DeserializeObject<List<SerieDTO>>(contentSerie);
+                }
             }
             else 
             {
                 MessageBox.Show("Erro ao salvar a serie", "Erro inesperado", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
             }
+        }
+
+        private void SerieForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

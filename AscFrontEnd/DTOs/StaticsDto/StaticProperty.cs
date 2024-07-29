@@ -27,12 +27,23 @@ namespace AscFrontEnd.DTOs.StaticsDto
         public static string codigo { get; set; }
         public static string descricao { get; set; }
 
-
+        // Cliente
         public static List<ClienteDTO> clientes { get; set; }
         public static List<ClienteFilialDTO> clienteFiliais { get; set; }
+
+        //Fornecedor
         public static List<FornecedorDTO> fornecedores { get; set; }
         public static List<FornecedorFilialDTO> fornFilais { get; set; }
+
+        //Artigo
         public static List<ArtigoDTO> artigos { get; set; }
+        public static List<FamiliaArtigoDTO> familias { get; set; }
+        public static List<SubFamiliaDTO>subFamilias { get; set; }
+        public static List<ModeloDTO> modelos { get; set; }
+        public static List<MarcaDTO> marcas { get; set; }
+
+        // Actividade
+        public static List<ActividadeDTO> actividades { get; set; }
 
         // Compra
         public static List<VftDTO> vfts { get; set; }
@@ -69,8 +80,6 @@ namespace AscFrontEnd.DTOs.StaticsDto
         public static List<FuncionarioDTO> funcionarios { get; set; }
         public static UserDTO user { get; set; }
 
-        // Actividade
-        public static List<ActividadeDTO> actividades { get; set; }
 
         // Depositos
         public static List<BancoDTO> bancos { get; set; }

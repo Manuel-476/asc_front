@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AscFrontEnd.DTOs.StaticsDto;
+using Newtonsoft.Json;
 
 namespace AscFrontEnd
 {
@@ -45,11 +47,26 @@ namespace AscFrontEnd
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Familia Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+
+                // Familia
+                var responseFamilia = await client.GetAsync($"https://localhost:7200/api/Artigo/Familia");
+
+                if (responseFamilia.IsSuccessStatusCode)
+                {
+                    var contentFamilia = await responseFamilia.Content.ReadAsStringAsync();
+
+                    StaticProperty.familias = JsonConvert.DeserializeObject<List<FamiliaArtigoDTO>>(contentFamilia);
+                }
             }
             else
             {
                 MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
             }
+        }
+
+        private void FamiliaArtigo_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

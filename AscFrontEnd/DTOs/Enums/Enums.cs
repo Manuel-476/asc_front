@@ -14,6 +14,8 @@ namespace AscFrontEnd.DTOs.Enums
             Superior,
             Inferior
         }
+
+
         public enum OpcaoBinaria
         {
             Nao = 0,

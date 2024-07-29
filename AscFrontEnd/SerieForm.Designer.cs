@@ -76,6 +76,7 @@
             this.Name = "SerieForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SerieForm";
+            this.Load += new System.EventHandler(this.SerieForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

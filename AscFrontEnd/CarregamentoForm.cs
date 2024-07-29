@@ -1,6 +1,8 @@
 ﻿using AscFrontEnd.DTOs;
+using AscFrontEnd.DTOs.Actividades;
 using AscFrontEnd.DTOs.Cliente;
 using AscFrontEnd.DTOs.ContasCorrentes;
+using AscFrontEnd.DTOs.Deposito;
 using AscFrontEnd.DTOs.Fornecedor;
 using AscFrontEnd.DTOs.Serie;
 using AscFrontEnd.DTOs.StaticsDto;
@@ -35,6 +37,7 @@ namespace AscFrontEnd
             var client = new HttpClient();
             try
             {
+                // Compra
                 var responseVft = await client.GetAsync($"https://localhost:7200/api/Compra/VftByRelations");
 
                 if (responseVft.IsSuccessStatusCode)
@@ -220,12 +223,89 @@ namespace AscFrontEnd
                     StaticProperty.contaCorrenteCliente = JsonConvert.DeserializeObject<object>(contentCCc);
                 }
 
+                // Serie
                 var responseSerie = await client.GetAsync($"https://localhost:7200/api/Serie");
 
                 if (responseSerie.IsSuccessStatusCode)
                 {
                     var contentSerie = await responseSerie.Content.ReadAsStringAsync();
                     StaticProperty.series = JsonConvert.DeserializeObject<List<SerieDTO>>(contentSerie);
+                }
+
+                // Actividade
+                var responseAct = await client.GetAsync($"https://localhost:7200/api/Actividade/WithRelations");
+
+                if (responseAct.IsSuccessStatusCode)
+                {
+                    var contentAct = await responseAct.Content.ReadAsStringAsync();
+                    StaticProperty.actividades = JsonConvert.DeserializeObject<List<ActividadeDTO>>(contentAct);
+                }
+
+                // Depositos
+                var responseBanco = await client.GetAsync($"https://localhost:7200/api/Deposito/Banco");
+
+                if (responseBanco.IsSuccessStatusCode)
+                {
+                    var contentBanco = await responseBanco.Content.ReadAsStringAsync();
+                    StaticProperty.bancos = JsonConvert.DeserializeObject<List<BancoDTO>>(contentBanco);
+                }
+
+                var responseCaixa = await client.GetAsync($"https://localhost:7200/api/Deposito/Caixa");
+
+                if (responseCaixa.IsSuccessStatusCode)
+                {
+                    var contentCaixa = await responseBanco.Content.ReadAsStringAsync();
+                    StaticProperty.caixas = JsonConvert.DeserializeObject<List<CaixaDTO>>(contentCaixa);
+                }
+
+                // Funcionario
+                var responseFuncionario = await client.GetAsync($"https://localhost:7200/api/Funcionario/WithRelations");
+
+                if (responseFuncionario.IsSuccessStatusCode)
+                {
+                    var contentFuncionario = await responseFuncionario.Content.ReadAsStringAsync();
+
+                    StaticProperty.funcionarios = JsonConvert.DeserializeObject<List<FuncionarioDTO>>(contentFuncionario);
+                }
+
+                // Familia
+                var responseFamilia= await client.GetAsync($"https://localhost:7200/api/Artigo/Familia");
+
+                if (responseFamilia.IsSuccessStatusCode)
+                {
+                    var contentFamilia = await responseFamilia.Content.ReadAsStringAsync();
+
+                    StaticProperty.familias = JsonConvert.DeserializeObject<List<FamiliaArtigoDTO>>(contentFamilia);
+                }
+
+                // Sub-Familia
+                var responseSubFamilia = await client.GetAsync($"https://localhost:7200/api/Artigo/SubFamilia");
+
+                if (responseSubFamilia.IsSuccessStatusCode)
+                {
+                    var contentSubFamilia = await responseSubFamilia.Content.ReadAsStringAsync();
+
+                    StaticProperty.subFamilias = JsonConvert.DeserializeObject<List<SubFamiliaDTO>>(contentSubFamilia);
+                }
+
+                // Marca
+                var responseMarca = await client.GetAsync($"https://localhost:7200/api/Artigo/Marca");
+
+                if (responseMarca.IsSuccessStatusCode)
+                {
+                    var contentMarca = await responseMarca.Content.ReadAsStringAsync();
+
+                    StaticProperty.marcas = JsonConvert.DeserializeObject<List<MarcaDTO>>(contentMarca);
+                }
+
+                // Modelo
+                var responseModelo = await client.GetAsync($"https://localhost:7200/api/Artigo/Modelo");
+
+                if (responseModelo.IsSuccessStatusCode)
+                {
+                    var contentModelo = await responseModelo.Content.ReadAsStringAsync();
+
+                    StaticProperty.modelos = JsonConvert.DeserializeObject<List<ModeloDTO>>(contentModelo);
                 }
             }
             catch (Exception ex)

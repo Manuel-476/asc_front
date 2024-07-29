@@ -8,9 +8,13 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AscFrontEnd.DTOs.StaticsDto;
+using System.Text.Json;
+using AscFrontEnd.DTOs.Deposito;
+
+
 
 
 namespace AscFrontEnd
@@ -55,6 +59,7 @@ namespace AscFrontEnd
             if (response.IsSuccessStatusCode)
             {
                 Console.WriteLine("Dados enviados com sucesso.");
+
             }
             else
             {
@@ -100,6 +105,33 @@ namespace AscFrontEnd
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Fornecedor Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+                // Actualizar dados nas propriedades estaticas
+
+                // Fornecedor
+                var responseFornecedor = await client.GetAsync($"https://localhost:7200/api/Fornecedor/FornecedoresByRelation");
+
+                if (responseFornecedor.IsSuccessStatusCode)
+                {
+                    var contentFornecedor = await responseFornecedor.Content.ReadAsStringAsync();
+                    StaticProperty.fornecedores = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FornecedorDTO>>(contentFornecedor);
+                }
+
+                // Depositos
+                var responseBanco = await client.GetAsync($"https://localhost:7200/api/Deposito/Banco");
+
+                if (responseBanco.IsSuccessStatusCode)
+                {
+                    var contentBanco = await responseBanco.Content.ReadAsStringAsync();
+                    StaticProperty.bancos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<BancoDTO>>(contentBanco);
+                }
+
+                var responseCaixa = await client.GetAsync($"https://localhost:7200/api/Deposito/Caixa");
+
+                if (responseCaixa.IsSuccessStatusCode)
+                {
+                    var contentCaixa = await responseBanco.Content.ReadAsStringAsync();
+                    StaticProperty.caixas = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CaixaDTO>>(contentCaixa);
+                }
             }
             else
             {
@@ -150,7 +182,11 @@ namespace AscFrontEnd
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            pessoaCombo.Items.Add("Singular");
+            pessoaCombo.Items.Add("Colectiva");
 
+            espacoFiscalCombo.Items.Add("Nacional");
+            espacoFiscalCombo.Items.Add("Internacional");
         }
     }
 }

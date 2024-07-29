@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AscFrontEnd.DTOs.StaticsDto;
+using Newtonsoft.Json;
 
 namespace AscFrontEnd
 {
@@ -45,11 +47,27 @@ namespace AscFrontEnd
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Modelo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+
+                //Atualizar a propriedade estatica
+                // Modelo
+                var responseModelo = await client.GetAsync($"https://localhost:7200/api/Artigo/Modelo");
+
+                if (responseModelo.IsSuccessStatusCode)
+                {
+                    var contentModelo = await responseModelo.Content.ReadAsStringAsync();
+
+                    StaticProperty.modelos = JsonConvert.DeserializeObject<List<ModeloDTO>>(contentModelo);
+                }
             }
             else
             {
                 MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
             }
+        }
+
+        private void ModeloArtigo_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

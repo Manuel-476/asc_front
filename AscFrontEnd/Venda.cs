@@ -75,14 +75,8 @@ namespace AscFrontEnd
 
         private async void Venda_Load(object sender, EventArgs e)
         {
-            clientetxt.Text = "cliente: " + ClienteDTO.clienteId;
-            var client = new HttpClient();
-            var response = await client.GetAsync("https://localhost:7200/api/Artigo");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                 dados = JsonConvert.DeserializeObject<List<ArtigoDTO>>(content);
+                dados = StaticProperty.artigos;
+                clientetxt.Text = "cliente: " + ClienteDTO.clienteId;
 
                 dtVenda.Columns.Add("id", typeof(int));
                 dtVenda.Columns.Add("Artigo", typeof(string));
@@ -98,14 +92,14 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in dados)
+                foreach (var item in StaticProperty.artigos)
                 {
                     dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario);
 
                     tabelaArtigos.DataSource = dt;
                 }
-            }
 
+            // Carregar documentos
             documento.Items.Add("FP");
             documento.Items.Add("ECL");
             documento.Items.Add("FR");
@@ -382,6 +376,55 @@ namespace AscFrontEnd
                 dtVenda.Rows.Clear();
                 
                 MessageBox.Show("Venda Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+
+                // Venda
+                var responseFr = await client.GetAsync($"https://localhost:7200/api/Venda/FrByRelations");
+
+                if (responseFr.IsSuccessStatusCode)
+                {
+                    var contentFr = await responseFr.Content.ReadAsStringAsync();
+                    StaticProperty.frs = JsonConvert.DeserializeObject<List<FrDTO>>(contentFr);
+                }
+
+                var responseFt = await client.GetAsync($"https://localhost:7200/api/Venda/FtByRelations");
+
+                if (responseFt.IsSuccessStatusCode)
+                {
+                    var contentFt = await responseFt.Content.ReadAsStringAsync();
+                    StaticProperty.fts = JsonConvert.DeserializeObject<List<FtDTO>>(contentFt);
+                }
+
+                var responseEcl = await client.GetAsync($"https://localhost:7200/api/Venda/EclByRelations");
+
+                if (responseEcl.IsSuccessStatusCode)
+                {
+                    var contentEcl = await responseEcl.Content.ReadAsStringAsync();
+                    StaticProperty.ecls = JsonConvert.DeserializeObject<List<EncomendaClienteDTO>>(contentEcl);
+                }
+
+                var responseFp = await client.GetAsync($"https://localhost:7200/api/Venda/FpByRelations");
+
+                if (responseFp.IsSuccessStatusCode)
+                {
+                    var contentFp = await responseFp.Content.ReadAsStringAsync();
+                    StaticProperty.fps = JsonConvert.DeserializeObject<List<FaturaProformaDTO>>(contentFp);
+                }
+
+                var responseNc = await client.GetAsync($"https://localhost:7200/api/Venda/NcByRelations");
+
+                if (responseNc.IsSuccessStatusCode)
+                {
+                    var contentNc = await responseNc.Content.ReadAsStringAsync();
+                    StaticProperty.ncs = JsonConvert.DeserializeObject<List<NcDTO>>(contentNc);
+                }
+
+                var responseNd = await client.GetAsync($"https://localhost:7200/api/Venda/NdByRelations");
+
+                if (responseNd.IsSuccessStatusCode)
+                {
+                    var contentNd = await responseNd.Content.ReadAsStringAsync();
+                    StaticProperty.nds = JsonConvert.DeserializeObject<List<NdDTO>>(contentNd);
+                }
             }
             else
             {

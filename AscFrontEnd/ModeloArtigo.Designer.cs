@@ -108,6 +108,7 @@
             this.Name = "ModeloArtigo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ModeloArtigo";
+            this.Load += new System.EventHandler(this.ModeloArtigo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

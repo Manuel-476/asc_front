@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AscFrontEnd.DTOs.StaticsDto;
+using Newtonsoft.Json;
 
 namespace AscFrontEnd
 {
@@ -45,11 +47,26 @@ namespace AscFrontEnd
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("SubFamilia Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+                // Actualizar propridade estatica subfamilias
+                // Sub-Familia
+                var responseSubFamilia = await client.GetAsync($"https://localhost:7200/api/Artigo/SubFamilia");
+
+                if (responseSubFamilia.IsSuccessStatusCode)
+                {
+                    var contentSubFamilia = await responseSubFamilia.Content.ReadAsStringAsync();
+
+                    StaticProperty.subFamilias = JsonConvert.DeserializeObject<List<SubFamiliaDTO>>(contentSubFamilia);
+                }
             }
             else
             {
                 MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
             }
+        }
+
+        private void SubFamilaArtigo_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

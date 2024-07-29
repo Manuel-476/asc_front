@@ -1,4 +1,6 @@
-﻿using AscFrontEnd.DTOs.Stock;
+﻿using AscFrontEnd.DTOs.StaticsDto;
+using AscFrontEnd.DTOs.Stock;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -87,6 +89,15 @@ namespace AscFrontEnd
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Armazem Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+                //Actualizar propriedade estatica armazem
+                // Amazem
+                var responseArmazem = await client.GetAsync($"https://localhost:7200/api/Armazem/ArmazensByRelations");
+
+                if (responseArmazem.IsSuccessStatusCode)
+                {
+                    var contentArmazem = await responseArmazem.Content.ReadAsStringAsync();
+                    StaticProperty.armazens = JsonConvert.DeserializeObject<List<ArmazemDTO>>(contentArmazem);
+                }
             }
             else
             {

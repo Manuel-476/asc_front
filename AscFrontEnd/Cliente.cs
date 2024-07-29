@@ -13,6 +13,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AscFrontEnd.DTOs.Cliente;
 using System.IO;
+using AscFrontEnd.DTOs.StaticsDto;
+using AscFrontEnd.DTOs.Deposito;
+
+
 
 namespace AscFrontEnd
 {
@@ -54,9 +58,35 @@ namespace AscFrontEnd
 
             // Envio dos dados para a API
             HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Cliente/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
+         
             if (response.IsSuccessStatusCode)
             {
-                MessageBox.Show("Cliente Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK); 
+                MessageBox.Show("Cliente Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+
+                var responseCliente = await client.GetAsync($"https://localhost:7200/api/Cliente/ClientesByRelations");
+
+                if (responseCliente.IsSuccessStatusCode)
+                {
+                    var contentCliente = await responseCliente.Content.ReadAsStringAsync();
+                    StaticProperty.clientes = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ClienteDTO>>(contentCliente);
+                }
+
+                // Depositos
+                var responseBanco = await client.GetAsync($"https://localhost:7200/api/Deposito/Banco");
+
+                if (responseBanco.IsSuccessStatusCode)
+                {
+                    var contentBanco = await responseBanco.Content.ReadAsStringAsync();
+                    StaticProperty.bancos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<BancoDTO>>(contentBanco);
+                }
+
+                var responseCaixa = await client.GetAsync($"https://localhost:7200/api/Deposito/Caixa");
+
+                if (responseCaixa.IsSuccessStatusCode)
+                {
+                    var contentCaixa = await responseBanco.Content.ReadAsStringAsync();
+                    StaticProperty.caixas = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CaixaDTO>>(contentCaixa);
+                }
             }
             else
             {
@@ -120,6 +150,15 @@ namespace AscFrontEnd
         {
             ClientesTable cl = new ClientesTable();
             cl.ShowDialog();
+        }
+
+        private void Cliente_Load(object sender, EventArgs e)
+        {
+            pessoaCombo.Items.Add("Singular");
+            pessoaCombo.Items.Add("Colectiva");
+
+            espacoFiscalCombo.Items.Add("Nacional");
+            espacoFiscalCombo.Items.Add("Internacional");
         }
     }
     

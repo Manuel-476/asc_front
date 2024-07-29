@@ -1,6 +1,7 @@
 ﻿using AscFrontEnd.DTOs;
 using AscFrontEnd.DTOs.Funcionario;
 using AscFrontEnd.DTOs.StaticsDto;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -74,6 +75,16 @@ namespace AscFrontEnd
             {
                 StaticProperty.user = null;
                 MessageBox.Show("Funcionario Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+
+                // Funcionario
+                var responseFuncionario = await client.GetAsync($"https://localhost:7200/api/Funcionario/WithRelations");
+
+                if (responseFuncionario.IsSuccessStatusCode)
+                {
+                    var contentFuncionario = await responseFuncionario.Content.ReadAsStringAsync();
+
+                    StaticProperty.funcionarios = JsonConvert.DeserializeObject<List<FuncionarioDTO>>(contentFuncionario);
+                }
             }
             else 
             {
