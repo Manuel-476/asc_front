@@ -115,6 +115,8 @@
             this.transformar.TabIndex = 10;
             this.transformar.TabStop = false;
             this.transformar.Click += new System.EventHandler(this.transformar_Click);
+            this.transformar.MouseLeave += new System.EventHandler(this.transformar_MouseLeave);
+            this.transformar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.transformar_MouseMove);
             // 
             // eliminarPicture
             // 
@@ -125,6 +127,8 @@
             this.eliminarPicture.Size = new System.Drawing.Size(71, 50);
             this.eliminarPicture.TabIndex = 9;
             this.eliminarPicture.TabStop = false;
+            this.eliminarPicture.MouseLeave += new System.EventHandler(this.eliminarPicture_MouseLeave);
+            this.eliminarPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.eliminarPicture_MouseMove);
             // 
             // editarPicture
             // 
@@ -135,6 +139,9 @@
             this.editarPicture.Size = new System.Drawing.Size(71, 50);
             this.editarPicture.TabIndex = 8;
             this.editarPicture.TabStop = false;
+            this.editarPicture.Click += new System.EventHandler(this.editarPicture_Click);
+            this.editarPicture.MouseLeave += new System.EventHandler(this.editarPicture_MouseLeave);
+            this.editarPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.editarPicture_MouseMove);
             // 
             // ClientesTable
             // 

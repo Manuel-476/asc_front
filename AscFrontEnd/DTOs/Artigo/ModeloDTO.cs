@@ -7,6 +7,7 @@ namespace AscFrontEnd
         public int id { get; set; }
         public string codigo { get; set; }
         public string descricao { get; set; }
-        public int status;
+        public int empresaId { get; set; }
+        public int status {  get; set; }
     }
 }

@@ -87,5 +87,25 @@ namespace AscFrontEnd
             CaixaForm caixa = new CaixaForm();
             caixa.ShowDialog();
         }
+
+        private void pictureBox3_MouseMove(object sender, MouseEventArgs e)
+        {
+            BackColor = Color.Gray;
+        }
+
+        private void pictureBox3_MouseLeave(object sender, EventArgs e)
+        {
+            BackColor = Color.Transparent;
+        }
+
+        private void pictureBox4_MouseLeave(object sender, EventArgs e)
+        {
+            BackColor = Color.Transparent;
+        }
+
+        private void pictureBox4_MouseMove(object sender, MouseEventArgs e)
+        {
+            BackColor = Color.Gray;
+        }
     }
 }

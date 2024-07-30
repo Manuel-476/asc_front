@@ -41,19 +41,23 @@
             this.numSerie = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.armazemCombo = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.localCombo = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.subFamiliaCombo = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.familiaCombo = new System.Windows.Forms.ComboBox();
             this.listagem = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button3 = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.marcaCombo = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.modeloCombo = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -64,7 +68,7 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(10, 397);
+            this.button1.Location = new System.Drawing.Point(17, 407);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(224, 41);
             this.button1.TabIndex = 0;
@@ -120,7 +124,7 @@
             // 
             this.precotxt.Location = new System.Drawing.Point(504, 161);
             this.precotxt.Name = "precotxt";
-            this.precotxt.Size = new System.Drawing.Size(187, 20);
+            this.precotxt.Size = new System.Drawing.Size(231, 20);
             this.precotxt.TabIndex = 5;
             // 
             // label4
@@ -144,7 +148,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(279, 189);
+            this.label5.Location = new System.Drawing.Point(266, 189);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(87, 20);
             this.label5.TabIndex = 10;
@@ -152,7 +156,7 @@
             // 
             // numSerie
             // 
-            this.numSerie.Location = new System.Drawing.Point(279, 212);
+            this.numSerie.Location = new System.Drawing.Point(266, 212);
             this.numSerie.Name = "numSerie";
             this.numSerie.Size = new System.Drawing.Size(242, 20);
             this.numSerie.TabIndex = 9;
@@ -160,30 +164,31 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(609, 215);
+            this.checkBox1.Location = new System.Drawing.Point(524, 215);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(81, 17);
             this.checkBox1.TabIndex = 11;
             this.checkBox1.Text = "Mov. Stock";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(609, 272);
+            this.checkBox2.Location = new System.Drawing.Point(524, 272);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(74, 17);
             this.checkBox2.TabIndex = 12;
             this.checkBox2.Text = "Mov. Lote";
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // armazemCombo
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(12, 268);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(221, 21);
-            this.comboBox1.TabIndex = 13;
+            this.armazemCombo.FormattingEnabled = true;
+            this.armazemCombo.Location = new System.Drawing.Point(12, 268);
+            this.armazemCombo.Name = "armazemCombo";
+            this.armazemCombo.Size = new System.Drawing.Size(221, 21);
+            this.armazemCombo.TabIndex = 13;
             // 
             // label6
             // 
@@ -199,19 +204,19 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(279, 245);
+            this.label7.Location = new System.Drawing.Point(266, 245);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(101, 20);
             this.label7.TabIndex = 16;
             this.label7.Text = "Localizacoes";
             // 
-            // comboBox2
+            // localCombo
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(283, 268);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(221, 21);
-            this.comboBox2.TabIndex = 15;
+            this.localCombo.FormattingEnabled = true;
+            this.localCombo.Location = new System.Drawing.Point(270, 268);
+            this.localCombo.Name = "localCombo";
+            this.localCombo.Size = new System.Drawing.Size(221, 21);
+            this.localCombo.TabIndex = 15;
             // 
             // label8
             // 
@@ -228,19 +233,19 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(283, 304);
+            this.label9.Location = new System.Drawing.Point(266, 304);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(88, 20);
             this.label9.TabIndex = 22;
             this.label9.Text = "SubFamilia";
             // 
-            // comboBox3
+            // subFamiliaCombo
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(287, 327);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(221, 21);
-            this.comboBox3.TabIndex = 21;
+            this.subFamiliaCombo.FormattingEnabled = true;
+            this.subFamiliaCombo.Location = new System.Drawing.Point(270, 327);
+            this.subFamiliaCombo.Name = "subFamiliaCombo";
+            this.subFamiliaCombo.Size = new System.Drawing.Size(221, 21);
+            this.subFamiliaCombo.TabIndex = 21;
             // 
             // label10
             // 
@@ -252,13 +257,13 @@
             this.label10.TabIndex = 20;
             this.label10.Text = "Familia";
             // 
-            // comboBox4
+            // familiaCombo
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(16, 327);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(221, 21);
-            this.comboBox4.TabIndex = 19;
+            this.familiaCombo.FormattingEnabled = true;
+            this.familiaCombo.Location = new System.Drawing.Point(16, 327);
+            this.familiaCombo.Name = "familiaCombo";
+            this.familiaCombo.Size = new System.Drawing.Size(221, 21);
+            this.familiaCombo.TabIndex = 19;
             // 
             // listagem
             // 
@@ -314,20 +319,60 @@
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(510, 304);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(53, 20);
+            this.label11.TabIndex = 32;
+            this.label11.Text = "Marca";
+            // 
+            // marcaCombo
+            // 
+            this.marcaCombo.FormattingEnabled = true;
+            this.marcaCombo.Location = new System.Drawing.Point(514, 327);
+            this.marcaCombo.Name = "marcaCombo";
+            this.marcaCombo.Size = new System.Drawing.Size(221, 21);
+            this.marcaCombo.TabIndex = 31;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(13, 357);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(61, 20);
+            this.label12.TabIndex = 30;
+            this.label12.Text = "Modelo";
+            // 
+            // modeloCombo
+            // 
+            this.modeloCombo.FormattingEnabled = true;
+            this.modeloCombo.Location = new System.Drawing.Point(17, 380);
+            this.modeloCombo.Name = "modeloCombo";
+            this.modeloCombo.Size = new System.Drawing.Size(221, 21);
+            this.modeloCombo.TabIndex = 29;
+            // 
             // Artigo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.marcaCombo);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.modeloCombo);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.subFamiliaCombo);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.comboBox4);
+            this.Controls.Add(this.familiaCombo);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.localCombo);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.armazemCombo);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label5);
@@ -371,18 +416,22 @@
         private System.Windows.Forms.TextBox numSerie;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox armazemCombo;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox localCombo;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox subFamiliaCombo;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox familiaCombo;
         private System.Windows.Forms.Button listagem;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox marcaCombo;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ComboBox modeloCombo;
     }
 }

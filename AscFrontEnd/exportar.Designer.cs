@@ -79,6 +79,7 @@
             this.pdfPicture.Size = new System.Drawing.Size(149, 139);
             this.pdfPicture.TabIndex = 0;
             this.pdfPicture.TabStop = false;
+            this.pdfPicture.Click += new System.EventHandler(this.pdfPicture_Click);
             this.pdfPicture.MouseLeave += new System.EventHandler(this.pdfPicture_MouseLeave);
             this.pdfPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pdfPicture_MouseMove);
             // 

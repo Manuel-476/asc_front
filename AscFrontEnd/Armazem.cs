@@ -129,26 +129,7 @@ namespace AscFrontEnd
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            int id = localizacaoTable.Rows.Count;
-            dt.Rows.Clear();
-            localizacaoTable.DataSource = dt;
-
-
-            localizacao.Add(new LocationStoreDTO
-            {
-                id = id,
-                codigo = codigoLocalizacao.Text.ToString(),
-                descricao = descricaoLocalizacao.Text.ToString(),
-                localizacao_fisica = localizacaoFisica.Text.ToString()
-            });
-
-            foreach (var local in localizacao)
-            {
-                string fisica = local.localizacao_fisica.ToString();
-                dt.Rows.Add(local.id, local.codigo.ToString(), local.descricao.ToString(), local.localizacao_fisica.ToString());
-
-                localizacaoTable.DataSource = dt;
-            }
+         
         }
 
         private void pictureBox4_Click(object sender, EventArgs e)
@@ -198,6 +179,36 @@ namespace AscFrontEnd
         {
             button1.BackColor = Color.White;
             button1.ForeColor = Color.Black;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            int id = localizacaoTable.Rows.Count;
+            dt.Rows.Clear();
+            localizacaoTable.DataSource = dt;
+
+
+            localizacao.Add(new LocationStoreDTO
+            {
+                id = id,
+                codigo = codigoLocalizacao.Text.ToString(),
+                descricao = descricaoLocalizacao.Text.ToString(),
+                localizacao_fisica = localizacaoFisica.Text.ToString()
+            });
+
+            foreach (var local in localizacao)
+            {
+                string fisica = local.localizacao_fisica.ToString();
+                dt.Rows.Add(local.id, local.codigo.ToString(), local.descricao.ToString(), local.localizacao_fisica.ToString());
+
+                localizacaoTable.DataSource = dt;
+            }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            ArmazemListagem armazemListagem = new ArmazemListagem();
+            armazemListagem.ShowDialog();
         }
     }
 }

@@ -244,5 +244,17 @@ namespace AscFrontEnd
                 }
             }
         }
+
+        private void aprovaBtn_MouseMove(object sender, MouseEventArgs e)
+        {
+            BackColor = Color.White;
+            ForeColor = Color.FromArgb(64,64,64);
+        }
+
+        private void aprovaBtn_MouseLeave(object sender, EventArgs e)
+        {
+            BackColor = Color.Transparent;
+            ForeColor = Color.White;
+        }
     }
 }

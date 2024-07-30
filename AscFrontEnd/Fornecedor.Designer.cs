@@ -51,8 +51,11 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.label9 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // nomeFantasiatxt
@@ -101,28 +104,28 @@
             // 
             // codigotxt
             // 
-            this.codigotxt.Location = new System.Drawing.Point(38, 334);
+            this.codigotxt.Location = new System.Drawing.Point(38, 368);
             this.codigotxt.Name = "codigotxt";
             this.codigotxt.Size = new System.Drawing.Size(158, 20);
             this.codigotxt.TabIndex = 6;
             // 
             // filialtxt
             // 
-            this.filialtxt.Location = new System.Drawing.Point(211, 334);
+            this.filialtxt.Location = new System.Drawing.Point(211, 368);
             this.filialtxt.Name = "filialtxt";
             this.filialtxt.Size = new System.Drawing.Size(173, 20);
             this.filialtxt.TabIndex = 7;
             // 
             // filialTel
             // 
-            this.filialTel.Location = new System.Drawing.Point(404, 334);
+            this.filialTel.Location = new System.Drawing.Point(404, 368);
             this.filialTel.Name = "filialTel";
             this.filialTel.Size = new System.Drawing.Size(145, 20);
             this.filialTel.TabIndex = 8;
             // 
             // localTxt
             // 
-            this.localTxt.Location = new System.Drawing.Point(576, 334);
+            this.localTxt.Location = new System.Drawing.Point(576, 368);
             this.localTxt.Name = "localTxt";
             this.localTxt.Size = new System.Drawing.Size(157, 20);
             this.localTxt.TabIndex = 9;
@@ -181,7 +184,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(38, 311);
+            this.label2.Location = new System.Drawing.Point(38, 345);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 20);
             this.label2.TabIndex = 16;
@@ -191,7 +194,7 @@
             // 
             this.email.AutoSize = true;
             this.email.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.email.Location = new System.Drawing.Point(208, 311);
+            this.email.Location = new System.Drawing.Point(208, 345);
             this.email.Name = "email";
             this.email.Size = new System.Drawing.Size(48, 20);
             this.email.TabIndex = 17;
@@ -201,7 +204,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(394, 311);
+            this.label3.Location = new System.Drawing.Point(394, 345);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(71, 20);
             this.label3.TabIndex = 18;
@@ -211,7 +214,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(572, 311);
+            this.label4.Location = new System.Drawing.Point(572, 345);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(93, 20);
             this.label4.TabIndex = 19;
@@ -219,7 +222,7 @@
             // 
             // emailText
             // 
-            this.emailText.Location = new System.Drawing.Point(38, 279);
+            this.emailText.Location = new System.Drawing.Point(38, 265);
             this.emailText.Name = "emailText";
             this.emailText.Size = new System.Drawing.Size(236, 20);
             this.emailText.TabIndex = 20;
@@ -228,7 +231,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(34, 256);
+            this.label5.Location = new System.Drawing.Point(34, 242);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(48, 20);
             this.label5.TabIndex = 21;
@@ -238,7 +241,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(289, 256);
+            this.label6.Location = new System.Drawing.Point(289, 242);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(35, 20);
             this.label6.TabIndex = 23;
@@ -246,7 +249,7 @@
             // 
             // nifText
             // 
-            this.nifText.Location = new System.Drawing.Point(293, 279);
+            this.nifText.Location = new System.Drawing.Point(293, 265);
             this.nifText.Name = "nifText";
             this.nifText.Size = new System.Drawing.Size(209, 20);
             this.nifText.TabIndex = 22;
@@ -255,7 +258,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(521, 256);
+            this.label7.Location = new System.Drawing.Point(521, 242);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(71, 20);
             this.label7.TabIndex = 25;
@@ -263,7 +266,7 @@
             // 
             // telefonetxt
             // 
-            this.telefonetxt.Location = new System.Drawing.Point(525, 279);
+            this.telefonetxt.Location = new System.Drawing.Point(525, 265);
             this.telefonetxt.Name = "telefonetxt";
             this.telefonetxt.Size = new System.Drawing.Size(209, 20);
             this.telefonetxt.TabIndex = 24;
@@ -274,7 +277,7 @@
             this.salvarBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.salvarBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.salvarBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.salvarBtn.Location = new System.Drawing.Point(38, 384);
+            this.salvarBtn.Location = new System.Drawing.Point(38, 533);
             this.salvarBtn.Name = "salvarBtn";
             this.salvarBtn.Size = new System.Drawing.Size(232, 31);
             this.salvarBtn.TabIndex = 27;
@@ -347,12 +350,34 @@
             this.pictureBox1.TabIndex = 30;
             this.pictureBox1.TabStop = false;
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(38, 394);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(686, 133);
+            this.dataGridView1.TabIndex = 31;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(40, 309);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(75, 25);
+            this.label9.TabIndex = 32;
+            this.label9.Text = "Filiais";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 567);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.salvarBtn);
             this.Controls.Add(this.label7);
@@ -388,6 +413,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -424,6 +450,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Label label9;
     }
 }
 

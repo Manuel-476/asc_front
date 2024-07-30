@@ -119,7 +119,31 @@ namespace AscFrontEnd
 
         private void Artigo_Load(object sender, EventArgs e)
         {
+            foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == 1).ToList())
+            {
+                armazemCombo.Items.Add(item.codigo);
+            }
+            foreach (var item in StaticProperty.familias.Where(fam => fam.empresaId == 1).ToList())
+            {
+                armazemCombo.Items.Add(item.codigo);
+            }
+            foreach (var item in StaticProperty.subFamilias.Where(fam => fam.empresaId == 1).ToList())
+            {
+                armazemCombo.Items.Add(item.codigo);
+            }
+        }
 
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked) 
+            {
+                if(StaticProperty.armazens == null) 
+                {
+                    MessageBox.Show("Nenhum armazem foi cadastrado no sistema\n\nPrecisas cadastrar um armazem no sistema","Atenção",MessageBoxButtons.OK,MessageBoxIcon.Information);
+
+                    return;
+                }
+            }
         }
     }
 }

@@ -69,5 +69,10 @@ namespace AscFrontEnd
         {
             excelPicture.BackColor = Color.Gray;
         }
+
+        private void pdfPicture_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

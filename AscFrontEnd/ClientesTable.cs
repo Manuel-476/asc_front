@@ -111,5 +111,40 @@ namespace AscFrontEnd
                 MessageBox.Show("Ocorreu um erro ao tentar Transformar cliente em fornecedor", "Erro", MessageBoxButtons.RetryCancel);
             }
         }
+
+        private void editarPicture_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void editarPicture_MouseMove(object sender, MouseEventArgs e)
+        {
+            editarPicture.BackColor = Color.Gray;
+        }
+
+        private void editarPicture_MouseLeave(object sender, EventArgs e)
+        {
+            editarPicture.BackColor= Color.White;
+        }
+
+        private void transformar_MouseMove(object sender, MouseEventArgs e)
+        {
+            transformar.BackColor = Color.Gray;
+        }
+
+        private void transformar_MouseLeave(object sender, EventArgs e)
+        {
+            transformar.BackColor = Color.White;
+        }
+
+        private void eliminarPicture_MouseMove(object sender, MouseEventArgs e)
+        {
+            eliminarPicture.BackColor= Color.Gray;
+        }
+
+        private void eliminarPicture_MouseLeave(object sender, EventArgs e)
+        {
+            eliminarPicture.BackColor = Color.White;
+        }
     }
 }

@@ -138,6 +138,12 @@
     <Compile Include="Armazem.Designer.cs">
       <DependentUpon>Armazem.cs</DependentUpon>
     </Compile>
+    <Compile Include="ArmazemListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ArmazemListagem.Designer.cs">
+      <DependentUpon>ArmazemListagem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Artigo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -375,6 +381,9 @@
     </Compile>
     <EmbeddedResource Include="Armazem.resx">
       <DependentUpon>Armazem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ArmazemListagem.resx">
+      <DependentUpon>ArmazemListagem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Artigo.resx">
       <DependentUpon>Artigo.cs</DependentUpon>
