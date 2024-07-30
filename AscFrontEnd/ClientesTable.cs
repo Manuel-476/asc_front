@@ -119,7 +119,7 @@ namespace AscFrontEnd
 
         private void editarPicture_MouseMove(object sender, MouseEventArgs e)
         {
-            editarPicture.BackColor = Color.Gray;
+            editarPicture.BackColor = Color.Transparent;
         }
 
         private void editarPicture_MouseLeave(object sender, EventArgs e)
@@ -134,7 +134,7 @@ namespace AscFrontEnd
 
         private void transformar_MouseLeave(object sender, EventArgs e)
         {
-            transformar.BackColor = Color.White;
+            transformar.BackColor = Color.Transparent;
         }
 
         private void eliminarPicture_MouseMove(object sender, MouseEventArgs e)
@@ -144,7 +144,7 @@ namespace AscFrontEnd
 
         private void eliminarPicture_MouseLeave(object sender, EventArgs e)
         {
-            eliminarPicture.BackColor = Color.White;
+            eliminarPicture.BackColor = Color.Transparent;
         }
     }
 }

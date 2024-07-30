@@ -174,6 +174,7 @@
             this.Name = "OpcaoDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "OpcaoDialog";
+            this.Load += new System.EventHandler(this.OpcaoDialog_Load);
             ((System.ComponentModel.ISupportInitialize)(this.modeloPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.marcaPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.subfamiliaPicture)).EndInit();

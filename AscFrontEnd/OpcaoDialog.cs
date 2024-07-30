@@ -81,5 +81,10 @@ namespace AscFrontEnd
         {
             modeloPicture.BackColor = Color.FromArgb(0, 120, 215);
         }
+
+        private void OpcaoDialog_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

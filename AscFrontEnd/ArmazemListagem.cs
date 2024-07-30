@@ -28,7 +28,6 @@ namespace AscFrontEnd
             dt.Columns.Add("mov. Stock", typeof(string));
             dt.Columns.Add("mov. Lote", typeof(string));
 
-
             // Adicionando linhas ao DataTable
             foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == 1))
             {
@@ -45,12 +44,12 @@ namespace AscFrontEnd
 
         private void editarPicture_MouseLeave(object sender, EventArgs e)
         {
-            editarPicture.BackColor= Color.White;
+            editarPicture.BackColor= Color.Transparent;
         }
 
         private void eliminarPicture_MouseLeave(object sender, EventArgs e)
         {
-            editarPicture.BackColor = Color.White;
+            eliminarPicture.BackColor = Color.Transparent;
         }
 
         private void eliminarPicture_MouseMove(object sender, MouseEventArgs e)

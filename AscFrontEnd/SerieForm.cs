@@ -66,5 +66,11 @@ namespace AscFrontEnd.Files
         {
 
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ListaSeries listaSeries = new ListaSeries();
+            listaSeries.ShowDialog();
+        }
     }
 }

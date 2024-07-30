@@ -300,11 +300,23 @@
     <Compile Include="FuncionarioForm.Designer.cs">
       <DependentUpon>FuncionarioForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FuncionarioListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FuncionarioListagem.Designer.cs">
+      <DependentUpon>FuncionarioListagem.cs</DependentUpon>
+    </Compile>
     <Compile Include="ListasContasCorrentes.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ListasContasCorrentes.Designer.cs">
       <DependentUpon>ListasContasCorrentes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListaSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListaSeries.Designer.cs">
+      <DependentUpon>ListaSeries.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -433,8 +445,14 @@
     <EmbeddedResource Include="FuncionarioForm.resx">
       <DependentUpon>FuncionarioForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FuncionarioListagem.resx">
+      <DependentUpon>FuncionarioListagem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ListasContasCorrentes.resx">
       <DependentUpon>ListasContasCorrentes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListaSeries.resx">
+      <DependentUpon>ListaSeries.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SerieForm.resx">
       <DependentUpon>SerieForm.cs</DependentUpon>
@@ -490,6 +508,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Files\asc.png" />
+    <Content Include="Files\icons8-active-58.png" />
     <Content Include="Files\icons8-add-40.png" />
     <Content Include="Files\icons8-add-user-male-40.png" />
     <Content Include="Files\icons8-bank-64.png" />
