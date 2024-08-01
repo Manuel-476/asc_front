@@ -927,6 +927,22 @@ namespace AscFrontEnd
             }
         }
 
+        private void vendaBtn_MouseMove(object sender, MouseEventArgs e)
+        {
+            vendaBtn.BackColor = Color.White;
+            vendaBtn.ForeColor = Color.FromArgb(64,64,64);
+        }
 
+        private void vendaBtn_MouseLeave(object sender, EventArgs e)
+        {
+            vendaBtn.BackColor = Color.Transparent;
+            vendaBtn.ForeColor = Color.White;
+        }
+
+        private void vendaBtn_Click(object sender, EventArgs e)
+        {
+            VendaListagem vendaListagem = new VendaListagem();
+            vendaListagem.ShowDialog();
+        }
     }
 }

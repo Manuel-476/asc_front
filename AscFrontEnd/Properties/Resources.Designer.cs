@@ -193,6 +193,16 @@ namespace AscFrontEnd.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_chargeback_32 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-chargeback-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_client_80 {
             get {
                 object obj = ResourceManager.GetObject("icons8-client-80", resourceCulture);

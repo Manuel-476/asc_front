@@ -127,6 +127,7 @@
             this.eliminarPicture.Size = new System.Drawing.Size(71, 50);
             this.eliminarPicture.TabIndex = 9;
             this.eliminarPicture.TabStop = false;
+            this.eliminarPicture.Click += new System.EventHandler(this.eliminarPicture_Click);
             this.eliminarPicture.MouseLeave += new System.EventHandler(this.eliminarPicture_MouseLeave);
             this.eliminarPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.eliminarPicture_MouseMove);
             // 

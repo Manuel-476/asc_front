@@ -1,5 +1,6 @@
 ﻿using AscFrontEnd.DTOs.Cliente;
 using AscFrontEnd.DTOs.Fornecedor;
+using AscFrontEnd.DTOs.StaticsDto;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static AscFrontEnd.DTOs.Enums.Enums;
 
 namespace AscFrontEnd
 {
@@ -27,14 +29,6 @@ namespace AscFrontEnd
 
         private async void FornecedorTable_Load(object sender, EventArgs e)
         {
-            var client = new HttpClient();
-            var response = await client.GetAsync("https://localhost:7200/api/Fornecedor");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                fornecedores = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FornecedorDTO>>(content);
-
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Nome", typeof(string));
@@ -45,13 +39,13 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in fornecedores)
+                foreach (var item in StaticProperty.fornecedores.Where(f => f.status == Status.activo))
                 {
                     dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
 
                     tabelaFornecedor.DataSource = dt;
                 }
-            }
+            
         }
 
         private void editarPicture_MouseLeave(object sender, EventArgs e)
@@ -111,6 +105,40 @@ namespace AscFrontEnd
         private void tabelaCliente_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             id = int.Parse(tabelaFornecedor.Rows[e.RowIndex].Cells[0].Value.ToString());
+        }
+
+        private async void eliminarPicture_Click(object sender, EventArgs e)
+        {
+            string nome = StaticProperty.clientes.Where(c => c.id == id).First().nome_fantasia;
+            if (MessageBox.Show($"Tens certeza que pretendes desativar {nome}", "Atencao", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+            {
+                try
+                {
+                    var client = new HttpClient();
+                    client.BaseAddress = new Uri("https://sua-api.com/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    // Conversão do objeto Film para JSON
+                    string json = JsonSerializer.Serialize(id);
+
+                    // Envio dos dados para a API
+                    HttpResponseMessage response = await client.PutAsync($"https://localhost:7200/api/Fornecedor/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json"));
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Fornecedor foi desativado com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erro ao desactivar funcionario: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                return;
+            }
         }
     }
 }

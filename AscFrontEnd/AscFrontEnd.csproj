@@ -391,6 +391,12 @@
     <Compile Include="Venda.Designer.cs">
       <DependentUpon>Venda.cs</DependentUpon>
     </Compile>
+    <Compile Include="VendaListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VendaListagem.Designer.cs">
+      <DependentUpon>VendaListagem.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Armazem.resx">
       <DependentUpon>Armazem.cs</DependentUpon>
     </EmbeddedResource>
@@ -492,6 +498,9 @@
     <EmbeddedResource Include="Venda.resx">
       <DependentUpon>Venda.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="VendaListagem.resx">
+      <DependentUpon>VendaListagem.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -520,6 +529,7 @@
     <Content Include="Files\icons8-buy-48.png" />
     <Content Include="Files\icons8-cash-64.png" />
     <Content Include="Files\icons8-chain-48.png" />
+    <Content Include="Files\icons8-chargeback-32.png" />
     <Content Include="Files\icons8-client-80.png" />
     <Content Include="Files\icons8-create-50.png" />
     <Content Include="Files\icons8-create-60.png" />

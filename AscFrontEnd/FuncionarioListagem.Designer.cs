@@ -60,7 +60,7 @@
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(654, 71);
+            this.panel1.Size = new System.Drawing.Size(778, 71);
             this.panel1.TabIndex = 1;
             // 
             // label1
@@ -81,18 +81,20 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 128);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(535, 261);
+            this.dataGridView1.Size = new System.Drawing.Size(689, 261);
             this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // eliminarPicture
             // 
             this.eliminarPicture.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_delete_48;
             this.eliminarPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.eliminarPicture.Location = new System.Drawing.Point(562, 201);
+            this.eliminarPicture.Location = new System.Drawing.Point(707, 207);
             this.eliminarPicture.Name = "eliminarPicture";
             this.eliminarPicture.Size = new System.Drawing.Size(71, 50);
             this.eliminarPicture.TabIndex = 11;
             this.eliminarPicture.TabStop = false;
+            this.eliminarPicture.Click += new System.EventHandler(this.eliminarPicture_Click);
             this.eliminarPicture.MouseLeave += new System.EventHandler(this.eliminarPicture_MouseLeave);
             this.eliminarPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.eliminarPicture_MouseMove);
             // 
@@ -100,7 +102,7 @@
             // 
             this.editarPicture.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_edit_40;
             this.editarPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.editarPicture.Location = new System.Drawing.Point(562, 128);
+            this.editarPicture.Location = new System.Drawing.Point(707, 128);
             this.editarPicture.Name = "editarPicture";
             this.editarPicture.Size = new System.Drawing.Size(71, 50);
             this.editarPicture.TabIndex = 10;
@@ -129,15 +131,20 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(654, 401);
+            this.ClientSize = new System.Drawing.Size(790, 401);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pesqText);
             this.Controls.Add(this.eliminarPicture);
             this.Controls.Add(this.editarPicture);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.panel1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FuncionarioListagem";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FuncionarioListagem";
+            this.Load += new System.EventHandler(this.FuncionarioListagem_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

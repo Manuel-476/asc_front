@@ -10,9 +10,11 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static AscFrontEnd.DTOs.Enums.Enums;
 using static System.Windows.Forms.AxHost;
 
 namespace AscFrontEnd
@@ -32,13 +34,13 @@ namespace AscFrontEnd
 
         private void activarPicture_MouseMove(object sender, MouseEventArgs e)
         {
-            activarPicture.BackColor =  Color.FromArgb(0, 120, 215);
+            activarPicture.BackColor =  System.Drawing.Color.FromArgb(0, 120, 215);
 
         }
 
         private void activarPicture_MouseLeave(object sender, EventArgs e)
         {
-            activarPicture.BackColor = Color.Transparent;
+            activarPicture.BackColor = System.Drawing.Color.Transparent;
         }
 
         private void ListaSeries_Load(object sender, EventArgs e)
@@ -46,11 +48,13 @@ namespace AscFrontEnd
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Serie", typeof(string));
+                dt.Columns.Add("Estado", typeof(string));
 
-                // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.series)
+            // Adicionando linhas ao DataTable
+            foreach (var item in StaticProperty.series)
                 {
-                    dt.Rows.Add(item.id, item.id, item.serie);
+                string status = item.status == OpcaoBinaria.Nao ?"Nao activo"  : "Activo";
+                    dt.Rows.Add(item.id, item.serie, status);
 
                     dataGridView1.DataSource = dt;
                 }
@@ -65,18 +69,46 @@ namespace AscFrontEnd
         {
             var client = new HttpClient();
             try 
-            { 
-                var responseSerie = await client.GetAsync($"https://localhost:7200/api/Serie/Change/State/{id}");
+            {
+                client.BaseAddress = new Uri("https://sua-api.com/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Conversão do objeto Film para JSON
+                string json = System.Text.Json.JsonSerializer.Serialize(id);
+
+                // Envio dos dados para a API
+                HttpResponseMessage responseSerie = await client.PutAsync($"https://localhost:7200/api/Serie/Change/State/{id}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                 if (responseSerie.IsSuccessStatusCode)
                 {
-                   var contentSerie = await responseSerie.Content.ReadAsStringAsync();
+                    var resposta = await client.GetAsync("https://localhost:7200/api/Serie");
+                    var contentSerie = await resposta.Content.ReadAsStringAsync();
+
                    StaticProperty.series = JsonConvert.DeserializeObject<List<SerieDTO>>(contentSerie);
+
+                   MessageBox.Show($"A serie {StaticProperty.series.Where(s=>s.id == id).First().serie} foi activada com sucesso",
+                                    "Feito com sucesso",MessageBoxButtons.OK,MessageBoxIcon.Information);
                  }
+     
+                // Actualizar tabela
+                DataTable dt = new DataTable();
+                dt.Columns.Add("id", typeof(int));
+                dt.Columns.Add("Serie", typeof(string));
+                dt.Columns.Add("Estado", typeof(string));
+                // Adicionando linhas ao DataTable
+                foreach (var item in StaticProperty.series)
+                {
+                    string status = item.status == OpcaoBinaria.Nao ? "Nao activo" : "Activo";
+                    dt.Rows.Add(item.id, item.serie, status);
+
+                    dataGridView1.DataSource = dt;
+                }
             }
             catch (Exception ex) 
             {
-                throw new Exception($"Erro ao Activar Serie: {ex.Message}");
+                MessageBox.Show($"Erro ao Activar Serie: {ex.Message}","Ocorreu um erro",MessageBoxButtons.RetryCancel,MessageBoxIcon.Error);
+                return;
             }
         }
     }

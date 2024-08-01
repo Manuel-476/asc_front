@@ -49,9 +49,10 @@
             this.eliminarBtn = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
-            this.logoPicture = new System.Windows.Forms.PictureBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.Imprimir = new System.Drawing.Printing.PrintDocument();
+            this.logoPicture = new System.Windows.Forms.PictureBox();
+            this.vendaBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaArtigos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaVenda)).BeginInit();
             this.panel1.SuspendLayout();
@@ -130,7 +131,7 @@
             this.clienteBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.clienteBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.clienteBtn.ForeColor = System.Drawing.SystemColors.Control;
-            this.clienteBtn.Location = new System.Drawing.Point(717, 47);
+            this.clienteBtn.Location = new System.Drawing.Point(534, 47);
             this.clienteBtn.Name = "clienteBtn";
             this.clienteBtn.Size = new System.Drawing.Size(177, 33);
             this.clienteBtn.TabIndex = 6;
@@ -273,6 +274,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.Controls.Add(this.vendaBtn);
             this.panel1.Controls.Add(this.logoPicture);
             this.panel1.Controls.Add(this.excelBtn);
             this.panel1.Controls.Add(this.clienteBtn);
@@ -282,6 +284,14 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1086, 83);
             this.panel1.TabIndex = 20;
+            // 
+            // timerRefresh
+            // 
+            this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
+            // 
+            // Imprimir
+            // 
+            this.Imprimir.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.Imprimir_PrintPage);
             // 
             // logoPicture
             // 
@@ -293,13 +303,20 @@
             this.logoPicture.TabIndex = 18;
             this.logoPicture.TabStop = false;
             // 
-            // timerRefresh
+            // vendaBtn
             // 
-            this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
-            // 
-            // Imprimir
-            // 
-            this.Imprimir.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.Imprimir_PrintPage);
+            this.vendaBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.vendaBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.vendaBtn.ForeColor = System.Drawing.SystemColors.Control;
+            this.vendaBtn.Location = new System.Drawing.Point(717, 47);
+            this.vendaBtn.Name = "vendaBtn";
+            this.vendaBtn.Size = new System.Drawing.Size(177, 33);
+            this.vendaBtn.TabIndex = 19;
+            this.vendaBtn.Text = "Vendas";
+            this.vendaBtn.UseVisualStyleBackColor = false;
+            this.vendaBtn.Click += new System.EventHandler(this.vendaBtn_Click);
+            this.vendaBtn.MouseLeave += new System.EventHandler(this.vendaBtn_MouseLeave);
+            this.vendaBtn.MouseMove += new System.Windows.Forms.MouseEventHandler(this.vendaBtn_MouseMove);
             // 
             // Venda
             // 
@@ -361,5 +378,6 @@
         private System.Windows.Forms.PictureBox logoPicture;
         private System.Windows.Forms.Timer timerRefresh;
         private System.Drawing.Printing.PrintDocument Imprimir;
+        private System.Windows.Forms.Button vendaBtn;
     }
 }

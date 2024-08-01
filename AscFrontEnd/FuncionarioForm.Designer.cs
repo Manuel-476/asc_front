@@ -101,6 +101,7 @@
             this.funcionarioBtn.TabIndex = 25;
             this.funcionarioBtn.Text = "Funcionarios";
             this.funcionarioBtn.UseVisualStyleBackColor = false;
+            this.funcionarioBtn.Click += new System.EventHandler(this.funcionarioBtn_Click);
             // 
             // pictureBox1
             // 

@@ -97,5 +97,11 @@ namespace AscFrontEnd
             UserForm form = new UserForm();
             form.ShowDialog();
         }
+
+        private void funcionarioBtn_Click(object sender, EventArgs e)
+        {
+            FuncionarioListagem funcionario = new FuncionarioListagem();
+            funcionario.ShowDialog();
+        }
     }
 }

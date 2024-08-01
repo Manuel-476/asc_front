@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static AscFrontEnd.DTOs.Enums.Enums;
 
 namespace AscFrontEnd.DTOs.Fornecedor
 {
@@ -19,7 +20,7 @@ namespace AscFrontEnd.DTOs.Fornecedor
         public int provincia_id { get; set; }
         public string localizacao { get; set; } = string.Empty;
         public int empresaid { get; set; }
-        public int status { get; set; }
+        public Status status { get; set; }
         public string nif { get; set; }
         public string foto { get; set; }
         public string email { get; set; }

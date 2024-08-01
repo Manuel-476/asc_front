@@ -151,6 +151,14 @@ namespace AscFrontEnd
                     StaticProperty.nds = JsonConvert.DeserializeObject<List<NdDTO>>(contentNd);
                 }
 
+                var responseGt = await client.GetAsync($"https://localhost:7200/api/Venda/GtByRelations");
+
+                if (responseGt.IsSuccessStatusCode)
+                {
+                    var contentGt = await responseNd.Content.ReadAsStringAsync();
+                    StaticProperty.gts = JsonConvert.DeserializeObject<List<GtDTO>>(contentGt);
+                }
+
                 // Cliente
                 var responseCliente = await client.GetAsync($"https://localhost:7200/api/Cliente/ClientesByRelations");
 

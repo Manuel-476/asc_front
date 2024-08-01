@@ -1,4 +1,5 @@
 ﻿using AscFrontEnd.DTOs.Cliente;
+using AscFrontEnd.DTOs.StaticsDto;
 using DocumentFormat.OpenXml.Bibliography;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static AscFrontEnd.DTOs.Enums.Enums;
+
 
 namespace AscFrontEnd
 {
@@ -27,13 +30,6 @@ namespace AscFrontEnd
 
         private async void ClientesTable_Load(object sender, EventArgs e)
         {
-            var client = new HttpClient();
-            var response = await client.GetAsync("https://localhost:7200/api/Cliente");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                 clientes = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ClienteDTO>>(content);
 
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
@@ -45,13 +41,13 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in clientes)
+                foreach (var item in StaticProperty.clientes.Where(c=>c.status == Status.activo))
                 {
                     dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
 
                     tabelaCliente.DataSource = dt;
                 }
-            }
+            
         }
 
         private async void pesqText_TextChanged(object sender, EventArgs e)
@@ -145,6 +141,40 @@ namespace AscFrontEnd
         private void eliminarPicture_MouseLeave(object sender, EventArgs e)
         {
             eliminarPicture.BackColor = Color.Transparent;
+        }
+
+        private async void eliminarPicture_Click(object sender, EventArgs e)
+        {
+            string nome = StaticProperty.clientes.Where(c => c.id == id).First().nome_fantasia;
+            if (MessageBox.Show($"Tens certeza que pretendes desativar {nome}", "Atencao", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+            {
+                try
+                {
+                    var client = new HttpClient();
+                    client.BaseAddress = new Uri("https://sua-api.com/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    // Conversão do objeto Film para JSON
+                    string json = JsonSerializer.Serialize(id);
+
+                    // Envio dos dados para a API
+                    HttpResponseMessage response = await client.PutAsync($"https://localhost:7200/api/Cliente/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json"));
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Cliente foi desativado com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erro ao desactivar funcionario: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                return;
+            }
         }
     }
 }
