@@ -90,22 +90,22 @@ namespace AscFrontEnd
 
         private void pictureBox3_MouseMove(object sender, MouseEventArgs e)
         {
-            BackColor = Color.Gray;
+            pictureBox3.BackColor = Color.Gray;
         }
 
         private void pictureBox3_MouseLeave(object sender, EventArgs e)
         {
-            BackColor = Color.Transparent;
+            pictureBox3.BackColor = Color.Transparent;
         }
 
         private void pictureBox4_MouseLeave(object sender, EventArgs e)
         {
-            BackColor = Color.Transparent;
+            pictureBox4.BackColor = Color.Transparent;
         }
 
         private void pictureBox4_MouseMove(object sender, MouseEventArgs e)
         {
-            BackColor = Color.Gray;
+            pictureBox4.BackColor = Color.Gray;
         }
     }
 }

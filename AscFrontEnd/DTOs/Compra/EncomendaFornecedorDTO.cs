@@ -2,6 +2,7 @@
 using AscFrontEnd.DTOs.Fornecedor;
 using System;
 using System.Collections.Generic;
+using static AscFrontEnd.DTOs.Enums.Enums;
 
 namespace AscFrontEnd.DTOs
 {
@@ -11,7 +12,7 @@ namespace AscFrontEnd.DTOs
         public string documento { get; set; }
         public int fornecedorId { get; set; }
         public string local_entrega { get; set; }
-        public int status { get; set; }
+        public DocState status { get; set; }
         public DateTime data { get; set; }
         public DateTime created { get; set; } = DateTime.Now;
         public List<EcfArtigoDTO> ecfArtigo { get; set; }

@@ -51,12 +51,21 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index+1);
 
-                    serie = documentoDados.documento.Substring(indexSpace+1,index);
+                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
+
+
+                    foreach (var art in documentoDados.vfrArtigo)
+                    {
+                        artigos.Text += $"\n{StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao}";
+                        qtds.Text += $"\n{art.qtd}";
+                        ivas.Text += $"\n{art.iva}";
+                        precos.Text += $"\n{art.preco}";
+                    }
                 }
                 else if (_documento.ToUpper().Equals("VFT"))
                 {
@@ -93,12 +102,21 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace , index);
+                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
+
+
+                    foreach (var art in documentoDados.ecfArtigo)
+                    {
+                        artigos.Text += $"\n{StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao}";
+                        qtds.Text += $"\n{art.qtd}";
+                        ivas.Text += $"\n{art.iva}";
+                        precos.Text += $"\n{art.preco}";
+                    }
                 }
                 else if (_documento.ToUpper().Equals("VGT"))
                 {
@@ -110,12 +128,21 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace + 1, index);
+                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
+
+
+                    foreach (var art in documentoDados.vgtArtigo)
+                    {
+                        artigos.Text += $"\n{StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao}";
+                        qtds.Text += $"\n{art.qtd}";
+                        ivas.Text += $"\n{art.iva}";
+                        precos.Text += $"\n{art.preco}";
+                    }
                 }
                 else if (_documento.ToUpper().Equals("VNC"))
                 {
@@ -127,12 +154,21 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace + 1, index);
+                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
+
+
+                    foreach (var art in documentoDados.vncArtigo)
+                    {
+                        artigos.Text += $"\n{StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao}";
+                        qtds.Text += $"\n{art.qtd}";
+                        ivas.Text += $"\n{art.iva}";
+                        precos.Text += $"\n{art.preco}";
+                    }
                 }
                 else if (_documento.ToUpper().Equals("VND"))
                 {
@@ -144,12 +180,21 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace + 1, index);
+                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
+
+
+                    foreach (var art in documentoDados.vndArtigo)
+                    {
+                        artigos.Text += $"\n{StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao}";
+                        qtds.Text += $"\n{art.qtd}";
+                        ivas.Text += $"\n{art.iva}";
+                        precos.Text += $"\n{art.preco}";
+                    }
                 }
                 else if (_documento.ToUpper().Equals("PCO"))
                 {
@@ -161,12 +206,20 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace + 1, index);
+                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
+
+
+                    foreach (var art in documentoDados.pcArtigo)
+                    {
+                        artigos.Text += $"\n{StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao}";
+                        ivas.Text += $"\n{art.iva}";
+                        precos.Text += $"\n{art.preco}";
+                    }
                 }
                 else if (_documento.ToUpper().Equals("COT"))
                 {
@@ -178,12 +231,21 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace + 1, index);
+                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
+
+
+                    foreach (var art in documentoDados.cArtigo)
+                    {
+                        artigos.Text += $"\n{StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao}";
+                        qtds.Text += $"\n{art.qtd}";
+                        ivas.Text += $"\n{art.iva}";
+                        precos.Text += $"\n{art.preco}";
+                    }
                 }
             }
             if (_entidade == Entidade.cliente)
@@ -198,12 +260,21 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace + 1, index);
+                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
+
+
+                    foreach (var art in documentoDados.frArtigo)
+                    {
+                        artigos.Text += $"\n{StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao}";
+                        qtds.Text += $"\n{art.qtd}";
+                        ivas.Text += $"\n{art.iva}";
+                        precos.Text += $"\n{art.preco}";
+                    }
                 }
                 else if (_documento.ToUpper().Equals("FT"))
                 {
@@ -215,12 +286,21 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace + 1, index);
+                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
+
+
+                    foreach (var art in documentoDados.ftArtigo)
+                    {
+                        artigos.Text += $"\n{StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao}";
+                        qtds.Text += $"\n{art.qtd}";
+                        ivas.Text += $"\n{art.iva}";
+                        precos.Text += $"\n{art.preco}";
+                    }
                 }
                 else if (_documento.ToUpper().Equals("ECL"))
                 {
@@ -232,12 +312,21 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace + 1, index);
+                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
+
+
+                    foreach (var art in documentoDados.eclArtigo)
+                    {
+                        artigos.Text += $"\n{StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao}";
+                        qtds.Text += $"\n{art.qtd}";
+                        ivas.Text += $"\n{art.iva}";
+                        precos.Text += $"\n{art.preco}";
+                    }
                 }
                 else if (_documento.ToUpper().Equals("GT"))
                 {
@@ -249,12 +338,21 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace + 1, index);
+                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
+
+
+                    foreach (var art in documentoDados.gtArtigo)
+                    {
+                        artigos.Text += $"\n{StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao}";
+                        qtds.Text += $"\n{art.qtd}";
+                        ivas.Text += $"\n{art.iva}";
+                        precos.Text += $"\n{art.preco}";
+                    }
                 }
                 else if (_documento.ToUpper().Equals("NC"))
                 {
@@ -266,12 +364,21 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace + 1, index);
+                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
+
+
+                    foreach (var art in documentoDados.ncArtigo)
+                    {
+                        artigos.Text += $"\n{StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao}";
+                        qtds.Text += $"\n{art.qtd}";
+                        ivas.Text += $"\n{art.iva}";
+                        precos.Text += $"\n{art.preco}";
+                    }
                 }
                 else if (_documento.ToUpper().Equals("ND"))
                 {
@@ -283,12 +390,21 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace + 1, index);
+                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
+
+
+                    foreach (var art in documentoDados.ndArtigo)
+                    {
+                        artigos.Text += $"\n{StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao}";
+                        qtds.Text += $"\n{art.qtd}";
+                        ivas.Text += $"\n{art.iva}";
+                        precos.Text += $"\n{art.preco}";
+                    }
                 }
                 else if (_documento.ToUpper().Equals("FP"))
                 {
@@ -300,13 +416,20 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace + 1, index);
+                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
-                    
+
+
+                    foreach (var art in documentoDados.fpArtigo)
+                    {
+                        artigos.Text += $"\n{StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao}";
+                        ivas.Text += $"\n{art.iva}";
+                        precos.Text += $"\n{art.preco}";
+                    }
                 }
             }
          

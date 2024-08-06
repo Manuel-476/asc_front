@@ -189,6 +189,7 @@
             this.armazemCombo.Name = "armazemCombo";
             this.armazemCombo.Size = new System.Drawing.Size(221, 21);
             this.armazemCombo.TabIndex = 13;
+            this.armazemCombo.SelectedValueChanged += new System.EventHandler(this.armazemCombo_SelectedValueChanged);
             // 
             // label6
             // 

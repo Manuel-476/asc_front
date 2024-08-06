@@ -18,6 +18,8 @@ namespace AscFrontEnd
     {
         string clienteNome = string.Empty;
         public int id;
+        string documento;
+
         public VendaListagem()
         {
             InitializeComponent();
@@ -52,7 +54,7 @@ namespace AscFrontEnd
             dt.Columns.Add("id", typeof(int));
             dt.Columns.Add("Cliente", typeof(string));
             dt.Columns.Add("Documento", typeof(string));
-            dt.Columns.Add("Data", typeof(float));
+            dt.Columns.Add("Data", typeof(string));
 
 
             // Adicionando linhas ao DataTable
@@ -73,11 +75,11 @@ namespace AscFrontEnd
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Cliente", typeof(string));
                 dt.Columns.Add("Documento", typeof(string));
-                dt.Columns.Add("Data", typeof(float));
+                dt.Columns.Add("Data", typeof(string));
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.fts)
+                foreach (var item in StaticProperty.fts.Where(v => v.status != DocState.estornado && v.status != DocState.anulado))
                 {
                     clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
                     dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
@@ -95,11 +97,11 @@ namespace AscFrontEnd
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Cliente", typeof(string));
                 dt.Columns.Add("Documento", typeof(string));
-                dt.Columns.Add("Data", typeof(float));
+                dt.Columns.Add("Data", typeof(string));
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.frs)
+                foreach (var item in StaticProperty.frs.Where(v =>  v.status != DocState.anulado && v.status != DocState.estornado))
                 {
                     clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
                     dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
@@ -117,11 +119,11 @@ namespace AscFrontEnd
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Cliente", typeof(string));
                 dt.Columns.Add("Documento", typeof(string));
-                dt.Columns.Add("Data", typeof(float));
+                dt.Columns.Add("Data", typeof(string));
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.gts)
+                foreach (var item in StaticProperty.gts.Where(v => v.status != DocState.anulado))
                 {
                     clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
                     dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
@@ -139,11 +141,11 @@ namespace AscFrontEnd
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Cliente", typeof(string));
                 dt.Columns.Add("Documento", typeof(string));
-                dt.Columns.Add("Data", typeof(float));
+                dt.Columns.Add("Data", typeof(string));
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.ncs)
+                foreach (var item in StaticProperty.ncs.Where(v => v.status != DocState.anulado))
                 {
                     clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
                     dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
@@ -217,7 +219,7 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.fps)
+                foreach (var item in StaticProperty.fps.Where(v => v.status != DocState.anulado))
                 {
                     clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
                     dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
@@ -306,6 +308,135 @@ namespace AscFrontEnd
             {
                 MessageBox.Show($"Ocorreu um erro no processo de anulacao de documento: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
             }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("id", typeof(int));
+            dt.Columns.Add("Cliente", typeof(string));
+            dt.Columns.Add("Documento", typeof(string));
+            dt.Columns.Add("Data", typeof(string));
+            if (radioFt.Checked)
+            {
+                // Adicionando linhas ao DataTable
+                foreach (var item in StaticProperty.fts.Where(f=>f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
+                {
+                    clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                    dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                    dataGridView1.DataSource = dt;
+                }
+                foreach (var item2 in StaticProperty.clientes.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text)))
+                {
+                    foreach (var item in StaticProperty.fts.Where(f => f.clienteId == item2.id && f.status != DocState.anulado).ToList())
+                    {
+                        clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                        dataGridView1.DataSource = dt;
+                    }
+                }
+            }        
+            else if (radioFr.Checked)
+            {
+                // Adicionando linhas ao DataTable
+                foreach (var item in StaticProperty.frs.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado && f.status != DocState.estornado))
+                {
+                    clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                    dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                    dataGridView1.DataSource = dt;
+                }
+                foreach (var item2 in StaticProperty.clientes.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text)))
+                {
+                    foreach (var item in StaticProperty.frs.Where(f => f.clienteId == item2.id && f.status != DocState.anulado && f.status != DocState.estornado).ToList())
+                    {
+                        clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                        dataGridView1.DataSource = dt;
+                    }
+                }
+            }
+            else if (radioFp.Checked)
+            {
+                // Adicionando linhas ao DataTable
+                foreach (var item in StaticProperty.fps.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
+                {
+                    clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                    dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                    dataGridView1.DataSource = dt;
+                }
+                foreach (var item2 in StaticProperty.clientes.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text)))
+                {
+                    foreach (var item in StaticProperty.fps.Where(f => f.clienteId == item2.id && f.status != DocState.anulado).ToList())
+                    {
+                        clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                        dataGridView1.DataSource = dt;
+                    }
+                }
+            }
+            else if (radioGt.Checked)
+            {
+                // Adicionando linhas ao DataTable
+                foreach (var item in StaticProperty.gts.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
+                {
+                    clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                    dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                    dataGridView1.DataSource = dt;
+                }
+                foreach (var item2 in StaticProperty.clientes.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text)))
+                {
+                    foreach (var item in StaticProperty.gts.Where(f => f.clienteId == item2.id && f.status != DocState.anulado).ToList())
+                    {
+                        clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                        dataGridView1.DataSource = dt;
+                    }
+                }
+            }
+            else if (radioNc.Checked)
+            {
+                // Adicionando linhas ao DataTable
+                foreach (var item in StaticProperty.ncs.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
+                {
+                    clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                    dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                    dataGridView1.DataSource = dt;
+                }
+                foreach (var item2 in StaticProperty.clientes.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text)))
+                {
+                    foreach (var item in StaticProperty.ncs.Where(f => f.clienteId == item2.id && f.status != DocState.anulado).ToList())
+                    {
+                        clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                        dataGridView1.DataSource = dt;
+                    }
+                }
+            }
+
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            id = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
+            if (radioFp.Checked) {documento = "FP";}
+            if (radioFr.Checked) { documento = "FR";}
+            if (radioFt.Checked) { documento = "FT";}
+            if (radioGt.Checked) { documento = "GT";}
+            if (radioNc.Checked) { documento = "NC"; }
+            if (radioEcl.Checked) { documento = "ECL"; }
+
+            DocumentosDetalhesForm ddf = new DocumentosDetalhesForm(documento,id,Entidade.cliente);
+            ddf.ShowDialog();
         }
     }
 }

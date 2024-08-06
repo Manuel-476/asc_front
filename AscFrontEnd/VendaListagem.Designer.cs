@@ -45,6 +45,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.anularPicture = new System.Windows.Forms.PictureBox();
             this.estornarPicture = new System.Windows.Forms.PictureBox();
+            this.radioEcl = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -165,7 +166,7 @@
             // 
             this.radioAnulado.AutoSize = true;
             this.radioAnulado.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.radioAnulado.Location = new System.Drawing.Point(626, 89);
+            this.radioAnulado.Location = new System.Drawing.Point(746, 89);
             this.radioAnulado.Name = "radioAnulado";
             this.radioAnulado.Size = new System.Drawing.Size(64, 17);
             this.radioAnulado.TabIndex = 27;
@@ -184,6 +185,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(801, 269);
             this.dataGridView1.TabIndex = 28;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
             // textBox1
             // 
@@ -191,6 +193,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(268, 20);
             this.textBox1.TabIndex = 29;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label1
             // 
@@ -249,11 +252,24 @@
             this.estornarPicture.MouseLeave += new System.EventHandler(this.estornarPicture_MouseLeave);
             this.estornarPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.estornarPicture_MouseMove);
             // 
+            // radioEcl
+            // 
+            this.radioEcl.AutoSize = true;
+            this.radioEcl.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.radioEcl.Location = new System.Drawing.Point(617, 89);
+            this.radioEcl.Name = "radioEcl";
+            this.radioEcl.Size = new System.Drawing.Size(82, 17);
+            this.radioEcl.TabIndex = 35;
+            this.radioEcl.TabStop = true;
+            this.radioEcl.Text = "Encomenda";
+            this.radioEcl.UseVisualStyleBackColor = true;
+            // 
             // VendaListagem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(932, 450);
+            this.Controls.Add(this.radioEcl);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.anularPicture);
@@ -306,5 +322,6 @@
         private System.Windows.Forms.PictureBox anularPicture;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.RadioButton radioEcl;
     }
 }

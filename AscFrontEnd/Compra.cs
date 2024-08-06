@@ -135,7 +135,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     vfrArtigo = artigos,
-                    status = 1,
+                    status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
 
@@ -174,7 +174,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     vftArtigo = vftArtigos,
-                    status = DTOs.Enums.Enums.OpcaoBinaria.Sim,
+                    status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
                 // Configuração do HttpClient
@@ -211,7 +211,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     vgtArtigo = vgtArtigos,
-                    status = 1,
+                    status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
 
@@ -250,7 +250,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     ecfArtigo = ecfArtigos,
-                    status = 1,
+                    status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
 
@@ -287,7 +287,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     vncArtigo = vncArtigos,
-                    status = 1,
+                    status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
              
@@ -313,7 +313,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     vndArtigo = vndArtigos,
-                    status = 1,
+                    status = DTOs.Enums.Enums.DocState.ativo,
                 };
                 vndArtigos.Clear();
                 foreach (var compraArtigo in compraArtigos)
@@ -361,7 +361,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     pcArtigo = pcoArtigos,
-                    status = 1,
+                    status = DTOs.Enums.Enums.DocState.ativo,
                     
                 };
 
@@ -400,7 +400,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     cArtigo = cotArtigos,
-                    status = 1,
+                    status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
 
@@ -448,7 +448,7 @@ namespace AscFrontEnd
 
                 if (responseVfr.IsSuccessStatusCode)
                 {
-                    var contentVfr = await responseVft.Content.ReadAsStringAsync();
+                    var contentVfr = await responseVfr.Content.ReadAsStringAsync();
                     StaticProperty.vfrs = JsonConvert.DeserializeObject<List<VfrDTO>>(contentVfr);
                 }
 
@@ -508,6 +508,7 @@ namespace AscFrontEnd
 
         private void clienteBtn_Click(object sender, EventArgs e)
         {
+            timerRefresh.Start();
             FornecedorListagem clienteListagem = new FornecedorListagem();
             clienteListagem.ShowDialog();
         }
@@ -828,8 +829,9 @@ namespace AscFrontEnd
 
         private void excelBtn_Click(object sender, EventArgs e)
         {
-            exportar exp = new exportar();
-            exp.ShowDialog();
+            timerRefresh.Stop();
+            CompraListagem cl = new CompraListagem();
+            cl.ShowDialog();
         }
 
         private void clienteBtn_MouseLeave(object sender, EventArgs e)
@@ -846,14 +848,14 @@ namespace AscFrontEnd
 
         private void excelBtn_MouseLeave(object sender, EventArgs e)
         {
-            excelBtn.BackColor = Color.FromArgb(64,64,64);
-            excelBtn.ForeColor = Color.White;
+            comprasBtn.BackColor = Color.FromArgb(64,64,64);
+            comprasBtn.ForeColor = Color.White;
         }
 
         private void excelBtn_MouseMove(object sender, MouseEventArgs e)
         {
-            excelBtn.BackColor= Color.White; 
-            excelBtn.ForeColor= Color.Black;   
+            comprasBtn.BackColor= Color.White; 
+            comprasBtn.ForeColor= Color.Black;   
         }
 
         private void timerRefresh_Tick(object sender, EventArgs e)
@@ -897,7 +899,7 @@ namespace AscFrontEnd
                                           $"Email: SmartEntity476@gmail.com\nTel: 944720430";
 
                 string clienteCabecalho = $"{fornecedorResult.nome_fantasia.ToUpper()}\n";
-                string clienteOutros = $"Cliente Nº {fornecedorResult.id}\nEndereco: {fornecedorResult.localizacao}\nContribuente: {fornecedorResult.nif}\n" +
+                string clienteOutros = $"Fornecedor Nº {fornecedorResult.id}\nEndereco: {fornecedorResult.localizacao}\nContribuente: {fornecedorResult.nif}\n" +
                                           $"Email: {fornecedorResult.email}\nTel: {fornecedorResult.phones.First().telefone}";
 
                 Pen caneta = new Pen(Color.Black, 2); // Define a cor e a largura da linha

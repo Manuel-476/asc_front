@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.artigoTexto = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pesqText = new System.Windows.Forms.TextBox();
@@ -37,7 +38,6 @@
             this.addStockPicture = new System.Windows.Forms.PictureBox();
             this.transferPicture = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.artigoTexto = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaInventario)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.removeStockPicture)).BeginInit();
@@ -57,6 +57,17 @@
             this.panel1.Size = new System.Drawing.Size(1078, 93);
             this.panel1.TabIndex = 7;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // artigoTexto
+            // 
+            this.artigoTexto.AutoSize = true;
+            this.artigoTexto.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.artigoTexto.ForeColor = System.Drawing.Color.White;
+            this.artigoTexto.Location = new System.Drawing.Point(571, 32);
+            this.artigoTexto.Name = "artigoTexto";
+            this.artigoTexto.Size = new System.Drawing.Size(93, 32);
+            this.artigoTexto.TabIndex = 2;
+            this.artigoTexto.Text = "Artigo:";
             // 
             // label2
             // 
@@ -97,6 +108,7 @@
             this.tabelaInventario.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tabelaInventario.Size = new System.Drawing.Size(890, 293);
             this.tabelaInventario.TabIndex = 4;
+            this.tabelaInventario.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabelaInventario_CellClick);
             this.tabelaInventario.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabelaCliente_CellContentClick);
             // 
             // removeStockPicture
@@ -134,6 +146,7 @@
             this.transferPicture.TabIndex = 8;
             this.transferPicture.TabStop = false;
             this.transferPicture.Tag = "Transferencia Stock";
+            this.transferPicture.Click += new System.EventHandler(this.transferPicture_Click);
             // 
             // pictureBox1
             // 
@@ -145,22 +158,11 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
-            // artigoTexto
-            // 
-            this.artigoTexto.AutoSize = true;
-            this.artigoTexto.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.artigoTexto.ForeColor = System.Drawing.Color.White;
-            this.artigoTexto.Location = new System.Drawing.Point(571, 32);
-            this.artigoTexto.Name = "artigoTexto";
-            this.artigoTexto.Size = new System.Drawing.Size(93, 32);
-            this.artigoTexto.TabIndex = 2;
-            this.artigoTexto.Text = "Artigo:";
-            // 
             // Stock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1080, 461);
+            this.ClientSize = new System.Drawing.Size(1080, 434);
             this.Controls.Add(this.removeStockPicture);
             this.Controls.Add(this.addStockPicture);
             this.Controls.Add(this.transferPicture);

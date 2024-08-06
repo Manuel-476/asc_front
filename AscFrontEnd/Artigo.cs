@@ -125,11 +125,19 @@ namespace AscFrontEnd
             }
             foreach (var item in StaticProperty.familias.Where(fam => fam.empresaId == 1).ToList())
             {
-                armazemCombo.Items.Add(item.codigo);
+                familiaCombo.Items.Add(item.codigo);
             }
             foreach (var item in StaticProperty.subFamilias.Where(fam => fam.empresaId == 1).ToList())
             {
-                armazemCombo.Items.Add(item.codigo);
+                subFamiliaCombo.Items.Add(item.codigo);
+            }
+            foreach (var item in StaticProperty.modelos.Where(fam => fam.empresaId == 1).ToList())
+            {
+                modeloCombo.Items.Add(item.codigo);
+            }
+            foreach (var item in StaticProperty.marcas.Where(fam => fam.empresaId == 1).ToList())
+            {
+                marcaCombo.Items.Add(item.codigo);
             }
         }
 
@@ -143,6 +151,15 @@ namespace AscFrontEnd
 
                     return;
                 }
+            }
+        }
+
+        private void armazemCombo_SelectedValueChanged(object sender, EventArgs e)
+        {
+            int armazemId = StaticProperty.armazens.Where(arm => arm.codigo == armazemCombo.Text && arm.empresaId == 1).First().id;
+            foreach (var item in StaticProperty.locationStores.Where(fam => fam.armazemId == armazemId).ToList())
+            {              
+                localCombo.Items.Add(item.codigo);
             }
         }
     }

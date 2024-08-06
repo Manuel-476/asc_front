@@ -14,7 +14,7 @@ namespace ERP_Buyer.Application.DTOs.Documentos
 
         public string documento { get; set; }
         public int fornecedorId { get; set; }
-        public OpcaoBinaria status { get; set; }
+        public DocState status { get; set; }
         public OpcaoBinaria pago { get; set; }
         public OpcaoBinaria apr { get; set; }
         public DateTime data { get; set; }

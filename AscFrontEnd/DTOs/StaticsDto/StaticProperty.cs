@@ -66,6 +66,8 @@ namespace AscFrontEnd.DTOs.StaticsDto
 
         // Stocks
         public static List<ArmazemDTO> armazens { get; set; }
+        public static List<LocationStoreDTO> locationStores { get; set; }
+        public static List<LocationArtigoDTO> locationArtigos { get; set; }
 
         // Contas Correntes
         public static List<NpDTO> nps { get; set; }

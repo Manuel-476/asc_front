@@ -16,13 +16,14 @@ namespace AscFrontEnd
 {
     public partial class Stock : Form
     {
-        List<LocationArtigoDTO> dados;
+        List<StockDTO> dados;
         DataTable stockTable;
+        int id;
         public Stock()
         {
             InitializeComponent();
 
-            dados = new List<LocationArtigoDTO>();
+            dados = new List<StockDTO>();
             stockTable = new DataTable();
         }
 
@@ -54,26 +55,51 @@ namespace AscFrontEnd
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                dados = JsonConvert.DeserializeObject<List<LocationArtigoDTO>>(content);
+                dados = JsonConvert.DeserializeObject<List<StockDTO>>(content);
 
                 stockTable.Columns.Add("id", typeof(int));
                 stockTable.Columns.Add("Artigo", typeof(string));
-                stockTable.Columns.Add("Descricao", typeof(float));
+                stockTable.Columns.Add("Descricao", typeof(string));
                 stockTable.Columns.Add("Qtd", typeof(int));
-                stockTable.Columns.Add("Estado", typeof(float));
+                stockTable.Columns.Add("Estado", typeof(string));
 
                 // Adicionando linhas ao DataTable
                 foreach (var artigo in dados)
                 {
-                    string status = artigo.Artigo.status == 0 ? "Nao Activo" : "Activo";
-                    stockTable.Rows.Add(artigo.artigoId, artigo.Artigo.codigo, artigo.Artigo.descricao, artigo.qtd,status );
+                    string status = artigo.status == 0 ? "Nao Activo" : "Activo";
+                    stockTable.Rows.Add(artigo.id, artigo.artigo, artigo.descricao, artigo.qtd,status );
 
                     tabelaInventario.DataSource = stockTable;
                 }
 
-             //   eliminarBtn.Enabled = false;
-
+                transferPicture.Enabled = false;
+                addStockPicture.Enabled = false;
+                removeStockPicture.Enabled = false;
             }
+        }
+
+        private void tabelaInventario_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                transferPicture.Enabled = true;
+                addStockPicture.Enabled = true;
+                removeStockPicture.Enabled = true;
+
+                id = int.Parse(tabelaInventario.Rows[e.RowIndex].Cells[0].Value.ToString());
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private void transferPicture_Click(object sender, EventArgs e)
+        {
+            StockDTO stock = dados.Where(st => st.id == id).First();
+
+            TransferenciaArmazem ta = new TransferenciaArmazem(stock);
+            ta.ShowDialog();
         }
     }
 }

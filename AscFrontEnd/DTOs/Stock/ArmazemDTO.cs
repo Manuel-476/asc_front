@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static AscFrontEnd.DTOs.Enums.Enums;
 
 namespace AscFrontEnd.DTOs.Stock
 {
@@ -16,6 +17,15 @@ namespace AscFrontEnd.DTOs.Stock
         public int funcionarioId { get; set; }
         public int status { get; set; }
         public int empresaId { get; set; }
+    }
+
+    public class StockDTO
+    {
+        public int id { get; set; }
+        public string artigo { get; set; }
+        public string descricao { get; set; }
+        public int qtd { get; set; }
+        public Status status { get; set; }
     }
 }
 

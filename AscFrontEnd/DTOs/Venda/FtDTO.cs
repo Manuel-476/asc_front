@@ -14,7 +14,7 @@ namespace EAscFrontEnd
         public int id { get; set; }
         public string documento { get; set; }
         public int clienteId { get; set; }
-        public int status { get; set; }
+        public DocState status { get; set; }
         public OpcaoBinaria pago { get; set; }
         public DateTime data { get; set; }
         public List<FtArtigoDTO> ftArtigo { get; set; }

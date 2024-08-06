@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.fornecedortxt = new System.Windows.Forms.Label();
-            this.excelBtn = new System.Windows.Forms.Button();
+            this.comprasBtn = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.iva = new System.Windows.Forms.ComboBox();
@@ -71,20 +71,20 @@
             this.fornecedortxt.TabIndex = 35;
             this.fornecedortxt.Text = "Fornecedor: ";
             // 
-            // excelBtn
+            // comprasBtn
             // 
-            this.excelBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.excelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.excelBtn.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.excelBtn.Location = new System.Drawing.Point(890, 73);
-            this.excelBtn.Name = "excelBtn";
-            this.excelBtn.Size = new System.Drawing.Size(190, 33);
-            this.excelBtn.TabIndex = 34;
-            this.excelBtn.Text = "Exportar";
-            this.excelBtn.UseVisualStyleBackColor = false;
-            this.excelBtn.Click += new System.EventHandler(this.excelBtn_Click);
-            this.excelBtn.MouseLeave += new System.EventHandler(this.excelBtn_MouseLeave);
-            this.excelBtn.MouseMove += new System.Windows.Forms.MouseEventHandler(this.excelBtn_MouseMove);
+            this.comprasBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.comprasBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comprasBtn.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.comprasBtn.Location = new System.Drawing.Point(890, 73);
+            this.comprasBtn.Name = "comprasBtn";
+            this.comprasBtn.Size = new System.Drawing.Size(190, 33);
+            this.comprasBtn.TabIndex = 34;
+            this.comprasBtn.Text = "Compras";
+            this.comprasBtn.UseVisualStyleBackColor = false;
+            this.comprasBtn.Click += new System.EventHandler(this.excelBtn_Click);
+            this.comprasBtn.MouseLeave += new System.EventHandler(this.excelBtn_MouseLeave);
+            this.comprasBtn.MouseMove += new System.Windows.Forms.MouseEventHandler(this.excelBtn_MouseMove);
             // 
             // label5
             // 
@@ -302,7 +302,7 @@
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.fornecedortxt);
             this.panel1.Controls.Add(this.clienteBtn);
-            this.panel1.Controls.Add(this.excelBtn);
+            this.panel1.Controls.Add(this.comprasBtn);
             this.panel1.Location = new System.Drawing.Point(1, -2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1080, 109);
@@ -368,7 +368,7 @@
         #endregion
 
         private System.Windows.Forms.Label fornecedortxt;
-        private System.Windows.Forms.Button excelBtn;
+        private System.Windows.Forms.Button comprasBtn;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox iva;

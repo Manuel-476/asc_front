@@ -168,7 +168,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     clienteId = StaticProperty.entityId,
                     frArtigo = artigos,
-                    status = 1,
+                    status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
                 // Conversão do objeto Film para JSON
@@ -185,9 +185,9 @@ namespace AscFrontEnd
                 {
                     documento = codigoDocumento.Text,
                     data = DateTime.Now,
-                    clienteId = ClienteDTO.clienteId,
+                    clienteId = StaticProperty.entityId,
                     ftArtigo = ftArtigos,
-                    status = 1,
+                    status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
                 ftArtigos.Clear();
@@ -227,9 +227,9 @@ namespace AscFrontEnd
                 {
                     documento = codigoDocumento.Text,
                     data = DateTime.Now,
-                    clienteId = ClienteDTO.clienteId,
+                    clienteId = StaticProperty.entityId,
                     fpArtigo = fpArtigos,
-                    status = 1,
+                    status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
                 // Conversão do objeto Film para JSON
@@ -257,9 +257,9 @@ namespace AscFrontEnd
                 {
                     documento = codigoDocumento.Text,
                     data = DateTime.Now,
-                    clienteId = ClienteDTO.clienteId,
+                    clienteId = StaticProperty.entityId,
                     gtArtigo = gtArtigos,
-                    status = 1,
+                    status =  DTOs.Enums.Enums.DocState.ativo,
                 };
 
                 // Conversão do objeto Film para JSON
@@ -288,9 +288,9 @@ namespace AscFrontEnd
                 {
                     documento = codigoDocumento.Text,
                     data = DateTime.Now,
-                    clienteId = ClienteDTO.clienteId,
+                    clienteId = StaticProperty.entityId,
                     eclArtigo = eclArtigos,
-                    status = 1,
+                    status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
                 // Conversão do objeto Film para JSON
@@ -318,9 +318,9 @@ namespace AscFrontEnd
                 {
                     documento = codigoDocumento.Text,
                     data = DateTime.Now,
-                    clienteId = ClienteDTO.clienteId,
+                    clienteId = StaticProperty.entityId,
                     ncArtigo = ncArtigos,
-                    status = 1,
+                    status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
                 // Conversão do objeto Film para JSON
@@ -348,9 +348,9 @@ namespace AscFrontEnd
                 {
                     documento = codigoDocumento.Text,
                     data = DateTime.Now,
-                    clienteId = ClienteDTO.clienteId,
+                    clienteId = StaticProperty.entityId,
                     ndArtigo = ndArtigos,
-                    status = 1,
+                    status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
                 // Conversão do objeto Film para JSON

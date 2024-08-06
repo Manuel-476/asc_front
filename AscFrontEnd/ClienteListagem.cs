@@ -23,14 +23,6 @@ namespace AscFrontEnd
 
         private async void ClienteListagem_Load(object sender, EventArgs e)
         {
-            var client = new HttpClient();
-            var response = await client.GetAsync("https://localhost:7200/api/Cliente");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                var dados = JsonConvert.DeserializeObject<List<ClienteDTO>>(content);
-
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Nome", typeof(string));
@@ -39,15 +31,13 @@ namespace AscFrontEnd
                 dt.Columns.Add("pessoa", typeof(string));
                 dt.Columns.Add("localizacao", typeof(string));
 
-
                 // Adicionando linhas ao DataTable
-                foreach (var item in dados)
+                foreach (var item in StaticProperty.clientes)
                 {
                     dt.Rows.Add(item.id, item.nome_fantasia, item.email,item.nif,item.pessoa,item.localizacao);
 
                     tabelaCliente.DataSource = dt;
                 }
-            }
         }
 
         private async void textBox1_TextChanged(object sender, EventArgs e)

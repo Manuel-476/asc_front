@@ -211,6 +211,12 @@
       <DependentUpon>DocumentosDetalhesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DTOs\Actividades\ActividadeDTO.cs" />
+    <Compile Include="CompraListagem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CompraListagem.Designer.cs">
+      <DependentUpon>CompraListagem.cs</DependentUpon>
+    </Compile>
     <Compile Include="DTOs\Compra\CotacaoArtigoDTO.cs" />
     <Compile Include="DTOs\Compra\CotacaoDTO.cs" />
     <Compile Include="DTOs\Compra\EcfArtigoDTO.cs" />
@@ -379,6 +385,12 @@
     <Compile Include="SubFamilaArtigo.Designer.cs">
       <DependentUpon>SubFamilaArtigo.cs</DependentUpon>
     </Compile>
+    <Compile Include="TransferenciaArmazem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TransferenciaArmazem.Designer.cs">
+      <DependentUpon>TransferenciaArmazem.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -436,6 +448,9 @@
     <EmbeddedResource Include="DocumentosDetalhesForm.resx">
       <DependentUpon>DocumentosDetalhesForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CompraListagem.resx">
+      <DependentUpon>CompraListagem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EmpresaForm.resx">
       <DependentUpon>EmpresaForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -491,6 +506,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubFamilaArtigo.resx">
       <DependentUpon>SubFamilaArtigo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TransferenciaArmazem.resx">
+      <DependentUpon>TransferenciaArmazem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserForm.resx">
       <DependentUpon>UserForm.cs</DependentUpon>
@@ -564,6 +582,7 @@
     <Content Include="Files\img\ascwhite.png" />
     <Content Include="Files\img\icons8-prototype-50.png" />
     <Content Include="Files\img\parcel.png" />
+    <Content Include="Files\loadImage.png" />
     <Content Include="Files\remove.png" />
     <Content Include="Files\Smart_Entity.png" />
     <Content Include="Files\transfer.png" />
