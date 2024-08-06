@@ -101,5 +101,23 @@ namespace AscFrontEnd
             TransferenciaArmazem ta = new TransferenciaArmazem(stock);
             ta.ShowDialog();
         }
+
+        private void addStockPicture_Click(object sender, EventArgs e)
+        {
+            var dado = dados.Where(x => x.id == id).First();
+            var artigo = StaticProperty.artigos.Where(x => x.codigo == dado.artigo /*&& x.empresaId == 1*/).First();
+
+            IncrementarStock incrementar = new IncrementarStock(artigo,dado.qtd);
+            incrementar.ShowDialog();
+        }
+
+        private void removeStockPicture_Click(object sender, EventArgs e)
+        {
+            var dado = dados.Where(x => x.id == id).First();
+            var artigo = StaticProperty.artigos.Where(x => x.codigo == dado.artigo /*&& x.empresaId == 1*/).First();
+
+            IncrementarStock incrementar = new IncrementarStock(artigo, dado.qtd);
+            incrementar.ShowDialog();
+        }
     }
 }

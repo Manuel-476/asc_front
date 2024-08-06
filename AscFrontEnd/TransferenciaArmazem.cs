@@ -46,8 +46,7 @@ namespace AscFrontEnd
             foreach(var item in StaticProperty.armazens) 
             {
                 armazemCombo.Items.Add(item.codigo);
-            }
-            
+            }       
         }
 
         private void armazemCombo_SelectedIndexChanged(object sender, EventArgs e)

@@ -113,8 +113,8 @@
             // 
             // removeStockPicture
             // 
-            this.removeStockPicture.BackgroundImage = global::AscFrontEnd.Properties.Resources.remove;
-            this.removeStockPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.removeStockPicture.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_remove_64;
+            this.removeStockPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.removeStockPicture.Cursor = System.Windows.Forms.Cursors.Hand;
             this.removeStockPicture.Location = new System.Drawing.Point(945, 337);
             this.removeStockPicture.Name = "removeStockPicture";
@@ -122,11 +122,12 @@
             this.removeStockPicture.TabIndex = 10;
             this.removeStockPicture.TabStop = false;
             this.removeStockPicture.Tag = "Decrementar Stock";
+            this.removeStockPicture.Click += new System.EventHandler(this.removeStockPicture_Click);
             // 
             // addStockPicture
             // 
-            this.addStockPicture.BackgroundImage = global::AscFrontEnd.Properties.Resources.warehouse;
-            this.addStockPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.addStockPicture.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_add_64;
+            this.addStockPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.addStockPicture.Cursor = System.Windows.Forms.Cursors.Hand;
             this.addStockPicture.Location = new System.Drawing.Point(945, 236);
             this.addStockPicture.Name = "addStockPicture";
@@ -134,6 +135,7 @@
             this.addStockPicture.TabIndex = 9;
             this.addStockPicture.TabStop = false;
             this.addStockPicture.Tag = "Incrementar Stock";
+            this.addStockPicture.Click += new System.EventHandler(this.addStockPicture_Click);
             // 
             // transferPicture
             // 
@@ -162,7 +164,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1080, 434);
+            this.ClientSize = new System.Drawing.Size(1028, 434);
             this.Controls.Add(this.removeStockPicture);
             this.Controls.Add(this.addStockPicture);
             this.Controls.Add(this.transferPicture);

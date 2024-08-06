@@ -204,6 +204,12 @@
     <Compile Include="ContasCorrentes.Designer.cs">
       <DependentUpon>ContasCorrentes.cs</DependentUpon>
     </Compile>
+    <Compile Include="DecrementarStock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DecrementarStock.Designer.cs">
+      <DependentUpon>DecrementarStock.cs</DependentUpon>
+    </Compile>
     <Compile Include="DocumentosDetalhesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -311,6 +317,12 @@
     </Compile>
     <Compile Include="FuncionarioListagem.Designer.cs">
       <DependentUpon>FuncionarioListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IncrementarStock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IncrementarStock.Designer.cs">
+      <DependentUpon>IncrementarStock.cs</DependentUpon>
     </Compile>
     <Compile Include="ListasContasCorrentes.cs">
       <SubType>Form</SubType>
@@ -445,6 +457,9 @@
     <EmbeddedResource Include="ContasCorrentes.resx">
       <DependentUpon>ContasCorrentes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DecrementarStock.resx">
+      <DependentUpon>DecrementarStock.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DocumentosDetalhesForm.resx">
       <DependentUpon>DocumentosDetalhesForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -468,6 +483,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FuncionarioListagem.resx">
       <DependentUpon>FuncionarioListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IncrementarStock.resx">
+      <DependentUpon>IncrementarStock.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ListasContasCorrentes.resx">
       <DependentUpon>ListasContasCorrentes.cs</DependentUpon>
@@ -537,6 +555,7 @@
     <Content Include="Files\asc.png" />
     <Content Include="Files\icons8-active-58.png" />
     <Content Include="Files\icons8-add-40.png" />
+    <Content Include="Files\icons8-add-64.png" />
     <Content Include="Files\icons8-add-user-male-40.png" />
     <Content Include="Files\icons8-bank-64.png" />
     <Content Include="Files\icons8-boss-64.png" />
@@ -567,6 +586,7 @@
     <Content Include="Files\icons8-product-50-family.png" />
     <Content Include="Files\icons8-product-50.png" />
     <Content Include="Files\icons8-prototype-50.png" />
+    <Content Include="Files\icons8-remove-64.png" />
     <Content Include="Files\icons8-sell-100.png" />
     <Content Include="Files\icons8-sell-30.png" />
     <Content Include="Files\icons8-sell-40.png" />
