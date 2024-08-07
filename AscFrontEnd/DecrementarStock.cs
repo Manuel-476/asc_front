@@ -45,7 +45,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(_artigo.id);
 
                 // Envio dos dados para a API
-                HttpResponseMessage response = await client.PutAsync($"https://localhost:7200/api/Armazem/Stock/Qtd/Artigo/Decremento/{_artigo.id}/{_qtd}", new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage response = await client.PutAsync($"https://localhost:7200/api/Armazem/Stock/Qtd/Artigo/Decremento/{_artigo.id}/{int.Parse(qtdText.Text.ToString())}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -70,7 +70,7 @@ namespace AscFrontEnd
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro ao Activar Serie: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                MessageBox.Show($"Erro ao Decrementar: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
                 return;
             }
         }

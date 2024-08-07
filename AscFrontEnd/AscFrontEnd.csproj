@@ -324,6 +324,12 @@
     <Compile Include="IncrementarStock.Designer.cs">
       <DependentUpon>IncrementarStock.cs</DependentUpon>
     </Compile>
+    <Compile Include="LiquidaDivida.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LiquidaDivida.Designer.cs">
+      <DependentUpon>LiquidaDivida.cs</DependentUpon>
+    </Compile>
     <Compile Include="ListasContasCorrentes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -486,6 +492,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IncrementarStock.resx">
       <DependentUpon>IncrementarStock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LiquidaDivida.resx">
+      <DependentUpon>LiquidaDivida.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ListasContasCorrentes.resx">
       <DependentUpon>ListasContasCorrentes.cs</DependentUpon>

@@ -116,8 +116,8 @@ namespace AscFrontEnd
             var dado = dados.Where(x => x.id == id).First();
             var artigo = StaticProperty.artigos.Where(x => x.codigo == dado.artigo /*&& x.empresaId == 1*/).First();
 
-            IncrementarStock incrementar = new IncrementarStock(artigo, dado.qtd);
-            incrementar.ShowDialog();
+            DecrementarStock decrementar = new DecrementarStock(artigo, dado.qtd);
+            decrementar.ShowDialog();
         }
     }
 }
