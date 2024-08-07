@@ -256,5 +256,24 @@ namespace AscFrontEnd
             aprovaBtn.BackColor = Color.Transparent;
             aprovaBtn.ForeColor = Color.White;
         }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            LiquidaDivida ld = null;
+            if (radioCliente.Checked) 
+            {
+                 ld = new LiquidaDivida(id,Entidade.cliente);
+            }
+            else if(radioFornecedor.Checked)
+            {
+                ld = new LiquidaDivida(id, Entidade.fornecedor);
+            }
+            ld.ShowDialog();
+        }
+
+        private void aprovaBtn_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

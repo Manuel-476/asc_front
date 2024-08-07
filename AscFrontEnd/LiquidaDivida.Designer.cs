@@ -31,14 +31,17 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.fornecedorLabel = new System.Windows.Forms.Label();
+            this.entidadeLabel = new System.Windows.Forms.Label();
             this.dividaLabel = new System.Windows.Forms.Label();
             this.liquidado = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.valorTxt = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.documentoLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -72,22 +75,22 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // fornecedorLabel
+            // entidadeLabel
             // 
-            this.fornecedorLabel.AutoSize = true;
-            this.fornecedorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fornecedorLabel.Location = new System.Drawing.Point(37, 91);
-            this.fornecedorLabel.Name = "fornecedorLabel";
-            this.fornecedorLabel.Size = new System.Drawing.Size(163, 24);
-            this.fornecedorLabel.TabIndex = 2;
-            this.fornecedorLabel.Text = "fornecedorLabel";
+            this.entidadeLabel.AutoSize = true;
+            this.entidadeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.entidadeLabel.Location = new System.Drawing.Point(37, 91);
+            this.entidadeLabel.Name = "entidadeLabel";
+            this.entidadeLabel.Size = new System.Drawing.Size(142, 24);
+            this.entidadeLabel.TabIndex = 2;
+            this.entidadeLabel.Text = "entidadeLabel";
             // 
             // dividaLabel
             // 
             this.dividaLabel.AutoSize = true;
             this.dividaLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dividaLabel.ForeColor = System.Drawing.Color.Red;
-            this.dividaLabel.Location = new System.Drawing.Point(514, 91);
+            this.dividaLabel.Location = new System.Drawing.Point(15, 22);
             this.dividaLabel.Name = "dividaLabel";
             this.dividaLabel.Size = new System.Drawing.Size(41, 13);
             this.dividaLabel.TabIndex = 3;
@@ -98,18 +101,18 @@
             this.liquidado.AutoSize = true;
             this.liquidado.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.liquidado.ForeColor = System.Drawing.Color.Green;
-            this.liquidado.Location = new System.Drawing.Point(514, 117);
+            this.liquidado.Location = new System.Drawing.Point(15, 61);
             this.liquidado.Name = "liquidado";
             this.liquidado.Size = new System.Drawing.Size(58, 13);
             this.liquidado.TabIndex = 4;
             this.liquidado.Text = "liquidado";
             // 
-            // textBox1
+            // valorTxt
             // 
-            this.textBox1.Location = new System.Drawing.Point(37, 152);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(290, 20);
-            this.textBox1.TabIndex = 5;
+            this.valorTxt.Location = new System.Drawing.Point(37, 152);
+            this.valorTxt.Name = "valorTxt";
+            this.valorTxt.Size = new System.Drawing.Size(290, 20);
+            this.valorTxt.TabIndex = 5;
             // 
             // label3
             // 
@@ -131,18 +134,39 @@
             this.button1.TabIndex = 7;
             this.button1.Text = "Salvar";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.liquidado);
+            this.groupBox1.Controls.Add(this.dividaLabel);
+            this.groupBox1.Location = new System.Drawing.Point(450, 91);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(155, 87);
+            this.groupBox1.TabIndex = 8;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Condicao";
+            // 
+            // documentoLabel
+            // 
+            this.documentoLabel.AutoSize = true;
+            this.documentoLabel.Location = new System.Drawing.Point(447, 196);
+            this.documentoLabel.Name = "documentoLabel";
+            this.documentoLabel.Size = new System.Drawing.Size(60, 13);
+            this.documentoLabel.TabIndex = 9;
+            this.documentoLabel.Text = "documento";
             // 
             // LiquidaDivida
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(636, 249);
+            this.Controls.Add(this.documentoLabel);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.liquidado);
-            this.Controls.Add(this.dividaLabel);
-            this.Controls.Add(this.fornecedorLabel);
+            this.Controls.Add(this.valorTxt);
+            this.Controls.Add(this.entidadeLabel);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -155,6 +179,8 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -165,11 +191,13 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label fornecedorLabel;
+        private System.Windows.Forms.Label entidadeLabel;
         private System.Windows.Forms.Label dividaLabel;
         private System.Windows.Forms.Label liquidado;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox valorTxt;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label documentoLabel;
     }
 }
