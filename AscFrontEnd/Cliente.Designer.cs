@@ -45,9 +45,9 @@
             this.regimeFiscal = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.Nome = new System.Windows.Forms.Label();
-            this.localTxt = new System.Windows.Forms.TextBox();
+            this.FiliallocalTxt = new System.Windows.Forms.TextBox();
             this.filialTel = new System.Windows.Forms.TextBox();
-            this.filialtxt = new System.Windows.Forms.TextBox();
+            this.Emailfilialtxt = new System.Windows.Forms.TextBox();
             this.codigotxt = new System.Windows.Forms.TextBox();
             this.localizacaotxt = new System.Windows.Forms.TextBox();
             this.espacoFiscalCombo = new System.Windows.Forms.ComboBox();
@@ -59,8 +59,12 @@
             this.label9 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.addFilialBtn = new System.Windows.Forms.Button();
+            this.tabelaFilial = new System.Windows.Forms.DataGridView();
+            this.label10 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tabelaFilial)).BeginInit();
             this.SuspendLayout();
             // 
             // label8
@@ -80,7 +84,7 @@
             this.salvarBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.salvarBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.salvarBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.salvarBtn.Location = new System.Drawing.Point(29, 404);
+            this.salvarBtn.Location = new System.Drawing.Point(29, 612);
             this.salvarBtn.Name = "salvarBtn";
             this.salvarBtn.Size = new System.Drawing.Size(201, 33);
             this.salvarBtn.TabIndex = 54;
@@ -92,6 +96,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label7.Location = new System.Drawing.Point(512, 275);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(71, 20);
@@ -109,6 +114,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label6.Location = new System.Drawing.Point(280, 275);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(35, 20);
@@ -126,6 +132,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label5.Location = new System.Drawing.Point(25, 275);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(48, 20);
@@ -143,7 +150,8 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(563, 330);
+            this.label4.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label4.Location = new System.Drawing.Point(563, 366);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(93, 20);
             this.label4.TabIndex = 47;
@@ -153,7 +161,8 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(385, 330);
+            this.label3.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label3.Location = new System.Drawing.Point(385, 366);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(71, 20);
             this.label3.TabIndex = 46;
@@ -163,7 +172,8 @@
             // 
             this.email.AutoSize = true;
             this.email.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.email.Location = new System.Drawing.Point(199, 330);
+            this.email.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.email.Location = new System.Drawing.Point(199, 366);
             this.email.Name = "email";
             this.email.Size = new System.Drawing.Size(48, 20);
             this.email.TabIndex = 45;
@@ -173,7 +183,8 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(29, 330);
+            this.label2.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label2.Location = new System.Drawing.Point(29, 366);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 20);
             this.label2.TabIndex = 44;
@@ -183,6 +194,7 @@
             // 
             this.nomeFiscal.AutoSize = true;
             this.nomeFiscal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nomeFiscal.ForeColor = System.Drawing.SystemColors.Highlight;
             this.nomeFiscal.Location = new System.Drawing.Point(356, 206);
             this.nomeFiscal.Name = "nomeFiscal";
             this.nomeFiscal.Size = new System.Drawing.Size(96, 20);
@@ -193,6 +205,7 @@
             // 
             this.localizacao.AutoSize = true;
             this.localizacao.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.localizacao.ForeColor = System.Drawing.SystemColors.Highlight;
             this.localizacao.Location = new System.Drawing.Point(29, 206);
             this.localizacao.Name = "localizacao";
             this.localizacao.Size = new System.Drawing.Size(93, 20);
@@ -203,6 +216,7 @@
             // 
             this.regimeFiscal.AutoSize = true;
             this.regimeFiscal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.regimeFiscal.ForeColor = System.Drawing.SystemColors.Highlight;
             this.regimeFiscal.Location = new System.Drawing.Point(535, 148);
             this.regimeFiscal.Name = "regimeFiscal";
             this.regimeFiscal.Size = new System.Drawing.Size(109, 20);
@@ -213,6 +227,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label1.Location = new System.Drawing.Point(347, 149);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 20);
@@ -223,37 +238,38 @@
             // 
             this.Nome.AutoSize = true;
             this.Nome.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Nome.ForeColor = System.Drawing.SystemColors.Highlight;
             this.Nome.Location = new System.Drawing.Point(29, 148);
             this.Nome.Name = "Nome";
             this.Nome.Size = new System.Drawing.Size(55, 20);
             this.Nome.TabIndex = 39;
             this.Nome.Text = "Nome:";
             // 
-            // localTxt
+            // FiliallocalTxt
             // 
-            this.localTxt.Location = new System.Drawing.Point(567, 353);
-            this.localTxt.Name = "localTxt";
-            this.localTxt.Size = new System.Drawing.Size(157, 20);
-            this.localTxt.TabIndex = 38;
+            this.FiliallocalTxt.Location = new System.Drawing.Point(567, 389);
+            this.FiliallocalTxt.Name = "FiliallocalTxt";
+            this.FiliallocalTxt.Size = new System.Drawing.Size(157, 20);
+            this.FiliallocalTxt.TabIndex = 38;
             // 
             // filialTel
             // 
-            this.filialTel.Location = new System.Drawing.Point(395, 353);
+            this.filialTel.Location = new System.Drawing.Point(395, 389);
             this.filialTel.Name = "filialTel";
             this.filialTel.Size = new System.Drawing.Size(145, 20);
             this.filialTel.TabIndex = 37;
             // 
-            // filialtxt
+            // Emailfilialtxt
             // 
-            this.filialtxt.Location = new System.Drawing.Point(202, 353);
-            this.filialtxt.Name = "filialtxt";
-            this.filialtxt.Size = new System.Drawing.Size(173, 20);
-            this.filialtxt.TabIndex = 36;
+            this.Emailfilialtxt.Location = new System.Drawing.Point(202, 389);
+            this.Emailfilialtxt.Name = "Emailfilialtxt";
+            this.Emailfilialtxt.Size = new System.Drawing.Size(173, 20);
+            this.Emailfilialtxt.TabIndex = 36;
             // 
             // codigotxt
             // 
             this.codigotxt.BackColor = System.Drawing.Color.LightGoldenrodYellow;
-            this.codigotxt.Location = new System.Drawing.Point(29, 353);
+            this.codigotxt.Location = new System.Drawing.Point(29, 389);
             this.codigotxt.Name = "codigotxt";
             this.codigotxt.Size = new System.Drawing.Size(158, 20);
             this.codigotxt.TabIndex = 35;
@@ -364,11 +380,45 @@
             this.pictureBox1.TabIndex = 57;
             this.pictureBox1.TabStop = false;
             // 
+            // addFilialBtn
+            // 
+            this.addFilialBtn.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.addFilialBtn.Location = new System.Drawing.Point(29, 415);
+            this.addFilialBtn.Name = "addFilialBtn";
+            this.addFilialBtn.Size = new System.Drawing.Size(108, 32);
+            this.addFilialBtn.TabIndex = 62;
+            this.addFilialBtn.Text = "Adicionar";
+            this.addFilialBtn.UseVisualStyleBackColor = true;
+            this.addFilialBtn.Click += new System.EventHandler(this.addFilialBtn_Click);
+            // 
+            // tabelaFilial
+            // 
+            this.tabelaFilial.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tabelaFilial.BackgroundColor = System.Drawing.Color.White;
+            this.tabelaFilial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tabelaFilial.Location = new System.Drawing.Point(29, 469);
+            this.tabelaFilial.Name = "tabelaFilial";
+            this.tabelaFilial.Size = new System.Drawing.Size(686, 133);
+            this.tabelaFilial.TabIndex = 61;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(29, 334);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(63, 25);
+            this.label10.TabIndex = 63;
+            this.label10.Text = "Filiais";
+            // 
             // Cliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 657);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.addFilialBtn);
+            this.Controls.Add(this.tabelaFilial);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.salvarBtn);
@@ -387,9 +437,9 @@
             this.Controls.Add(this.regimeFiscal);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Nome);
-            this.Controls.Add(this.localTxt);
+            this.Controls.Add(this.FiliallocalTxt);
             this.Controls.Add(this.filialTel);
-            this.Controls.Add(this.filialtxt);
+            this.Controls.Add(this.Emailfilialtxt);
             this.Controls.Add(this.codigotxt);
             this.Controls.Add(this.localizacaotxt);
             this.Controls.Add(this.espacoFiscalCombo);
@@ -406,6 +456,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tabelaFilial)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -430,9 +481,9 @@
         private System.Windows.Forms.Label regimeFiscal;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label Nome;
-        private System.Windows.Forms.TextBox localTxt;
+        private System.Windows.Forms.TextBox FiliallocalTxt;
         private System.Windows.Forms.TextBox filialTel;
-        private System.Windows.Forms.TextBox filialtxt;
+        private System.Windows.Forms.TextBox Emailfilialtxt;
         private System.Windows.Forms.TextBox codigotxt;
         private System.Windows.Forms.TextBox localizacaotxt;
         private System.Windows.Forms.ComboBox espacoFiscalCombo;
@@ -444,5 +495,8 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button addFilialBtn;
+        private System.Windows.Forms.DataGridView tabelaFilial;
+        private System.Windows.Forms.Label label10;
     }
 }

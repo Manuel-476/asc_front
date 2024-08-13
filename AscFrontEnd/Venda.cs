@@ -750,14 +750,12 @@ namespace AscFrontEnd
 
         private void excelBtn_MouseMove(object sender, MouseEventArgs e)
         {
-            excelBtn.BackColor = Color.White;
-            excelBtn.ForeColor = Color.Black;
+
         }
 
         private void excelBtn_MouseLeave(object sender, EventArgs e)
         {
-            excelBtn.BackColor = Color.FromArgb(64, 64, 64);
-            excelBtn.ForeColor = Color.White;
+
         }
 
         private void timerRefresh_Tick(object sender, EventArgs e)

@@ -21,16 +21,20 @@ namespace AscFrontEnd
 {
     public partial class Form1 : Form
     {
+        List<FornecedorFilialDTO> filiais;
+        DataTable dtFilial;
         public Form1()
         {
             InitializeComponent();
+            filiais = new List<FornecedorFilialDTO> ();
+            dtFilial = new DataTable ();
         }
 
         private async void cadastrarBtn_Click(object sender, EventArgs e)
         {
             List<FornecedorPhoneDTO> phone = new List<FornecedorPhoneDTO>() { new FornecedorPhoneDTO() { telefone = telefonetxt.Text} };
             List<FornecedorFilialDTO> filias = new List<FornecedorFilialDTO> { new FornecedorFilialDTO() { email = emailText.Text,codigo=codigotxt
-           .Text,localizacao=localTxt.Text,nif=nifText.Text,fornFilialPhones=null,foto="string"} };
+           .Text,localizacao=FiliallocalTxt.Text,nif=nifText.Text,fornFilialPhones=null,foto="string"} };
             var fornecedor = new FornecedorDTO()
             {
                 nome_fantasia = nomeFantasiatxt.Text,
@@ -76,7 +80,7 @@ namespace AscFrontEnd
         {
             List<FornecedorPhoneDTO> phone = new List<FornecedorPhoneDTO>() { new FornecedorPhoneDTO() { telefone = telefonetxt.Text } };
             List<FornecedorFilialDTO> filias = new List<FornecedorFilialDTO> { new FornecedorFilialDTO() { email = emailText.Text,codigo=codigotxt
-           .Text,localizacao=localTxt.Text,nif=nifText.Text,fornFilialPhones=null,foto="string"} };
+           .Text,localizacao=FiliallocalTxt.Text,nif=nifText.Text,fornFilialPhones=null,foto="string"} };
             var fornecedor = new FornecedorDTO()
             {
                 nome_fantasia = nomeFantasiatxt.Text,
@@ -187,6 +191,43 @@ namespace AscFrontEnd
 
             espacoFiscalCombo.Items.Add("Nacional");
             espacoFiscalCombo.Items.Add("Internacional");
+
+            dtFilial.Columns.Add("id", typeof(int));
+            dtFilial.Columns.Add("Codigo", typeof(string));
+            dtFilial.Columns.Add("Email", typeof(string));
+            dtFilial.Columns.Add("Telefone", typeof(string));
+            dtFilial.Columns.Add("Localizacao", typeof(string));
+
+            tabelaFilial.DataSource = dtFilial;
+        }
+
+        private void addFilialBtn_Click(object sender, EventArgs e)
+        {
+            int idFilais = tabelaFilial.Rows.Count;
+            int id = 1;
+
+            dtFilial.Rows.Clear();
+
+            var telefone = new List<FornFilialPhoneDTO>();
+               telefone.Add(new FornFilialPhoneDTO() { telefone =  filialTel.Text });
+
+                filiais.Add(new FornecedorFilialDTO()
+                {
+                    codigo = codigotxt.Text,
+                    email = Emailfilialtxt.Text,
+                    fornFilialPhones = telefone,
+                    localizacao = FiliallocalTxt.Text,
+                });
+
+                foreach (var f in filiais)
+                {
+
+                    dtFilial.Rows.Add(id, f.codigo, f.email, f.fornFilialPhones.First().telefone, f.localizacao);
+                  
+                   id++;
+                }
+            tabelaFilial.DataSource = dtFilial;
         }
     }
+    
 }
