@@ -87,6 +87,8 @@ namespace AscFrontEnd
                 removeStockPicture.Enabled = true;
 
                 id = int.Parse(tabelaInventario.Rows[e.RowIndex].Cells[0].Value.ToString());
+
+                artigoTexto.Text ="Artigo: " + StaticProperty.artigos.Where(art => art.id == id).First().codigo;
             }
             catch
             {

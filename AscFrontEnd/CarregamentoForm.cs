@@ -229,7 +229,7 @@ namespace AscFrontEnd
                     var contentArmazem = await responseArmazem.Content.ReadAsStringAsync();
                     StaticProperty.armazens = JsonConvert.DeserializeObject<List<ArmazemDTO>>(contentArmazem);
 
-                    processValue += 2;
+                    processValue += 1;
                 }
 
                 var responseLocationStore = await client.GetAsync($"https://localhost:7200/api/Armazem/LocationStore");
@@ -243,11 +243,22 @@ namespace AscFrontEnd
                 }
 
                 var responseLocationArtigo = await client.GetAsync($"https://localhost:7200/api/Armazem/LocationArtigo");
-
+                
                 if (responseLocationArtigo.IsSuccessStatusCode)
                 {
                     var contentLocationArtigo = await responseLocationArtigo.Content.ReadAsStringAsync();
                     StaticProperty.locationArtigos = JsonConvert.DeserializeObject<List<LocationArtigoDTO>>(contentLocationArtigo);
+
+                    processValue += 1;
+                }
+
+                var responseHistorico  = await client.GetAsync($"https://localhost:7200/api/Stock/Historico");
+
+                if (responseHistorico.IsSuccessStatusCode)
+                {
+                    var contentHistorico = await responseHistorico.Content.ReadAsStringAsync();
+
+                    StaticProperty.historico = JsonConvert.DeserializeObject<List<ArmazemHistoricoDTO>>(contentHistorico);
 
                     processValue += 1;
                 }

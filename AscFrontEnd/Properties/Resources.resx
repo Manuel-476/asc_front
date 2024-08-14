@@ -124,9 +124,6 @@
   <data name="icons8-truck-80" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-truck-80.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-add-40" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Files\icons8-add-40.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="warehouse" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\warehouse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -159,6 +156,9 @@
   </data>
   <data name="icons8-active-58" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-active-58.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icons8-product-50" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Files\icons8-product-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-credit-60" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-credit-60.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -208,8 +208,14 @@
   <data name="icons8-credit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-credit.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="istockphoto-1316081189-1024x1024" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Files\istockphoto-1316081189-1024x1024.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="icons8-product-50-family" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-product-50-family.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icons8-add-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Files\icons8-add-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-bullet-list-50" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-bullet-list-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -253,8 +259,8 @@
   <data name="icons8-pdf-60" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-pdf-60.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-product-50" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Files\icons8-product-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-add-40" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Files\icons8-add-40.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-enterprise-96T1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-enterprise-96T.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -262,16 +268,16 @@
   <data name="ascPng" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\img\ascPng.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="icons8-remove-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Files\icons8-remove-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="icons8-excel-80" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-excel-80.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="loadImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\loadImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-add-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Files\icons8-add-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icons8-remove-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Files\icons8-remove-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Smart_Entity" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Files\Smart_Entity.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

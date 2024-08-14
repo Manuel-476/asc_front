@@ -26,10 +26,14 @@ namespace AscFrontEnd
 
         private async void button1_Click(object sender, EventArgs e)
         {
+
+            int armazemId  = StaticProperty.armazens.Where(arm=>arm.codigo == armazemCombo.Text.ToString()).First().id;
+            int localId  = StaticProperty.locationStores.Where(arm => arm.codigo == localCombo.Text.ToString()).First().id;
+
             var artigo = new ArtigoDTO()
             {
               codigo = codigotxt.Text,
-              armazemId = 0,
+              armazemId = armazemId,
               descricao = descricaotxt.Text,
               familiaId = 1,
               subFamiliaId = 1,
@@ -37,7 +41,7 @@ namespace AscFrontEnd
               modeloId = 1,
               mov_stock = checkBox1.Checked?OpcaoBinaria.Sim:OpcaoBinaria.Nao,
               mov_lote = checkBox1.Checked?OpcaoBinaria.Sim:OpcaoBinaria.Nao,
-              localizacaoArtigoId = 0,
+              localizacaoArtigoId = localId,
 
             };
 

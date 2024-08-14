@@ -533,6 +533,16 @@ namespace AscFrontEnd.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap istockphoto_1316081189_1024x1024 {
+            get {
+                object obj = ResourceManager.GetObject("istockphoto-1316081189-1024x1024", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap loadImage {
             get {
                 object obj = ResourceManager.GetObject("loadImage", resourceCulture);
@@ -556,6 +566,16 @@ namespace AscFrontEnd.Properties {
         internal static System.Drawing.Bitmap remove {
             get {
                 object obj = ResourceManager.GetObject("remove", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Smart_Entity {
+            get {
+                object obj = ResourceManager.GetObject("Smart_Entity", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
