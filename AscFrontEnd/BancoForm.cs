@@ -52,7 +52,7 @@ namespace AscFrontEnd
                 conta = contaText.Text.ToString(),
                 iban = ibanText.Text.ToString(),
                 status = DTOs.Enums.Enums.Status.activo,
-                empresaId = 1
+                empresaId = StaticProperty.empresaId
             });
 
             foreach (var banco in bancos)

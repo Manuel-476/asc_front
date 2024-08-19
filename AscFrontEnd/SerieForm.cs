@@ -27,7 +27,7 @@ namespace AscFrontEnd.Files
         {
             var serie = new SerieDTO()
             {
-                EmpresaId = 0,
+                EmpresaId = StaticProperty.empresaId,
                 serie = textSerie.Text,
                 status = DTOs.Enums.Enums.OpcaoBinaria.Sim,
             };

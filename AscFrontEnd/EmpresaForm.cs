@@ -55,6 +55,7 @@ namespace AscFrontEnd
                            caixas = StaticProperty.caixas,
                            status = DTOs.Enums.Enums.Status.activo,
                            foto = string.Empty,
+                           
                        };
 
             // Conversão do objeto Film para JSON

@@ -41,7 +41,7 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.clientes.Where(c=>c.status == Status.activo))
+                foreach (var item in StaticProperty.clientes.Where(c=>c.status == Status.activo && c.empresaid == StaticProperty.empresaId))
                 {
                     dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
 
@@ -70,7 +70,7 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in clientes)
+                foreach (var item in clientes.Where(x => x.empresaid == StaticProperty.empresaId))
                 {
                     dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
 
@@ -115,12 +115,12 @@ namespace AscFrontEnd
 
         private void editarPicture_MouseMove(object sender, MouseEventArgs e)
         {
-            editarPicture.BackColor = Color.Transparent;
+            editarPicture.BackColor = Color.Gray;
         }
 
         private void editarPicture_MouseLeave(object sender, EventArgs e)
         {
-            editarPicture.BackColor= Color.White;
+            editarPicture.BackColor= Color.Transparent;
         }
 
         private void transformar_MouseMove(object sender, MouseEventArgs e)

@@ -13,7 +13,7 @@ using static AscFrontEnd.DTOs.Enums.Enums;
 
 namespace AscFrontEnd.DTOs
 {
-    public class FuncionarioDTO:PessoaDTO
+    public class FuncionarioDTO : PessoaDTO
     {
         public int Id { get; set; }
         public string Nome { get; set; }

@@ -53,7 +53,7 @@ namespace AscFrontEnd
                 morada = moradaText.Text,
                 status = DTOs.Enums.Enums.Status.activo,
                 users = StaticProperty.user,
-                empresaid = 1,
+                empresaid = StaticProperty.empresaId,
                 paisId = 1,
                 provinciaId = 1,
                 phones = phones,

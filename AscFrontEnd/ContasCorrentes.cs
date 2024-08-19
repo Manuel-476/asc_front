@@ -66,7 +66,7 @@ namespace AscFrontEnd
 
         private async void ContasCorrentes_Load(object sender, EventArgs e)
         {
-            var vftResult = StaticProperty.vfts.GroupBy(vft => vft.fornecedorId);
+            var vftResult = StaticProperty.vfts.Where(x=>x.fornecedor.empresaid == StaticProperty.empresaId).GroupBy(vft => vft.fornecedorId);
 
             entidadeTable.Columns.Add("Codigo Entidade", typeof(int));
             entidadeTable.Columns.Add("Entidade", typeof(string));
@@ -195,7 +195,7 @@ namespace AscFrontEnd
                     dataTable.Clear(); // Limpa todas as linhas da fonte de dados
                 }
 
-                var ftResult = StaticProperty.fts.GroupBy(ft => ft.clienteId);
+                var ftResult = StaticProperty.fts.Where(x=>x.cliente.empresaid == StaticProperty.empresaId).GroupBy(ft => ft.clienteId);
 
                 // Adicionando linhas ao DataTable
                 foreach (var ft in ftResult)
@@ -229,7 +229,7 @@ namespace AscFrontEnd
                     dataTable.Clear(); // Limpa todas as linhas da fonte de dados
                 }
 
-                var vftResult = StaticProperty.vfts.GroupBy(vft => vft.fornecedorId);
+                var vftResult = StaticProperty.vfts.Where(x=>x.fornecedor.empresaid==StaticProperty.empresaId).GroupBy(vft => vft.fornecedorId);
 
                 // Adicionando linhas ao DataTable
                 foreach (var vft in vftResult)

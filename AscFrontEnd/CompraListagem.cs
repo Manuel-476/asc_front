@@ -37,7 +37,7 @@ namespace AscFrontEnd
 
 
               // Adicionando linhas ao DataTable
-              foreach (var item in StaticProperty.pcos.Where(f => f.status != DocState.anulado))
+              foreach (var item in StaticProperty.pcos.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
               {
                 fornecedorNome = StaticProperty.fornecedores.Where(f =>f.id == item.fornecedorId).First().nome_fantasia;
                 dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
@@ -59,7 +59,7 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.cots.Where(f => f.status != DocState.anulado))
+                foreach (var item in StaticProperty.cots.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
                 {
                     fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
                     dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
@@ -82,7 +82,7 @@ namespace AscFrontEnd
 
 
             // Adicionando linhas ao DataTable
-            foreach (var item in StaticProperty.pcos.Where(f => f.status != DocState.anulado))
+            foreach (var item in StaticProperty.pcos.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
             {
                 fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
                 dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
@@ -103,7 +103,7 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vfts.Where(f => f.status != DocState.anulado))
+                foreach (var item in StaticProperty.vfts.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
                 {
                     fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
                     dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
@@ -125,7 +125,7 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vfrs.Where(f => f.status != DocState.anulado && f.status != DocState.estornado).ToList())
+                foreach (var item in StaticProperty.vfrs.Where(f => f.status != DocState.anulado && f.status != DocState.estornado && f.fornecedor.empresaid == StaticProperty.empresaId).ToList())
                 {
                     fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
                     dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
@@ -148,7 +148,7 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vgts.Where(f => f.status != DocState.anulado))
+                foreach (var item in StaticProperty.vgts.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
                 {
                     fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
                     dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
@@ -170,7 +170,7 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vncs)
+                foreach (var item in StaticProperty.vncs.Where(x => x.fornecedor.empresaid == StaticProperty.empresaId))
                 {
                     fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
                     dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
@@ -190,7 +190,7 @@ namespace AscFrontEnd
             if (radioVft.Checked)
             {
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vfts.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
+                foreach (var item in StaticProperty.vfts.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
                 {
                     fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
                     dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);

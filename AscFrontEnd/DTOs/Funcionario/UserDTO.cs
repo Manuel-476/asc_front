@@ -11,6 +11,7 @@ namespace AscFrontEnd.DTOs.Funcionario
         public int id { get; set; }
         public string user_name { get; set; }
         public string password { get; set; }
-        public string nivel_acesso { get; set; } = string.Empty;   
+        public string nivel_acesso { get; set; } = string.Empty;
+        public int funcionarioid { get; set; }
     }
 }

@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.nomeUsuariotxt = new System.Windows.Forms.TextBox();
+            this.senhaUsuariotxt = new System.Windows.Forms.TextBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -56,25 +56,27 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "asc";
             // 
-            // textBox1
+            // nomeUsuariotxt
             // 
-            this.textBox1.Location = new System.Drawing.Point(487, 203);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(198, 20);
-            this.textBox1.TabIndex = 3;
+            this.nomeUsuariotxt.Location = new System.Drawing.Point(487, 203);
+            this.nomeUsuariotxt.Name = "nomeUsuariotxt";
+            this.nomeUsuariotxt.Size = new System.Drawing.Size(198, 20);
+            this.nomeUsuariotxt.TabIndex = 3;
+            this.nomeUsuariotxt.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // textBox2
+            // senhaUsuariotxt
             // 
-            this.textBox2.Location = new System.Drawing.Point(487, 264);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(198, 20);
-            this.textBox2.TabIndex = 4;
+            this.senhaUsuariotxt.Location = new System.Drawing.Point(487, 264);
+            this.senhaUsuariotxt.Name = "senhaUsuariotxt";
+            this.senhaUsuariotxt.Size = new System.Drawing.Size(198, 20);
+            this.senhaUsuariotxt.TabIndex = 4;
+            this.senhaUsuariotxt.TextChanged += new System.EventHandler(this.senhaUsuariotxt_TextChanged);
             // 
             // pictureBox3
             // 
             this.pictureBox3.BackgroundImage = global::AscFrontEnd.Properties.Resources.Smart_Entity;
             this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox3.Location = new System.Drawing.Point(478, 370);
+            this.pictureBox3.Location = new System.Drawing.Point(478, 360);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(218, 102);
             this.pictureBox3.TabIndex = 5;
@@ -137,7 +139,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial Narrow", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label5.Location = new System.Drawing.Point(517, 9);
+            this.label5.Location = new System.Drawing.Point(517, 25);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(132, 31);
             this.label5.TabIndex = 9;
@@ -166,8 +168,8 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pictureBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.senhaUsuariotxt);
+            this.Controls.Add(this.nomeUsuariotxt);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
@@ -177,7 +179,7 @@
             this.Name = "TelaLogin";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "TelaLogin";
+            this.Text = " ";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -191,8 +193,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox nomeUsuariotxt;
+        private System.Windows.Forms.TextBox senhaUsuariotxt;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;

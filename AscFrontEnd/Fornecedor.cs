@@ -92,7 +92,8 @@ namespace AscFrontEnd
                 nif = nifText.Text,
                 phones = phone,
                 foto = "string",
-                fornecedorFiliais = filias
+                fornecedorFiliais = filias,
+                empresaid = StaticProperty.empresaId
             };
 
             // Configuração do HttpClient

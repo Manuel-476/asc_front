@@ -89,6 +89,7 @@
             this.pesqText.Name = "pesqText";
             this.pesqText.Size = new System.Drawing.Size(222, 20);
             this.pesqText.TabIndex = 13;
+            this.pesqText.TextChanged += new System.EventHandler(this.pesqText_TextChanged);
             // 
             // dataGridView1
             // 

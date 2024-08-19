@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.Json;
 using Color = System.Drawing.Color;
+using AscFrontEnd.DTOs.Fornecedor;
+using AscFrontEnd.DTOs;
+
 
 namespace AscFrontEnd
 {
@@ -57,11 +60,14 @@ namespace AscFrontEnd
             dt.Columns.Add("Data Nascimento", typeof(string));
 
             // Adicionando linhas ao DataTable
-            foreach (var item in StaticProperty.funcionarios.Where(f => f.status == DTOs.Enums.Enums.Status.activo).ToList())
-            {
-                dt.Rows.Add(item.Id, item.Nome, item.email, item.nif, item.morada, item.data_nascimento);
+            if(StaticProperty.funcionarios != null) 
+            { 
+              foreach (var item in StaticProperty.funcionarios.Where(f => f.status == DTOs.Enums.Enums.Status.activo && f.empresaid == StaticProperty.empresaId))
+              {
+                  dt.Rows.Add(item.Id, item.Nome, item.email, item.nif, item.morada, item.data_nascimento);
 
-                dataGridView1.DataSource = dt;
+                   dataGridView1.DataSource = dt;
+              }
             }
         }
 
@@ -101,6 +107,41 @@ namespace AscFrontEnd
             else
             { 
                 return;
+            }
+        }
+
+        private async void pesqText_TextChanged(object sender, EventArgs e)
+        {
+            var client = new HttpClient();
+            List<FuncionarioDTO> dados = null;
+            
+            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("id", typeof(int));
+            dt.Columns.Add("Nome", typeof(string));
+            dt.Columns.Add("email", typeof(string));
+            dt.Columns.Add("nif", typeof(string));
+            dt.Columns.Add("pessoa", typeof(string));
+            dt.Columns.Add("localizacao", typeof(string));
+            dt.Columns.Add("Data Nascimento", typeof(string));
+
+            var response = await client.GetAsync($"https://localhost:7200/api/Funcionario/Search/{pesqText.Text}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+
+                dados = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FuncionarioDTO>>(content);
+            }
+            // Adicionando linhas ao DataTable
+            foreach (var item in dados)
+            {
+                dt.Rows.Add(item.Id, item.Nome, item.email, item.nif, item.morada, item.data_nascimento);
+
+                dataGridView1.DataSource = dt;
             }
         }
     }

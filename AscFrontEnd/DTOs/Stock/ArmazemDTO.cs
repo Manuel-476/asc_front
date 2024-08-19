@@ -15,7 +15,7 @@ namespace AscFrontEnd.DTOs.Stock
         public List<LocationStoreDTO> storeLocations { get; set; }
         public int sectorId { get; set; }
         public int funcionarioId { get; set; }
-        public int status { get; set; }
+        public Status status { get; set; }
         public int empresaId { get; set; }
     }
 

@@ -92,7 +92,7 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.artigos)
+                foreach (var item in StaticProperty.artigos.Where(x=>x.empresaId == StaticProperty.empresaId))
                 {
                     dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario);
 
@@ -175,7 +175,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(frs);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Venda/Fr/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Venda/Fr/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
 
             }
 
@@ -198,7 +198,7 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = vendaArtigo.preco,
                         qtd = vendaArtigo.qtd,
-                        iva = vendaArtigo.iva
+                        iva = vendaArtigo.iva,
                     });
                 }
 
@@ -206,7 +206,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(fts);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Venda/Ft/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Venda/Ft/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
 
             }
 
@@ -236,7 +236,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(fps);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync("https://localhost:7200/api/Venda/Fp", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Venda/Fp", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "GT")
@@ -266,7 +266,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(gts);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync("https://localhost:7200/api/Venda/Gt", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Venda/Gt/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
 
             }
 
@@ -327,7 +327,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(ncs);
 
                 // Envio dos dados para a API
-               response = await client.PostAsync("https://localhost:7200/api/Venda/Ecl", new StringContent(json, Encoding.UTF8, "application/json"));
+               response = await client.PostAsync($"https://localhost:7200/api/Venda/Nc/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
   
             }
 
@@ -452,7 +452,7 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in dados)
+                foreach (var item in dados.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
                     dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario);
 

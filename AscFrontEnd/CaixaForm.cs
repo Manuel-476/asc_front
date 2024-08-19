@@ -37,7 +37,7 @@ namespace AscFrontEnd
                 codigo = codigoText.Text,
                 descricao = descText.Text.ToString(),
                 status = DTOs.Enums.Enums.Status.activo,
-                empresaId = 1
+                empresaId = StaticProperty.empresaId
             });
 
             foreach (var caixa in caixas)

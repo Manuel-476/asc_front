@@ -1,6 +1,7 @@
 ﻿using AscFrontEnd.DTOs.Cliente;
 using AscFrontEnd.DTOs.Fornecedor;
 using AscFrontEnd.DTOs.StaticsDto;
+using ERP_Buyer.Application.DTOs.Documentos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -39,7 +40,7 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.fornecedores.Where(f => f.status == Status.activo))
+                foreach (var item in StaticProperty.fornecedores.Where(f => f.status == Status.activo && f.empresaid == StaticProperty.empresaId))
                 {
                     dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
 
@@ -139,6 +140,43 @@ namespace AscFrontEnd
             {
                 return;
             }
+        }
+
+        private async void pesqText_TextChanged(object sender, EventArgs e)
+        {
+            var client = new HttpClient();
+            List<FornecedorDTO> dados = null;
+            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("id", typeof(int));
+            dt.Columns.Add("Nome", typeof(string));
+            dt.Columns.Add("email", typeof(string));
+            dt.Columns.Add("nif", typeof(string));
+            dt.Columns.Add("pessoa", typeof(string));
+            dt.Columns.Add("localizacao", typeof(string));
+
+            var response = await client.GetAsync($"https://localhost:7200/api/Fornecedor/Search/{pesqText.Text}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                dados = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FornecedorDTO>>(content);
+            }
+            // Adicionando linhas ao DataTable
+            foreach (var item in dados)
+            {
+                dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
+
+                tabelaFornecedor.DataSource = dt;
+            }
+        }
+
+        private void editarPicture_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

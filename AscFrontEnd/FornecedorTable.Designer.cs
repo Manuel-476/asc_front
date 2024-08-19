@@ -92,6 +92,7 @@
             this.pesqText.Name = "pesqText";
             this.pesqText.Size = new System.Drawing.Size(226, 20);
             this.pesqText.TabIndex = 12;
+            this.pesqText.TextChanged += new System.EventHandler(this.pesqText_TextChanged);
             // 
             // tabelaFornecedor
             // 
@@ -139,6 +140,7 @@
             this.editarPicture.Size = new System.Drawing.Size(71, 50);
             this.editarPicture.TabIndex = 15;
             this.editarPicture.TabStop = false;
+            this.editarPicture.Click += new System.EventHandler(this.editarPicture_Click);
             this.editarPicture.MouseLeave += new System.EventHandler(this.editarPicture_MouseLeave);
             this.editarPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.editarPicture_MouseMove);
             // 

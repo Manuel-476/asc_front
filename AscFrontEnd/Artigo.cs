@@ -42,7 +42,7 @@ namespace AscFrontEnd
               mov_stock = checkBox1.Checked?OpcaoBinaria.Sim:OpcaoBinaria.Nao,
               mov_lote = checkBox1.Checked?OpcaoBinaria.Sim:OpcaoBinaria.Nao,
               localizacaoArtigoId = localId,
-
+              empresaId = StaticProperty.empresaId,
             };
 
             // Configuração do HttpClient
@@ -55,7 +55,7 @@ namespace AscFrontEnd
             string json = JsonSerializer.Serialize(artigo);
 
             // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Artigo/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Artigo/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Artigo Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);

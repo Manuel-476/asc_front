@@ -29,7 +29,8 @@ namespace AscFrontEnd
             var familia = new FamiliaArtigoDTO()
             { 
                 codigo = codigo,
-                descricao = descricao
+                descricao = descricao,
+                empresaId = StaticProperty.empresaId
             };
 
             // Configuração do HttpClient

@@ -126,6 +126,7 @@
             this.pesqText.Name = "pesqText";
             this.pesqText.Size = new System.Drawing.Size(226, 20);
             this.pesqText.TabIndex = 12;
+            this.pesqText.TextChanged += new System.EventHandler(this.pesqText_TextChanged);
             // 
             // FuncionarioListagem
             // 

@@ -26,10 +26,11 @@ namespace AscFrontEnd
             string codigo = codigotxt.Text;
             string descricao = descricaotxt.Text;
 
-            var familia = new FamiliaArtigoDTO()
+            var subFamilia = new SubFamiliaDTO()
             {
                 codigo = codigo,
-                descricao = descricao
+                descricao = descricao,
+                empresaId = StaticProperty.empresaId
             };
 
             // Configuração do HttpClient
@@ -39,7 +40,7 @@ namespace AscFrontEnd
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             // Conversão do objeto Film para JSON
-            string json = System.Text.Json.JsonSerializer.Serialize(familia);
+            string json = System.Text.Json.JsonSerializer.Serialize(subFamilia);
 
             // Envio dos dados para a API
             var response = await client.PostAsync("https://localhost:7200/api/Artigo/SubFamilia", new StringContent(json, Encoding.UTF8, "application/json"));

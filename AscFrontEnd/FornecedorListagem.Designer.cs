@@ -55,6 +55,7 @@
             this.pesqText.Name = "pesqText";
             this.pesqText.Size = new System.Drawing.Size(220, 20);
             this.pesqText.TabIndex = 4;
+            this.pesqText.TextChanged += new System.EventHandler(this.pesqText_TextChanged);
             // 
             // tabelaFornecedor
             // 

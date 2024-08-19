@@ -379,7 +379,7 @@ namespace AscFrontEnd
                     var contentSubFamilia = await responseSubFamilia.Content.ReadAsStringAsync();
 
                     StaticProperty.subFamilias = JsonConvert.DeserializeObject<List<SubFamiliaDTO>>(contentSubFamilia);
-                    processValue += 1;
+                    processValue += 2;
                 }
 
                 // Marca
@@ -403,7 +403,7 @@ namespace AscFrontEnd
 
                     StaticProperty.modelos = JsonConvert.DeserializeObject<List<ModeloDTO>>(contentModelo);
 
-                    processValue += 1;
+                    processValue += 3;
                 }
             }
             catch (Exception ex)
@@ -430,7 +430,9 @@ namespace AscFrontEnd
             else 
             {
                 timer1.Stop();
+
                 this.Hide();
+
                 MenuPrincipal menuForm = new MenuPrincipal();
                 menuForm.ShowDialog();
             }

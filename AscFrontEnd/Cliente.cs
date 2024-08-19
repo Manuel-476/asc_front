@@ -48,7 +48,8 @@ namespace AscFrontEnd
                 nif = nifText.Text,
                 phones = phone,
                 foto = "string",
-                clienteFiliais = filias
+                clienteFiliais = filias,
+                empresaid = StaticProperty.empresaId
             };
 
             // Configuração do HttpClient
@@ -61,7 +62,7 @@ namespace AscFrontEnd
             string json = JsonSerializer.Serialize(cliente);
 
             // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Cliente/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Cliente/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
          
             if (response.IsSuccessStatusCode)
             {

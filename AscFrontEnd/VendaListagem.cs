@@ -60,10 +60,13 @@ namespace AscFrontEnd
             // Adicionando linhas ao DataTable
             foreach (var item in StaticProperty.fps)
             {
-                clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
-                dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+                if (StaticProperty.artigos.Where(x=>x.id == item.fpArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId) 
+                {
+                    clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                    dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
 
-                dataGridView1.DataSource = dt;
+                    dataGridView1.DataSource = dt;
+                }
             }
         }
 
@@ -79,7 +82,7 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.fts.Where(v => v.status != DocState.estornado && v.status != DocState.anulado))
+                foreach (var item in StaticProperty.fts.Where(v => v.status != DocState.estornado && v.status != DocState.anulado && v.cliente.empresaid == StaticProperty.empresaId))
                 {
                     clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
                     dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
@@ -101,12 +104,15 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.frs.Where(v =>  v.status != DocState.anulado && v.status != DocState.estornado))
+                foreach (var item in StaticProperty.frs.Where(v =>  v.status != DocState.anulado && v.status != DocState.estornado ))
                 {
-                    clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
-                    dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+                    if (StaticProperty.artigos.Where(x=>x.id == item.frArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                    {
+                        clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
 
-                    dataGridView1.DataSource = dt;
+                        dataGridView1.DataSource = dt;
+                    }
                 }
             }
         }
@@ -123,12 +129,15 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.gts.Where(v => v.status != DocState.anulado))
+                foreach (var item in StaticProperty.gts.Where(v => v.status != DocState.anulado ))
                 {
-                    clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
-                    dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+                    if (StaticProperty.artigos.Where(x => x.id == item.gtArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                    {
+                        clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
 
-                    dataGridView1.DataSource = dt;
+                        dataGridView1.DataSource = dt;
+                    }
                 }
             }
         }
@@ -147,10 +156,13 @@ namespace AscFrontEnd
                 // Adicionando linhas ao DataTable
                 foreach (var item in StaticProperty.ncs.Where(v => v.status != DocState.anulado))
                 {
-                    clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
-                    dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+                    if (StaticProperty.artigos.Where(x => x.id == item.ncArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                    {
+                        clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
 
-                    dataGridView1.DataSource = dt;
+                        dataGridView1.DataSource = dt;
+                    }
                 }
             }
         }
@@ -221,10 +233,13 @@ namespace AscFrontEnd
                 // Adicionando linhas ao DataTable
                 foreach (var item in StaticProperty.fps.Where(v => v.status != DocState.anulado))
                 {
-                    clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
-                    dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+                    if (StaticProperty.artigos.Where(x => x.id == item.fpArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                    {
+                        clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
 
-                    dataGridView1.DataSource = dt;
+                        dataGridView1.DataSource = dt;
+                    }
                 }
             }
         }

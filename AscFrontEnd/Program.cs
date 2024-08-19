@@ -16,7 +16,7 @@ namespace AscFrontEnd
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CarregamentoForm());
+            Application.Run(new TelaLogin());
         }
     }
 }

@@ -79,7 +79,7 @@ namespace AscFrontEnd
                 dt.Columns.Add("preco", typeof(float));
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.artigos.ToList())
+                foreach (var item in StaticProperty.artigos.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
                     dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario);
 
@@ -149,7 +149,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(vfrs);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Compra/Vfr/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Compra/Vfr/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "VFT")
@@ -187,7 +187,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(vfts);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Compra/Vft/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Compra/Vft/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "VGT")
@@ -225,7 +225,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(vgts);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync("https://localhost:7200/api/Compra/Vgt", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Compra/Vgt/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "ECF")
@@ -264,7 +264,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(ecfs);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync("https://localhost:7200/api/Compra/Ecf", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Compra/Ecf", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "VNC")
@@ -302,7 +302,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(vncs);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync("https://localhost:7200/api/Compra/Vnc", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Compra/Vnc/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "VND")
@@ -337,7 +337,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(vncs);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync("https://localhost:7200/api/Compra/Vnd", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Compra/Vnd", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "PCO")
@@ -375,7 +375,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(pcos);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync("https://localhost:7200/api/Compra/Pco", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Compra/Pco", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "COT")
@@ -414,7 +414,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(cots);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync("https://localhost:7200/api/Compra/Pco", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Compra/Cot", new StringContent(json, Encoding.UTF8, "application/json"));
 
             }
 
@@ -602,7 +602,8 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = float.Parse(precotxt.Text),
                         qtd = int.Parse(Qtd.Text),
-                        iva = float.Parse(iva.Text)
+                        iva = float.Parse(iva.Text),
+                        
                     });
 
                     foreach (var vft in compraArtigos)

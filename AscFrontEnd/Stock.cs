@@ -37,9 +37,35 @@ namespace AscFrontEnd
 
         }
 
-        private void pesqText_TextChanged(object sender, EventArgs e)
+        private async void pesqText_TextChanged(object sender, EventArgs e)
         {
+            var client = new HttpClient();
+            var response = await client.GetAsync($"https://localhost:7200/api/Armazem/Stock/Artigo/{StaticProperty.empresaId}");
 
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                dados = JsonConvert.DeserializeObject<List<StockDTO>>(content);
+
+                stockTable.Columns.Add("id", typeof(int));
+                stockTable.Columns.Add("Artigo", typeof(string));
+                stockTable.Columns.Add("Descricao", typeof(string));
+                stockTable.Columns.Add("Qtd", typeof(int));
+                stockTable.Columns.Add("Estado", typeof(string));
+
+                // Adicionando linhas ao DataTable
+                foreach (var artigo in dados.Where(x=>x.artigo.Contains(pesqText.Text) || x.descricao.Contains(pesqText.Text)))
+                {
+                    string status = artigo.status == 0 ? "Nao Activo" : "Activo";
+                    stockTable.Rows.Add(artigo.id, artigo.artigo, artigo.descricao, artigo.qtd, status);
+
+                    tabelaInventario.DataSource = stockTable;
+                }
+
+                transferPicture.Enabled = false;
+                addStockPicture.Enabled = false;
+                removeStockPicture.Enabled = false;
+            }
         }
 
         private void tabelaCliente_CellContentClick(object sender, DataGridViewCellEventArgs e)

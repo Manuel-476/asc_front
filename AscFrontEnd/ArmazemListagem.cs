@@ -29,7 +29,7 @@ namespace AscFrontEnd
             dt.Columns.Add("mov. Lote", typeof(string));
 
             // Adicionando linhas ao DataTable
-            foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == 1))
+            foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == StaticProperty.empresaId))
             {
                 dt.Rows.Add(item.id, item.codigo, item.descricao);
 
@@ -60,6 +60,25 @@ namespace AscFrontEnd
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void pesqText_TextChanged(object sender, EventArgs e)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("id", typeof(int));
+            dt.Columns.Add("Codigo", typeof(string));
+            dt.Columns.Add("descricao", typeof(string));
+            dt.Columns.Add("P. Unitario", typeof(string));
+            dt.Columns.Add("mov. Stock", typeof(string));
+            dt.Columns.Add("mov. Lote", typeof(string));
+
+            // Adicionando linhas ao DataTable
+            foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == StaticProperty.empresaId && (arm.codigo.Contains(pesqText.Text) || arm.descricao.Contains(pesqText.Text))))
+            {
+                dt.Rows.Add(item.id, item.codigo, item.descricao);
+
+                dataGridView1.DataSource = dt;
+            }
         }
     }
 }

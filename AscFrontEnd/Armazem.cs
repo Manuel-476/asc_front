@@ -10,6 +10,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Windows.Forms;
+using AscFrontEnd.DTOs.Enums;
+using static AscFrontEnd.DTOs.Enums.Enums;
 
 namespace AscFrontEnd
 {
@@ -70,9 +72,9 @@ namespace AscFrontEnd
                 codigo = codigoArmazemtxt.Text,
                 descricao = descricaoArmazem.Text,
                 sectorId = 0,
-                funcionarioId = 0,
-                empresaId = 0,
-                status = 1,
+                funcionarioId = StaticProperty.funcionarioId,
+                empresaId = StaticProperty.empresaId,
+                status = Status.activo,
                 storeLocations = location
             };
 
@@ -85,7 +87,7 @@ namespace AscFrontEnd
             string json = System.Text.Json.JsonSerializer.Serialize(armazem);
 
             // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Armazem/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Armazem/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Armazem Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
