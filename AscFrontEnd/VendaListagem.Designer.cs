@@ -264,6 +264,7 @@
             this.radioEcl.TabStop = true;
             this.radioEcl.Text = "Encomenda";
             this.radioEcl.UseVisualStyleBackColor = true;
+            this.radioEcl.CheckedChanged += new System.EventHandler(this.radioEcl_CheckedChanged);
             // 
             // VendaListagem
             // 

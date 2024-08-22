@@ -65,7 +65,7 @@ namespace AscFrontEnd
 
 
             // Adicionando linhas ao DataTable
-            foreach (var item in StaticProperty.fps)
+            foreach (var item in StaticProperty.fps.Where(x=>x.status != DocState.anulado && x.status != DocState.estornado))
             {
                 if (StaticProperty.artigos.Where(x => x.id == item.fpArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
                 {
@@ -302,8 +302,28 @@ namespace AscFrontEnd
         {
             if (radioFp.Checked)
             {
-               
 
+                foreach (var item in StaticProperty.fps)
+                {
+                    if (StaticProperty.artigos.Where(x => x.id == item.fpArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                    {
+                        clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                        dataGridView1.DataSource = dt;
+                    }
+                }
+                foreach (var item in StaticProperty.fps)
+                {
+                    documentoVendas.Add(new DocumentoVenda()
+                    {
+                        id = item.id,
+                        clienteId = item.clienteId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
             }
         }
 
@@ -574,6 +594,27 @@ namespace AscFrontEnd
                     }
                 }
             }
+            else if (radioEcl.Checked)
+            {
+                // Adicionando linhas ao DataTable
+                foreach (var item in StaticProperty.ecls.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
+                {
+                    clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                    dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                    dataGridView1.DataSource = dt;
+                }
+                foreach (var item2 in StaticProperty.clientes.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text)))
+                {
+                    foreach (var item in StaticProperty.ecls.Where(f => f.clienteId == item2.id && f.status != DocState.anulado).ToList())
+                    {
+                        clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                        dataGridView1.DataSource = dt;
+                    }
+                }
+            }
 
         }
 
@@ -586,6 +627,12 @@ namespace AscFrontEnd
             if (radioGt.Checked) { documento = "GT"; }
             if (radioNc.Checked) { documento = "NC"; }
             if (radioEcl.Checked) { documento = "ECL"; }
+            if (radioAnulado.Checked)
+            {
+                var doc = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
+                var indexSpace = doc.IndexOf(" ");
+                documento = doc.Substring(0, indexSpace);
+            }
 
             DocumentosDetalhesForm ddf = new DocumentosDetalhesForm(documento, id, Entidade.cliente);
             ddf.ShowDialog();
@@ -684,7 +731,30 @@ namespace AscFrontEnd
                 throw new Exception($"Erro ao carregar os dados: {ex.Message}");
             }
         }
-    } 
+
+        private void radioEcl_CheckedChanged(object sender, EventArgs e)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("id", typeof(int));
+            dt.Columns.Add("Cliente", typeof(string));
+            dt.Columns.Add("Documento", typeof(string));
+            dt.Columns.Add("Data", typeof(string));
+
+            if (radioEcl.Checked)
+            {
+                foreach (var item in StaticProperty.ecls)
+                {
+                    if (StaticProperty.artigos.Where(x => x.id == item.eclArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                    {
+                        clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                        dataGridView1.DataSource = dt;
+                    }
+                }
+            }
+        }
+    }
     public class DocumentoVenda
     {
         public int id { get; set; }

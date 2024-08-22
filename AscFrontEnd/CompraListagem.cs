@@ -418,6 +418,27 @@ namespace AscFrontEnd
                     }
                 }
             }
+            else if (radioEcf.Checked)
+            {
+                // Adicionando linhas ao DataTable
+                foreach (var item in StaticProperty.ecfs.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
+                {
+                    fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
+                    dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                    dataGridView1.DataSource = dt;
+                }
+                foreach (var item2 in StaticProperty.fornecedores.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text) && f.status == Status.activo))
+                {
+                    foreach (var item in StaticProperty.ecfs.Where(f => f.fornecedorId == item2.id).ToList())
+                    {
+                        fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                        dataGridView1.DataSource = dt;
+                    }
+                }
+            }
         }
 
         private async void estornarPicture_Click(object sender, EventArgs e)
@@ -660,12 +681,40 @@ namespace AscFrontEnd
             if (radioVgt.Checked) { documento = "VGT"; }
             if (radioVnc.Checked) { documento = "VNC"; }
             if (radioEcf.Checked) { documento = "ECF"; }
+            if(radioAnulado.Checked) 
+            {
+                var doc = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
+                var indexSpace = doc.IndexOf(" ");
+                documento = doc.Substring(0,indexSpace);
+            }
 
             DocumentosDetalhesForm ddf = new DocumentosDetalhesForm(documento, id, Entidade.fornecedor
                 );
             ddf.ShowDialog();
         }
 
+        private void radioEcf_CheckedChanged(object sender, EventArgs e)
+        {
+                DataTable dt = new DataTable();
+                dt.Columns.Add("id", typeof(int));
+                dt.Columns.Add("Cliente", typeof(string));
+                dt.Columns.Add("Documento", typeof(string));
+                dt.Columns.Add("Data", typeof(string));
+
+                if (radioEcf.Checked)
+                {
+                    foreach (var item in StaticProperty.ecfs)
+                    {
+                        if (StaticProperty.artigos.Where(x => x.id == item.ecfArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                        {
+                            fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
+                            dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                            dataGridView1.DataSource = dt;
+                        }
+                    }
+                }
+        }
         private async void RefreshDocs()
         {
             var client = new HttpClient();
@@ -737,8 +786,7 @@ namespace AscFrontEnd
             }
             catch (Exception ex)
             { throw new Exception($"Erro na actualizacao dos dados: {ex.Message}"); }
-            }
-
+        }
     }
 
     public class DocumentoCompra 

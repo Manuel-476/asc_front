@@ -99,5 +99,15 @@ namespace AscFrontEnd
         {
             Application.Exit();
         }
+
+        private void bancoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new BancoCadastroForm().ShowDialog();
+        }
+
+        private void caixaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new CaixaCadastroForm().ShowDialog();
+        }
     }
 }

@@ -162,11 +162,23 @@
     <Compile Include="ArtigoListagem.Designer.cs">
       <DependentUpon>ArtigoListagem.cs</DependentUpon>
     </Compile>
+    <Compile Include="BancoCadastroForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BancoCadastroForm.Designer.cs">
+      <DependentUpon>BancoCadastroForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="BancoForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="BancoForm.Designer.cs">
       <DependentUpon>BancoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CaixaCadastroForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CaixaCadastroForm.Designer.cs">
+      <DependentUpon>CaixaCadastroForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CaixaForm.cs">
       <SubType>Form</SubType>
@@ -455,8 +467,14 @@
     <EmbeddedResource Include="ArtigoListagem.resx">
       <DependentUpon>ArtigoListagem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BancoCadastroForm.resx">
+      <DependentUpon>BancoCadastroForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BancoForm.resx">
       <DependentUpon>BancoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CaixaCadastroForm.resx">
+      <DependentUpon>CaixaCadastroForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CaixaForm.resx">
       <DependentUpon>CaixaForm.cs</DependentUpon>

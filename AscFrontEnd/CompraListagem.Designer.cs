@@ -274,6 +274,7 @@
             this.radioEcf.TabStop = true;
             this.radioEcf.Text = "Encomenda";
             this.radioEcf.UseVisualStyleBackColor = true;
+            this.radioEcf.CheckedChanged += new System.EventHandler(this.radioEcf_CheckedChanged);
             // 
             // CompraListagem
             // 
