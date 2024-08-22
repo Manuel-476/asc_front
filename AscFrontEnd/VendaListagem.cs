@@ -11,6 +11,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static AscFrontEnd.DTOs.Enums.Enums;
+using AscFrontEnd.DTOs.Fornecedor;
+using AscFrontEnd.DTOs.Cliente;
+using AscFrontEnd.DTOs.Venda;
+using EAscFrontEnd;
+using ERP_Seller.Application.DTOs.Documentos;
+using Newtonsoft.Json;
 
 namespace AscFrontEnd
 {
@@ -19,10 +25,11 @@ namespace AscFrontEnd
         string clienteNome = string.Empty;
         public int id;
         string documento;
-
+        List<DocumentoVenda> documentoVendas;
         public VendaListagem()
         {
             InitializeComponent();
+            documentoVendas = new List<DocumentoVenda>();
         }
 
         private void anularPicture_MouseMove(object sender, MouseEventArgs e)
@@ -47,7 +54,7 @@ namespace AscFrontEnd
 
         private void VendaListagem_Load(object sender, EventArgs e)
         {
-         
+
             radioFp.Checked = true;
 
             DataTable dt = new DataTable();
@@ -60,7 +67,7 @@ namespace AscFrontEnd
             // Adicionando linhas ao DataTable
             foreach (var item in StaticProperty.fps)
             {
-                if (StaticProperty.artigos.Where(x=>x.id == item.fpArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId) 
+                if (StaticProperty.artigos.Where(x => x.id == item.fpArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
                 {
                     clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
                     dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
@@ -68,11 +75,78 @@ namespace AscFrontEnd
                     dataGridView1.DataSource = dt;
                 }
             }
+            foreach (var item in StaticProperty.fps)
+            {
+                documentoVendas.Add(new DocumentoVenda()
+                {
+                    id = item.id,
+                    clienteId = item.clienteId,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+            foreach (var item in StaticProperty.fts)
+            {
+                documentoVendas.Add(new DocumentoVenda()
+                {
+                    id = item.id,
+                    clienteId = item.clienteId,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+            foreach (var item in StaticProperty.frs)
+            {
+                documentoVendas.Add(new DocumentoVenda()
+                {
+                    id = item.id,
+                    clienteId = item.clienteId,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+
+            foreach (var item in StaticProperty.ecls)
+            {
+                documentoVendas.Add(new DocumentoVenda()
+                {
+                    id = item.id,
+                    clienteId = item.clienteId,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+            foreach (var item in StaticProperty.ncs)
+            {
+                documentoVendas.Add(new DocumentoVenda()
+                {
+                    id = item.id,
+                    clienteId = item.clienteId,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+            foreach (var item in StaticProperty.nds)
+            {
+                documentoVendas.Add(new DocumentoVenda()
+                {
+                    id = item.id,
+                    clienteId = item.clienteId,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
         }
 
         private void radioFt_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioFt.Checked) 
+            if (radioFt.Checked)
             {
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
@@ -84,7 +158,10 @@ namespace AscFrontEnd
                 // Adicionando linhas ao DataTable
                 foreach (var item in StaticProperty.fts.Where(v => v.status != DocState.estornado && v.status != DocState.anulado && v.cliente.empresaid == StaticProperty.empresaId))
                 {
-                    clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                    if (StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First() != null)
+                    {
+                        clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                    }
                     dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
 
                     dataGridView1.DataSource = dt;
@@ -94,7 +171,7 @@ namespace AscFrontEnd
 
         private void radioFr_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioFr.Checked) 
+            if (radioFr.Checked)
             {
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
@@ -104,9 +181,9 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.frs.Where(v =>  v.status != DocState.anulado && v.status != DocState.estornado ))
+                foreach (var item in StaticProperty.frs.Where(v => v.status != DocState.anulado && v.status != DocState.estornado))
                 {
-                    if (StaticProperty.artigos.Where(x=>x.id == item.frArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                    if (StaticProperty.artigos.Where(x => x.id == item.frArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
                     {
                         clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
                         dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
@@ -129,7 +206,7 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.gts.Where(v => v.status != DocState.anulado ))
+                foreach (var item in StaticProperty.gts.Where(v => v.status != DocState.anulado))
                 {
                     if (StaticProperty.artigos.Where(x => x.id == item.gtArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
                     {
@@ -169,23 +246,25 @@ namespace AscFrontEnd
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            try 
+            try
             {
                 if (radioFr.Checked)
                 {
                     estornarPicture.Enabled = true;
                 }
-                else 
+                else
                 {
                     estornarPicture.Enabled = false;
                 }
+                if (radioAnulado.Checked) {anularPicture.Enabled = false;}
+                else { anularPicture.Enabled = true; }
                 id = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
             }
-            catch 
+            catch
             {
                 return;
             }
-           
+
         }
 
         private async void estornarPicture_Click(object sender, EventArgs e)
@@ -212,9 +291,9 @@ namespace AscFrontEnd
                         MessageBox.Show($"O documento {documento} foi estornado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-                catch(Exception ex) 
+                catch (Exception ex)
                 {
-                    MessageBox.Show($"Ocorreu um erro mo processo de estorno: {ex.Message}","Ocorreu um erro",MessageBoxButtons.RetryCancel,MessageBoxIcon.Error);
+                    MessageBox.Show($"Ocorreu um erro mo processo de estorno: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
                 }
             }
         }
@@ -223,24 +302,8 @@ namespace AscFrontEnd
         {
             if (radioFp.Checked)
             {
-                DataTable dt = new DataTable();
-                dt.Columns.Add("id", typeof(int));
-                dt.Columns.Add("Cliente", typeof(string));
-                dt.Columns.Add("Documento", typeof(string));
-                dt.Columns.Add("Data", typeof(float));
+               
 
-
-                // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.fps.Where(v => v.status != DocState.anulado))
-                {
-                    if (StaticProperty.artigos.Where(x => x.id == item.fpArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
-                    {
-                        clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
-                        dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
-
-                        dataGridView1.DataSource = dt;
-                    }
-                }
             }
         }
 
@@ -254,8 +317,8 @@ namespace AscFrontEnd
             try
             {
                 if (radioFr.Checked)
-                {        
-               
+                {
+
                     documento = StaticProperty.frs.Where(cl => cl.id == id).First().documento;
 
                     // Conversão do objeto Film para JSON
@@ -267,10 +330,29 @@ namespace AscFrontEnd
                     if (responseFr.IsSuccessStatusCode)
                     {
                         MessageBox.Show($"O documento {documento} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.RefreshDocs();
+                    }
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("id", typeof(int));
+                    dt.Columns.Add("Cliente", typeof(string));
+                    dt.Columns.Add("Documento", typeof(string));
+                    dt.Columns.Add("Data", typeof(string));
+
+
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.frs.Where(v => v.status != DocState.anulado && v.status != DocState.estornado))
+                    {
+                        if (StaticProperty.artigos.Where(x => x.id == item.frArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                        {
+                            clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                            dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                            dataGridView1.DataSource = dt;
+                        }
                     }
 
-                 }
-                else if (radioFt.Checked) 
+                }
+                else if (radioFt.Checked)
                 {
                     documento = StaticProperty.fts.Where(cl => cl.id == id).First().documento;
 
@@ -283,6 +365,23 @@ namespace AscFrontEnd
                     if (responseFt.IsSuccessStatusCode)
                     {
                         MessageBox.Show($"O documento {documento} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.RefreshDocs();
+                    }
+
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("id", typeof(int));
+                    dt.Columns.Add("Cliente", typeof(string));
+                    dt.Columns.Add("Documento", typeof(string));
+                    dt.Columns.Add("Data", typeof(string));
+
+
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.fts.Where(v => v.status != DocState.estornado && v.status != DocState.anulado && v.cliente.empresaid == StaticProperty.empresaId))
+                    {
+                        clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                        dataGridView1.DataSource = dt;
                     }
                 }
                 else if (radioFp.Checked)
@@ -299,6 +398,26 @@ namespace AscFrontEnd
                         .IsSuccessStatusCode)
                     {
                         MessageBox.Show($"O documento {documento} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.RefreshDocs();
+                    }
+
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("id", typeof(int));
+                    dt.Columns.Add("Cliente", typeof(string));
+                    dt.Columns.Add("Documento", typeof(string));
+                    dt.Columns.Add("Data", typeof(float));
+
+
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.fps.Where(v => v.status != DocState.anulado))
+                    {
+                        if (StaticProperty.artigos.Where(x => x.id == item.fpArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                        {
+                            clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                            dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                            dataGridView1.DataSource = dt;
+                        }
                     }
                 }
                 else if (radioGt.Checked)
@@ -314,10 +433,28 @@ namespace AscFrontEnd
                     if (responseGt.IsSuccessStatusCode)
                     {
                         MessageBox.Show($"O documento {documento} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.RefreshDocs();
+                    }
+
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("id", typeof(int));
+                    dt.Columns.Add("Cliente", typeof(string));
+                    dt.Columns.Add("Documento", typeof(string));
+                    dt.Columns.Add("Data", typeof(string));
+
+
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.gts.Where(v => v.status != DocState.anulado))
+                    {
+                        if (StaticProperty.artigos.Where(x => x.id == item.gtArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                        {
+                            clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                            dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                            dataGridView1.DataSource = dt;
+                        }
                     }
                 }
-
-
             }
             catch (Exception ex)
             {
@@ -335,7 +472,7 @@ namespace AscFrontEnd
             if (radioFt.Checked)
             {
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.fts.Where(f=>f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
+                foreach (var item in StaticProperty.fts.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
                 {
                     clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
                     dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
@@ -352,7 +489,7 @@ namespace AscFrontEnd
                         dataGridView1.DataSource = dt;
                     }
                 }
-            }        
+            }
             else if (radioFr.Checked)
             {
                 // Adicionando linhas ao DataTable
@@ -443,15 +580,118 @@ namespace AscFrontEnd
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             id = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
-            if (radioFp.Checked) {documento = "FP";}
-            if (radioFr.Checked) { documento = "FR";}
-            if (radioFt.Checked) { documento = "FT";}
-            if (radioGt.Checked) { documento = "GT";}
+            if (radioFp.Checked) { documento = "FP"; }
+            if (radioFr.Checked) { documento = "FR"; }
+            if (radioFt.Checked) { documento = "FT"; }
+            if (radioGt.Checked) { documento = "GT"; }
             if (radioNc.Checked) { documento = "NC"; }
             if (radioEcl.Checked) { documento = "ECL"; }
 
-            DocumentosDetalhesForm ddf = new DocumentosDetalhesForm(documento,id,Entidade.cliente);
+            DocumentosDetalhesForm ddf = new DocumentosDetalhesForm(documento, id, Entidade.cliente);
             ddf.ShowDialog();
         }
+
+        private void radioAnulado_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioAnulado.Checked)
+            {
+                DataTable dt = new DataTable();
+                dt.Columns.Add("id", typeof(int));
+                dt.Columns.Add("Fornecedor", typeof(string));
+                dt.Columns.Add("Documento", typeof(string));
+                dt.Columns.Add("Data", typeof(string));
+
+
+                // Adicionando linhas ao DataTable
+                foreach (var item in documentoVendas.Where(f => f.status == DocState.anulado).OrderByDescending(x => x.data))
+                {
+                    if (StaticProperty.clientes.Where(f => f.id == item.clienteId).First() != null)
+                    {
+                        clienteNome = StaticProperty.clientes.Where(f => f.id == item.clienteId).First().nome_fantasia;
+                    }
+
+                    dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+
+                    dataGridView1.DataSource = dt;
+                }
+            }
+
+        }
+        private async void RefreshDocs()
+        {
+            var client = new HttpClient();
+            try
+            {
+                var responseFr = await client.GetAsync($"https://localhost:7200/api/Venda/FrByRelations");
+
+                if (responseFr.IsSuccessStatusCode)
+                {
+                    var contentFr = await responseFr.Content.ReadAsStringAsync();
+                    StaticProperty.frs = JsonConvert.DeserializeObject<List<FrDTO>>(contentFr);
+                }
+
+                var responseFt = await client.GetAsync($"https://localhost:7200/api/Venda/FtByRelations");
+
+                if (responseFt.IsSuccessStatusCode)
+                {
+                    var contentFt = await responseFt.Content.ReadAsStringAsync();
+                    StaticProperty.fts = JsonConvert.DeserializeObject<List<FtDTO>>(contentFt);
+                }
+
+                var responseEcl = await client.GetAsync($"https://localhost:7200/api/Venda/EclByRelations");
+
+                if (responseEcl.IsSuccessStatusCode)
+                {
+                    var contentEcl = await responseEcl.Content.ReadAsStringAsync();
+                    StaticProperty.ecls = JsonConvert.DeserializeObject<List<EncomendaClienteDTO>>(contentEcl);
+                }
+
+                var responseFp = await client.GetAsync($"https://localhost:7200/api/Venda/FpByRelations");
+
+                if (responseFp.IsSuccessStatusCode)
+                {
+                    var contentFp = await responseFp.Content.ReadAsStringAsync();
+                    StaticProperty.fps = JsonConvert.DeserializeObject<List<FaturaProformaDTO>>(contentFp);
+                }
+
+                var responseNc = await client.GetAsync($"https://localhost:7200/api/Venda/NcByRelations");
+
+                if (responseNc.IsSuccessStatusCode)
+                {
+                    var contentNc = await responseNc.Content.ReadAsStringAsync();
+                    StaticProperty.ncs = JsonConvert.DeserializeObject<List<NcDTO>>(contentNc);
+                }
+
+                var responseNd = await client.GetAsync($"https://localhost:7200/api/Venda/NdByRelations");
+
+                if (responseNd.IsSuccessStatusCode)
+                {
+                    var contentNd = await responseNd.Content.ReadAsStringAsync();
+                    StaticProperty.nds = JsonConvert.DeserializeObject<List<NdDTO>>(contentNd);
+                }
+
+                var responseGt = await client.GetAsync($"https://localhost:7200/api/Venda/GtByRelations");
+
+                if (responseGt.IsSuccessStatusCode)
+                {
+                    var contentGt = await responseNd.Content.ReadAsStringAsync();
+                    StaticProperty.gts = JsonConvert.DeserializeObject<List<GtDTO>>(contentGt);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao carregar os dados: {ex.Message}");
+            }
+        }
+    } 
+    public class DocumentoVenda
+    {
+        public int id { get; set; }
+        public string documento { get; set; }
+        public int clienteId { get; set; }
+        public DocState status { get; set; }
+        public DateTime data { get; set; }
+        public ClienteDTO cliente { get; set; }
     }
 }

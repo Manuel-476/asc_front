@@ -12,17 +12,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static AscFrontEnd.DTOs.Enums.Enums;
+using AscFrontEnd.DTOs.Fornecedor;
+using AscFrontEnd.DTOs;
+using ERP_Buyer.Application.DTOs.Documentos;
+using Newtonsoft.Json;
 
 namespace AscFrontEnd
 {
     public partial class CompraListagem : Form
     {
-        string fornecedorNome;
+        string fornecedorNome = string.Empty;
         int id;
         string documento;
+        List<DocumentoCompra> documentoCompras;
         public CompraListagem()
         {
             InitializeComponent();
+            documentoCompras = new List<DocumentoCompra>();
         }
 
         private void radioFp_CheckedChanged(object sender, EventArgs e)
@@ -89,6 +95,101 @@ namespace AscFrontEnd
 
                 dataGridView1.DataSource = dt;
             }
+
+            foreach (var item in StaticProperty.pcos)
+            {
+                documentoCompras.Add(new DocumentoCompra() { id = item.id,
+                                                             fornecedorId=item.fornecedorId,
+                                                             fornecedor=item.fornecedor,
+                                                             documento = item.documento,
+                                                             data=item.data,
+                                                             status = item.status});
+            }
+            foreach (var item in StaticProperty.cots)
+            {
+                documentoCompras.Add(new DocumentoCompra()
+                {
+                    id = item.id,
+                    fornecedorId = item.fornecedorId,
+                    fornecedor = item.fornecedor,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+            foreach (var item in StaticProperty.vfts)
+            {
+                documentoCompras.Add(new DocumentoCompra()
+                {
+                    id = item.id,
+                    fornecedorId = item.fornecedorId,
+                    fornecedor = item.fornecedor,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+            foreach (var item in StaticProperty.vfrs)
+            {
+                documentoCompras.Add(new DocumentoCompra()
+                {
+                    id = item.id,
+                    fornecedorId = item.fornecedorId,
+                    fornecedor = item.fornecedor,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+            foreach (var item in StaticProperty.ecfs)
+            {
+                documentoCompras.Add(new DocumentoCompra()
+                {
+                    id = item.id,
+                    fornecedorId = item.fornecedorId,
+                    fornecedor = item.fornecedor,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+            foreach (var item in StaticProperty.vgts)
+            {
+                documentoCompras.Add(new DocumentoCompra()
+                {
+                    id = item.id,
+                    fornecedorId = item.fornecedorId,
+                    fornecedor = item.fornecedor,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+            foreach (var item in StaticProperty.vncs)
+            {
+                documentoCompras.Add(new DocumentoCompra()
+                {
+                    id = item.id,
+                    fornecedorId = item.fornecedorId,
+                    fornecedor = item.fornecedor,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+            foreach (var item in StaticProperty.vnds)
+            {
+                documentoCompras.Add(new DocumentoCompra()
+                {
+                    id = item.id,
+                    fornecedorId = item.fornecedorId,
+                    fornecedor = item.fornecedor,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+
         }
 
         private void radioVft_CheckedChanged(object sender, EventArgs e)
@@ -173,6 +274,31 @@ namespace AscFrontEnd
                 foreach (var item in StaticProperty.vncs.Where(x => x.fornecedor.empresaid == StaticProperty.empresaId))
                 {
                     fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                    dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                    dataGridView1.DataSource = dt;
+                }
+            }
+        }
+        private void radioAnulado_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioAnulado.Checked)
+            {
+                DataTable dt = new DataTable();
+                dt.Columns.Add("id", typeof(int));
+                dt.Columns.Add("Fornecedor", typeof(string));
+                dt.Columns.Add("Documento", typeof(string));
+                dt.Columns.Add("Data", typeof(string));
+
+
+                // Adicionando linhas ao DataTable
+                foreach (var item in documentoCompras.Where(f => f.status == DocState.anulado).OrderByDescending(x=>x.data))
+                {
+                    if(StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First() != null) 
+                    {
+                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                    }
+                    
                     dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
 
                     dataGridView1.DataSource = dt;
@@ -348,6 +474,23 @@ namespace AscFrontEnd
                     if (responseVfr.IsSuccessStatusCode)
                     {
                         MessageBox.Show($"O documento {documento} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.RefreshDocs();
+                    }
+
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("id", typeof(int));
+                    dt.Columns.Add("Fornecedor", typeof(string));
+                    dt.Columns.Add("Documento", typeof(string));
+                    dt.Columns.Add("Data", typeof(string));
+
+
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.vfrs.Where(f => f.status != DocState.anulado && f.status != DocState.estornado && f.fornecedor.empresaid == StaticProperty.empresaId).ToList())
+                    {
+                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                        dataGridView1.DataSource = dt;
                     }
 
                 }
@@ -364,6 +507,23 @@ namespace AscFrontEnd
                     if (responseFt.IsSuccessStatusCode)
                     {
                         MessageBox.Show($"O documento {documento} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.RefreshDocs();
+                    }
+
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("id", typeof(int));
+                    dt.Columns.Add("Fornecedor", typeof(string));
+                    dt.Columns.Add("Documento", typeof(string));
+                    dt.Columns.Add("Data", typeof(string));
+
+
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.vfts.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+                    {
+                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                        dataGridView1.DataSource = dt;
                     }
                 }
                 else if (radioPco.Checked)
@@ -380,6 +540,23 @@ namespace AscFrontEnd
                         .IsSuccessStatusCode)
                     {
                         MessageBox.Show($"O documento {documento} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.RefreshDocs();
+                    }
+
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("id", typeof(int));
+                    dt.Columns.Add("Fornecedor", typeof(string));
+                    dt.Columns.Add("Documento", typeof(string));
+                    dt.Columns.Add("Data", typeof(string));
+
+
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.pcos.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+                    {
+                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                        dataGridView1.DataSource = dt;
                     }
                 }
                 else if (radioCot.Checked)
@@ -396,6 +573,23 @@ namespace AscFrontEnd
                         .IsSuccessStatusCode)
                     {
                         MessageBox.Show($"O documento {documento} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.RefreshDocs();
+                    }
+
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("id", typeof(int));
+                    dt.Columns.Add("Fornecedor", typeof(string));
+                    dt.Columns.Add("Documento", typeof(string));
+                    dt.Columns.Add("Data", typeof(string));
+
+
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.cots.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+                    {
+                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                        dataGridView1.DataSource = dt;
                     }
                 }
                 else if (radioVgt.Checked)
@@ -411,10 +605,25 @@ namespace AscFrontEnd
                     if (responseGt.IsSuccessStatusCode)
                     {
                         MessageBox.Show($"O documento {documento} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.RefreshDocs();
                     }
-                }
+
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("id", typeof(int));
+                    dt.Columns.Add("Fornecedor", typeof(string));
+                    dt.Columns.Add("Documento", typeof(string));
+                    dt.Columns.Add("Data", typeof(string));
 
 
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.vgts.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+                    {
+                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                        dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                        dataGridView1.DataSource = dt;
+                    }
+                }   
             }
             catch (Exception ex)
             {
@@ -456,5 +665,89 @@ namespace AscFrontEnd
                 );
             ddf.ShowDialog();
         }
+
+        private async void RefreshDocs()
+        {
+            var client = new HttpClient();
+            try
+            {
+                var responseVft = await client.GetAsync($"https://localhost:7200/api/Compra/VftByRelations");
+
+                if (responseVft.IsSuccessStatusCode)
+                {
+                    var contentVft = await responseVft.Content.ReadAsStringAsync();
+                    StaticProperty.vfts = JsonConvert.DeserializeObject<List<VftDTO>>(contentVft);
+                }
+
+                var responseVfr = await client.GetAsync($"https://localhost:7200/api/Compra/VfrByRelations");
+
+                if (responseVfr.IsSuccessStatusCode)
+                {
+                    var contentVfr = await responseVfr.Content.ReadAsStringAsync();
+                    StaticProperty.vfrs = JsonConvert.DeserializeObject<List<VfrDTO>>(contentVfr);
+                }
+
+                var responseVgt = await client.GetAsync($"https://localhost:7200/api/Compra/VgtByRelation");
+
+                if (responseVgt.IsSuccessStatusCode)
+                {
+                    var contentVgt = await responseVgt.Content.ReadAsStringAsync();
+                    StaticProperty.vgts = JsonConvert.DeserializeObject<List<VgtDTO>>(contentVgt);
+                }
+
+                var responsePco = await client.GetAsync($"https://localhost:7200/api/Compra/PcoByRelation");
+
+                if (responsePco.IsSuccessStatusCode)
+                {
+                    var contentPco = await responsePco.Content.ReadAsStringAsync();
+                    StaticProperty.pcos = JsonConvert.DeserializeObject<List<PedidoCotacaoDTO>>(contentPco);
+                }
+
+                var responseCot = await client.GetAsync($"https://localhost:7200/api/Compra/CotByRelation");
+
+                if (responseCot.IsSuccessStatusCode)
+                {
+                    var contentCot = await responseCot.Content.ReadAsStringAsync();
+                    StaticProperty.cots = JsonConvert.DeserializeObject<List<CotacaoDTO>>(contentCot);
+                }
+
+                var responseEcf = await client.GetAsync($"https://localhost:7200/api/Compra/EcfByRelations");
+
+                if (responseEcf.IsSuccessStatusCode)
+                {
+                    var contentEcf = await responseEcf.Content.ReadAsStringAsync();
+                    StaticProperty.ecfs = JsonConvert.DeserializeObject<List<EncomendaFornecedorDTO>>(contentEcf);
+                }
+
+                var responseVnc = await client.GetAsync($"https://localhost:7200/api/Compra/VncByRelations");
+
+                if (responseVnc.IsSuccessStatusCode)
+                {
+                    var contentVnc = await responseVnc.Content.ReadAsStringAsync();
+                    StaticProperty.vncs = JsonConvert.DeserializeObject<List<VncDTO>>(contentVnc);
+                }
+
+                var responseVnd = await client.GetAsync($"https://localhost:7200/api/Compra/VndByRelation");
+
+                if (responseVnd.IsSuccessStatusCode)
+                {
+                    var contentVnd = await responseVnd.Content.ReadAsStringAsync();
+                    StaticProperty.vnds = JsonConvert.DeserializeObject<List<VndDTO>>(contentVnd);
+                }
+            }
+            catch (Exception ex)
+            { throw new Exception($"Erro na actualizacao dos dados: {ex.Message}"); }
+            }
+
+    }
+
+    public class DocumentoCompra 
+    {
+        public int id { get; set; }
+        public string documento { get; set; }
+        public int fornecedorId { get; set; }
+        public DocState status { get; set; }
+        public DateTime data { get; set; }
+        public FornecedorDTO fornecedor { get; set; }
     }
 }

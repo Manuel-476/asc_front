@@ -30,6 +30,7 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.artigoTexto = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pesqText = new System.Windows.Forms.TextBox();
@@ -37,13 +38,12 @@
             this.removeStockPicture = new System.Windows.Forms.PictureBox();
             this.addStockPicture = new System.Windows.Forms.PictureBox();
             this.transferPicture = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaInventario)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.removeStockPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.addStockPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.transferPicture)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -68,6 +68,16 @@
             this.artigoTexto.Size = new System.Drawing.Size(93, 32);
             this.artigoTexto.TabIndex = 2;
             this.artigoTexto.Text = "Artigo:";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_client_80;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox1.Location = new System.Drawing.Point(13, 11);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 69);
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
             // 
             // label2
             // 
@@ -116,55 +126,53 @@
             this.removeStockPicture.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_remove_64;
             this.removeStockPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.removeStockPicture.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.removeStockPicture.Location = new System.Drawing.Point(945, 337);
+            this.removeStockPicture.Location = new System.Drawing.Point(923, 337);
             this.removeStockPicture.Name = "removeStockPicture";
             this.removeStockPicture.Size = new System.Drawing.Size(100, 86);
             this.removeStockPicture.TabIndex = 10;
             this.removeStockPicture.TabStop = false;
             this.removeStockPicture.Tag = "Decrementar Stock";
             this.removeStockPicture.Click += new System.EventHandler(this.removeStockPicture_Click);
+            this.removeStockPicture.MouseLeave += new System.EventHandler(this.removeStockPicture_MouseLeave);
+            this.removeStockPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.removeStockPicture_MouseMove);
             // 
             // addStockPicture
             // 
+            this.addStockPicture.BackColor = System.Drawing.SystemColors.Control;
             this.addStockPicture.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_add_64;
             this.addStockPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.addStockPicture.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.addStockPicture.Location = new System.Drawing.Point(945, 236);
+            this.addStockPicture.Location = new System.Drawing.Point(923, 236);
             this.addStockPicture.Name = "addStockPicture";
             this.addStockPicture.Size = new System.Drawing.Size(100, 86);
             this.addStockPicture.TabIndex = 9;
             this.addStockPicture.TabStop = false;
             this.addStockPicture.Tag = "Incrementar Stock";
             this.addStockPicture.Click += new System.EventHandler(this.addStockPicture_Click);
+            this.addStockPicture.MouseLeave += new System.EventHandler(this.addStockPicture_MouseLeave);
+            this.addStockPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.addStockPicture_MouseMove);
             // 
             // transferPicture
             // 
             this.transferPicture.BackgroundImage = global::AscFrontEnd.Properties.Resources.transfer;
             this.transferPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.transferPicture.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.transferPicture.Location = new System.Drawing.Point(945, 130);
+            this.transferPicture.Location = new System.Drawing.Point(923, 130);
             this.transferPicture.Name = "transferPicture";
             this.transferPicture.Size = new System.Drawing.Size(100, 86);
             this.transferPicture.TabIndex = 8;
             this.transferPicture.TabStop = false;
             this.transferPicture.Tag = "Transferencia Stock";
             this.transferPicture.Click += new System.EventHandler(this.transferPicture_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_client_80;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox1.Location = new System.Drawing.Point(13, 11);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 69);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            this.transferPicture.MouseEnter += new System.EventHandler(this.transferPicture_MouseEnter);
+            this.transferPicture.MouseLeave += new System.EventHandler(this.transferPicture_MouseLeave);
+            this.transferPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.transferPicture_MouseMove);
             // 
             // Stock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1028, 434);
+            this.ClientSize = new System.Drawing.Size(1033, 434);
             this.Controls.Add(this.removeStockPicture);
             this.Controls.Add(this.addStockPicture);
             this.Controls.Add(this.transferPicture);
@@ -181,11 +189,11 @@
             this.Load += new System.EventHandler(this.Stock_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaInventario)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.removeStockPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.addStockPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.transferPicture)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

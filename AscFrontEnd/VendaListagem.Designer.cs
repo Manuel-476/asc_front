@@ -173,6 +173,7 @@
             this.radioAnulado.TabStop = true;
             this.radioAnulado.Text = "Anulada";
             this.radioAnulado.UseVisualStyleBackColor = true;
+            this.radioAnulado.CheckedChanged += new System.EventHandler(this.radioAnulado_CheckedChanged);
             // 
             // dataGridView1
             // 

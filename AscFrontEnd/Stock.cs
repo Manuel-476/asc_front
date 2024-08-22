@@ -46,7 +46,7 @@ namespace AscFrontEnd
             {
                 var content = await response.Content.ReadAsStringAsync();
                 dados = JsonConvert.DeserializeObject<List<StockDTO>>(content);
-
+                stockTable = new DataTable();
                 stockTable.Columns.Add("id", typeof(int));
                 stockTable.Columns.Add("Artigo", typeof(string));
                 stockTable.Columns.Add("Descricao", typeof(string));
@@ -146,6 +146,41 @@ namespace AscFrontEnd
 
             DecrementarStock decrementar = new DecrementarStock(artigo, dado.qtd);
             decrementar.ShowDialog();
+        }
+
+        private void transferPicture_MouseMove(object sender, MouseEventArgs e)
+        {
+            transferPicture.BackColor = Color.Gray;
+        }
+
+        private void transferPicture_MouseLeave(object sender, EventArgs e)
+        {
+            transferPicture.BackColor = Color.Transparent;
+        }
+
+        private void addStockPicture_MouseMove(object sender, MouseEventArgs e)
+        {
+            addStockPicture.BackColor = Color.Gray;
+        }
+
+        private void addStockPicture_MouseLeave(object sender, EventArgs e)
+        {
+            addStockPicture.BackColor= Color.Transparent;
+        }
+
+        private void removeStockPicture_MouseMove(object sender, MouseEventArgs e)
+        {
+            removeStockPicture.BackColor = Color.Gray;
+        }
+
+        private void removeStockPicture_MouseLeave(object sender, EventArgs e)
+        {
+            removeStockPicture.BackColor = Color.Transparent;
+        }
+
+        private void transferPicture_MouseEnter(object sender, EventArgs e)
+        {
+            transferPicture.BackColor = Color.Gray;
         }
     }
 }
