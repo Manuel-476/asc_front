@@ -38,7 +38,6 @@ namespace AscFrontEnd
 
             bancos.Add(new BancoDTO
             {
-                id = id,
                 codigo = codigoText.Text,
                 descricao = descText.Text.ToString(),
                 conta = contaText.Text.ToString(),
@@ -50,7 +49,7 @@ namespace AscFrontEnd
             foreach (var banco in bancos)
             {
 
-                dt.Rows.Add(banco.id, banco.codigo.ToString(), banco.descricao.ToString(), banco.conta.ToString(), banco.iban.ToString());
+                dt.Rows.Add(id, banco.codigo.ToString(), banco.descricao.ToString(), banco.conta.ToString(), banco.iban.ToString());
 
                 bancoTable.DataSource = dt;
             }
@@ -116,24 +115,27 @@ namespace AscFrontEnd
             client.BaseAddress = new Uri("https://sua-api.com/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            // Conversão do objeto Film para JSON
-            string json = System.Text.Json.JsonSerializer.Serialize(bancos);
-
-            // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Deposito/banco", new StringContent(json, Encoding.UTF8, "application/json"));
-            if (response.IsSuccessStatusCode)
+            foreach (var item in this.bancos)
             {
-                MessageBox.Show("Banco Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+                // Conversão do objeto Film para JSON
+                string json = System.Text.Json.JsonSerializer.Serialize(item);
 
-                var responseBanco = await client.GetAsync($"https://localhost:7200/api/Deposito/Banco");
-
-                if (responseBanco.IsSuccessStatusCode)
+                // Envio dos dados para a API
+                var response = await client.PostAsync($"https://localhost:7200/api/Deposito/Banco", new StringContent(json, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
                 {
-                    var contentBanco = await responseBanco.Content.ReadAsStringAsync();
-                    StaticProperty.bancos = JsonConvert.DeserializeObject<List<BancoDTO>>(contentBanco);
+                    MessageBox.Show("Banco Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
+                    var responseBanco = await client.GetAsync($"https://localhost:7200/api/Deposito/Banco");
+
+                    if (responseBanco.IsSuccessStatusCode)
+                    {
+                        var contentBanco = await responseBanco.Content.ReadAsStringAsync();
+                        StaticProperty.bancos = JsonConvert.DeserializeObject<List<BancoDTO>>(contentBanco);
+
+                    }
                 }
+                else { MessageBox.Show("Erro ao salvar Banco", "Ocorreu um erro", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error); }
             }
         }
     }

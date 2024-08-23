@@ -37,7 +37,6 @@ namespace AscFrontEnd
 
             caixas.Add(new CaixaDTO
             {
-                id = id,
                 codigo = codigoText.Text,
                 descricao = descText.Text.ToString(),
                 status = DTOs.Enums.Enums.Status.activo,
@@ -47,7 +46,7 @@ namespace AscFrontEnd
             foreach (var caixa in caixas)
             {
 
-                dt.Rows.Add(caixa.id, caixa.codigo.ToString(), caixa.descricao.ToString());
+                dt.Rows.Add(id, caixa.codigo.ToString(), caixa.descricao.ToString());
 
                 caixaTable.DataSource = dt;
             }
@@ -59,27 +58,29 @@ namespace AscFrontEnd
             client.BaseAddress = new Uri("https://sua-api.com/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            // Conversão do objeto Film para JSON
-            string json = System.Text.Json.JsonSerializer.Serialize(caixas);
-
-            // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Deposito/caixa", new StringContent(json, Encoding.UTF8, "application/json"));
-            if (response.IsSuccessStatusCode)
+            foreach (var item in this.caixas)
             {
-                MessageBox.Show("Caixa Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+                // Conversão do objeto Film para JSON
+                string json = System.Text.Json.JsonSerializer.Serialize(item);
 
-                var responseCaixa = await client.GetAsync($"https://localhost:7200/api/Deposito/Caixa");
-
-                if (responseCaixa.IsSuccessStatusCode)
+                // Envio dos dados para a API
+                HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Deposito/Caixa", new StringContent(json, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
                 {
-                    var contentCaixa = await responseCaixa.Content.ReadAsStringAsync();
-                    StaticProperty.caixas = JsonConvert.DeserializeObject<List<CaixaDTO>>(contentCaixa);
+                    MessageBox.Show("Caixa Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
+                    var responseCaixa = await client.GetAsync($"https://localhost:7200/api/Deposito/Caixa");
+
+                    if (responseCaixa.IsSuccessStatusCode)
+                    {
+                        var contentCaixa = await responseCaixa.Content.ReadAsStringAsync();
+                        StaticProperty.caixas = JsonConvert.DeserializeObject<List<CaixaDTO>>(contentCaixa);
+
+                    }
                 }
+                else { MessageBox.Show("Erro ao salvar Caixa", "Ocorreu um erro", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error); }
             }
         }
-
         private void CaixaCadastroForm_Load(object sender, EventArgs e)
         {
             eliminarPicture.Enabled = false;

@@ -302,6 +302,12 @@ namespace AscFrontEnd
         {
             if (radioFp.Checked)
             {
+                DataTable dt = new DataTable();
+                dt.Columns.Add("id", typeof(int));
+                dt.Columns.Add("Cliente", typeof(string));
+                dt.Columns.Add("Documento", typeof(string));
+                dt.Columns.Add("Data", typeof(string));
+
 
                 foreach (var item in StaticProperty.fps)
                 {
