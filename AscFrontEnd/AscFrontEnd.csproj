@@ -144,6 +144,12 @@
     <Compile Include="Armazem.Designer.cs">
       <DependentUpon>Armazem.cs</DependentUpon>
     </Compile>
+    <Compile Include="ArmazemEditar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ArmazemEditar.Designer.cs">
+      <DependentUpon>ArmazemEditar.cs</DependentUpon>
+    </Compile>
     <Compile Include="ArmazemListagem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +161,12 @@
     </Compile>
     <Compile Include="Artigo.Designer.cs">
       <DependentUpon>Artigo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ArtigoEditar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ArtigoEditar.Designer.cs">
+      <DependentUpon>ArtigoEditar.cs</DependentUpon>
     </Compile>
     <Compile Include="ArtigoListagem.cs">
       <SubType>Form</SubType>
@@ -197,6 +209,12 @@
     </Compile>
     <Compile Include="Cliente.Designer.cs">
       <DependentUpon>Cliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClienteEditar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClienteEditar.Designer.cs">
+      <DependentUpon>ClienteEditar.cs</DependentUpon>
     </Compile>
     <Compile Include="ClienteListagem.cs">
       <SubType>Form</SubType>
@@ -319,6 +337,12 @@
     <Compile Include="FamiliaArtigo.Designer.cs">
       <DependentUpon>FamiliaArtigo.cs</DependentUpon>
     </Compile>
+    <Compile Include="FornecedorEditar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FornecedorEditar.Designer.cs">
+      <DependentUpon>FornecedorEditar.cs</DependentUpon>
+    </Compile>
     <Compile Include="FornecedorTable.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -336,6 +360,12 @@
     </Compile>
     <Compile Include="FuncionarioListagem.Designer.cs">
       <DependentUpon>FuncionarioListagem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Historico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Historico.Designer.cs">
+      <DependentUpon>Historico.cs</DependentUpon>
     </Compile>
     <Compile Include="IncrementarStock.cs">
       <SubType>Form</SubType>
@@ -458,11 +488,17 @@
     <EmbeddedResource Include="Armazem.resx">
       <DependentUpon>Armazem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ArmazemEditar.resx">
+      <DependentUpon>ArmazemEditar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ArmazemListagem.resx">
       <DependentUpon>ArmazemListagem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Artigo.resx">
       <DependentUpon>Artigo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ArtigoEditar.resx">
+      <DependentUpon>ArtigoEditar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ArtigoListagem.resx">
       <DependentUpon>ArtigoListagem.cs</DependentUpon>
@@ -484,6 +520,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cliente.resx">
       <DependentUpon>Cliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClienteEditar.resx">
+      <DependentUpon>ClienteEditar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ClienteListagem.resx">
       <DependentUpon>ClienteListagem.cs</DependentUpon>
@@ -515,6 +554,9 @@
     <EmbeddedResource Include="FamiliaArtigo.resx">
       <DependentUpon>FamiliaArtigo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FornecedorEditar.resx">
+      <DependentUpon>FornecedorEditar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FornecedorTable.resx">
       <DependentUpon>FornecedorTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -523,6 +565,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FuncionarioListagem.resx">
       <DependentUpon>FuncionarioListagem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Historico.resx">
+      <DependentUpon>Historico.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IncrementarStock.resx">
       <DependentUpon>IncrementarStock.cs</DependentUpon>

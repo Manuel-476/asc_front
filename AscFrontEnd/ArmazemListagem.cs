@@ -5,14 +5,18 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.Json;
 
 namespace AscFrontEnd
 {
     public partial class ArmazemListagem : Form
     {
+        int id;
         public ArmazemListagem()
         {
             InitializeComponent();
@@ -79,6 +83,53 @@ namespace AscFrontEnd
 
                 dataGridView1.DataSource = dt;
             }
+        }
+
+        private void editarPicture_Click(object sender, EventArgs e)
+        {
+            new ArmazemEditar(id).ShowDialog();
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            id = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
+        }
+
+        private async void eliminarPicture_Click(object sender, EventArgs e)
+        {
+            string nome = StaticProperty.armazens.Where(c => c.id == id).First().codigo;
+
+
+            try
+            {
+                HttpResponseMessage response = null;
+                var client = new HttpClient();
+                client.BaseAddress = new Uri("https://sua-api.com/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Conversão do objeto Film para JSON
+                string json = JsonSerializer.Serialize(id);
+
+                if (MessageBox.Show($"Tens certeza que pretendes eliminar {nome}", "Atencao", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                {
+                    response = await client.PutAsync($"https://localhost:7200/api/Armazem/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json")); 
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Armazem foi eliminado com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao desactivar Armazem: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
     }
 }

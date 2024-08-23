@@ -47,7 +47,8 @@ namespace AscFrontEnd
 
                     tabelaCliente.DataSource = dt;
                 }
-            
+
+                editarPicture.Enabled = false;
         }
 
         private async void pesqText_TextChanged(object sender, EventArgs e)
@@ -68,7 +69,6 @@ namespace AscFrontEnd
                 dt.Columns.Add("pessoa", typeof(string));
                 dt.Columns.Add("localizacao", typeof(string));
 
-
                 // Adicionando linhas ao DataTable
                 foreach (var item in clientes.Where(x => x.empresaid == StaticProperty.empresaId))
                 {
@@ -82,6 +82,12 @@ namespace AscFrontEnd
         private void tabelaCliente_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             id = int.Parse(tabelaCliente.Rows[e.RowIndex].Cells[0].Value.ToString());
+
+            if(hasSellCliente(id))
+            {
+                editarPicture.Enabled = true;
+            }
+            else { editarPicture.Enabled = false; }
         }
 
         private async void transformar_Click(object sender, EventArgs e)
@@ -110,7 +116,7 @@ namespace AscFrontEnd
 
         private void editarPicture_Click(object sender, EventArgs e)
         {
-
+            new ClienteEditar(id).ShowDialog();
         }
 
         private void editarPicture_MouseMove(object sender, MouseEventArgs e)
@@ -146,10 +152,12 @@ namespace AscFrontEnd
         private async void eliminarPicture_Click(object sender, EventArgs e)
         {
             string nome = StaticProperty.clientes.Where(c => c.id == id).First().nome_fantasia;
+
             if (MessageBox.Show($"Tens certeza que pretendes desativar {nome}", "Atencao", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
             {
                 try
                 {
+                    HttpResponseMessage response = null;
                     var client = new HttpClient();
                     client.BaseAddress = new Uri("https://sua-api.com/");
                     client.DefaultRequestHeaders.Accept.Clear();
@@ -159,22 +167,40 @@ namespace AscFrontEnd
                     string json = JsonSerializer.Serialize(id);
 
                     // Envio dos dados para a API
-                    HttpResponseMessage response = await client.PutAsync($"https://localhost:7200/api/Cliente/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json"));
+                    if (hasSellCliente(id)) 
+                    {
+                        response = await client.DeleteAsync($"https://localhost:7200/api/Cliente/{id}");
+                    }
+                    else 
+                    {
+                        response = await client.PutAsync($"https://localhost:7200/api/Cliente/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json"));
+                    }
+                  
 
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show("Cliente foi desativado com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+                        MessageBox.Show("Cliente foi eliminar com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Erro ao desactivar funcionario: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Erro ao eliminar cliente: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
                 return;
             }
+        }
+
+        private bool hasSellCliente(int clienteId)
+        {
+            if (StaticProperty.frs.Where(x => x.clienteId == clienteId).First() == null &&
+               StaticProperty.fts.Where(x => x.clienteId == clienteId).First() == null &&
+               StaticProperty.fps.Where(x => x.clienteId == clienteId).First() == null &&
+               StaticProperty.ecls.Where(x => x.clienteId == clienteId).First() == null)
+            { return true; }
+            else { return false; }
         }
     }
 }

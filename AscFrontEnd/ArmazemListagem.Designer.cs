@@ -101,6 +101,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(677, 217);
             this.dataGridView1.TabIndex = 12;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // eliminarPicture
@@ -112,6 +113,7 @@
             this.eliminarPicture.Size = new System.Drawing.Size(71, 50);
             this.eliminarPicture.TabIndex = 17;
             this.eliminarPicture.TabStop = false;
+            this.eliminarPicture.Click += new System.EventHandler(this.eliminarPicture_Click);
             this.eliminarPicture.MouseLeave += new System.EventHandler(this.eliminarPicture_MouseLeave);
             this.eliminarPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.eliminarPicture_MouseMove);
             // 
@@ -124,6 +126,7 @@
             this.editarPicture.Size = new System.Drawing.Size(71, 50);
             this.editarPicture.TabIndex = 16;
             this.editarPicture.TabStop = false;
+            this.editarPicture.Click += new System.EventHandler(this.editarPicture_Click);
             this.editarPicture.MouseLeave += new System.EventHandler(this.editarPicture_MouseLeave);
             this.editarPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.editarPicture_MouseMove);
             // 

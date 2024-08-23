@@ -46,7 +46,8 @@ namespace AscFrontEnd
 
                     tabelaFornecedor.DataSource = dt;
                 }
-            
+
+                editarPicture.Enabled = false;
         }
 
         private void editarPicture_MouseLeave(object sender, EventArgs e)
@@ -106,15 +107,25 @@ namespace AscFrontEnd
         private void tabelaCliente_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             id = int.Parse(tabelaFornecedor.Rows[e.RowIndex].Cells[0].Value.ToString());
+
+            if (hasBuyFornecedor(id)) 
+            {
+                editarPicture.Enabled = true;
+            }
+            else 
+            {
+                editarPicture.Enabled = false;
+            }
         }
 
         private async void eliminarPicture_Click(object sender, EventArgs e)
         {
             string nome = StaticProperty.clientes.Where(c => c.id == id).First().nome_fantasia;
-            if (MessageBox.Show($"Tens certeza que pretendes desativar {nome}", "Atencao", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+
+
+            try
             {
-                try
-                {
+                    HttpResponseMessage response = null;
                     var client = new HttpClient();
                     client.BaseAddress = new Uri("https://sua-api.com/");
                     client.DefaultRequestHeaders.Accept.Clear();
@@ -123,23 +134,32 @@ namespace AscFrontEnd
                     // Conversão do objeto Film para JSON
                     string json = JsonSerializer.Serialize(id);
 
+                if (MessageBox.Show($"Tens certeza que pretendes eliminar {nome}", "Atencao", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                 {
                     // Envio dos dados para a API
-                    HttpResponseMessage response = await client.PutAsync($"https://localhost:7200/api/Fornecedor/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json"));
+                   
 
+                    if (hasBuyFornecedor(id)) 
+                    { 
+                        response = await client.DeleteAsync($"https://localhost:7200/api/Fornecedor/{id}");
+                    }
+                    else { response = await client.PutAsync($"https://localhost:7200/api/Fornecedor/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json")); }
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show("Fornecedor foi desativado com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK,MessageBoxIcon.Information);
+                        MessageBox.Show("Fornecedor foi eliminado com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show($"Erro ao desactivar funcionario: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return;
+               MessageBox.Show($"Erro ao desactivar fornecedor: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            
+
         }
 
         private async void pesqText_TextChanged(object sender, EventArgs e)
@@ -176,6 +196,18 @@ namespace AscFrontEnd
 
         private void editarPicture_Click(object sender, EventArgs e)
         {
+            new FornecedorEditar(id).ShowDialog();
+        }
+
+        private bool hasBuyFornecedor(int fornecedorId) 
+        {
+            if(StaticProperty.vfrs.Where(x => x.fornecedorId == fornecedorId).First() == null &&
+               StaticProperty.vfts.Where(x => x.fornecedorId == fornecedorId).First() == null &&
+               StaticProperty.ecfs.Where(x => x.fornecedorId == fornecedorId).First() == null &&
+               StaticProperty.cots.Where(x => x.fornecedorId == fornecedorId).First() == null &&
+               StaticProperty.pcos.Where(x => x.fornecedorId == fornecedorId).First() == null )
+            { return true; }
+            else { return false; }
 
         }
     }
