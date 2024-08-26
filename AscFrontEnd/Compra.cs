@@ -107,6 +107,7 @@ namespace AscFrontEnd
 
             HttpResponseMessage response = null;
             var clientGet = new HttpClient();
+            clientGet.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
 
             if (StaticProperty.series == null)
             {
@@ -141,6 +142,7 @@ namespace AscFrontEnd
 
                 // Configuração do HttpClient
                 var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
                 client.BaseAddress = new Uri("https://sua-api.com/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -182,6 +184,7 @@ namespace AscFrontEnd
                 client.BaseAddress = new Uri("https://sua-api.com/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
 
                 // Conversão do objeto Film para JSON
                 string json = System.Text.Json.JsonSerializer.Serialize(vfts);
@@ -217,6 +220,7 @@ namespace AscFrontEnd
 
                 // Configuração do HttpClient
                 var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
                 client.BaseAddress = new Uri("https://sua-api.com/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -256,6 +260,7 @@ namespace AscFrontEnd
 
                 // Configuração do HttpClient
                 var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
                 client.BaseAddress = new Uri("https://sua-api.com/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -294,6 +299,7 @@ namespace AscFrontEnd
 
                 // Configuração do HttpClient
                 var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
                 client.BaseAddress = new Uri("https://sua-api.com/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -329,6 +335,7 @@ namespace AscFrontEnd
 
                 // Configuração do HttpClient
                 var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
                 client.BaseAddress = new Uri("https://sua-api.com/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -367,6 +374,7 @@ namespace AscFrontEnd
 
                 // Configuração do HttpClient
                 var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
                 client.BaseAddress = new Uri("https://sua-api.com/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -406,6 +414,7 @@ namespace AscFrontEnd
 
                 // Configuração do HttpClient
                 var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
                 client.BaseAddress = new Uri("https://sua-api.com/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -435,6 +444,7 @@ namespace AscFrontEnd
 
                 // Actualizar a propriedade estatica de compras
                 var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
                 // Compra
                 var responseVft = await client.GetAsync($"https://localhost:7200/api/Compra/VftByRelations");
 
@@ -509,8 +519,8 @@ namespace AscFrontEnd
         private void clienteBtn_Click(object sender, EventArgs e)
         {
             timerRefresh.Start();
-            FornecedorListagem clienteListagem = new FornecedorListagem();
-            clienteListagem.ShowDialog();
+            FornecedorListagem fornecedorListagem = new FornecedorListagem();
+            fornecedorListagem.ShowDialog();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -736,7 +746,7 @@ namespace AscFrontEnd
                 MessageBox.Show("Nenhuma Serie Foi Criada","Precisa de uma Serie",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 return;
             }
-
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             var response = await client.GetAsync($"https://localhost:7200/api/serie/codigoDocumento/{documento.Text}");
 
             if (response.IsSuccessStatusCode)
@@ -794,6 +804,7 @@ namespace AscFrontEnd
         private async void textBox1_TextChanged(object sender, EventArgs e)
         {
             var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             var response= await client.GetAsync($"https://localhost:7200/api/Artigo/Search/{textBox1.Text}"); ;
 
             if (string.IsNullOrWhiteSpace(textBox1.Text.ToString()))

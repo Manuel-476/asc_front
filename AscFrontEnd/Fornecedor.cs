@@ -97,6 +97,7 @@ namespace AscFrontEnd
             // Configuração do HttpClient
             var client = new HttpClient();
             client.BaseAddress = new Uri("https://sua-api.com/");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 

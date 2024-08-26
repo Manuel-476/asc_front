@@ -12,6 +12,7 @@ using EAscFrontEnd;
 using ERP_Buyer.Application.DTOs.Documentos;
 using ERP_Seller.Application.DTOs.Documentos;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -38,6 +40,7 @@ namespace AscFrontEnd
             timer1.Start();
 
             var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             try
             {
                 // Compra

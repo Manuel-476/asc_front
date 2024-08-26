@@ -49,6 +49,7 @@ namespace AscFrontEnd
         private async void pesqText_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             var response = await client.GetAsync($"https://localhost:7200/api/Artigo/Search/{pesqText.Text}");
 
             if (response.IsSuccessStatusCode)

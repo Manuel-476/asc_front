@@ -84,7 +84,8 @@ namespace AscFrontEnd
                 try 
                 { 
                    var client = new HttpClient();
-                   client.BaseAddress = new Uri("https://sua-api.com/");
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+                    client.BaseAddress = new Uri("https://sua-api.com/");
                    client.DefaultRequestHeaders.Accept.Clear();
                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -114,7 +115,7 @@ namespace AscFrontEnd
         {
             var client = new HttpClient();
             List<FuncionarioDTO> dados = null;
-            
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             client.BaseAddress = new Uri("https://sua-api.com/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

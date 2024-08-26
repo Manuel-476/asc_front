@@ -35,6 +35,7 @@ namespace AscFrontEnd
         private async void salvarBtn_Click(object sender, EventArgs e)
         {
             var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             try
             {
                 client.BaseAddress = new Uri("https://sua-api.com/");

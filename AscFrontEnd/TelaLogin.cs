@@ -84,6 +84,7 @@ namespace AscFrontEnd
 
 
                             this.Hide();
+                            StaticProperty.token = token;
                             new CarregamentoForm().ShowDialog();
                         }
                     }
@@ -146,6 +147,7 @@ namespace AscFrontEnd
 
 
                             this.Hide();
+                            StaticProperty.token = token;
                             new CarregamentoForm().ShowDialog();
                         }
                     }
@@ -158,6 +160,11 @@ namespace AscFrontEnd
                 }
                 
             }
+        }
+
+        private void TelaLogin_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

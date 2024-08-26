@@ -54,6 +54,8 @@ namespace AscFrontEnd
         private async void pesqText_TextChanged(object sender, EventArgs e)
         {
             var client = new HttpClient();
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             var response = await client.GetAsync($"https://localhost:7200/api/Cliente/Search/{pesqText.Text}");
 
             if (response.IsSuccessStatusCode)
@@ -95,6 +97,7 @@ namespace AscFrontEnd
             var cliente = clientes.Where(cl => cl.id == id).First();
 
             var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             client.BaseAddress = new Uri("https://sua-api.com/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -159,6 +162,7 @@ namespace AscFrontEnd
                 {
                     HttpResponseMessage response = null;
                     var client = new HttpClient();
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
                     client.BaseAddress = new Uri("https://sua-api.com/");
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

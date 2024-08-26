@@ -308,3 +308,8 @@ C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFront
 C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.TelaLogin.resources
 C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.BancoCadastroForm.resources
 C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.CaixaCadastroForm.resources
+C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.ArmazemEditar.resources
+C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.ArtigoEditar.resources
+C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.ClienteEditar.resources
+C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.FornecedorEditar.resources
+C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.Historico.resources

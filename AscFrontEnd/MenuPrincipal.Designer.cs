@@ -45,13 +45,14 @@
             this.clienteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.criacaoSerieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.funcionarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.depositoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bancoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.caixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.empresaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.depositoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bancoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.caixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.historicoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -73,6 +74,7 @@
             this.criacaoSerieToolStripMenuItem,
             this.funcionarioToolStripMenuItem,
             this.depositoToolStripMenuItem,
+            this.historicoToolStripMenuItem,
             this.empresaToolStripMenuItem,
             this.sairToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -224,6 +226,32 @@
             this.funcionarioToolStripMenuItem.Text = "Funcionario";
             this.funcionarioToolStripMenuItem.Click += new System.EventHandler(this.funcionarioToolStripMenuItem_Click);
             // 
+            // depositoToolStripMenuItem
+            // 
+            this.depositoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bancoToolStripMenuItem,
+            this.caixaToolStripMenuItem});
+            this.depositoToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.depositoToolStripMenuItem.Name = "depositoToolStripMenuItem";
+            this.depositoToolStripMenuItem.Size = new System.Drawing.Size(128, 23);
+            this.depositoToolStripMenuItem.Text = "Deposito";
+            // 
+            // bancoToolStripMenuItem
+            // 
+            this.bancoToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_bank_64;
+            this.bancoToolStripMenuItem.Name = "bancoToolStripMenuItem";
+            this.bancoToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
+            this.bancoToolStripMenuItem.Text = "Banco";
+            this.bancoToolStripMenuItem.Click += new System.EventHandler(this.bancoToolStripMenuItem_Click);
+            // 
+            // caixaToolStripMenuItem
+            // 
+            this.caixaToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_cash_64;
+            this.caixaToolStripMenuItem.Name = "caixaToolStripMenuItem";
+            this.caixaToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
+            this.caixaToolStripMenuItem.Text = "Caixa";
+            this.caixaToolStripMenuItem.Click += new System.EventHandler(this.caixaToolStripMenuItem_Click);
+            // 
             // empresaToolStripMenuItem
             // 
             this.empresaToolStripMenuItem.ForeColor = System.Drawing.Color.White;
@@ -266,31 +294,12 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "asc";
             // 
-            // depositoToolStripMenuItem
+            // historicoToolStripMenuItem
             // 
-            this.depositoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bancoToolStripMenuItem,
-            this.caixaToolStripMenuItem});
-            this.depositoToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.depositoToolStripMenuItem.Name = "depositoToolStripMenuItem";
-            this.depositoToolStripMenuItem.Size = new System.Drawing.Size(128, 23);
-            this.depositoToolStripMenuItem.Text = "Deposito";
-            // 
-            // bancoToolStripMenuItem
-            // 
-            this.bancoToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_bank_64;
-            this.bancoToolStripMenuItem.Name = "bancoToolStripMenuItem";
-            this.bancoToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
-            this.bancoToolStripMenuItem.Text = "Banco";
-            this.bancoToolStripMenuItem.Click += new System.EventHandler(this.bancoToolStripMenuItem_Click);
-            // 
-            // caixaToolStripMenuItem
-            // 
-            this.caixaToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_cash_64;
-            this.caixaToolStripMenuItem.Name = "caixaToolStripMenuItem";
-            this.caixaToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
-            this.caixaToolStripMenuItem.Text = "Caixa";
-            this.caixaToolStripMenuItem.Click += new System.EventHandler(this.caixaToolStripMenuItem_Click);
+            this.historicoToolStripMenuItem.Name = "historicoToolStripMenuItem";
+            this.historicoToolStripMenuItem.Size = new System.Drawing.Size(128, 23);
+            this.historicoToolStripMenuItem.Text = "Historico";
+            this.historicoToolStripMenuItem.Click += new System.EventHandler(this.historicoToolStripMenuItem_Click);
             // 
             // MenuPrincipal
             // 
@@ -340,5 +349,6 @@
         private System.Windows.Forms.ToolStripMenuItem depositoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bancoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem caixaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem historicoToolStripMenuItem;
     }
 }

@@ -718,6 +718,7 @@ namespace AscFrontEnd
         private async void RefreshDocs()
         {
             var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             try
             {
                 var responseVft = await client.GetAsync($"https://localhost:7200/api/Compra/VftByRelations");

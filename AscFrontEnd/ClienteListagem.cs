@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -43,6 +44,7 @@ namespace AscFrontEnd
         private async void textBox1_TextChanged(object sender, EventArgs e)
         {
             var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             var response = await client.GetAsync($"https://localhost:7200/api/Cliente/Search/{pesqText.Text}");
 
             if (response.IsSuccessStatusCode)

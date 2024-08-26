@@ -27,6 +27,7 @@ namespace AscFrontEnd.DTOs.StaticsDto
         public static string nome { get; set; }
         public static string codigo { get; set; }
         public static string descricao { get; set; }
+        public static string token {  get; set; }   
 
         // Cliente
         public static List<ClienteDTO> clientes { get; set; }

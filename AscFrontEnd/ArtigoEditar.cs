@@ -66,7 +66,7 @@ namespace AscFrontEnd
             if (checkBox1.Checked)
             {
                 armazemCombo.Text = StaticProperty.armazens.Where(x => x.id == _artigo.armazemId).First().codigo;
-                localCombo.Text = StaticProperty.locationStores.Where(x => x.id == StaticProperty.locationArtigos.Where(x => x.id == _artigo.localizacaoArtigoId).First().locationStoreId).First().codigo;
+                localCombo.Text = StaticProperty.locationStores.Where(x => x.id == StaticProperty.locationArtigos.Where(art => art.id == _artigo.localizacaoArtigoId).First().locationStoreId).First().codigo;
             }
             if(_artigo.familiaId > 0)
             {
@@ -103,6 +103,7 @@ namespace AscFrontEnd
 
             // Configuração do HttpClient
             var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             client.BaseAddress = new Uri("https://sua-api.com/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

@@ -37,6 +37,7 @@ namespace AscFrontEnd
         private async void salvarBtn_Click(object sender, EventArgs e)
         {
             var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             HttpResponseMessage response = null;
 
             List<FuncionarioPhoneDTO> phones = new List<FuncionarioPhoneDTO>();
@@ -69,7 +70,7 @@ namespace AscFrontEnd
             string json = System.Text.Json.JsonSerializer.Serialize(funcionario);
 
             // Envio dos dados para a API
-            response = await client.PostAsync($"https://localhost:7200/api/Funcionario/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
+            response = await client.PostAsync($"https://localhost:7200/api/Funcionario/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
 
             if (response.IsSuccessStatusCode)
             {

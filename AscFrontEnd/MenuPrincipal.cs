@@ -109,5 +109,10 @@ namespace AscFrontEnd
         {
             new CaixaCadastroForm().ShowDialog();
         }
+
+        private void historicoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new Historico().ShowDialog();
+        }
     }
 }

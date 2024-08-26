@@ -276,6 +276,7 @@ namespace AscFrontEnd
                 {
                     string documento = StaticProperty.frs.Where(cl => cl.id == id).First().documento;
 
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
                     client.BaseAddress = new Uri("https://sua-api.com/");
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -337,6 +338,8 @@ namespace AscFrontEnd
         {
             string documento = string.Empty;
             var client = new HttpClient();
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             client.BaseAddress = new Uri("https://sua-api.com/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -673,6 +676,7 @@ namespace AscFrontEnd
         private async void RefreshDocs()
         {
             var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             try
             {
                 var responseFr = await client.GetAsync($"https://localhost:7200/api/Venda/FrByRelations");
