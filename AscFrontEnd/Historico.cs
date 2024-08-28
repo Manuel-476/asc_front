@@ -23,7 +23,7 @@ namespace AscFrontEnd
         public Historico()
         {
             InitializeComponent();
-          
+
             client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
         }
@@ -55,7 +55,7 @@ namespace AscFrontEnd
                 else if (item.actividade == DTOs.Enums.Enums.Actividade.vendaGT) { documento = StaticProperty.gts.Where(x => x.id == item.acaoId).First().documento.ToString(); }
                 else if (item.actividade == DTOs.Enums.Enums.Actividade.vendaNC) { documento = StaticProperty.ncs.Where(x => x.id == item.acaoId).First().documento.ToString(); }
 
-                dt.Rows.Add(item.id, documento, StaticProperty.funcionarios.Where(x=>x.Id == item.funcionarioId).First().Nome, item.data);
+                dt.Rows.Add(item.id, documento, StaticProperty.funcionarios.Where(x => x.Id == item.funcionarioId).First().Nome, item.data);
             }
 
             historicoTable.DataSource = dt;
@@ -70,7 +70,7 @@ namespace AscFrontEnd
                 dt.Columns.Add("Funcionario", typeof(string));
                 dt.Columns.Add("Data", typeof(DateTime));
 
-                foreach (var item in StaticProperty.actividades.Where(x => StaticProperty.funcionarios.Where(f=>f.Id == x.funcionarioId).First().empresaid == StaticProperty.empresaId &&
+                foreach (var item in StaticProperty.actividades.Where(x => StaticProperty.funcionarios.Where(f => f.Id == x.funcionarioId).First().empresaid == StaticProperty.empresaId &&
                                                                     (x.actividade == DTOs.Enums.Enums.Actividade.vendaFR || x.actividade == DTOs.Enums.Enums.Actividade.vendaFT
                                                                      || x.actividade == DTOs.Enums.Enums.Actividade.vendaGT || x.actividade == DTOs.Enums.Enums.Actividade.vendaNC)))
                 {
@@ -111,5 +111,234 @@ namespace AscFrontEnd
                 historicoTable.DataSource = dt;
             }
         }
+
+        private void radioCliente_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioCliente.Checked)
+            {
+                dt = new DataTable();
+                dt.Columns.Add("Id", typeof(int));
+                dt.Columns.Add("Cliente", typeof(string));
+                dt.Columns.Add("Operacao", typeof(string));
+                dt.Columns.Add("Funcionario", typeof(string));
+                dt.Columns.Add("Data", typeof(DateTime));
+
+                foreach (var item in StaticProperty.actividades.Where(x => StaticProperty.funcionarios.Where(f => f.Id == x.funcionarioId).First().empresaid == StaticProperty.empresaId))
+                {
+                    if (item.actividade == DTOs.Enums.Enums.Actividade.cliente)
+                    {
+                        dt.Rows.Add(item.id, StaticProperty.clientes.Where(x => x.id == item.acaoId).First().nome_fantasia,
+                                    "Cadastro", StaticProperty.funcionarios.Where(x => x.Id == item.funcionarioId).First().Nome,
+                                    item.data);
+                    }
+                    else if (item.actividade == DTOs.Enums.Enums.Actividade.clienteEdit)
+                    {
+                        dt.Rows.Add(item.id, StaticProperty.clientes.Where(x => x.id == item.acaoId).First().nome_fantasia,
+                       "Alteração", StaticProperty.funcionarios.Where(x => x.Id == item.funcionarioId).First().Nome,
+                       item.data);
+                    }
+
+                }
+
+                historicoTable.DataSource = dt;
+            }
+        }
+
+        private void radioFornecedor_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioFornecedor.Checked)
+            {
+                dt = new DataTable();
+                dt.Columns.Add("Id", typeof(int));
+                dt.Columns.Add("Fornecedor", typeof(string));
+                dt.Columns.Add("Operacao", typeof(string));
+                dt.Columns.Add("Funcionario", typeof(string));
+                dt.Columns.Add("Data", typeof(DateTime));
+
+                foreach (var item in StaticProperty.actividades.Where(x => StaticProperty.funcionarios.Where(f => f.Id == x.funcionarioId).First().empresaid == StaticProperty.empresaId))
+                {
+                    if (item.actividade == DTOs.Enums.Enums.Actividade.fornecedor)
+                    {
+                        dt.Rows.Add(item.id, StaticProperty.fornecedores.Where(x => x.id == item.acaoId).First().nome_fantasia,
+                                    "Cadastro", StaticProperty.funcionarios.Where(x => x.Id == item.funcionarioId).First().Nome,
+                                    item.data);
+                    }
+                    else if (item.actividade == DTOs.Enums.Enums.Actividade.fornecedorEdit)
+                    {
+                        dt.Rows.Add(item.id, StaticProperty.fornecedores.Where(x => x.id == item.acaoId).First().nome_fantasia,
+                       "Alteração", StaticProperty.funcionarios.Where(x => x.Id == item.funcionarioId).First().Nome,
+                       item.data);
+                    }
+
+                }
+
+                historicoTable.DataSource = dt;
+            }
+        }
+
+        private void radioAmarzem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioArmazem.Checked)
+            {
+                dt = new DataTable();
+                dt.Columns.Add("Id", typeof(int));
+                dt.Columns.Add("Armazem", typeof(string));
+                dt.Columns.Add("Operacao", typeof(string));
+                dt.Columns.Add("Funcionario", typeof(string));
+                dt.Columns.Add("Data", typeof(DateTime));
+
+                foreach (var item in StaticProperty.actividades.Where(x => StaticProperty.funcionarios.Where(f => f.Id == x.funcionarioId).First().empresaid == StaticProperty.empresaId))
+                {
+                    if (item.actividade == DTOs.Enums.Enums.Actividade.armazem)
+                    {
+                        dt.Rows.Add(item.id, StaticProperty.armazens.Where(x => x.id == item.acaoId).First().descricao,
+                                    "Cadastro", StaticProperty.funcionarios.Where(x => x.Id == item.funcionarioId).First().Nome,
+                                    item.data);
+                    }
+                    else if (item.actividade == DTOs.Enums.Enums.Actividade.armazemEdit)
+                    {
+                        dt.Rows.Add(item.id, StaticProperty.armazens.Where(x => x.id == item.acaoId).First().descricao,
+                       "Alteração", StaticProperty.funcionarios.Where(x => x.Id == item.funcionarioId).First().Nome,
+                       item.data);
+                    }
+                    else if (item.actividade == DTOs.Enums.Enums.Actividade.stockInc)
+                    {
+                        dt.Rows.Add(item.id, StaticProperty.artigos.Where(x => x.id == item.acaoId).First().descricao,
+                       "Entrada de Stock", StaticProperty.funcionarios.Where(x => x.Id == item.funcionarioId).First().Nome,
+                       item.data);
+                    }
+                    else if (item.actividade == DTOs.Enums.Enums.Actividade.stockDec)
+                    {
+                        dt.Rows.Add(item.id, StaticProperty.artigos.Where(x => x.id == item.acaoId).First().descricao,
+                       "Saida de Stock", StaticProperty.funcionarios.Where(x => x.Id == item.funcionarioId).First().Nome,
+                       item.data);
+                    }
+                    else if (item.actividade == DTOs.Enums.Enums.Actividade.stockTransf)
+                    {
+                        dt.Rows.Add(item.id, StaticProperty.artigos.Where(x => x.id == item.acaoId).First().descricao,
+                       "Transferencia de Local", StaticProperty.funcionarios.Where(x => x.Id == item.funcionarioId).First().Nome,
+                       item.data);
+                    }
+                }
+
+                historicoTable.DataSource = dt;
+            }
+        }
+
+        private void radioArtigo_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioArtigo.Checked)
+            {
+                dt = new DataTable();
+                dt.Columns.Add("Id", typeof(int));
+                dt.Columns.Add("Artigo", typeof(string));
+                dt.Columns.Add("Operacao", typeof(string));
+                dt.Columns.Add("Funcionario", typeof(string));
+                dt.Columns.Add("Data", typeof(DateTime));
+
+                foreach (var item in StaticProperty.actividades.Where(x => StaticProperty.funcionarios.Where(f => f.Id == x.funcionarioId).First().empresaid == StaticProperty.empresaId))
+                {
+                    if (item.actividade == DTOs.Enums.Enums.Actividade.artigo)
+                    {
+                        dt.Rows.Add(item.id, StaticProperty.artigos.Where(x => x.id == item.acaoId).First().descricao,
+                                    "Cadastro", StaticProperty.funcionarios.Where(x => x.Id == item.funcionarioId).First().Nome,
+                                    item.data);
+                    }
+                    else if (item.actividade == DTOs.Enums.Enums.Actividade.artigoEdit)
+                    {
+                        dt.Rows.Add(item.id, StaticProperty.artigos.Where(x => x.id == item.acaoId).First().descricao,
+                       "Alteração", StaticProperty.funcionarios.Where(x => x.Id == item.funcionarioId).First().Nome,
+                       item.data);
+                    }
+
+                }
+
+                historicoTable.DataSource = dt;
+            }
+        }
+
+        private void radioFuncionario_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioFuncionario.Checked)
+            {
+                dt = new DataTable();
+                dt.Columns.Add("Id", typeof(int));
+                dt.Columns.Add("Nome", typeof(string));
+                dt.Columns.Add("Operacao", typeof(string));
+                dt.Columns.Add("Funcionario", typeof(string));
+                dt.Columns.Add("Data", typeof(DateTime));
+
+                foreach (var item in StaticProperty.actividades.Where(x => StaticProperty.funcionarios.Where(f => f.Id == x.funcionarioId).First().empresaid == StaticProperty.empresaId))
+                {
+                    if (item.actividade == DTOs.Enums.Enums.Actividade.funcionario)
+                    {
+                        dt.Rows.Add(item.id, StaticProperty.funcionarios.Where(x => x.Id == item.acaoId).First().Nome,
+                                    "Cadastro", StaticProperty.funcionarios.Where(x => x.Id == item.funcionarioId).First().Nome,
+                                    item.data);
+                    }
+                    else if (item.actividade == DTOs.Enums.Enums.Actividade.funcionarioEdit)
+                    {
+                        dt.Rows.Add(item.id, StaticProperty.funcionarios.Where(x => x.Id == item.acaoId).First().Nome,
+                       "Alteração", StaticProperty.funcionarios.Where(x => x.Id == item.funcionarioId).First().Nome,
+                       item.data);
+                    }
+
+                }
+            }
+        }
+
+        private void radioCc_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioCc.Checked)
+            {
+                dt = new DataTable();
+                dt.Columns.Add("Id", typeof(int));
+                dt.Columns.Add("Documento", typeof(string));
+                dt.Columns.Add("Operacao", typeof(string));
+                dt.Columns.Add("Funcionario", typeof(string));
+                dt.Columns.Add("Data", typeof(DateTime));
+
+                foreach (var item in StaticProperty.actividades.Where(x => StaticProperty.funcionarios.Where(f => f.Id == x.funcionarioId).First().empresaid == StaticProperty.empresaId))
+                {
+                    if (item.actividade == DTOs.Enums.Enums.Actividade.ccLiqCli)
+                    {
+                        dt.Rows.Add(item.id, StaticProperty.recibos.Where(x => x.id == item.acaoId).First().documento,
+                                    "Pagamento", StaticProperty.funcionarios.Where(x => x.Id == item.funcionarioId).First().Nome,
+                                    item.data);
+                    }
+                    else if (item.actividade == DTOs.Enums.Enums.Actividade.ccAdCli)
+                    {
+
+                    }
+
+                }
+            }
+        }
+
+        private void radioCcF_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioCcF.Checked)
+            {
+                dt = new DataTable();
+                dt.Columns.Add("Id", typeof(int));
+                dt.Columns.Add("Documento", typeof(string));
+                dt.Columns.Add("Operacao", typeof(string));
+                dt.Columns.Add("Funcionario", typeof(string));
+                dt.Columns.Add("Data", typeof(DateTime));
+
+                foreach (var item in StaticProperty.actividades.Where(x => StaticProperty.funcionarios.Where(f => f.Id == x.funcionarioId).First().empresaid == StaticProperty.empresaId))
+                {
+                    if (item.actividade == DTOs.Enums.Enums.Actividade.ccLiqFor)
+                    {
+                        dt.Rows.Add(item.id, StaticProperty.nps.Where(x => x.id == item.acaoId).First().documento,
+                                    "Pagamento", StaticProperty.funcionarios.Where(x => x.Id == item.funcionarioId).First().Nome,
+                                    item.data);
+                    }
+                    else if (item.actividade == DTOs.Enums.Enums.Actividade.ccAdCli)
+                    {
+
+                    }
+                }
+            }
+        }
     }
-}

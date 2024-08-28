@@ -35,7 +35,7 @@
             this.radioCompra = new System.Windows.Forms.RadioButton();
             this.radioCliente = new System.Windows.Forms.RadioButton();
             this.radioFornecedor = new System.Windows.Forms.RadioButton();
-            this.radioAmarzem = new System.Windows.Forms.RadioButton();
+            this.radioArmazem = new System.Windows.Forms.RadioButton();
             this.radioArtigo = new System.Windows.Forms.RadioButton();
             this.radioFuncionario = new System.Windows.Forms.RadioButton();
             this.radiobanco = new System.Windows.Forms.RadioButton();
@@ -121,6 +121,7 @@
             this.radioCliente.TabStop = true;
             this.radioCliente.Text = "Cliente";
             this.radioCliente.UseVisualStyleBackColor = true;
+            this.radioCliente.CheckedChanged += new System.EventHandler(this.radioCliente_CheckedChanged);
             // 
             // radioFornecedor
             // 
@@ -134,19 +135,21 @@
             this.radioFornecedor.TabStop = true;
             this.radioFornecedor.Text = "Fornecedor";
             this.radioFornecedor.UseVisualStyleBackColor = true;
+            this.radioFornecedor.CheckedChanged += new System.EventHandler(this.radioFornecedor_CheckedChanged);
             // 
-            // radioAmarzem
+            // radioArmazem
             // 
-            this.radioAmarzem.AutoSize = true;
-            this.radioAmarzem.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioAmarzem.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.radioAmarzem.Location = new System.Drawing.Point(381, 95);
-            this.radioAmarzem.Name = "radioAmarzem";
-            this.radioAmarzem.Size = new System.Drawing.Size(69, 20);
-            this.radioAmarzem.TabIndex = 20;
-            this.radioAmarzem.TabStop = true;
-            this.radioAmarzem.Text = "Armazem";
-            this.radioAmarzem.UseVisualStyleBackColor = true;
+            this.radioArmazem.AutoSize = true;
+            this.radioArmazem.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioArmazem.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.radioArmazem.Location = new System.Drawing.Point(381, 95);
+            this.radioArmazem.Name = "radioArmazem";
+            this.radioArmazem.Size = new System.Drawing.Size(69, 20);
+            this.radioArmazem.TabIndex = 20;
+            this.radioArmazem.TabStop = true;
+            this.radioArmazem.Text = "Armazem";
+            this.radioArmazem.UseVisualStyleBackColor = true;
+            this.radioArmazem.CheckedChanged += new System.EventHandler(this.radioAmarzem_CheckedChanged);
             // 
             // radioArtigo
             // 
@@ -160,6 +163,7 @@
             this.radioArtigo.TabStop = true;
             this.radioArtigo.Text = "Artigo";
             this.radioArtigo.UseVisualStyleBackColor = true;
+            this.radioArtigo.CheckedChanged += new System.EventHandler(this.radioArtigo_CheckedChanged);
             // 
             // radioFuncionario
             // 
@@ -173,6 +177,7 @@
             this.radioFuncionario.TabStop = true;
             this.radioFuncionario.Text = "Funcionario";
             this.radioFuncionario.UseVisualStyleBackColor = true;
+            this.radioFuncionario.CheckedChanged += new System.EventHandler(this.radioFuncionario_CheckedChanged);
             // 
             // radiobanco
             // 
@@ -212,6 +217,7 @@
             this.radioCc.TabStop = true;
             this.radioCc.Text = "Contas Correntes Cliente";
             this.radioCc.UseVisualStyleBackColor = true;
+            this.radioCc.CheckedChanged += new System.EventHandler(this.radioCc_CheckedChanged);
             // 
             // radioCcF
             // 
@@ -225,6 +231,7 @@
             this.radioCcF.TabStop = true;
             this.radioCcF.Text = "Contas Correntes Fornecedor";
             this.radioCcF.UseVisualStyleBackColor = true;
+            this.radioCcF.CheckedChanged += new System.EventHandler(this.radioCcF_CheckedChanged);
             // 
             // historicoTable
             // 
@@ -270,7 +277,7 @@
             this.Controls.Add(this.radiobanco);
             this.Controls.Add(this.radioFuncionario);
             this.Controls.Add(this.radioArtigo);
-            this.Controls.Add(this.radioAmarzem);
+            this.Controls.Add(this.radioArmazem);
             this.Controls.Add(this.radioFornecedor);
             this.Controls.Add(this.radioCliente);
             this.Controls.Add(this.radioCompra);
@@ -302,7 +309,7 @@
         private System.Windows.Forms.RadioButton radioCompra;
         private System.Windows.Forms.RadioButton radioCliente;
         private System.Windows.Forms.RadioButton radioFornecedor;
-        private System.Windows.Forms.RadioButton radioAmarzem;
+        private System.Windows.Forms.RadioButton radioArmazem;
         private System.Windows.Forms.RadioButton radioArtigo;
         private System.Windows.Forms.RadioButton radioFuncionario;
         private System.Windows.Forms.RadioButton radiobanco;
