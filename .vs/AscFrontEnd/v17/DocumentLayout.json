@@ -3,11 +3,11 @@
   "WorkspaceRootPath": "C:\\Users\\Devs\\Documents\\GitHub\\asc_front\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Devs\\Documents\\GitHub\\asc_front\\ascfrontend\\historico.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\devs\\documents\\github\\asc_front\\ascfrontend\\historico.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\historico.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\devs\\documents\\github\\asc_front\\ascfrontend\\historico.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Devs\\Documents\\GitHub\\asc_front\\ascfrontend\\historico.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\historico.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
@@ -360,7 +360,7 @@
               "RelativeDocumentMoniker": "AscFrontEnd\\Historico.cs",
               "ToolTip": "C:\\Users\\Devs\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Historico.cs",
               "RelativeToolTip": "AscFrontEnd\\Historico.cs",
-              "ViewState": "AQIAADgBAAAAAAAAAAAqwEwBAAA/AAAA",
+              "ViewState": "AQIAAGcAAAAAAAAAAAAQwEwBAAA/AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-23T14:34:58.7Z",
               "EditorCaption": ""
@@ -374,8 +374,7 @@
               "ToolTip": "C:\\Users\\Devs\\Documents\\GitHub\\asc_front\\AscFrontEnd\\ClienteListagem.cs [Design]",
               "RelativeToolTip": "AscFrontEnd\\ClienteListagem.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-24T20:12:36.569Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2024-08-24T20:12:36.569Z"
             },
             {
               "$type": "Document",
@@ -387,8 +386,7 @@
               "RelativeToolTip": "AscFrontEnd\\ClienteListagem.cs",
               "ViewState": "AQIAABgAAAAAAAAAAAAlwBoAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-24T20:12:38.175Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-24T20:12:38.175Z"
             },
             {
               "$type": "Document",
@@ -399,8 +397,7 @@
               "ToolTip": "C:\\Users\\Devs\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Historico.cs [Design]",
               "RelativeToolTip": "AscFrontEnd\\Historico.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-23T14:29:43.209Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2024-08-23T14:29:43.209Z"
             },
             {
               "$type": "Document",
