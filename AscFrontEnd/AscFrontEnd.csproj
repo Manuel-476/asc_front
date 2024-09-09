@@ -132,6 +132,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdiantamentoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdiantamentoForm.Designer.cs">
+      <DependentUpon>AdiantamentoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AprovaPagamento.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -284,8 +290,12 @@
     <Compile Include="DTOs\Cliente\ClienteFilialDTO.cs" />
     <Compile Include="DTOs\Cliente\ClientePhoneDTO.cs" />
     <Compile Include="DTOs\Cliente\FilialPhoneDTO.cs" />
+    <Compile Include="DTOs\ContasCorrentes\AdiantamentoClienteDTO.cs" />
+    <Compile Include="DTOs\ContasCorrentes\AdiantamentoFornDTO.cs" />
     <Compile Include="DTOs\ContasCorrentes\NpDTO.cs" />
     <Compile Include="DTOs\ContasCorrentes\ReciboDTO.cs" />
+    <Compile Include="DTOs\ContasCorrentes\RegAdiantamentoClienteDTO.cs" />
+    <Compile Include="DTOs\ContasCorrentes\RegAdiantamentoFornDTO.cs" />
     <Compile Include="DTOs\Deposito\BancoDTO.cs" />
     <Compile Include="DTOs\Deposito\CaixaDTO.cs" />
     <Compile Include="DTOs\Empresa\EmpresaDTO.cs" />
@@ -482,6 +492,9 @@
     <Compile Include="VendaListagem.Designer.cs">
       <DependentUpon>VendaListagem.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AdiantamentoForm.resx">
+      <DependentUpon>AdiantamentoForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AprovaPagamento.resx">
       <DependentUpon>AprovaPagamento.cs</DependentUpon>
     </EmbeddedResource>
