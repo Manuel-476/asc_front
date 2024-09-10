@@ -70,6 +70,7 @@ namespace AscFrontEnd
                 {
                     var contentVgt = await responseVgt.Content.ReadAsStringAsync();
                     StaticProperty.vgts = JsonConvert.DeserializeObject<List<VgtDTO>>(contentVgt);
+
                     processValue += 4;
                 }
 
@@ -306,7 +307,27 @@ namespace AscFrontEnd
                     var contentCCc = await responseCCc.Content.ReadAsStringAsync();
                     StaticProperty.contaCorrenteCliente = JsonConvert.DeserializeObject<object>(contentCCc);
 
-                    processValue += 5;
+                    processValue += 3;
+                }
+
+                var responseAdForn = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Fornecedor");
+
+                if (responseAdForn.IsSuccessStatusCode)
+                {
+                    var contentAdForn = await responseAdForn.Content.ReadAsStringAsync();
+                    StaticProperty.adiantamentoForns = JsonConvert.DeserializeObject<List<AdiantamentoFornDTO>>(contentAdForn);
+
+                    processValue += 1;
+                }
+
+                var responseAdCliente = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Fornecedor");
+
+                if (responseAdCliente.IsSuccessStatusCode)
+                {
+                    var contentAdCliente = await responseAdForn.Content.ReadAsStringAsync();
+                    StaticProperty.adiantamentoClientes = JsonConvert.DeserializeObject<List<AdiantamentoClienteDTO>>(contentAdCliente);
+
+                    processValue += 1;
                 }
 
                 // Serie

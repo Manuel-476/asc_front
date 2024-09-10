@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AscFrontEnd.DTOs.ContasCorrentes;
+using AscFrontEnd.Application;
 
 namespace AscFrontEnd
 {
@@ -21,6 +22,7 @@ namespace AscFrontEnd
         string nomeEntidadeStr = string.Empty;
         AdiantamentoFornDTO adiantamentoFornecedor;
         AdiantamentoClienteDTO adiantamentoCliente;
+        
 
         public AdiantamentoForm()
         {
@@ -86,39 +88,74 @@ namespace AscFrontEnd
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private async void button3_Click(object sender, EventArgs e)
         {
-            adiantamentoCliente = new AdiantamentoClienteDTO();
-            
+            HttpResponseMessage response = null;
+            string json;
+            string codigoDocumento;
+            string documento;
 
-            if (radioFornecedor.Checked) 
-            {
-                adiantamentoFornecedor = new AdiantamentoFornDTO() { fornecedorId = StaticProperty.entityId,
-                                                                     state = DTOs.Enums.Enums.DocState.ativo,
-                                                                     documento = };
-            }
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             client.BaseAddress = new Uri("https://sua-api.com/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            // Conversão do objeto Film para JSON
-            string json = System.Text.Json.JsonSerializer.Serialize(armazem);
+            
+            if (radioFornecedor.Checked) 
+            {
+                documento = "ADF";
+
+                codigoDocumento = await Documento.GetCodigoDocumentoAsync(documento);
+
+                adiantamentoFornecedor = new AdiantamentoFornDTO() { fornecedorId = StaticProperty.entityId,
+                                                                     state = DTOs.Enums.Enums.DocState.ativo,
+                                                                     documento = codigoDocumento};
+
+                json = System.Text.Json.JsonSerializer.Serialize(adiantamentoFornecedor);
+
+                response = await client.PostAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Fornecedor", new StringContent(json, Encoding.UTF8, "application/json"));
+
+            }
+
+            if (radioCliente.Checked)
+            {
+                documento = "ADC";
+
+                codigoDocumento = await Documento.GetCodigoDocumentoAsync(documento);
+
+                adiantamentoCliente = new AdiantamentoClienteDTO()
+                {
+                    clienteId = StaticProperty.entityId,
+                    state = DTOs.Enums.Enums.DocState.ativo,
+                    documento = codigoDocumento
+                };
+
+                json = System.Text.Json.JsonSerializer.Serialize(adiantamentoCliente);
+
+                response = await client.PostAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Cliente", new StringContent(json, Encoding.UTF8, "application/json"));
+
+            }
 
             // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Armazem/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
-                MessageBox.Show("Armazem Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
-                //Actualizar propriedade estatica armazem
-                // Amazem
-                var responseArmazem = await client.GetAsync($"https://localhost:7200/api/Armazem/ArmazensByRelations");
+                MessageBox.Show("Adiantamento Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
-                if (responseArmazem.IsSuccessStatusCode)
+                var responseAdForn = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Fornecedor");
+
+                if (responseAdForn.IsSuccessStatusCode)
                 {
-                    var contentArmazem = await responseArmazem.Content.ReadAsStringAsync();
-                    StaticProperty.armazens = JsonConvert.DeserializeObject<List<ArmazemDTO>>(contentArmazem);
+                    var contentAdForn = await responseAdForn.Content.ReadAsStringAsync();
+                    StaticProperty.adiantamentoForns = JsonConvert.DeserializeObject<List<AdiantamentoFornDTO>>(contentAdForn);
+                }
+
+                var responseAdCliente = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Fornecedor");
+
+                if (responseAdCliente.IsSuccessStatusCode)
+                {
+                    var contentAdCliente = await responseAdForn.Content.ReadAsStringAsync();
+                    StaticProperty.adiantamentoClientes = JsonConvert.DeserializeObject<List<AdiantamentoClienteDTO>>(contentAdCliente);
                 }
             }
         }

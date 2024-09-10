@@ -138,6 +138,7 @@
     <Compile Include="AdiantamentoForm.Designer.cs">
       <DependentUpon>AdiantamentoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Application\Documento.cs" />
     <Compile Include="AprovaPagamento.cs">
       <SubType>Form</SubType>
     </Compile>
