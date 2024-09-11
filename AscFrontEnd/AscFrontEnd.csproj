@@ -407,6 +407,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RegularAdiantamentoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegularAdiantamentoForm.Designer.cs">
+      <DependentUpon>RegularAdiantamentoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SerieForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -594,6 +600,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ListaSeries.resx">
       <DependentUpon>ListaSeries.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RegularAdiantamentoForm.resx">
+      <DependentUpon>RegularAdiantamentoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SerieForm.resx">
       <DependentUpon>SerieForm.cs</DependentUpon>

@@ -275,5 +275,21 @@ namespace AscFrontEnd
         {
 
         }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            RegularAdiantamentoForm form = null;
+
+            if (radioCliente.Checked) 
+            {
+                form = new RegularAdiantamentoForm(Entidade.cliente,id);
+            }
+            else if (radioFornecedor.Checked)
+            {
+                form = new RegularAdiantamentoForm(Entidade.fornecedor, id);
+            }
+
+            form.ShowDialog();
+        }
     }
 }
