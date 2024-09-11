@@ -330,6 +330,26 @@ namespace AscFrontEnd
                     processValue += 1;
                 }
 
+                var responseRegAdForn = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Regular/Adiantamento/Fornecedor/WithRelations");
+
+                if (responseRegAdForn.IsSuccessStatusCode)
+                {
+                    var contentRegAdForn = await responseRegAdForn.Content.ReadAsStringAsync();
+                    StaticProperty.regAdiantamentoForns = JsonConvert.DeserializeObject<List<RegAdiantamentoFornDTO>>(contentRegAdForn);
+
+                    processValue += 1;
+                }
+
+                var responseRegAdCliente = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Regular/Adiantamento/Cliente/WithRelations");
+
+                if (responseRegAdCliente.IsSuccessStatusCode)
+                {
+                    var contentRegAdCliente = await responseRegAdCliente.Content.ReadAsStringAsync();
+                    StaticProperty.regAdiantamentoClientes = JsonConvert.DeserializeObject <List<RegAdiantamentoClienteDTO>>(contentRegAdCliente);
+
+                    processValue += 1;
+                }
+
                 // Serie
                 var responseSerie = await client.GetAsync($"https://localhost:7200/api/Serie");
 
@@ -348,7 +368,7 @@ namespace AscFrontEnd
                     var contentAct = await responseAct.Content.ReadAsStringAsync();
                     StaticProperty.actividades = JsonConvert.DeserializeObject<List<ActividadeDTO>>(contentAct);
 
-                    processValue += 5;
+                    processValue += 3;
                 }
 
                 // Depositos
@@ -434,13 +454,8 @@ namespace AscFrontEnd
             {          
                 if (MessageBox.Show( $"{ex.Message}", "Erro na Abertura do Sistema", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Warning)==DialogResult.Abort)
                 {
-                    Application.Exit();
+                    System.Windows.Forms.Application.Exit();
                 }
-            }
-            finally 
-            {
-
-             
             }
         }
 

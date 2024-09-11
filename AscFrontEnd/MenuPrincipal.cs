@@ -97,7 +97,7 @@ namespace AscFrontEnd
 
         private void sairToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            System.Windows.Forms.Application.Exit();
         }
 
         private void bancoToolStripMenuItem_Click(object sender, EventArgs e)

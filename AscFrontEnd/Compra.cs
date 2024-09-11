@@ -137,6 +137,7 @@ namespace AscFrontEnd
                     fornecedorId = StaticProperty.entityId,
                     vfrArtigo = artigos,
                     status = DTOs.Enums.Enums.DocState.ativo,
+                    created_at = DateTime.Now,
                 };
 
 

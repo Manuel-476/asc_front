@@ -171,6 +171,7 @@ namespace AscFrontEnd
                     clienteId = StaticProperty.entityId,
                     frArtigo = artigos,
                     status = DTOs.Enums.Enums.DocState.ativo,
+                    created_at = DateTime.Now,
                 };
 
                 // Conversão do objeto Film para JSON

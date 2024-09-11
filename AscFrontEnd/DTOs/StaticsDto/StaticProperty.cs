@@ -79,6 +79,8 @@ namespace AscFrontEnd.DTOs.StaticsDto
         public static object contaCorrenteCliente { get; set; }
         public static List<AdiantamentoFornDTO> adiantamentoForns { get; set; }
         public static List<AdiantamentoClienteDTO> adiantamentoClientes { get; set; }
+        public static List<RegAdiantamentoFornDTO> regAdiantamentoForns { get; set; }
+        public static List<RegAdiantamentoClienteDTO> regAdiantamentoClientes { get; set; }
 
         // Serie
         public static List<SerieDTO> series { get; set; }

@@ -314,3 +314,4 @@ C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFront
 C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.FornecedorEditar.resources
 C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.Historico.resources
 C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.AdiantamentoForm.resources
+C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.RegularAdiantamentoForm.resources

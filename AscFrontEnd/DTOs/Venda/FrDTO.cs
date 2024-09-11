@@ -13,6 +13,7 @@ namespace AscFrontEnd.DTOs.Venda
         public int clienteId { get; set; }
         public DocState status { get; set; }
         public DateTime data { get; set; }
+        public DateTime created_at { get; set; }
         public List<FrArtigoDTO> frArtigo { get; set; }
     }
 }

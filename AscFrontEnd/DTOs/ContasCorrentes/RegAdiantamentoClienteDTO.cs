@@ -17,6 +17,7 @@ namespace AscFrontEnd.DTOs.ContasCorrentes
         public int frId { get; set; }
         public DocState status { get; set; }
         public int empresaId { get; set; }
+        public DateTime created_at { get; set; }
         public FrDTO fr { get; set; }
         public AdiantamentoClienteDTO adiantamento { get; set; }
     }

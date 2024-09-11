@@ -15,6 +15,7 @@ namespace AscFrontEnd.DTOs.ContasCorrentes
         public int vfrId { get; set; }
         public DocState status { get; set; }
         public int empresaId { get; set; }
+        public DateTime created_at { get; set; }
         public VfrDTO Vfr { get; set; }
         public AdiantamentoFornDTO adiantamento { get; set; }
     }
