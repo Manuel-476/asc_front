@@ -172,6 +172,8 @@ namespace AscFrontEnd
                         var contentRegAdCliente = await responseRegAdCliente.Content.ReadAsStringAsync();
                         StaticProperty.regAdiantamentoClientes = JsonConvert.DeserializeObject<List<RegAdiantamentoClienteDTO>>(contentRegAdCliente);
                     }
+                    var result = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Feito Com Sucesso", MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }
                 else
                 {

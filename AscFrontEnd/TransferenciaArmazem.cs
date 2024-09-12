@@ -60,7 +60,7 @@ namespace AscFrontEnd
             int qtd = int.Parse(qtdText.Text);
             int idLoc = armazens.storeLocations.Where(sl => sl.locationArtigos.Where(la => la.artigoId == _stock.id).First().artigoId == _stock.id).First().id;
 
-        var client = new HttpClient();
+            var client = new HttpClient();
             try
             {
                 locationStoreId = StaticProperty.locationStores.Where(loc => loc.id == idLoc).First().id; 
@@ -87,8 +87,9 @@ namespace AscFrontEnd
 
                     StaticProperty.locationArtigos = JsonConvert.DeserializeObject<List<LocationArtigoDTO>>(contentTransf);
 
-                    MessageBox.Show($"Transferencia feita com sucesso",
-                                     "Feito com sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    var result = await responseTransf.Content.ReadAsStringAsync();
+
+                    MessageBox.Show(result,result, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
             }
