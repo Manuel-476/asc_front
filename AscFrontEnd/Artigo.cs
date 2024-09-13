@@ -42,6 +42,11 @@ namespace AscFrontEnd
               mov_stock = checkBox1.Checked?OpcaoBinaria.Sim:OpcaoBinaria.Nao,
               mov_lote = checkBox1.Checked?OpcaoBinaria.Sim:OpcaoBinaria.Nao,
               localizacaoArtigoId = localId,
+              codigo_barra = codBarra.Text,
+              num_serie = numSerie.Text,
+              preco_unitario = float.Parse(precotxt.Text),
+              unidadeCompra = comboUnCompra.Text,
+              unidadeVenda = comboUnVenda.Text,
               empresaId = StaticProperty.empresaId,
             };
 
@@ -144,6 +149,12 @@ namespace AscFrontEnd
             {
                 marcaCombo.Items.Add(item.codigo);
             }
+
+            comboUnCompra.Items.Add("Un"); comboUnVenda.Items.Add("Un");
+            comboUnCompra.Items.Add("Kg"); comboUnVenda.Items.Add("Kg");
+            comboUnCompra.Items.Add("Ltr"); comboUnVenda.Items.Add("Ltr");
+            comboUnCompra.Items.Add("m"); comboUnVenda.Items.Add("m");
+            comboUnCompra.Items.Add("Cx"); comboUnVenda.Items.Add("Cx");
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)

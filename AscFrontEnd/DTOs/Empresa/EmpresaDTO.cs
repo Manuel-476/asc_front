@@ -15,6 +15,10 @@ namespace AscFrontEnd.DTOs.Empresa
         public string nome_fantasia { get; set; }
         public string razao_social { get; set; }
         public string endereco { get; set; }
+        public string bairro { get; set; }
+        public string pronvicia { get; set; }
+        public string telefone { get; set; }
+        public string website { get; set; }
         public string ramo_actividade { get; set; }
         public string descricao { get; set; }
         public string logotipo { get; set; }

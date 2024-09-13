@@ -58,6 +58,10 @@
             this.marcaCombo = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.modeloCombo = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.comboUnVenda = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.comboUnCompra = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -356,11 +360,51 @@
             this.modeloCombo.Size = new System.Drawing.Size(221, 21);
             this.modeloCombo.TabIndex = 29;
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(506, 357);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(120, 20);
+            this.label13.TabIndex = 36;
+            this.label13.Text = "Unidade Venda";
+            // 
+            // comboUnVenda
+            // 
+            this.comboUnVenda.FormattingEnabled = true;
+            this.comboUnVenda.Location = new System.Drawing.Point(510, 380);
+            this.comboUnVenda.Name = "comboUnVenda";
+            this.comboUnVenda.Size = new System.Drawing.Size(221, 21);
+            this.comboUnVenda.TabIndex = 35;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(262, 357);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(129, 20);
+            this.label14.TabIndex = 34;
+            this.label14.Text = "Unidade Compra";
+            // 
+            // comboUnCompra
+            // 
+            this.comboUnCompra.FormattingEnabled = true;
+            this.comboUnCompra.Location = new System.Drawing.Point(266, 380);
+            this.comboUnCompra.Name = "comboUnCompra";
+            this.comboUnCompra.Size = new System.Drawing.Size(221, 21);
+            this.comboUnCompra.TabIndex = 33;
+            // 
             // Artigo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.comboUnVenda);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.comboUnCompra);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.marcaCombo);
             this.Controls.Add(this.label12);
@@ -434,5 +478,9 @@
         private System.Windows.Forms.ComboBox marcaCombo;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox modeloCombo;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox comboUnVenda;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox comboUnCompra;
     }
 }
