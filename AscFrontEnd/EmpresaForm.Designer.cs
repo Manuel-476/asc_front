@@ -54,6 +54,12 @@
             this.label11 = new System.Windows.Forms.Label();
             this.telText = new System.Windows.Forms.TextBox();
             this.Telefone = new System.Windows.Forms.Label();
+            this.siteTxt = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.bairroTxt = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.provinciaTxt = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -187,7 +193,7 @@
             this.pictureBox4.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox4.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_cash_64;
             this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox4.Location = new System.Drawing.Point(604, 320);
+            this.pictureBox4.Location = new System.Drawing.Point(622, 357);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(107, 69);
             this.pictureBox4.TabIndex = 14;
@@ -201,7 +207,7 @@
             this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox3.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_bank_64;
             this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox3.Location = new System.Drawing.Point(240, 320);
+            this.pictureBox3.Location = new System.Drawing.Point(258, 357);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(107, 69);
             this.pictureBox3.TabIndex = 13;
@@ -227,7 +233,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label7.Location = new System.Drawing.Point(260, 402);
+            this.label7.Location = new System.Drawing.Point(280, 429);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(63, 20);
             this.label7.TabIndex = 15;
@@ -238,7 +244,7 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label8.Location = new System.Drawing.Point(625, 402);
+            this.label8.Location = new System.Drawing.Point(645, 429);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(56, 20);
             this.label8.TabIndex = 16;
@@ -271,7 +277,7 @@
             // 
             // nifText
             // 
-            this.nifText.Location = new System.Drawing.Point(330, 258);
+            this.nifText.Location = new System.Drawing.Point(330, 256);
             this.nifText.Name = "nifText";
             this.nifText.Size = new System.Drawing.Size(269, 20);
             this.nifText.TabIndex = 22;
@@ -281,7 +287,7 @@
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label10.Location = new System.Drawing.Point(326, 234);
+            this.label10.Location = new System.Drawing.Point(326, 232);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(39, 20);
             this.label10.TabIndex = 21;
@@ -289,7 +295,7 @@
             // 
             // emailText
             // 
-            this.emailText.Location = new System.Drawing.Point(23, 258);
+            this.emailText.Location = new System.Drawing.Point(23, 256);
             this.emailText.Name = "emailText";
             this.emailText.Size = new System.Drawing.Size(291, 20);
             this.emailText.TabIndex = 20;
@@ -299,7 +305,7 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label11.Location = new System.Drawing.Point(19, 234);
+            this.label11.Location = new System.Drawing.Point(19, 232);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(48, 20);
             this.label11.TabIndex = 19;
@@ -307,7 +313,7 @@
             // 
             // telText
             // 
-            this.telText.Location = new System.Drawing.Point(612, 258);
+            this.telText.Location = new System.Drawing.Point(612, 256);
             this.telText.Name = "telText";
             this.telText.Size = new System.Drawing.Size(297, 20);
             this.telText.TabIndex = 24;
@@ -317,11 +323,65 @@
             this.Telefone.AutoSize = true;
             this.Telefone.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Telefone.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.Telefone.Location = new System.Drawing.Point(615, 234);
+            this.Telefone.Location = new System.Drawing.Point(615, 232);
             this.Telefone.Name = "Telefone";
             this.Telefone.Size = new System.Drawing.Size(71, 20);
             this.Telefone.TabIndex = 23;
             this.Telefone.Text = "Telefone";
+            // 
+            // siteTxt
+            // 
+            this.siteTxt.Location = new System.Drawing.Point(612, 316);
+            this.siteTxt.Name = "siteTxt";
+            this.siteTxt.Size = new System.Drawing.Size(297, 20);
+            this.siteTxt.TabIndex = 30;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label12.Location = new System.Drawing.Point(615, 292);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(41, 20);
+            this.label12.TabIndex = 29;
+            this.label12.Text = "Site:";
+            // 
+            // bairroTxt
+            // 
+            this.bairroTxt.Location = new System.Drawing.Point(330, 316);
+            this.bairroTxt.Name = "bairroTxt";
+            this.bairroTxt.Size = new System.Drawing.Size(269, 20);
+            this.bairroTxt.TabIndex = 28;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label13.Location = new System.Drawing.Point(326, 292);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(55, 20);
+            this.label13.TabIndex = 27;
+            this.label13.Text = "Bairro:";
+            // 
+            // provinciaTxt
+            // 
+            this.provinciaTxt.Location = new System.Drawing.Point(23, 316);
+            this.provinciaTxt.Name = "provinciaTxt";
+            this.provinciaTxt.Size = new System.Drawing.Size(291, 20);
+            this.provinciaTxt.TabIndex = 26;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label14.Location = new System.Drawing.Point(19, 292);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(72, 20);
+            this.label14.TabIndex = 25;
+            this.label14.Text = "Provincia";
             // 
             // EmpresaForm
             // 
@@ -329,6 +389,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(941, 493);
+            this.Controls.Add(this.siteTxt);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.bairroTxt);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.provinciaTxt);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.telText);
             this.Controls.Add(this.Telefone);
             this.Controls.Add(this.nifText);
@@ -399,5 +465,11 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox telText;
         private System.Windows.Forms.Label Telefone;
+        private System.Windows.Forms.TextBox siteTxt;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox bairroTxt;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox provinciaTxt;
+        private System.Windows.Forms.Label label14;
     }
 }

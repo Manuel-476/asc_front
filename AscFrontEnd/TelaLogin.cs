@@ -98,12 +98,12 @@ namespace AscFrontEnd
 
         private async void senhaUsuariotxt_TextChanged(object sender, EventArgs e)
         {
-            user = new UserDTO() { user_name = nomeUsuariotxt.Text, password = senhaUsuariotxt.Text };
+           user = new UserDTO() { user_name = nomeUsuariotxt.Text, password = senhaUsuariotxt.Text };
 
             if (!string.IsNullOrWhiteSpace(nomeUsuariotxt.Text.ToString()) && !string.IsNullOrWhiteSpace(senhaUsuariotxt.Text.ToString()))
             {
                 json = JsonSerializer.Serialize(user);
-                HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Fornecedor", new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Funcionario/User/Login", new StringContent(json, Encoding.UTF8, "application/json"));
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();

@@ -299,6 +299,8 @@
     <Compile Include="DTOs\ContasCorrentes\RegAdiantamentoFornDTO.cs" />
     <Compile Include="DTOs\Deposito\BancoDTO.cs" />
     <Compile Include="DTOs\Deposito\CaixaDTO.cs" />
+    <Compile Include="DTOs\Deposito\FormaPagamentoDTO.cs" />
+    <Compile Include="DTOs\Deposito\ParcelasFormaPagamentoDTO.cs" />
     <Compile Include="DTOs\Empresa\EmpresaDTO.cs" />
     <Compile Include="DTOs\Enums\Enums.cs" />
     <Compile Include="DTOs\Fornecedor\FornecedorDTO.cs" />
@@ -347,6 +349,12 @@
     </Compile>
     <Compile Include="FamiliaArtigo.Designer.cs">
       <DependentUpon>FamiliaArtigo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormaPagamentoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormaPagamentoForm.Designer.cs">
+      <DependentUpon>FormaPagamentoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FornecedorEditar.cs">
       <SubType>Form</SubType>
@@ -573,6 +581,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FamiliaArtigo.resx">
       <DependentUpon>FamiliaArtigo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormaPagamentoForm.resx">
+      <DependentUpon>FormaPagamentoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FornecedorEditar.resx">
       <DependentUpon>FornecedorEditar.cs</DependentUpon>

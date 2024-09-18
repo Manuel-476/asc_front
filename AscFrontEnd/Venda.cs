@@ -171,6 +171,8 @@ namespace AscFrontEnd
                     clienteId = StaticProperty.entityId,
                     frArtigo = artigos,
                     status = DTOs.Enums.Enums.DocState.ativo,
+                    fullHash = string.Empty,
+                    shortHash = string.Empty,
                     created_at = DateTime.Now,
                 };
 
@@ -467,7 +469,8 @@ namespace AscFrontEnd
         private async void documento_SelectedIndexChanged(object sender, EventArgs e)
         {
             var client = new HttpClient();
-            var response = await client.GetAsync($"https://localhost:7200/api/serie/codigoDocumento/{documento.Text}");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            var response = await client.GetAsync($"https://localhost:7200/api/serie/codigoDocumento/{documento.Text}/{StaticProperty.empresaId}");
 
             if (response.IsSuccessStatusCode)
             {

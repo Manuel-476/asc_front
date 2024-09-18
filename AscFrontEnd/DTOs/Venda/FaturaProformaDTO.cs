@@ -12,6 +12,8 @@ namespace AscFrontEnd
         public string documento { get; set; }
         public int clienteId { get; set; }
         public DocState status { get; set; }
+        public string fullHash { get; set; }
+        public string shortHash { get; set; }
         public DateTime data { get; set; }
         public List<FaturaProformaArtigoDTO> fpArtigo { get; set; }
     }

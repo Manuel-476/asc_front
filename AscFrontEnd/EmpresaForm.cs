@@ -56,20 +56,30 @@ namespace AscFrontEnd
                            caixas = StaticProperty.caixas,
                            status = DTOs.Enums.Enums.Status.activo,
                            foto = string.Empty,
-                           
+                           bairro = bairroTxt.Text,
+                           pronvicia = provinciaTxt.Text,
+                           website = siteTxt.Text,
                        };
 
             // Conversão do objeto Film para JSON
             string json = System.Text.Json.JsonSerializer.Serialize(empresa);
 
             // Envio dos dados para a API
-            response = await client.PostAsync($"https://localhost:7200/api/Empresa/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
+            response = await client.PostAsync($"https://localhost:7200/api/Empresa/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
 
             if (response.IsSuccessStatusCode)
             {
                 StaticProperty.bancos = null;
                 StaticProperty.caixas = null;
+
                 MessageBox.Show("Empresa Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+
+                var result = await response.Content.ReadAsStringAsync();
+
+                StaticProperty.empresaId = int.Parse(result);
+
+                FuncionarioForm form = new FuncionarioForm();
+                form.ShowDialog();
             }
             }
             catch(Exception ex) 

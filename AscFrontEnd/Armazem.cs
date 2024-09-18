@@ -101,6 +101,13 @@ namespace AscFrontEnd
                     var contentArmazem = await responseArmazem.Content.ReadAsStringAsync();
                     StaticProperty.armazens = JsonConvert.DeserializeObject<List<ArmazemDTO>>(contentArmazem);
                 }
+                var responseLocationStore = await client.GetAsync($"https://localhost:7200/api/Armazem/LocationStore");
+
+                if (responseLocationStore.IsSuccessStatusCode)
+                {
+                    var contentLocationStore = await responseLocationStore.Content.ReadAsStringAsync();
+                    StaticProperty.locationStores = JsonConvert.DeserializeObject<List<LocationStoreDTO>>(contentLocationStore);
+                }
             }
             else
             {

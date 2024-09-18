@@ -26,19 +26,20 @@ namespace AscFrontEnd
 
         private async void button1_Click(object sender, EventArgs e)
         {
-
+            try { 
             int armazemId  = StaticProperty.armazens.Where(arm=>arm.codigo == armazemCombo.Text.ToString()).First().id;
             int localId  = StaticProperty.locationStores.Where(arm => arm.codigo == localCombo.Text.ToString()).First().id;
 
+            
             var artigo = new ArtigoDTO()
             {
               codigo = codigotxt.Text,
               armazemId = armazemId,
               descricao = descricaotxt.Text,
-              familiaId = StaticProperty.familias.Where(x => x.codigo == familiaCombo.Text.ToString()).First().id,
-              subFamiliaId = StaticProperty.subFamilias.Where(x => x.codigo == subFamiliaCombo.Text.ToString()).First().id,
-              marcaId = StaticProperty.marcas.Where(x => x.codigo == marcaCombo.Text.ToString()).First().id,
-              modeloId = StaticProperty.modelos.Where(x => x.codigo == modeloCombo.Text.ToString()).First().id,
+              familiaId = StaticProperty.familias.Where(x => x.codigo == familiaCombo.Text.ToString()).Any() ? StaticProperty.familias.Where(x => x.codigo == familiaCombo.Text.ToString()).First().id : 0,
+              subFamiliaId =  StaticProperty.subFamilias.Where(x => x.codigo == subFamiliaCombo.Text.ToString()).Any() ? StaticProperty.subFamilias.Where(x => x.codigo == subFamiliaCombo.Text.ToString()).First().id : 0,
+              marcaId = StaticProperty.marcas.Where(x => x.codigo == marcaCombo.Text.ToString()).Any() ? StaticProperty.marcas.Where(x => x.codigo == marcaCombo.Text.ToString()).First().id : 0,
+              modeloId = StaticProperty.modelos.Where(x => x.codigo == modeloCombo.Text.ToString()).Any() ? StaticProperty.modelos.Where(x => x.codigo == modeloCombo.Text.ToString()).First().id : 0,
               mov_stock = checkBox1.Checked?OpcaoBinaria.Sim:OpcaoBinaria.Nao,
               mov_lote = checkBox1.Checked?OpcaoBinaria.Sim:OpcaoBinaria.Nao,
               localizacaoArtigoId = localId,
@@ -78,6 +79,11 @@ namespace AscFrontEnd
             else
             {
                 MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
+            }
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show($"Ocorreu um erro ao tentar Salvar {ex.Message}", "Erro", MessageBoxButtons.RetryCancel);
             }
         }
 

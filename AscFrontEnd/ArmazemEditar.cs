@@ -106,10 +106,10 @@ namespace AscFrontEnd
             string json = System.Text.Json.JsonSerializer.Serialize(armazem);
 
             // Envio dos dados para a API
-            HttpResponseMessage response = await client.PutAsync($"https://localhost:7200/api/Armazem/{_armazemId}/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Armazem/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
-                MessageBox.Show("Armazem alterado Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+                MessageBox.Show("Armazem Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
                 //Actualizar propriedade estatica armazem
                 // Amazem
                 var responseArmazem = await client.GetAsync($"https://localhost:7200/api/Armazem/ArmazensByRelations");
@@ -119,10 +119,17 @@ namespace AscFrontEnd
                     var contentArmazem = await responseArmazem.Content.ReadAsStringAsync();
                     StaticProperty.armazens = JsonConvert.DeserializeObject<List<ArmazemDTO>>(contentArmazem);
                 }
+                var responseLocationStore = await client.GetAsync($"https://localhost:7200/api/Armazem/LocationStore");
+
+                if (responseLocationStore.IsSuccessStatusCode)
+                {
+                    var contentLocationStore = await responseLocationStore.Content.ReadAsStringAsync();
+                    StaticProperty.locationStores = JsonConvert.DeserializeObject<List<LocationStoreDTO>>(contentLocationStore);
+                }
             }
             else
             {
-                MessageBox.Show("Ocorreu um erro ao tentar alterar", "Erro", MessageBoxButtons.RetryCancel);
+                MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
             }
         }
 

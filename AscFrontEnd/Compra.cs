@@ -748,7 +748,7 @@ namespace AscFrontEnd
                 return;
             }
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            var response = await client.GetAsync($"https://localhost:7200/api/serie/codigoDocumento/{documento.Text}");
+            var response = await client.GetAsync($"https://localhost:7200/api/serie/codigoDocumento/{documento.Text}/{StaticProperty.empresaId}");
 
             if (response.IsSuccessStatusCode)
             {

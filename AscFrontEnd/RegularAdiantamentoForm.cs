@@ -226,7 +226,7 @@ namespace AscFrontEnd
                 // Adicionando linhas ao DataTable
                 foreach (var item in StaticProperty.adiantamentoClientes.Where(cl => cl.clienteId == _entidadeId && cl.resolvido == OpcaoBinaria.Nao))
                 {
-                    if (item.documento.ToUpper().Contains(textBox1.Text.ToUpper().ToString()) || item.created_at.ToUpper().Contains(textBox1.Text.ToUpper().ToString()))
+                    if (item.documento.ToUpper().Contains(textBox1.Text.ToUpper().ToString()) || item.created_at.ToString().ToUpper().Contains(textBox1.Text.ToUpper().ToString()))
                     {
                         dt.Rows.Add(item.id, item.documento, item.valorAdiantado);
 
@@ -238,7 +238,7 @@ namespace AscFrontEnd
             {
                 foreach (var item in StaticProperty.adiantamentoForns.Where(f => f.fornecedorId == _entidadeId))
                 {
-                    if (item.documento.ToUpper().Contains(textBox1.Text.ToUpper().ToString()) || item.created_at.ToUpper().Contains(textBox1.Text.ToUpper().ToString()))
+                    if (item.documento.ToUpper().Contains(textBox1.Text.ToUpper().ToString()) || item.created_at.ToString().ToUpper().Contains(textBox1.Text.ToUpper().ToString()))
                     {
                         dt.Rows.Add(item.id, item.documento, item.valorAdiantado);
 
@@ -259,7 +259,7 @@ namespace AscFrontEnd
             {
                 foreach (var item in StaticProperty.frs.Where(cl => cl.clienteId == _entidadeId))
                 {
-                    if (item.documento.ToUpper().Contains(textBox1.Text.ToUpper().ToString()) || item.created_at.ToUpper().Contains(textBox1.Text.ToUpper().ToString()))
+                    if (item.documento.ToUpper().Contains(textBox1.Text.ToUpper().ToString()) || item.created_at.ToString().ToUpper().Contains(textBox1.Text.ToUpper().ToString()))
                     {
                         dtDocs.Rows.Add(item.id, item.documento, item.frArtigo.Sum(x => x.preco * x.qtd));
 
@@ -271,7 +271,7 @@ namespace AscFrontEnd
             {
                 foreach (var item in StaticProperty.vfrs.Where(f => f.fornecedorId == _entidadeId))
                 {
-                    if (item.documento.ToUpper().Contains(textBox1.Text.ToUpper().ToString()) || item.created_at.ToUpper().Contains(textBox1.Text.ToUpper().ToString()))
+                    if (item.documento.ToUpper().Contains(textBox1.Text.ToUpper().ToString()) || item.created_at.ToString().ToUpper().Contains(textBox1.Text.ToUpper().ToString()))
                     {
                         dtDocs.Rows.Add(item.id, item.documento, item.vfrArtigo.Sum(x => x.preco * x.qtd));
 

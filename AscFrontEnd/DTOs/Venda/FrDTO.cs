@@ -12,6 +12,8 @@ namespace AscFrontEnd.DTOs.Venda
         public string documento { get; set; }
         public int clienteId { get; set; }
         public DocState status { get; set; }
+        public string fullHash { get; set; }
+        public string shortHash { get; set; }
         public DateTime data { get; set; }
         public DateTime created_at { get; set; }
         public List<FrArtigoDTO> frArtigo { get; set; }
