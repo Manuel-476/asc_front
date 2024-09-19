@@ -14,6 +14,10 @@ namespace EAscFrontEnd
         public DocState status { get; set; }
         public string fullHash { get; set; }
         public string shortHash { get; set; }
+        public int? bancoId { get; set; }
+        public int? caixaId { get; set; }
+        public int? bancoClienteId { get; set; }
+        public int? caixaClienteId { get; set; }
         public DateTime data { get; set; }
         public List<GtArtigoDTO> gtArtigo { get; set; }
     }

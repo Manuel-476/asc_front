@@ -93,6 +93,7 @@ namespace AscFrontEnd.DTOs.StaticsDto
         // Depositos
         public static List<BancoDTO> bancos { get; set; }
         public static List<CaixaDTO> caixas { get; set; }
+        public static List<FormaPagamentoDTO> formasPagamento { get; set; }
 
         // Empresa
         public static List<EmpresaDTO> empresas { get; set; }

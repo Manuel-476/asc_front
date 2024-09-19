@@ -386,10 +386,20 @@ namespace AscFrontEnd
 
                 if (responseCaixa.IsSuccessStatusCode)
                 {
-                    var contentCaixa = await responseBanco.Content.ReadAsStringAsync();
+                    var contentCaixa = await responseCaixa.Content.ReadAsStringAsync();
                     StaticProperty.caixas = JsonConvert.DeserializeObject<List<CaixaDTO>>(contentCaixa);
 
                     processValue += 6;
+                }
+
+                var responseFormaPagamento = await client.GetAsync($"https://localhost:7200/api/Deposito/FormaPagamento");
+
+                if (responseFormaPagamento.IsSuccessStatusCode)
+                {
+                    var contentFormaPagamento = await responseFormaPagamento.Content.ReadAsStringAsync();
+                    StaticProperty.formasPagamento = JsonConvert.DeserializeObject<List<FormaPagamentoDTO>>(contentFormaPagamento);
+
+                    processValue += 2;
                 }
 
                 // Funcionario

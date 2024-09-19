@@ -350,6 +350,12 @@
     <Compile Include="FamiliaArtigo.Designer.cs">
       <DependentUpon>FamiliaArtigo.cs</DependentUpon>
     </Compile>
+    <Compile Include="FaturaDetalhes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FaturaDetalhes.Designer.cs">
+      <DependentUpon>FaturaDetalhes.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormaPagamentoForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -581,6 +587,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FamiliaArtigo.resx">
       <DependentUpon>FamiliaArtigo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FaturaDetalhes.resx">
+      <DependentUpon>FaturaDetalhes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormaPagamentoForm.resx">
       <DependentUpon>FormaPagamentoForm.cs</DependentUpon>
