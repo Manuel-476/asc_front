@@ -48,11 +48,12 @@
             this.depositoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bancoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.caixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.historicoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.empresaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.historicoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.formaPagamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -230,7 +231,8 @@
             // 
             this.depositoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bancoToolStripMenuItem,
-            this.caixaToolStripMenuItem});
+            this.caixaToolStripMenuItem,
+            this.formaPagamentoToolStripMenuItem});
             this.depositoToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.depositoToolStripMenuItem.Name = "depositoToolStripMenuItem";
             this.depositoToolStripMenuItem.Size = new System.Drawing.Size(128, 23);
@@ -240,7 +242,7 @@
             // 
             this.bancoToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_bank_64;
             this.bancoToolStripMenuItem.Name = "bancoToolStripMenuItem";
-            this.bancoToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
+            this.bancoToolStripMenuItem.Size = new System.Drawing.Size(189, 24);
             this.bancoToolStripMenuItem.Text = "Banco";
             this.bancoToolStripMenuItem.Click += new System.EventHandler(this.bancoToolStripMenuItem_Click);
             // 
@@ -248,9 +250,16 @@
             // 
             this.caixaToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_cash_64;
             this.caixaToolStripMenuItem.Name = "caixaToolStripMenuItem";
-            this.caixaToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
+            this.caixaToolStripMenuItem.Size = new System.Drawing.Size(189, 24);
             this.caixaToolStripMenuItem.Text = "Caixa";
             this.caixaToolStripMenuItem.Click += new System.EventHandler(this.caixaToolStripMenuItem_Click);
+            // 
+            // historicoToolStripMenuItem
+            // 
+            this.historicoToolStripMenuItem.Name = "historicoToolStripMenuItem";
+            this.historicoToolStripMenuItem.Size = new System.Drawing.Size(128, 23);
+            this.historicoToolStripMenuItem.Text = "Historico";
+            this.historicoToolStripMenuItem.Click += new System.EventHandler(this.historicoToolStripMenuItem_Click);
             // 
             // empresaToolStripMenuItem
             // 
@@ -294,12 +303,12 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "asc";
             // 
-            // historicoToolStripMenuItem
+            // formaPagamentoToolStripMenuItem
             // 
-            this.historicoToolStripMenuItem.Name = "historicoToolStripMenuItem";
-            this.historicoToolStripMenuItem.Size = new System.Drawing.Size(128, 23);
-            this.historicoToolStripMenuItem.Text = "Historico";
-            this.historicoToolStripMenuItem.Click += new System.EventHandler(this.historicoToolStripMenuItem_Click);
+            this.formaPagamentoToolStripMenuItem.Name = "formaPagamentoToolStripMenuItem";
+            this.formaPagamentoToolStripMenuItem.Size = new System.Drawing.Size(189, 24);
+            this.formaPagamentoToolStripMenuItem.Text = "Forma Pagamento";
+            this.formaPagamentoToolStripMenuItem.Click += new System.EventHandler(this.formaPagamentoToolStripMenuItem_Click);
             // 
             // MenuPrincipal
             // 
@@ -350,5 +359,6 @@
         private System.Windows.Forms.ToolStripMenuItem bancoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem caixaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem historicoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem formaPagamentoToolStripMenuItem;
     }
 }

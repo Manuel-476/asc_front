@@ -328,3 +328,5 @@ C:\Users\Devs\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.Forne
 C:\Users\Devs\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.Historico.resources
 C:\Users\Devs\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.RegularAdiantamentoForm.resources
 C:\Users\Devs\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.TelaLogin.resources
+C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.FaturaDetalhes.resources
+C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.FormaPagamentoForm.resources

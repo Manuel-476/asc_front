@@ -9,6 +9,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -177,6 +179,44 @@ namespace AscFrontEnd
             }
 
             formaPagamentoTable.DataSource = dt;
+        }
+
+        private async void Salvar_Click(object sender, EventArgs e)
+        {
+            string rota = string.Empty;
+            string json = string.Empty;
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",StaticProperty.token);
+
+            if(_fr != null) 
+            {
+                json = System.Text.Json.JsonSerializer.Serialize(_fr);
+
+                rota = $"https://localhost:7200/api/Venda/Fr/{StaticProperty.funcionarioId}";
+            }
+            else if(_gt != null)
+            {
+                json = System.Text.Json.JsonSerializer.Serialize(_gt);
+
+                rota = $"https://localhost:7200/api/Venda/Gt/{StaticProperty.funcionarioId}";
+            }
+            else if (_vfr != null)
+            {
+                json = System.Text.Json.JsonSerializer.Serialize(_vfr);
+
+                rota = $"https://localhost:7200/api/Compra/Vfr/{StaticProperty.funcionarioId}";
+            }
+            else if (_vgt != null)
+            {
+                // Conversão do objeto Film para JSON
+                json = System.Text.Json.JsonSerializer.Serialize(_vgt);
+
+                // Envio dos dados para a API
+                rota = $"https://localhost:7200/api/Compra/Vgt/{StaticProperty.funcionarioId}";
+            }
+
+            var response = await client.PostAsync(rota, new StringContent(json, Encoding.UTF8, "application/json"));
+            
         }
     }
 }

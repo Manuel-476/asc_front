@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Venda));
             this.documento = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabelaArtigos = new System.Windows.Forms.DataGridView();
@@ -52,6 +53,7 @@
             this.logoPicture = new System.Windows.Forms.PictureBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.Imprimir = new System.Drawing.Printing.PrintDocument();
+            this.preVisualizacaoDialog = new System.Windows.Forms.PrintPreviewDialog();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaArtigos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaVenda)).BeginInit();
             this.panel1.SuspendLayout();
@@ -301,6 +303,16 @@
             // 
             this.Imprimir.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.Imprimir_PrintPage);
             // 
+            // preVisualizacaoDialog
+            // 
+            this.preVisualizacaoDialog.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.preVisualizacaoDialog.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.preVisualizacaoDialog.ClientSize = new System.Drawing.Size(400, 300);
+            this.preVisualizacaoDialog.Enabled = true;
+            this.preVisualizacaoDialog.Icon = ((System.Drawing.Icon)(resources.GetObject("preVisualizacaoDialog.Icon")));
+            this.preVisualizacaoDialog.Name = "preVisualizacaoDialog";
+            this.preVisualizacaoDialog.Visible = false;
+            // 
             // Venda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -361,5 +373,6 @@
         private System.Windows.Forms.Timer timerRefresh;
         private System.Drawing.Printing.PrintDocument Imprimir;
         private System.Windows.Forms.Button vendaBtn;
+        private System.Windows.Forms.PrintPreviewDialog preVisualizacaoDialog;
     }
 }

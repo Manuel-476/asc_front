@@ -139,16 +139,20 @@ namespace AscFrontEnd
 
         private async void salvarBtn_Click(object sender, EventArgs e)
         {
+            FaturaDetalhes form;
             HttpResponseMessage response = null;
             var client = new HttpClient();
             var clientGet = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             clientGet.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+
             // Configuração do HttpClient
             client.BaseAddress = new Uri("https://sua-api.com/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+            float totalPreco = vendaArtigos.Sum(x => x.preco * x.qtd);
+            
             if (documento.Text == "FR")
             {
 
@@ -176,12 +180,14 @@ namespace AscFrontEnd
                     created_at = DateTime.Now,
                 };
 
-                // Conversão do objeto Film para JSON
-                string json = System.Text.Json.JsonSerializer.Serialize(frs);
-
-                // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Venda/Fr/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
-
+                form = new FaturaDetalhes(totalPreco,frs);
+                if (form.ShowDialog() != DialogResult.OK) 
+                {
+                    return;
+                }
+                
+                
+              
             }
 
             if (documento.Text == "FT")
@@ -267,11 +273,14 @@ namespace AscFrontEnd
                     status =  DTOs.Enums.Enums.DocState.ativo,
                 };
 
-                // Conversão do objeto Film para JSON
-                string json = System.Text.Json.JsonSerializer.Serialize(gts);
+                form = new FaturaDetalhes(totalPreco, gts);
+                form.ShowDialog();
 
-                // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Venda/Gt/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
 
             }
 
@@ -372,8 +381,13 @@ namespace AscFrontEnd
                 var content = await responseGet.Content.ReadAsStringAsync();
                 clienteResult = JsonConvert.DeserializeObject<ClienteDTO>(content);
             }
+            preVisualizacaoDialog.Document = Imprimir;
 
-             Imprimir.Print();
+            if (preVisualizacaoDialog.ShowDialog() == DialogResult.OK) 
+            {
+                Imprimir.Print();
+            }
+     
              vendaArtigos.Clear();
 
             if (response.IsSuccessStatusCode)

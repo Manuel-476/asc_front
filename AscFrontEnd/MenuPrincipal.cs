@@ -114,5 +114,10 @@ namespace AscFrontEnd
         {
             new Historico().ShowDialog();
         }
+
+        private void formaPagamentoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new  FormaPagamentoForm().ShowDialog();
+        }
     }
 }

@@ -104,16 +104,24 @@ namespace AscFrontEnd
 
         private async void salvarBtn_Click(object sender, EventArgs e)
         {
+            FaturaDetalhes form;
 
             HttpResponseMessage response = null;
             var clientGet = new HttpClient();
             clientGet.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             if (StaticProperty.series == null)
             {
                 MessageBox.Show("Nenhuma Serie Foi Criada", "Precisa de uma Serie", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            float totalPreco = compraArtigos.Sum(x=> x.preco * x.qtd);
 
             if (documento.Text == "VFR")
             {
@@ -140,19 +148,13 @@ namespace AscFrontEnd
                     created_at = DateTime.Now,
                 };
 
+                form = new FaturaDetalhes(totalPreco, vfrs);
+                form.ShowDialog();
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
 
-                // Configuração do HttpClient
-                var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                client.BaseAddress = new Uri("https://sua-api.com/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                // Conversão do objeto Film para JSON
-                string json = System.Text.Json.JsonSerializer.Serialize(vfrs);
-
-                // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Compra/Vfr/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "VFT")
@@ -179,13 +181,6 @@ namespace AscFrontEnd
                     vftArtigo = vftArtigos,
                     status = DTOs.Enums.Enums.DocState.ativo,
                 };
-
-                // Configuração do HttpClient
-                var client = new HttpClient();
-                client.BaseAddress = new Uri("https://sua-api.com/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
 
                 // Conversão do objeto Film para JSON
                 string json = System.Text.Json.JsonSerializer.Serialize(vfts);
@@ -218,19 +213,12 @@ namespace AscFrontEnd
                     status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
-
-                // Configuração do HttpClient
-                var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                client.BaseAddress = new Uri("https://sua-api.com/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                // Conversão do objeto Film para JSON
-                string json = System.Text.Json.JsonSerializer.Serialize(vgts);
-
-                // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Compra/Vgt/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                form = new FaturaDetalhes(totalPreco,vgts);
+                form.ShowDialog();
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
             }
 
             if (documento.Text == "ECF")
@@ -257,14 +245,6 @@ namespace AscFrontEnd
                     ecfArtigo = ecfArtigos,
                     status = DTOs.Enums.Enums.DocState.ativo,
                 };
-
-
-                // Configuração do HttpClient
-                var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                client.BaseAddress = new Uri("https://sua-api.com/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // Conversão do objeto Film para JSON
                 string json = System.Text.Json.JsonSerializer.Serialize(ecfs);
@@ -296,15 +276,6 @@ namespace AscFrontEnd
                     status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
-             
-
-                // Configuração do HttpClient
-                var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                client.BaseAddress = new Uri("https://sua-api.com/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
                 // Conversão do objeto Film para JSON
                 string json = System.Text.Json.JsonSerializer.Serialize(vncs);
 
@@ -333,13 +304,6 @@ namespace AscFrontEnd
                         iva = compraArtigo.iva
                     });
                 }
-
-                // Configuração do HttpClient
-                var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                client.BaseAddress = new Uri("https://sua-api.com/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // Conversão do objeto Film para JSON
                 string json = System.Text.Json.JsonSerializer.Serialize(vncs);
@@ -373,13 +337,6 @@ namespace AscFrontEnd
                     
                 };
 
-                // Configuração do HttpClient
-                var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                client.BaseAddress = new Uri("https://sua-api.com/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
                 // Conversão do objeto Film para JSON
                 string json = System.Text.Json.JsonSerializer.Serialize(pcos);
 
@@ -412,14 +369,6 @@ namespace AscFrontEnd
                     status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
-
-                // Configuração do HttpClient
-                var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                client.BaseAddress = new Uri("https://sua-api.com/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
                 // Conversão do objeto Film para JSON
                 string json = System.Text.Json.JsonSerializer.Serialize(cots);
 
@@ -436,16 +385,21 @@ namespace AscFrontEnd
                 fornecedorResult = JsonConvert.DeserializeObject<FornecedorDTO>(content);
             }
 
-            Imprimir.Print();
+            preVisualizacaoDialog.Document = Imprimir;
+
+            if (preVisualizacaoDialog.ShowDialog() == DialogResult.OK)
+            {
+                Imprimir.Print();
+            }
+
+            
             compraArtigos.Clear();
 
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Compra Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
-                // Actualizar a propriedade estatica de compras
-                var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+
                 // Compra
                 var responseVft = await client.GetAsync($"https://localhost:7200/api/Compra/VftByRelations");
 

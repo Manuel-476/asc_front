@@ -115,6 +115,7 @@
             // Salvar
             // 
             this.Salvar.BackColor = System.Drawing.SystemColors.Highlight;
+            this.Salvar.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Salvar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Salvar.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Salvar.ForeColor = System.Drawing.Color.White;
@@ -124,6 +125,7 @@
             this.Salvar.TabIndex = 7;
             this.Salvar.Text = "Salvar";
             this.Salvar.UseVisualStyleBackColor = false;
+            this.Salvar.Click += new System.EventHandler(this.Salvar_Click);
             // 
             // label4
             // 
