@@ -157,6 +157,7 @@ namespace AscFrontEnd
         public void FillTable(List<ParcelasFormaPagamentoDTO> parcelas) 
         {
             string deposito = string.Empty;
+
             DataTable dt = new DataTable();
             dt.Columns.Add("Forma", typeof(string));
             dt.Columns.Add("Valor (KZ)", typeof(float));
@@ -216,6 +217,13 @@ namespace AscFrontEnd
             }
 
             var response = await client.PostAsync(rota, new StringContent(json, Encoding.UTF8, "application/json"));
+
+            if (!response.IsSuccessStatusCode) 
+            {
+                MessageBox.Show("Ocorreu um erro ao executar esta operação","Ocorreu um erro",MessageBoxButtons.RetryCancel,MessageBoxIcon.Error);
+                
+                return;
+            }
             
         }
     }
