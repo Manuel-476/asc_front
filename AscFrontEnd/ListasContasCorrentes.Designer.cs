@@ -34,6 +34,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.entidadeText = new System.Windows.Forms.Label();
+            this.radioAdiantamento = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.correnteTable)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -43,18 +45,18 @@
             this.correnteTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.correnteTable.BackgroundColor = System.Drawing.Color.White;
             this.correnteTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.correnteTable.Location = new System.Drawing.Point(13, 93);
+            this.correnteTable.Location = new System.Drawing.Point(13, 121);
             this.correnteTable.Name = "correnteTable";
             this.correnteTable.ReadOnly = true;
             this.correnteTable.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.correnteTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.correnteTable.Size = new System.Drawing.Size(501, 246);
+            this.correnteTable.Size = new System.Drawing.Size(501, 218);
             this.correnteTable.TabIndex = 4;
             this.correnteTable.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.correnteTable_CellDoubleClick);
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(74, 67);
+            this.textBox1.Location = new System.Drawing.Point(75, 95);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(173, 20);
             this.textBox1.TabIndex = 5;
@@ -62,7 +64,7 @@
             // textoPesquisar
             // 
             this.textoPesquisar.AutoSize = true;
-            this.textoPesquisar.Location = new System.Drawing.Point(12, 70);
+            this.textoPesquisar.Location = new System.Drawing.Point(13, 98);
             this.textoPesquisar.Name = "textoPesquisar";
             this.textoPesquisar.Size = new System.Drawing.Size(56, 13);
             this.textoPesquisar.TabIndex = 6;
@@ -92,17 +94,45 @@
             // 
             this.entidadeText.AutoSize = true;
             this.entidadeText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.entidadeText.Location = new System.Drawing.Point(433, 70);
+            this.entidadeText.Location = new System.Drawing.Point(434, 98);
             this.entidadeText.Name = "entidadeText";
             this.entidadeText.Size = new System.Drawing.Size(81, 20);
             this.entidadeText.TabIndex = 8;
             this.entidadeText.Text = "Entidade";
+            // 
+            // radioAdiantamento
+            // 
+            this.radioAdiantamento.AutoSize = true;
+            this.radioAdiantamento.BackColor = System.Drawing.SystemColors.Control;
+            this.radioAdiantamento.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.radioAdiantamento.Location = new System.Drawing.Point(424, 67);
+            this.radioAdiantamento.Name = "radioAdiantamento";
+            this.radioAdiantamento.Size = new System.Drawing.Size(90, 17);
+            this.radioAdiantamento.TabIndex = 9;
+            this.radioAdiantamento.TabStop = true;
+            this.radioAdiantamento.Text = "Adiantamento";
+            this.radioAdiantamento.UseVisualStyleBackColor = false;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.BackColor = System.Drawing.SystemColors.Control;
+            this.radioButton1.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.radioButton1.Location = new System.Drawing.Point(349, 67);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(55, 17);
+            this.radioButton1.TabIndex = 10;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Divida";
+            this.radioButton1.UseVisualStyleBackColor = false;
             // 
             // ListasContasCorrentes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(526, 351);
+            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.radioAdiantamento);
             this.Controls.Add(this.entidadeText);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.textoPesquisar);
@@ -132,5 +162,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label entidadeText;
+        private System.Windows.Forms.RadioButton radioAdiantamento;
+        private System.Windows.Forms.RadioButton radioButton1;
     }
 }

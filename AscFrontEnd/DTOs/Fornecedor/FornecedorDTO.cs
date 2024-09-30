@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AscFrontEnd.DTOs.ContasCorrentes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,5 +27,6 @@ namespace AscFrontEnd.DTOs.Fornecedor
         public string email { get; set; }
         public List<FornecedorFilialDTO> fornecedorFiliais { get; set; }
         public List<FornecedorPhoneDTO> phones { get; set; }
+        public List<AdiantamentoFornDTO> adiantamentos { get; set; }
     }
 }

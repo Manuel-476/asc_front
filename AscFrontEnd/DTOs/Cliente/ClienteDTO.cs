@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AscFrontEnd.DTOs.ContasCorrentes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,5 +28,6 @@ namespace AscFrontEnd.DTOs.Cliente
         public ICollection<ClienteFilialDTO> clienteFiliais { get; set; }
         public ICollection<ClientePhoneDTO> phones { get; set; }
        // public ICollection<FtDTO>? ft { get; set; }
+       public ICollection<AdiantamentoClienteDTO> adiantamentos { get; set; }
     }
 }

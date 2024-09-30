@@ -67,37 +67,57 @@ namespace AscFrontEnd
 
         private async void ContasCorrentes_Load(object sender, EventArgs e)
         {
+            float result = 0;
+            float valorAdiantamento = 0;
+
             var vftResult = StaticProperty.vfts.Where(x=>x.fornecedor.empresaid == StaticProperty.empresaId).GroupBy(vft => vft.fornecedorId);
-            var adFornResult = StaticProperty.adiantamentoForns.Where(x => x.Fornecedor.empresaid == StaticProperty.empresaId).GroupBy(x => x.fornecedorId);
+            var fornecedor = StaticProperty.fornecedores.Where(x => x.empresaid == StaticProperty.empresaId).ToList();
 
             entidadeTable.Columns.Add("Codigo Entidade", typeof(int));
             entidadeTable.Columns.Add("Entidade", typeof(string));
             entidadeTable.Columns.Add("Por Pagar", typeof(float));
+            entidadeTable.Columns.Add("Adiantado", typeof(float));
             entidadeTable.Columns.Add("Estado", typeof(string));
 
 
-                // Adicionando linhas ao DataTable
+            // Adicionando linhas ao DataTable
+            if (vftResult.Any())
+            {
                 foreach (var vft in vftResult)
                 {
-                    float result = vft.Sum(vt=>vt.vftArtigo.Sum(va=>va.preco*va.qtd));
+                    result = vft.Sum(vt => vt.vftArtigo.Sum(va => va.preco * va.qtd));
+                    valorAdiantamento = StaticProperty.fornecedores.Where(f => f.id == vft.Key).Sum(f => f.adiantamentos.Where(x => x.resolvido == OpcaoBinaria.Nao).Sum(x => x.valorAdiantado));
 
-                    string nomeFornecedor = StaticProperty.fornecedores.Where(f => f.id == vft.Key).First().nome_fantasia;
+                    string nomeFornecedor = fornecedor.Where(f => f.id == vft.Key).First().nome_fantasia;
 
-                    entidadeTable.Rows.Add(vft.Key, nomeFornecedor, result, "Não regulada");
-                   
+                    entidadeTable.Rows.Add(vft.Key, nomeFornecedor, result, valorAdiantamento, "Não regulada");
+
                 }
-
-            foreach (var ad in adFornResult)
+            }
+            else if(StaticProperty.adiantamentoForns.Any())
             {
-                float result = ad.Sum(x => x.valorAdiantado);
+                foreach (var ad in fornecedor)
+                {
+                    result = vftResult.Where(x => x.Key == ad.id).First().Sum(vt => vt.vftArtigo.Sum(va => va.preco * va.qtd));
+                    valorAdiantamento = fornecedor.Where(f => f.id == ad.id).Sum(f => f.adiantamentos.Where(x => x.resolvido == OpcaoBinaria.Nao).Sum(x => x.valorAdiantado));
 
-                string nomeFornecedor = StaticProperty.fornecedores.Where(f => f.id == ad.First().fornecedorId).First().nome_fantasia;
+                    string nomeFornecedor = fornecedor.Where(f => f.id == ad.id).First().nome_fantasia;
 
-                entidadeTable.Rows.Add(ad.First().fornecedorId, nomeFornecedor, result, "Não regulada");
-
+                    entidadeTable.Rows.Add(ad.id, nomeFornecedor, result, valorAdiantamento, "Não regulada");
+                }
             }
 
-            correnteTable.DataSource = entidadeTable;
+                /*   foreach (var ad in adFornResult)
+                   {
+                       float result = ad.Sum(x => x.valorAdiantado);
+
+                       string nomeFornecedor = StaticProperty.fornecedores.Where(f => f.id == ad.First().fornecedorId).First().nome_fantasia;
+
+                       entidadeTable.Rows.Add(ad.First().fornecedorId, nomeFornecedor, result, "Não regulada");
+
+                   }*/
+
+                correnteTable.DataSource = entidadeTable;
             aprovaBtn.Enabled = false;
         }
 
@@ -106,6 +126,7 @@ namespace AscFrontEnd
             float divida = 0;
             float regulado = 0;
             float adianta = 0;
+            float valorAdiantamento = 0;
 
             try
             {
@@ -128,6 +149,7 @@ namespace AscFrontEnd
                         {
                              divida += item.vftArtigo.Sum(d => d.preco * d.qtd);
                              regulado += StaticProperty.nps.Where(np => np.vftId == item.id).Sum(np => np.quantia);
+                             valorAdiantamento = StaticProperty.fornecedores.Where(f => f.id == id).Sum(f => f.adiantamentos.Where(x => x.resolvido == OpcaoBinaria.Nao).Sum(x => x.valorAdiantado));
                         }
                     }        
                 }
@@ -142,12 +164,15 @@ namespace AscFrontEnd
                         {
                             divida += item.ftArtigo.Sum(d => d.preco * d.qtd);
                             regulado += StaticProperty.recibos.Where(re => re.ftId == item.id).Sum(re => re.quantia);
+                            valorAdiantamento = StaticProperty.clientes.Where(cl => cl.id == id).Sum(cl => cl.adiantamentos.Where(x => x.resolvido == OpcaoBinaria.Nao).Sum(x => x.valorAdiantado));
                         }
                     }
                 }
 
+
                 dividaResult.Text = divida.ToString("F2");
                 liqResult.Text = regulado.ToString("F2");
+                adiantamentoResult.Text = valorAdiantamento.ToString("F2");
 
                 aprovaBtn.Enabled = true;
             }
@@ -190,8 +215,84 @@ namespace AscFrontEnd
 
         private void radioFornecedor_CheckedChanged(object sender, EventArgs e)
         {
+            float result = 0;
+            float valorAdiantamento = 0;
 
-            if (radioCliente.Checked) 
+            string nomeFornecedor = string.Empty;
+
+            if (radioFornecedor.Checked)
+            {
+                if (!StaticProperty.vfts.Any() && !StaticProperty.adiantamentoForns.Any())
+                {
+                    MessageBox.Show("Nenhum Documento Encontrado!", "Vazio", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    radioCliente.Checked = true;
+                    return;
+                }
+                DataTable dataTable = (DataTable)correnteTable.DataSource;
+
+                if (dataTable != null)
+                {
+                    dataTable.Clear(); // Limpa todas as linhas da fonte de dados
+                }
+                var fornecedor = StaticProperty.fornecedores.Where(x => x.empresaid == StaticProperty.empresaId).ToList();
+                var vftResult = StaticProperty.vfts.Where(x => x.fornecedor.empresaid == StaticProperty.empresaId).GroupBy(vft => vft.fornecedorId);
+
+                // Adicionando linhas ao DataTable
+                if (vftResult.Any())
+                {
+                    foreach (var vft in vftResult)
+                    {
+                        if (vft.First().vftArtigo.Any())
+                        {
+                            result = vft.Sum(vt => vt.vftArtigo.Sum(va => va.preco * va.qtd));
+                        }
+
+                        if (StaticProperty.fornecedores.Where(f => f.id == vft.Key).First().adiantamentos.Any()) 
+                        {
+                            valorAdiantamento = StaticProperty.fornecedores.Where(f => f.id == vft.Key).Sum(f => f.adiantamentos.Where(x => x.resolvido == OpcaoBinaria.Nao).Sum(x => x.valorAdiantado));
+                        }
+
+                       if(StaticProperty.fornecedores.Where(f => f.id == vft.Key).Any())
+                        {
+                            nomeFornecedor = StaticProperty.fornecedores.Where(f => f.id == vft.Key).First().nome_fantasia;
+                        }
+                        entidadeTable.Rows.Add(vft.Key, nomeFornecedor, result, valorAdiantamento, "Não regulada");
+
+                        correnteTable.DataSource = entidadeTable;
+                    }
+                }
+                else if (StaticProperty.adiantamentoForns.Any())
+                {
+                    foreach (var ad in fornecedor)
+                    {
+                        if (vftResult.Where(x => x.Key == ad.id).First().First().vftArtigo.Any())
+                        {
+                            result = vftResult.Where(x => x.Key == ad.id).First().Sum(vt => vt.vftArtigo.Sum(va => va.preco * va.qtd));
+                        }
+
+                        if (fornecedor.Where(f => f.id == ad.id).First().adiantamentos.Any())
+                        {
+                            valorAdiantamento = fornecedor.Where(f => f.id == ad.id).Sum(f => f.adiantamentos.Where(x => x.resolvido == OpcaoBinaria.Nao).Sum(x => x.valorAdiantado));
+                        }
+                        if (fornecedor.Where(f => f.id == ad.id).Any())
+                        {
+                            nomeFornecedor = fornecedor.Where(f => f.id == ad.id).First().nome_fantasia;
+                        }
+                        entidadeTable.Rows.Add(ad.id, nomeFornecedor, result, valorAdiantamento, "Não regulada");
+                    }
+                }
+            }
+
+        }
+
+        private void radioCliente_CheckedChanged(object sender, EventArgs e)
+        {
+            string nomeCliente = string.Empty;
+            float valorAdiantamento = 0;
+            float result = 0;
+            var cliente = StaticProperty.clientes.Where(x => x.empresaid == StaticProperty.empresaId).ToList();
+
+            if (radioCliente.Checked)
             {
                 if (!StaticProperty.fts.Any() && !StaticProperty.adiantamentoClientes.Any())
                 {
@@ -207,63 +308,54 @@ namespace AscFrontEnd
                     dataTable.Clear(); // Limpa todas as linhas da fonte de dados
                 }
 
-                var ftResult = StaticProperty.fts.Where(x=>x.cliente.empresaid == StaticProperty.empresaId).GroupBy(ft => ft.clienteId);
+                var ftResult = StaticProperty.fts.Where(x => x.cliente.empresaid == StaticProperty.empresaId).GroupBy(ft => ft.clienteId);
 
                 // Adicionando linhas ao DataTable
                 foreach (var ft in ftResult)
                 {
-                    float result = ft.Sum(vt => vt.ftArtigo.Sum(va => va.preco * va.qtd));
+                    if (ftResult.Any())
+                    {
+                        if (ftResult.Where(x => x.Key == ft.Key).First().First().ftArtigo.Any())
+                        {
+                            result = ft.Sum(vt => vt.ftArtigo.Sum(va => va.preco * va.qtd));
+                        }
+                    }
+                    if (cliente.Where(f => f.id == ft.Key).First().adiantamentos.Any())
+                    {
+                        valorAdiantamento = StaticProperty.clientes.Where(f => f.id == ft.Key).Sum(cl => cl.adiantamentos.Where(x => x.resolvido == OpcaoBinaria.Nao).Sum(x => x.valorAdiantado));
+                    }
+                    if (cliente.Where(f => f.id == ft.Key).Any())
+                    {
+                        nomeCliente = StaticProperty.clientes.Where(c => c.id == ft.Key).First().nome_fantasia;
+                    }
 
-                    string nomeCliente = StaticProperty.clientes.Where(c => c.id == ft.Key).First().nome_fantasia;
-
-                    entidadeTable.Rows.Add(ft.Key, nomeCliente, result, "Não regulada");
-
-                    correnteTable.DataSource = entidadeTable;
-                }
-
-                var adClienteResult = StaticProperty.adiantamentoClientes.Where(x => x.cliente.empresaid == StaticProperty.empresaId).GroupBy(x => x.clienteId);
-
-                foreach (var ad in adClienteResult)
-                {
-                    float result = ad.Sum(x => x.valorAdiantado);
-
-                    string nomeFornecedor = StaticProperty.clientes.Where(f => f.id == ad.First().clienteId).First().nome_fantasia;
-
-                    entidadeTable.Rows.Add(ad.First().clienteId, nomeFornecedor, result, "Não regulada");
-                }
-            }
-        }
-
-        private void radioCliente_CheckedChanged(object sender, EventArgs e)
-        {
-
-            if (radioFornecedor.Checked)
-            {
-                if (StaticProperty.vfts == null)
-                {
-                    MessageBox.Show("Nenhum Documento Encontrado!", "Vazio", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    radioCliente.Checked = true;
-                    return;
-                }
-                DataTable dataTable = (DataTable)correnteTable.DataSource;
-
-                if (dataTable != null)
-                {
-                    dataTable.Clear(); // Limpa todas as linhas da fonte de dados
-                }
-
-                var vftResult = StaticProperty.vfts.Where(x=>x.fornecedor.empresaid==StaticProperty.empresaId).GroupBy(vft => vft.fornecedorId);
-
-                // Adicionando linhas ao DataTable
-                foreach (var vft in vftResult)
-                {
-                    float result = vft.Sum(vt => vt.vftArtigo.Sum(va => va.preco * va.qtd));
-
-                    string nomeFornecedor = StaticProperty.fornecedores.Where(f => f.id == vft.Key).First().nome_fantasia;
-
-                    entidadeTable.Rows.Add(vft.Key, nomeFornecedor, result, "Não regulada");
+                    entidadeTable.Rows.Add(ft.Key, nomeCliente, result,valorAdiantamento, "Não regulada");
 
                     correnteTable.DataSource = entidadeTable;
+                }
+
+                if (StaticProperty.adiantamentoClientes != null)
+                {
+                    foreach (var ad in cliente)
+                    {
+                        if (ftResult.Any())
+                        {
+                            if (ftResult.Where(x => x.Key == ad.id).First().First().ftArtigo.Any())
+                            {
+                                result = ftResult.Where(x => x.Key == ad.id).First().Sum(vt => vt.ftArtigo.Sum(va => va.preco * va.qtd));
+                            }
+                        }
+                        if (cliente.Where(f => f.id == ad.id).First().adiantamentos.Any())
+                        {
+                            valorAdiantamento = cliente.Where(f => f.id == ad.id).Sum(f => f.adiantamentos.Where(x => x.resolvido == OpcaoBinaria.Nao).Sum(x => x.valorAdiantado));
+                        }
+                        if (cliente.Where(f => f.id == ad.id).Any())
+                        {
+                            nomeCliente = cliente.Where(f => f.id == ad.id).First().nome_fantasia;
+                        }
+
+                        entidadeTable.Rows.Add(ad.id, nomeCliente, result, valorAdiantamento, "Não regulada");
+                    }
                 }
             }
         }
