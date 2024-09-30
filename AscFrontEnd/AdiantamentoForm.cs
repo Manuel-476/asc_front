@@ -32,6 +32,8 @@ namespace AscFrontEnd
         private void AdiantamentoForm_Load(object sender, EventArgs e)
         {
             radioCliente.Checked = true;
+
+            timer1.Start();
         }
 
         private void radioCliente_CheckedChanged(object sender, EventArgs e)
@@ -110,7 +112,9 @@ namespace AscFrontEnd
 
                 adiantamentoFornecedor = new AdiantamentoFornDTO() { fornecedorId = StaticProperty.entityId,
                                                                      state = DTOs.Enums.Enums.DocState.ativo,
-                                                                     documento = codigoDocumento};
+                                                                     documento = codigoDocumento,
+                                                                     valorAdiantado = float.Parse(valorTxt.Text)
+                };
 
                 json = System.Text.Json.JsonSerializer.Serialize(adiantamentoFornecedor);
 
@@ -128,13 +132,13 @@ namespace AscFrontEnd
                 {
                     clienteId = StaticProperty.entityId,
                     state = DTOs.Enums.Enums.DocState.ativo,
-                    documento = codigoDocumento
+                    documento = codigoDocumento.Replace("\"",""),
+                    valorAdiantado = float.Parse(valorTxt.Text)
                 };
 
                 json = System.Text.Json.JsonSerializer.Serialize(adiantamentoCliente);
 
                 response = await client.PostAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Cliente", new StringContent(json, Encoding.UTF8, "application/json"));
-
             }
 
             // Envio dos dados para a API
@@ -158,10 +162,31 @@ namespace AscFrontEnd
                     StaticProperty.adiantamentoClientes = JsonConvert.DeserializeObject<List<AdiantamentoClienteDTO>>(contentAdCliente);
                 }
             }
+            else 
+            {
+                MessageBox.Show("Nao foi possivel fazer o adiantamento", "Ocorreu um erro", MessageBoxButtons.RetryCancel,MessageBoxIcon.Error);
+            }
         }
 
         private void valorTxt_TextChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (StaticProperty.entityId > 0) 
+            { 
+              if (radioFornecedor.Checked) 
+              {
+                
+                nomeEntidade.Text = StaticProperty.fornecedores.Where(x => x.id == StaticProperty.entityId).First().nome_fantasia;
+              }
+              else if (radioCliente.Checked)
+              {
+                nomeEntidade.Text = StaticProperty.clientes.Where(x => x.id == StaticProperty.entityId).First().nome_fantasia;
+              }
+            }
 
         }
     }

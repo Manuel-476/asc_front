@@ -1,5 +1,6 @@
 ﻿using AscFrontEnd.DTOs.Deposito;
 using AscFrontEnd.DTOs.StaticsDto;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +21,7 @@ namespace AscFrontEnd
         public FormaPagamentoForm()
         {
             InitializeComponent();
-            httpClient = new HttpClient();
+           
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -30,20 +31,35 @@ namespace AscFrontEnd
             {
                 var formaPagamento = new FormaPagamentoDTO()
                 {
-                    codigo = codigoTxt.ToString(),
-                    descricao = descricaoTxt.ToString(),
+                    codigo = codigoTxt.Text.ToString(),
+                    descricao = descricaoTxt.Text.ToString(),
                     empresaId = StaticProperty.empresaId
                 };
 
                 json = System.Text.Json.JsonSerializer.Serialize(formaPagamento);
 
-                httpClient.DefaultRequestHeaders.Authorization =  new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+                httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+                httpClient.BaseAddress = new Uri("https://sua-api.com/");
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+      
 
-                var resposta = await httpClient.PostAsync("api/Deposito/FormaPagamento", new StringContent(json, Encoding.UTF8, "application/json"));
+                var resposta = await httpClient.PostAsync("https://localhost:7200/api/Deposito/FormaPagamento", new StringContent(json, Encoding.UTF8, "application/json"));
 
                 if (resposta.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Salvo Com Sucesso", "Nova Forma de pagamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    var responseFormaPagamento = await httpClient.GetAsync($"https://localhost:7200/api/Deposito/FormaPagamento");
+
+                    if (responseFormaPagamento.IsSuccessStatusCode)
+                    {
+                        var contentFormaPagamento = await responseFormaPagamento.Content.ReadAsStringAsync();
+                        StaticProperty.formasPagamento =  JsonConvert.DeserializeObject<List<FormaPagamentoDTO>>(contentFormaPagamento);
+
+                        
+                    }
                 }
                 else
                 {

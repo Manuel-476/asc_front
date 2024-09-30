@@ -30,12 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.botaoFornecedor = new System.Windows.Forms.Button();
+            this.botaoCliente = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.radioCliente = new System.Windows.Forms.RadioButton();
             this.radioFornecedor = new System.Windows.Forms.RadioButton();
-            this.botaoCliente = new System.Windows.Forms.Button();
-            this.botaoFornecedor = new System.Windows.Forms.Button();
             this.nomeEntidade = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.valorTxt = new System.Windows.Forms.TextBox();
@@ -56,6 +56,38 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(687, 86);
             this.panel1.TabIndex = 4;
+            // 
+            // botaoFornecedor
+            // 
+            this.botaoFornecedor.BackColor = System.Drawing.Color.Transparent;
+            this.botaoFornecedor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.botaoFornecedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.botaoFornecedor.ForeColor = System.Drawing.Color.White;
+            this.botaoFornecedor.Location = new System.Drawing.Point(397, 46);
+            this.botaoFornecedor.Name = "botaoFornecedor";
+            this.botaoFornecedor.Size = new System.Drawing.Size(135, 34);
+            this.botaoFornecedor.TabIndex = 60;
+            this.botaoFornecedor.Text = "Fornecedores";
+            this.botaoFornecedor.UseVisualStyleBackColor = false;
+            this.botaoFornecedor.Click += new System.EventHandler(this.botaoFornecedor_Click);
+            this.botaoFornecedor.MouseLeave += new System.EventHandler(this.botaoFornecedor_MouseLeave);
+            this.botaoFornecedor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.botaoFornecedor_MouseMove);
+            // 
+            // botaoCliente
+            // 
+            this.botaoCliente.BackColor = System.Drawing.Color.Transparent;
+            this.botaoCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.botaoCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.botaoCliente.ForeColor = System.Drawing.Color.White;
+            this.botaoCliente.Location = new System.Drawing.Point(538, 46);
+            this.botaoCliente.Name = "botaoCliente";
+            this.botaoCliente.Size = new System.Drawing.Size(140, 34);
+            this.botaoCliente.TabIndex = 59;
+            this.botaoCliente.Text = "Clientes";
+            this.botaoCliente.UseVisualStyleBackColor = false;
+            this.botaoCliente.Click += new System.EventHandler(this.botaoCliente_Click);
+            this.botaoCliente.MouseLeave += new System.EventHandler(this.botaoCliente_MouseLeave);
+            this.botaoCliente.MouseMove += new System.Windows.Forms.MouseEventHandler(this.botaoCliente_MouseMove);
             // 
             // pictureBox1
             // 
@@ -104,38 +136,6 @@
             this.radioFornecedor.UseVisualStyleBackColor = true;
             this.radioFornecedor.CheckedChanged += new System.EventHandler(this.radioFornecedor_CheckedChanged);
             // 
-            // botaoCliente
-            // 
-            this.botaoCliente.BackColor = System.Drawing.Color.Transparent;
-            this.botaoCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.botaoCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.botaoCliente.ForeColor = System.Drawing.Color.White;
-            this.botaoCliente.Location = new System.Drawing.Point(538, 46);
-            this.botaoCliente.Name = "botaoCliente";
-            this.botaoCliente.Size = new System.Drawing.Size(140, 34);
-            this.botaoCliente.TabIndex = 59;
-            this.botaoCliente.Text = "Clientes";
-            this.botaoCliente.UseVisualStyleBackColor = false;
-            this.botaoCliente.Click += new System.EventHandler(this.botaoCliente_Click);
-            this.botaoCliente.MouseLeave += new System.EventHandler(this.botaoCliente_MouseLeave);
-            this.botaoCliente.MouseMove += new System.Windows.Forms.MouseEventHandler(this.botaoCliente_MouseMove);
-            // 
-            // botaoFornecedor
-            // 
-            this.botaoFornecedor.BackColor = System.Drawing.Color.Transparent;
-            this.botaoFornecedor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.botaoFornecedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.botaoFornecedor.ForeColor = System.Drawing.Color.White;
-            this.botaoFornecedor.Location = new System.Drawing.Point(397, 46);
-            this.botaoFornecedor.Name = "botaoFornecedor";
-            this.botaoFornecedor.Size = new System.Drawing.Size(135, 34);
-            this.botaoFornecedor.TabIndex = 60;
-            this.botaoFornecedor.Text = "Fornecedores";
-            this.botaoFornecedor.UseVisualStyleBackColor = false;
-            this.botaoFornecedor.Click += new System.EventHandler(this.botaoFornecedor_Click);
-            this.botaoFornecedor.MouseLeave += new System.EventHandler(this.botaoFornecedor_MouseLeave);
-            this.botaoFornecedor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.botaoFornecedor_MouseMove);
-            // 
             // nomeEntidade
             // 
             this.nomeEntidade.AutoSize = true;
@@ -178,6 +178,10 @@
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // AdiantamentoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -195,7 +199,6 @@
             this.MinimizeBox = false;
             this.Name = "AdiantamentoForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AdiantamentoForm";
             this.Load += new System.EventHandler(this.AdiantamentoForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

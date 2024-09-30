@@ -39,8 +39,28 @@ namespace AscFrontEnd
             _entidadeId = entidadeId;
             _getCodigoDocumento = new Documento();
 
-            if(entidade == Entidade.cliente) {cliente = StaticProperty.clientes.Where(cl => cl.id == entidadeId).First();}
-            else if(entidade == Entidade.fornecedor) { fornecedor = StaticProperty.fornecedores.Where(f => f.id == entidadeId).First(); }
+            if(entidade == Entidade.cliente) 
+            {
+                if(StaticProperty.clientes.Where(cl => cl.id == entidadeId).Any())
+                {
+                    cliente = StaticProperty.clientes.Where(cl => cl.id == entidadeId).First();
+                }
+                else 
+                {
+                    MessageBox.Show("Nao foi encontrado nenhum registro do adiantamento", "Sem registro", MessageBoxButtons.RetryCancel);
+                }
+            }
+            else if(entidade == Entidade.fornecedor) 
+            {
+                if(StaticProperty.fornecedores.Where(f => f.id == entidadeId).Any())
+                { 
+                       fornecedor = StaticProperty.fornecedores.Where(f => f.id == entidadeId).First();
+                }
+                else 
+                {
+                    MessageBox.Show("Nao foi encontrado nenhum registro do adiantamento", "Sem registro", MessageBoxButtons.RetryCancel);
+                }
+            }
         }
 
         private void RegularAdiantamentoForm_Load(object sender, EventArgs e)

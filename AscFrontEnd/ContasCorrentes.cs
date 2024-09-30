@@ -2,6 +2,7 @@
 using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.DTOs.Stock;
 using ERP_Buyer.Application.DTOs.Documentos;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -67,6 +68,7 @@ namespace AscFrontEnd
         private async void ContasCorrentes_Load(object sender, EventArgs e)
         {
             var vftResult = StaticProperty.vfts.Where(x=>x.fornecedor.empresaid == StaticProperty.empresaId).GroupBy(vft => vft.fornecedorId);
+            var adFornResult = StaticProperty.adiantamentoForns.Where(x => x.Fornecedor.empresaid == StaticProperty.empresaId).GroupBy(x => x.fornecedorId);
 
             entidadeTable.Columns.Add("Codigo Entidade", typeof(int));
             entidadeTable.Columns.Add("Entidade", typeof(string));
@@ -82,11 +84,21 @@ namespace AscFrontEnd
                     string nomeFornecedor = StaticProperty.fornecedores.Where(f => f.id == vft.Key).First().nome_fantasia;
 
                     entidadeTable.Rows.Add(vft.Key, nomeFornecedor, result, "Não regulada");
-
-                    correnteTable.DataSource = entidadeTable;
+                   
                 }
 
-                aprovaBtn.Enabled = false;
+            foreach (var ad in adFornResult)
+            {
+                float result = ad.Sum(x => x.valorAdiantado);
+
+                string nomeFornecedor = StaticProperty.fornecedores.Where(f => f.id == ad.First().fornecedorId).First().nome_fantasia;
+
+                entidadeTable.Rows.Add(ad.First().fornecedorId, nomeFornecedor, result, "Não regulada");
+
+            }
+
+            correnteTable.DataSource = entidadeTable;
+            aprovaBtn.Enabled = false;
         }
 
         private void correnteTable_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -181,7 +193,7 @@ namespace AscFrontEnd
 
             if (radioCliente.Checked) 
             {
-                if (StaticProperty.fts == null)
+                if (!StaticProperty.fts.Any() && !StaticProperty.adiantamentoClientes.Any())
                 {
                     MessageBox.Show("Nenhum Documento Encontrado!", "Vazio", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     radioFornecedor.Checked = true;
@@ -207,6 +219,17 @@ namespace AscFrontEnd
                     entidadeTable.Rows.Add(ft.Key, nomeCliente, result, "Não regulada");
 
                     correnteTable.DataSource = entidadeTable;
+                }
+
+                var adClienteResult = StaticProperty.adiantamentoClientes.Where(x => x.cliente.empresaid == StaticProperty.empresaId).GroupBy(x => x.clienteId);
+
+                foreach (var ad in adClienteResult)
+                {
+                    float result = ad.Sum(x => x.valorAdiantado);
+
+                    string nomeFornecedor = StaticProperty.clientes.Where(f => f.id == ad.First().clienteId).First().nome_fantasia;
+
+                    entidadeTable.Rows.Add(ad.First().clienteId, nomeFornecedor, result, "Não regulada");
                 }
             }
         }
@@ -260,15 +283,22 @@ namespace AscFrontEnd
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             LiquidaDivida ld = null;
-            if (radioCliente.Checked) 
+            if (this.id > 0)
             {
-                 ld = new LiquidaDivida(id,Entidade.cliente);
+                if (radioCliente.Checked)
+                {
+                    ld = new LiquidaDivida(id, Entidade.cliente);
+                }
+                else if (radioFornecedor.Checked)
+                {
+                    ld = new LiquidaDivida(id, Entidade.fornecedor);
+                }
+                ld.ShowDialog();
             }
-            else if(radioFornecedor.Checked)
+            else 
             {
-                ld = new LiquidaDivida(id, Entidade.fornecedor);
+                return;
             }
-            ld.ShowDialog();
         }
 
         private void aprovaBtn_Click(object sender, EventArgs e)
@@ -279,17 +309,36 @@ namespace AscFrontEnd
         private void pictureBox3_Click(object sender, EventArgs e)
         {
             RegularAdiantamentoForm form = null;
-
-            if (radioCliente.Checked) 
+            if (this.id > 0)
             {
-                form = new RegularAdiantamentoForm(Entidade.cliente,id);
-            }
-            else if (radioFornecedor.Checked)
-            {
-                form = new RegularAdiantamentoForm(Entidade.fornecedor, id);
-            }
+                if (radioCliente.Checked)
+                {
+                    form = new RegularAdiantamentoForm(Entidade.cliente, id);
+                }
+                else if (radioFornecedor.Checked)
+                {
+                    form = new RegularAdiantamentoForm(Entidade.fornecedor, id);
+                }
 
+                form.ShowDialog();
+            }
+            else 
+            {
+                return;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void adiantaBtn_Click(object sender, EventArgs e)
+        {
+            AdiantamentoForm form = new AdiantamentoForm();
             form.ShowDialog();
         }
     }
+
+
 }

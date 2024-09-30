@@ -1,4 +1,5 @@
 ﻿using AscFrontEnd.DTOs;
+using AscFrontEnd.DTOs.ContasCorrentes;
 using AscFrontEnd.DTOs.Deposito;
 using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.DTOs.Venda;
@@ -25,6 +26,8 @@ namespace AscFrontEnd
         GtDTO _gt;
         VfrDTO _vfr;
         VgtDTO _vgt;
+        NpDTO _np;
+        ReciboDTO _re;
 
         List<ParcelasFormaPagamentoDTO> parcelas;
 
@@ -52,10 +55,23 @@ namespace AscFrontEnd
             _totalPreco = totalPreco;
             _vgt = vgt;
         }
+        public FaturaDetalhes(float totalPreco, NpDTO np)
+        {
+            InitializeComponent();
+            _totalPreco = totalPreco;
+            _np = np;
+        }
+        public FaturaDetalhes(float totalPreco, ReciboDTO re)
+        {
+            InitializeComponent();
+            _totalPreco = totalPreco;
+            _re = re;
+        }
 
         private void FaturaDetalhes_Load(object sender, EventArgs e)
         {
             radioBanco.Enabled = true;
+            radioBanco.Checked = true;
             removerPicture.Enabled = false;
 
             valorTxt.Text = _totalPreco.ToString("F2");
@@ -66,6 +82,30 @@ namespace AscFrontEnd
             dt.Columns.Add("Deposito",typeof(string));
 
             formaPagamentoTable.DataSource = dt;
+            if (StaticProperty.formasPagamento != null)
+            {
+                foreach (var item in StaticProperty.formasPagamento)
+                {
+                    formaPagamentoCombo.Items.Add(item.descricao);
+                }
+            }
+
+            if (StaticProperty.bancos != null) 
+            {
+                foreach (var item in StaticProperty.bancos)
+                {
+                    bancoCombo.Items.Add(item.descricao);
+                }
+            }
+
+            if (StaticProperty.caixas != null)
+            {
+                foreach (var item in StaticProperty.caixas)
+                {
+                    caixaCombo.Items.Add(item.descricao);
+                }
+            }
+
         }
 
         private void addButton_Click(object sender, EventArgs e)
@@ -87,28 +127,34 @@ namespace AscFrontEnd
 
             if (bancoCombo.Enabled)
             {
-                if (StaticProperty.bancos.Where(x => x.descricao == bancoCombo.Text.ToString() && x.empresaId == StaticProperty.empresaId).Any())
+                if (StaticProperty.bancos != null)
                 {
-                    depositoId = StaticProperty.bancos.Where(x => x.descricao == bancoCombo.Text.ToString() && x.empresaId == StaticProperty.empresaId).First().id;
-                    parcelas.Add(new ParcelasFormaPagamentoDTO() { formaPagamentoId = fPagamentoId, valor = valorPago, bancoId = depositoId, caixaId = 0 });
-                }
-                else 
-                {
-                    MessageBox.Show("Codigo do banco  não encontrado", "Atenção", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                    return;
+                    if (StaticProperty.bancos.Where(x => x.descricao == bancoCombo.Text.ToString() && x.empresaId == StaticProperty.empresaId).Any())
+                    {
+                        depositoId = StaticProperty.bancos.Where(x => x.descricao == bancoCombo.Text.ToString() && x.empresaId == StaticProperty.empresaId).First().id;
+                        parcelas.Add(new ParcelasFormaPagamentoDTO() { formaPagamentoId = fPagamentoId, valor = valorPago, bancoId = depositoId, caixaId = 0 });
+                    }
+                    else
+                    {
+                        MessageBox.Show("Codigo do banco  não encontrado", "Atenção", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                        return;
+                    }
                 }
             }
             else if (caixaCombo.Enabled)
             {
-                if (StaticProperty.caixas.Where(x => x.descricao == caixaCombo.Text.ToString() && x.empresaId == StaticProperty.empresaId).Any())
+                if (StaticProperty.caixas != null)
                 {
-                    depositoId = StaticProperty.caixas.Where(x => x.descricao == caixaCombo.Text.ToString() && x.empresaId == StaticProperty.empresaId).First().id;
-                    parcelas.Add(new ParcelasFormaPagamentoDTO() { formaPagamentoId = fPagamentoId, valor = valorPago,bancoId = 0, caixaId = depositoId });
-                }
-                else 
-                {
-                    MessageBox.Show("Codigo do Caixa não encontrado", "Atenção", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                    return;
+                    if (StaticProperty.caixas.Where(x => x.descricao == caixaCombo.Text.ToString() && x.empresaId == StaticProperty.empresaId).Any())
+                    {
+                        depositoId = StaticProperty.caixas.Where(x => x.descricao == caixaCombo.Text.ToString() && x.empresaId == StaticProperty.empresaId).First().id;
+                        parcelas.Add(new ParcelasFormaPagamentoDTO() { formaPagamentoId = fPagamentoId, valor = valorPago, bancoId = 0, caixaId = depositoId });
+                    }
+                    else
+                    {
+                        MessageBox.Show("Codigo do Caixa não encontrado", "Atenção", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                        return;
+                    }
                 }
             }
 
@@ -120,6 +166,7 @@ namespace AscFrontEnd
             if (radioCaixa.Checked)
             {
                 bancoCombo.Enabled = false;
+                caixaCombo.Enabled = true;
             }
         }
 
@@ -128,6 +175,7 @@ namespace AscFrontEnd
             if (radioBanco.Checked)
             {
                 caixaCombo.Enabled = false;
+                bancoCombo.Enabled = true;
             }
         }
 
@@ -162,20 +210,23 @@ namespace AscFrontEnd
             dt.Columns.Add("Valor (KZ)", typeof(float));
             dt.Columns.Add("Deposito", typeof(string));
 
-            foreach (var item in parcelas) 
+            if (parcelas != null)
             {
-                string fPagamento = StaticProperty.formasPagamento.Where(x => x.id == item.formaPagamentoId && x.empresaId == StaticProperty.empresaId).First().descricao;
-
-                if (item.bancoId != 0)
+                foreach (var item in parcelas)
                 {
-                    deposito = StaticProperty.bancos.Where(x => x.id == item.bancoId).First().codigo;
-                }
-                else if(item.caixaId != 0) 
-                {
-                    deposito = StaticProperty.caixas.Where(x => x.id == item.caixaId).First().codigo;
-                }
+                    string fPagamento = StaticProperty.formasPagamento.Where(x => x.id == item.formaPagamentoId && x.empresaId == StaticProperty.empresaId).First().descricao;
 
-                dt.Rows.Add(fPagamento,item.valor,deposito);
+                    if (item.bancoId != 0)
+                    {
+                        deposito = StaticProperty.bancos.Where(x => x.id == item.bancoId).First().codigo;
+                    }
+                    else if (item.caixaId != 0)
+                    {
+                        deposito = StaticProperty.caixas.Where(x => x.id == item.caixaId).First().codigo;
+                    }
+
+                    dt.Rows.Add(fPagamento, item.valor, deposito);
+                }
             }
 
             formaPagamentoTable.DataSource = dt;
@@ -213,6 +264,20 @@ namespace AscFrontEnd
 
                 // Envio dos dados para a API
                 rota = $"https://localhost:7200/api/Compra/Vgt/{StaticProperty.funcionarioId}";
+            }
+            else if(_np != null) 
+            {
+                // Conversão do objeto Film para JSON
+                json = System.Text.Json.JsonSerializer.Serialize(_np);
+
+                rota = $"https://localhost:7200/api/ContaCorrente/Np/{StaticProperty.funcionarioId}";
+            }
+            else if(_re != null) 
+            {
+                // Conversão do objeto Film para JSON
+                json = System.Text.Json.JsonSerializer.Serialize(_re);
+
+                rota = $"https://localhost:7200/api/ContaCorrente/Re/{StaticProperty.funcionarioId}";
             }
 
             var response = await client.PostAsync(rota, new StringContent(json, Encoding.UTF8, "application/json"));

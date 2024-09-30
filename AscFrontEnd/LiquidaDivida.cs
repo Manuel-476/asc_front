@@ -96,6 +96,8 @@ namespace AscFrontEnd
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            FaturaDetalhes form;
+
             string json = string.Empty;
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
@@ -115,11 +117,13 @@ namespace AscFrontEnd
                     vftId = _docId
                 };
 
-                // Conversão do objeto Film para JSON
-                json = System.Text.Json.JsonSerializer.Serialize(np);
-
                 // Envio dos dados para a API
-                await client.PostAsync($"https://localhost:7200/api/ContaCorrente/Np/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
+                form = new FaturaDetalhes(float.Parse(valorTxt.Text), np);
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
             }
             if (_entidade == Entidade.cliente)
             {
@@ -131,13 +135,13 @@ namespace AscFrontEnd
                     quantia = float.Parse(valorTxt.Text),
                     ftId = _docId
                 };
+                form = new FaturaDetalhes(float.Parse(valorTxt.Text), re);
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
 
-                // Conversão do objeto Film para JSON
-                json = System.Text.Json.JsonSerializer.Serialize(re);
-
-                // Envio dos dados para a API
-                await client.PostAsync($"https://localhost:7200/api/ContaCorrente/Re/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
-            }
+            }    
         }
     }
 }

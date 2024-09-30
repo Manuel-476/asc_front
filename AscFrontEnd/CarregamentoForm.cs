@@ -320,11 +320,11 @@ namespace AscFrontEnd
                     processValue += 1;
                 }
 
-                var responseAdCliente = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Fornecedor");
+                var responseAdCliente = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Cliente");
 
                 if (responseAdCliente.IsSuccessStatusCode)
                 {
-                    var contentAdCliente = await responseAdForn.Content.ReadAsStringAsync();
+                    var contentAdCliente = await responseAdCliente.Content.ReadAsStringAsync();
                     StaticProperty.adiantamentoClientes = JsonConvert.DeserializeObject<List<AdiantamentoClienteDTO>>(contentAdCliente);
 
                     processValue += 1;

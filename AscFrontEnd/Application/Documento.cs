@@ -7,10 +7,13 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace AscFrontEnd.Application
 {
     public class Documento
     {
+
+
         public static async Task<string> GetCodigoDocumentoAsync(string documento) 
         {
             string codigoDocumento = null;
@@ -22,12 +25,12 @@ namespace AscFrontEnd.Application
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync($"https://localhost:7200/api/serie/codigoDocumento/{documento}");
+                HttpResponseMessage response = await client.GetAsync($"https://localhost:7200/api/serie/codigoDocumento/{documento}/{StaticProperty.empresaId}");
 
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    string dados = content.ToString();
+                    string dados = content;
 
                     codigoDocumento = dados;
                 }
@@ -38,5 +41,7 @@ namespace AscFrontEnd.Application
                 throw new Exception($"Erro ao carregar o codigo do documento {ex.Message}");
             }
         }
+
+        
     }
 }

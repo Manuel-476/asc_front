@@ -49,6 +49,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.adiantaBtn = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.correnteTable)).BeginInit();
@@ -60,6 +61,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.Controls.Add(this.adiantaBtn);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.aprovaBtn);
             this.panel1.Controls.Add(this.label2);
@@ -74,21 +76,22 @@
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(465, 53);
+            this.button1.Location = new System.Drawing.Point(527, 53);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(164, 33);
+            this.button1.Size = new System.Drawing.Size(129, 33);
             this.button1.TabIndex = 26;
             this.button1.Text = "Documentos";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // aprovaBtn
             // 
             this.aprovaBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.aprovaBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.aprovaBtn.ForeColor = System.Drawing.Color.White;
-            this.aprovaBtn.Location = new System.Drawing.Point(635, 53);
+            this.aprovaBtn.Location = new System.Drawing.Point(662, 53);
             this.aprovaBtn.Name = "aprovaBtn";
-            this.aprovaBtn.Size = new System.Drawing.Size(164, 33);
+            this.aprovaBtn.Size = new System.Drawing.Size(137, 33);
             this.aprovaBtn.TabIndex = 25;
             this.aprovaBtn.Text = "Aprovações";
             this.aprovaBtn.UseVisualStyleBackColor = false;
@@ -307,6 +310,19 @@
             this.pictureBox2.MouseEnter += new System.EventHandler(this.pictureBox2_MouseEnter);
             this.pictureBox2.MouseLeave += new System.EventHandler(this.pictureBox2_MouseLeave);
             // 
+            // adiantaBtn
+            // 
+            this.adiantaBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.adiantaBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.adiantaBtn.ForeColor = System.Drawing.Color.White;
+            this.adiantaBtn.Location = new System.Drawing.Point(392, 53);
+            this.adiantaBtn.Name = "adiantaBtn";
+            this.adiantaBtn.Size = new System.Drawing.Size(129, 33);
+            this.adiantaBtn.TabIndex = 27;
+            this.adiantaBtn.Text = "Adiantamento";
+            this.adiantaBtn.UseVisualStyleBackColor = false;
+            this.adiantaBtn.Click += new System.EventHandler(this.adiantaBtn_Click);
+            // 
             // ContasCorrentes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -365,5 +381,6 @@
         private System.Windows.Forms.Label liqResult;
         private System.Windows.Forms.Button aprovaBtn;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button adiantaBtn;
     }
 }

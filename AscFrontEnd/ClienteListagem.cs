@@ -33,7 +33,7 @@ namespace AscFrontEnd
                 dt.Columns.Add("localizacao", typeof(string));
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.clientes.Where(x => x.empresaid == StaticProperty.empresaId))
+                foreach (var item in StaticProperty.clientes.Where(x => x.empresaid == StaticProperty.empresaId && x.status == DTOs.Enums.Enums.Status.activo))
                 {
                     dt.Rows.Add(item.id, item.nome_fantasia, item.email,item.nif,item.pessoa,item.localizacao);
 
