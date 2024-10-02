@@ -27,7 +27,7 @@ namespace AscFrontEnd
         {
             InitializeComponent();
             dados = new List<VftDTO>();
-            entidadeTable = new DataTable();
+            
         }
 
         private async void groupBox1_Enter(object sender, EventArgs e)
@@ -70,9 +70,12 @@ namespace AscFrontEnd
             float result = 0;
             float valorAdiantamento = 0;
 
+          //  radioFornecedor.Checked = true;    
+
             var vftResult = StaticProperty.vfts.Where(x=>x.fornecedor.empresaid == StaticProperty.empresaId).GroupBy(vft => vft.fornecedorId);
             var fornecedor = StaticProperty.fornecedores.Where(x => x.empresaid == StaticProperty.empresaId).ToList();
 
+            entidadeTable = new DataTable();
             entidadeTable.Columns.Add("Codigo Entidade", typeof(int));
             entidadeTable.Columns.Add("Entidade", typeof(string));
             entidadeTable.Columns.Add("Por Pagar", typeof(float));
@@ -118,7 +121,7 @@ namespace AscFrontEnd
                    }*/
 
                 correnteTable.DataSource = entidadeTable;
-            aprovaBtn.Enabled = false;
+                aprovaBtn.Enabled = false;
         }
 
         private void correnteTable_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -220,6 +223,14 @@ namespace AscFrontEnd
 
             string nomeFornecedor = string.Empty;
 
+            entidadeTable = new DataTable();
+
+            entidadeTable.Columns.Add("Codigo Entidade", typeof(int));
+            entidadeTable.Columns.Add("Entidade", typeof(string));
+            entidadeTable.Columns.Add("Por Pagar", typeof(float));
+            entidadeTable.Columns.Add("Adiantado", typeof(float));
+            entidadeTable.Columns.Add("Estado", typeof(string));
+
             if (radioFornecedor.Checked)
             {
                 if (!StaticProperty.vfts.Any() && !StaticProperty.adiantamentoForns.Any())
@@ -280,6 +291,7 @@ namespace AscFrontEnd
                         }
                         entidadeTable.Rows.Add(ad.id, nomeFornecedor, result, valorAdiantamento, "Não regulada");
                     }
+                    correnteTable.DataSource = entidadeTable;
                 }
             }
 
@@ -291,6 +303,14 @@ namespace AscFrontEnd
             float valorAdiantamento = 0;
             float result = 0;
             var cliente = StaticProperty.clientes.Where(x => x.empresaid == StaticProperty.empresaId).ToList();
+
+            entidadeTable = new DataTable();
+
+            entidadeTable.Columns.Add("Codigo Entidade", typeof(int));
+            entidadeTable.Columns.Add("Entidade", typeof(string));
+            entidadeTable.Columns.Add("Por Pagar", typeof(float));
+            entidadeTable.Columns.Add("Adiantado", typeof(float));
+            entidadeTable.Columns.Add("Estado", typeof(string));
 
             if (radioCliente.Checked)
             {
@@ -334,7 +354,7 @@ namespace AscFrontEnd
                     correnteTable.DataSource = entidadeTable;
                 }
 
-                if (StaticProperty.adiantamentoClientes != null)
+                if (StaticProperty.adiantamentoClientes.Any())
                 {
                     foreach (var ad in cliente)
                     {
@@ -356,6 +376,7 @@ namespace AscFrontEnd
 
                         entidadeTable.Rows.Add(ad.id, nomeCliente, result, valorAdiantamento, "Não regulada");
                     }
+                    correnteTable.DataSource = entidadeTable;
                 }
             }
         }

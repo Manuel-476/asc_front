@@ -35,7 +35,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.entidadeText = new System.Windows.Forms.Label();
             this.radioAdiantamento = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioDivida = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.correnteTable)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -105,33 +105,35 @@
             this.radioAdiantamento.AutoSize = true;
             this.radioAdiantamento.BackColor = System.Drawing.SystemColors.Control;
             this.radioAdiantamento.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.radioAdiantamento.Location = new System.Drawing.Point(424, 67);
+            this.radioAdiantamento.Location = new System.Drawing.Point(88, 67);
             this.radioAdiantamento.Name = "radioAdiantamento";
             this.radioAdiantamento.Size = new System.Drawing.Size(90, 17);
             this.radioAdiantamento.TabIndex = 9;
             this.radioAdiantamento.TabStop = true;
             this.radioAdiantamento.Text = "Adiantamento";
             this.radioAdiantamento.UseVisualStyleBackColor = false;
+            this.radioAdiantamento.CheckedChanged += new System.EventHandler(this.radioAdiantamento_CheckedChanged);
             // 
-            // radioButton1
+            // radioDivida
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.BackColor = System.Drawing.SystemColors.Control;
-            this.radioButton1.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.radioButton1.Location = new System.Drawing.Point(349, 67);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(55, 17);
-            this.radioButton1.TabIndex = 10;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Divida";
-            this.radioButton1.UseVisualStyleBackColor = false;
+            this.radioDivida.AutoSize = true;
+            this.radioDivida.BackColor = System.Drawing.SystemColors.Control;
+            this.radioDivida.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.radioDivida.Location = new System.Drawing.Point(13, 67);
+            this.radioDivida.Name = "radioDivida";
+            this.radioDivida.Size = new System.Drawing.Size(55, 17);
+            this.radioDivida.TabIndex = 10;
+            this.radioDivida.TabStop = true;
+            this.radioDivida.Text = "Divida";
+            this.radioDivida.UseVisualStyleBackColor = false;
+            this.radioDivida.CheckedChanged += new System.EventHandler(this.radioDivida_CheckedChanged);
             // 
             // ListasContasCorrentes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(526, 351);
-            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.radioDivida);
             this.Controls.Add(this.radioAdiantamento);
             this.Controls.Add(this.entidadeText);
             this.Controls.Add(this.panel1);
@@ -163,6 +165,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label entidadeText;
         private System.Windows.Forms.RadioButton radioAdiantamento;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioDivida;
     }
 }

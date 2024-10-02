@@ -25,17 +25,25 @@ namespace AscFrontEnd
             InitializeComponent();
             _entidade = entidade;
             _entidadeId = entidadeId;
-            entidadeTable = new DataTable();
+         
         }
 
         private void ListasContasCorrentes_Load(object sender, EventArgs e)
         {
+            entidadeTable = new DataTable();
             entidadeTable.Columns.Add("Numero", typeof(int));
             entidadeTable.Columns.Add("Documento", typeof(string));
             entidadeTable.Columns.Add("Valor", typeof(float));
 
+            radioDivida.Checked = true;
+
             if (_entidade == Entidade.cliente)
             {
+               if(!StaticProperty.fts.Where(ft => ft.clienteId == _entidadeId && ft.pago == OpcaoBinaria.Nao).Any()) 
+               {
+                    return;
+               }
+
                 var ftResult = StaticProperty.fts.Where(ft => ft.clienteId == _entidadeId && ft.pago == OpcaoBinaria.Nao);
 
                 entidadeText.Text = StaticProperty.clientes.Where(c => c.id == _entidadeId).First().nome_fantasia;
@@ -51,8 +59,13 @@ namespace AscFrontEnd
                 }
             }
             else if (_entidade == Entidade.fornecedor) 
-            { 
-               var vftResult = StaticProperty.vfts.Where(vft => vft.fornecedorId == _entidadeId && vft.pago== OpcaoBinaria.Nao);
+            {
+                if (!StaticProperty.vfts.Where(vft => vft.fornecedorId == _entidadeId && vft.pago == OpcaoBinaria.Nao).Any())
+                {
+                    return;
+                }
+
+                var vftResult = StaticProperty.vfts.Where(vft => vft.fornecedorId == _entidadeId && vft.pago== OpcaoBinaria.Nao);
            
                 entidadeText.Text = StaticProperty.fornecedores.Where(f => f.id == _entidadeId).First().nome_fantasia;
 
@@ -69,8 +82,7 @@ namespace AscFrontEnd
         }
 
         private void correnteTable_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
+        {     
             try
             {
                 if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
@@ -100,6 +112,112 @@ namespace AscFrontEnd
                 return;
             }
             
+        }
+
+        private void radioDivida_CheckedChanged(object sender, EventArgs e)
+        {
+            entidadeTable = new DataTable();
+
+            if (radioDivida.Checked) 
+            {
+                entidadeTable.Columns.Add("Numero", typeof(int));
+                entidadeTable.Columns.Add("Documento", typeof(string));
+                entidadeTable.Columns.Add("Valor", typeof(float));
+
+                if (_entidade == Entidade.cliente)
+                {
+                    if (!StaticProperty.fts.Where(ft => ft.clienteId == _entidadeId && ft.pago == OpcaoBinaria.Nao).Any())
+                    {
+                        return;
+                    }
+
+                    var ftResult = StaticProperty.fts.Where(ft => ft.clienteId == _entidadeId && ft.pago == OpcaoBinaria.Nao);
+
+                    entidadeText.Text = StaticProperty.clientes.Where(c => c.id == _entidadeId).First().nome_fantasia;
+
+                    // Adicionando linhas ao DataTable
+                    foreach (var ft in ftResult)
+                    {
+                        float result = ft.ftArtigo.Sum(fa => (fa.preco * fa.qtd));
+
+                        entidadeTable.Rows.Add(ft.id, ft.documento, result);
+
+                        correnteTable.DataSource = entidadeTable;
+                    }
+                }
+                else if (_entidade == Entidade.fornecedor)
+                {
+                    if (!StaticProperty.vfts.Where(vft => vft.fornecedorId == _entidadeId && vft.pago == OpcaoBinaria.Nao).Any())
+                    {
+                        return;
+                    }
+
+                    var vftResult = StaticProperty.vfts.Where(vft => vft.fornecedorId == _entidadeId && vft.pago == OpcaoBinaria.Nao);
+
+                    entidadeText.Text = StaticProperty.fornecedores.Where(f => f.id == _entidadeId).First().nome_fantasia;
+
+                    // Adicionando linhas ao DataTable
+                    foreach (var vft in vftResult)
+                    {
+                        float result = vft.vftArtigo.Sum(va => (va.preco * va.qtd) - (va.preco * (va.iva / 100)));
+
+                        entidadeTable.Rows.Add(vft.id, vft.documento, result);
+
+                        correnteTable.DataSource = entidadeTable;
+                    }
+                }
+            }
+        }
+
+        private void radioAdiantamento_CheckedChanged(object sender, EventArgs e)
+        {
+            entidadeTable = new DataTable();
+
+            if (radioAdiantamento.Checked) 
+            {
+                entidadeTable.Columns.Add("Numero", typeof(int));
+                entidadeTable.Columns.Add("Documento", typeof(string));
+                entidadeTable.Columns.Add("Valor", typeof(float));
+
+                if (_entidade == Entidade.cliente)
+                {
+                    if (!StaticProperty.adiantamentoClientes.Where(ad => ad.clienteId == _entidadeId && ad.resolvido == OpcaoBinaria.Nao).Any()) 
+                    {
+                        return;
+                    }
+
+                    var adResult = StaticProperty.adiantamentoClientes.Where(ad => ad.clienteId == _entidadeId && ad.resolvido == OpcaoBinaria.Nao);
+
+                    entidadeText.Text = StaticProperty.clientes.Where(c => c.id == _entidadeId).First().nome_fantasia;
+
+                    // Adicionando linhas ao DataTable
+                    foreach (var ad in adResult)
+                    {
+                        entidadeTable.Rows.Add(ad.id, ad.documento, ad.valorAdiantado);
+
+                        correnteTable.DataSource = entidadeTable;
+                    }
+                }
+                else if (_entidade == Entidade.fornecedor)
+                {
+                    if (!StaticProperty.adiantamentoForns.Where(ad => ad.fornecedorId == _entidadeId && ad.resolvido == OpcaoBinaria.Nao).Any())
+                    {
+                        return;
+                    }
+
+                    var adResult = StaticProperty.adiantamentoForns.Where(ad => ad.fornecedorId == _entidadeId && ad.resolvido == OpcaoBinaria.Nao);
+
+                    entidadeText.Text = StaticProperty.fornecedores.Where(f => f.id == _entidadeId).First().nome_fantasia;
+
+                    // Adicionando linhas ao DataTable
+                    foreach (var ad in adResult)
+                    {
+                        entidadeTable.Rows.Add(ad.id, ad.documento, ad.valorAdiantado);
+
+                        correnteTable.DataSource = entidadeTable;
+                    }
+                }
+            }
         }
     }
 }

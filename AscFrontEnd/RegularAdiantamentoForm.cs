@@ -84,7 +84,11 @@ namespace AscFrontEnd
                 foreach (var item in StaticProperty.adiantamentoClientes.Where(cl => cl.clienteId == _entidadeId && cl.resolvido == OpcaoBinaria.Nao))
                 {
                     valorAdiantado += item.valorAdiantado;
-                    valorRegulado += StaticProperty.regAdiantamentoClientes.Where(x => x.adiantamentoId == item.id).Sum(x => x.fr.frArtigo.Sum(f => f.preco * f.qtd));
+
+                    if (StaticProperty.regAdiantamentoClientes.Where(x => x.adiantamentoId == item.id).Any())
+                    {
+                        valorRegulado += StaticProperty.regAdiantamentoClientes.Where(x => x.adiantamentoId == item.id).Sum(x => x.fr.frArtigo.Sum(f => f.preco * f.qtd));
+                    }
 
                     dt.Rows.Add(item.id, item.documento, item.valorAdiantado);
 
@@ -105,7 +109,11 @@ namespace AscFrontEnd
                 foreach (var item in StaticProperty.adiantamentoForns.Where(f => f.fornecedorId == _entidadeId))
                 {
                     valorAdiantado += item.valorAdiantado;
-                    valorRegulado += StaticProperty.regAdiantamentoForns.Where(x => x.adiantamentoId == item.id).Sum(x => x.Vfr.vfrArtigo.Sum(f => f.preco * f.qtd));
+
+                    if(StaticProperty.regAdiantamentoForns.Where(x => x.adiantamentoId == item.id).Any()) 
+                    { 
+                       valorRegulado += StaticProperty.regAdiantamentoForns.Where(x => x.adiantamentoId == item.id).Sum(x => x.Vfr.vfrArtigo.Sum(f => f.preco * f.qtd));
+                    }
 
                     dt.Rows.Add(item.id, item.documento, item.valorAdiantado);
 
@@ -126,32 +134,41 @@ namespace AscFrontEnd
 
         private void adiantamentoTable_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            adiantamentoId = int.Parse(adiantamentoTable.Rows[e.RowIndex].Cells[0].ToString());
+            try
+            {
+                adiantamentoId = int.Parse(adiantamentoTable.Rows[e.RowIndex].Cells[0].Value.ToString());
 
-            if (_entidade == Entidade.cliente)
-            {
-                documentoAdiantamento.Text = StaticProperty.adiantamentoClientes.Where(ad => ad.id == adiantamentoId).First().documento;
+                if (_entidade == Entidade.cliente)
+                {
+                    documentoAdiantamento.Text = StaticProperty.adiantamentoClientes.Where(ad => ad.id == adiantamentoId).First().documento;
+                }
+                else if (_entidade == Entidade.fornecedor)
+                {
+                    documentoAdiantamento.Text = StaticProperty.adiantamentoForns.Where(ad => ad.id == adiantamentoId).First().documento;
+                }
             }
-            else if(_entidade == Entidade.fornecedor) 
-            {
-                documentoAdiantamento.Text = StaticProperty.adiantamentoForns.Where(ad => ad.id == adiantamentoId).First().documento;
-            }
+            catch { return; }
         }
 
         private void docRegularTable_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            documentoId = int.Parse(docRegularTable.Rows[e.RowIndex].Cells[0].ToString());
+            try
+            {
+                documentoId = int.Parse(docRegularTable.Rows[e.RowIndex].Cells[0].Value.ToString());
 
-            if (_entidade == Entidade.cliente)
-            {
-                documentoPagamento.Text = StaticProperty.regAdiantamentoClientes.Where(ad => ad.id == adiantamentoId).First().documento;
-                valorDocumento.Text = StaticProperty.frs.Where(x => x.id == documentoId).Sum(x => x.frArtigo.Sum(f=>f.preco * f.qtd)).ToString("F2");
+                if (_entidade == Entidade.cliente)
+                {
+                    documentoPagamento.Text = StaticProperty.frs.Where(ad => ad.id == adiantamentoId).First().documento;
+                    valorDocumento.Text = StaticProperty.frs.Where(x => x.id == documentoId).Sum(x => x.frArtigo.Sum(f => f.preco * f.qtd)).ToString("F2");
+
+                }
+                else if (_entidade == Entidade.fornecedor)
+                {
+                    documentoPagamento.Text = StaticProperty.vfrs.Where(ad => ad.id == adiantamentoId).First().documento;
+                    valorDocumento.Text = StaticProperty.vfrs.Where(x => x.id == documentoId).Sum(x => x.vfrArtigo.Sum(f => f.preco * f.qtd)).ToString("F2");
+                }
             }
-            else if (_entidade == Entidade.fornecedor)
-            {
-                documentoPagamento.Text = StaticProperty.regAdiantamentoForns.Where(ad => ad.id == adiantamentoId).First().documento;
-                valorDocumento.Text = StaticProperty.vfrs.Where(x => x.id == documentoId).Sum(x => x.vfrArtigo.Sum(f => f.preco * f.qtd)).ToString("F2");
-            }
+            catch { return; }
         }
 
         private async void botaoSalvar_Click(object sender, EventArgs e)
