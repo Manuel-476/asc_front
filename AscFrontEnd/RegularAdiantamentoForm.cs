@@ -187,11 +187,14 @@ namespace AscFrontEnd
             {
                 documento = await Documento.GetCodigoDocumentoAsync("RGC");
 
+                var fr = StaticProperty.frs.Where(x => x.id == documentoId).First();
+
                 var regAdiantamento = new RegAdiantamentoClienteDTO()
                 {
                     adiantamentoId = adiantamentoId,
                     documento = documento,
                     frId = documentoId,
+                    fr = fr,
                     status = DocState.ativo,
                     empresaId = StaticProperty.empresaId,
                 };
@@ -220,12 +223,14 @@ namespace AscFrontEnd
             else if (_entidade == Entidade.fornecedor)
             {
                 documento = await Documento.GetCodigoDocumentoAsync("RGF");
+                var vfr = StaticProperty.vfrs.Where(x => x.id == documentoId).First();
 
                 var regAdiantamento = new RegAdiantamentoFornDTO()
                 {
                     adiantamentoId = adiantamentoId,
                     documento = documento,
                     vfrId = documentoId,
+                    Vfr = vfr,
                     status = DocState.ativo,
                     empresaId = StaticProperty.empresaId,
                 };
