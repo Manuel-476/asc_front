@@ -372,7 +372,7 @@ namespace AscFrontEnd
                 }
 
                 // Depositos
-                var responseBanco = await client.GetAsync($"https://localhost:7200/api/Deposito/Banco");
+                var responseBanco = await client.GetAsync($"https://localhost:7200/api/Deposito/Bancos");
 
                 if (responseBanco.IsSuccessStatusCode)
                 {

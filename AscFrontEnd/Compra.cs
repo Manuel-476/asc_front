@@ -213,12 +213,10 @@ namespace AscFrontEnd
                     status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
-                form = new FaturaDetalhes(totalPreco,vgts);
-                form.ShowDialog();
-                if (form.ShowDialog() != DialogResult.OK)
-                {
-                    return;
-                }
+                string json = System.Text.Json.JsonSerializer.Serialize(vgts);
+
+                // Envio dos dados para a API
+                response = await client.PostAsync($"https://localhost:7200/api/Compra/Vgt/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "ECF")

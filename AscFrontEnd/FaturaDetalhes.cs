@@ -36,36 +36,42 @@ namespace AscFrontEnd
             InitializeComponent();
             _totalPreco = totalPreco;
             _fr = fr;
+            parcelas = new List<ParcelasFormaPagamentoDTO>();
         }
         public FaturaDetalhes(float totalPreco, GtDTO gt)
         {
             InitializeComponent();
             _totalPreco = totalPreco;
             _gt = gt;
+            parcelas = new List<ParcelasFormaPagamentoDTO>();
         }
         public FaturaDetalhes(float totalPreco, VfrDTO vfr)
         {
             InitializeComponent();
             _totalPreco = totalPreco;
             _vfr = vfr;
+            parcelas = new List<ParcelasFormaPagamentoDTO>();
         }
         public FaturaDetalhes(float totalPreco, VgtDTO vgt)
         {
             InitializeComponent();
             _totalPreco = totalPreco;
             _vgt = vgt;
+            parcelas = new List<ParcelasFormaPagamentoDTO>();
         }
         public FaturaDetalhes(float totalPreco, NpDTO np)
         {
             InitializeComponent();
             _totalPreco = totalPreco;
             _np = np;
+            parcelas = new List<ParcelasFormaPagamentoDTO>();
         }
         public FaturaDetalhes(float totalPreco, ReciboDTO re)
         {
             InitializeComponent();
             _totalPreco = totalPreco;
             _re = re;
+            parcelas = new List<ParcelasFormaPagamentoDTO>();
         }
 
         private void FaturaDetalhes_Load(object sender, EventArgs e)
@@ -246,25 +252,12 @@ namespace AscFrontEnd
 
                 rota = $"https://localhost:7200/api/Venda/Fr/{StaticProperty.funcionarioId}";
             }
-            else if(_gt != null)
-            {
-                json = System.Text.Json.JsonSerializer.Serialize(_gt);
 
-                rota = $"https://localhost:7200/api/Venda/Gt/{StaticProperty.funcionarioId}";
-            }
             else if (_vfr != null)
             {
                 json = System.Text.Json.JsonSerializer.Serialize(_vfr);
 
                 rota = $"https://localhost:7200/api/Compra/Vfr/{StaticProperty.funcionarioId}";
-            }
-            else if (_vgt != null)
-            {
-                // Conversão do objeto Film para JSON
-                json = System.Text.Json.JsonSerializer.Serialize(_vgt);
-
-                // Envio dos dados para a API
-                rota = $"https://localhost:7200/api/Compra/Vgt/{StaticProperty.funcionarioId}";
             }
             else if(_np != null) 
             {

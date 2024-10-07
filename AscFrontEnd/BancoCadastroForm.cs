@@ -127,7 +127,7 @@ namespace AscFrontEnd
                 {
                     MessageBox.Show("Banco Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
-                    var responseBanco = await client.GetAsync($"https://localhost:7200/api/Deposito/Banco");
+                    var responseBanco = await client.GetAsync($"https://localhost:7200/api/Deposito/Bancos");
 
                     if (responseBanco.IsSuccessStatusCode)
                     {

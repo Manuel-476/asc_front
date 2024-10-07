@@ -273,15 +273,10 @@ namespace AscFrontEnd
                     status =  DTOs.Enums.Enums.DocState.ativo,
                 };
 
-                form = new FaturaDetalhes(totalPreco, gts);
-                form.ShowDialog();
+                string json = System.Text.Json.JsonSerializer.Serialize(gts);
 
-                if (form.ShowDialog() != DialogResult.OK)
-                {
-                    return;
-                }
-
-
+                // Envio dos dados para a API
+                response = await client.PostAsync($"https://localhost:7200/api/Venda/Gt/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "ECL")
@@ -389,60 +384,61 @@ namespace AscFrontEnd
             }
      
              vendaArtigos.Clear();
-
-            if (response.IsSuccessStatusCode)
-            {
-                dtVenda.Rows.Clear();
-                
-                MessageBox.Show("Venda Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
-
-                // Venda
-                var responseFr = await client.GetAsync($"https://localhost:7200/api/Venda/FrByRelations");
-
-                if (responseFr.IsSuccessStatusCode)
+            if (documento.Text != "FR") {
+                if (response.IsSuccessStatusCode)
                 {
-                    var contentFr = await responseFr.Content.ReadAsStringAsync();
-                    StaticProperty.frs = JsonConvert.DeserializeObject<List<FrDTO>>(contentFr);
-                }
+                    dtVenda.Rows.Clear();
 
-                var responseFt = await client.GetAsync($"https://localhost:7200/api/Venda/FtByRelations");
+                    MessageBox.Show("Venda Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
-                if (responseFt.IsSuccessStatusCode)
-                {
-                    var contentFt = await responseFt.Content.ReadAsStringAsync();
-                    StaticProperty.fts = JsonConvert.DeserializeObject<List<FtDTO>>(contentFt);
-                }
+                    // Venda
+                    var responseFr = await client.GetAsync($"https://localhost:7200/api/Venda/FrByRelations");
 
-                var responseEcl = await client.GetAsync($"https://localhost:7200/api/Venda/EclByRelations");
+                    if (responseFr.IsSuccessStatusCode)
+                    {
+                        var contentFr = await responseFr.Content.ReadAsStringAsync();
+                        StaticProperty.frs = JsonConvert.DeserializeObject<List<FrDTO>>(contentFr);
+                    }
 
-                if (responseEcl.IsSuccessStatusCode)
-                {
-                    var contentEcl = await responseEcl.Content.ReadAsStringAsync();
-                    StaticProperty.ecls = JsonConvert.DeserializeObject<List<EncomendaClienteDTO>>(contentEcl);
-                }
+                    var responseFt = await client.GetAsync($"https://localhost:7200/api/Venda/FtByRelations");
 
-                var responseFp = await client.GetAsync($"https://localhost:7200/api/Venda/FpByRelations");
+                    if (responseFt.IsSuccessStatusCode)
+                    {
+                        var contentFt = await responseFt.Content.ReadAsStringAsync();
+                        StaticProperty.fts = JsonConvert.DeserializeObject<List<FtDTO>>(contentFt);
+                    }
 
-                if (responseFp.IsSuccessStatusCode)
-                {
-                    var contentFp = await responseFp.Content.ReadAsStringAsync();
-                    StaticProperty.fps = JsonConvert.DeserializeObject<List<FaturaProformaDTO>>(contentFp);
-                }
+                    var responseEcl = await client.GetAsync($"https://localhost:7200/api/Venda/EclByRelations");
 
-                var responseNc = await client.GetAsync($"https://localhost:7200/api/Venda/NcByRelations");
+                    if (responseEcl.IsSuccessStatusCode)
+                    {
+                        var contentEcl = await responseEcl.Content.ReadAsStringAsync();
+                        StaticProperty.ecls = JsonConvert.DeserializeObject<List<EncomendaClienteDTO>>(contentEcl);
+                    }
 
-                if (responseNc.IsSuccessStatusCode)
-                {
-                    var contentNc = await responseNc.Content.ReadAsStringAsync();
-                    StaticProperty.ncs = JsonConvert.DeserializeObject<List<NcDTO>>(contentNc);
-                }
+                    var responseFp = await client.GetAsync($"https://localhost:7200/api/Venda/FpByRelations");
 
-                var responseNd = await client.GetAsync($"https://localhost:7200/api/Venda/NdByRelations");
+                    if (responseFp.IsSuccessStatusCode)
+                    {
+                        var contentFp = await responseFp.Content.ReadAsStringAsync();
+                        StaticProperty.fps = JsonConvert.DeserializeObject<List<FaturaProformaDTO>>(contentFp);
+                    }
 
-                if (responseNd.IsSuccessStatusCode)
-                {
-                    var contentNd = await responseNd.Content.ReadAsStringAsync();
-                    StaticProperty.nds = JsonConvert.DeserializeObject<List<NdDTO>>(contentNd);
+                    var responseNc = await client.GetAsync($"https://localhost:7200/api/Venda/NcByRelations");
+
+                    if (responseNc.IsSuccessStatusCode)
+                    {
+                        var contentNc = await responseNc.Content.ReadAsStringAsync();
+                        StaticProperty.ncs = JsonConvert.DeserializeObject<List<NcDTO>>(contentNc);
+                    }
+
+                    var responseNd = await client.GetAsync($"https://localhost:7200/api/Venda/NdByRelations");
+
+                    if (responseNd.IsSuccessStatusCode)
+                    {
+                        var contentNd = await responseNd.Content.ReadAsStringAsync();
+                        StaticProperty.nds = JsonConvert.DeserializeObject<List<NdDTO>>(contentNd);
+                    }
                 }
             }
             else
