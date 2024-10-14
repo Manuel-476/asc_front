@@ -62,6 +62,11 @@
             this.comboUnVenda = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.comboUnCompra = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.regimeIvaCombo = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.mencaoCombo = new System.Windows.Forms.ComboBox();
+            this.descricaoIvaTxt = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -72,7 +77,7 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(17, 407);
+            this.button1.Location = new System.Drawing.Point(17, 475);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(224, 41);
             this.button1.TabIndex = 0;
@@ -396,11 +401,62 @@
             this.comboUnCompra.Size = new System.Drawing.Size(221, 21);
             this.comboUnCompra.TabIndex = 33;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(13, 416);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(89, 20);
+            this.label15.TabIndex = 38;
+            this.label15.Text = "Regime Iva";
+            // 
+            // regimeIvaCombo
+            // 
+            this.regimeIvaCombo.FormattingEnabled = true;
+            this.regimeIvaCombo.Location = new System.Drawing.Point(17, 439);
+            this.regimeIvaCombo.Name = "regimeIvaCombo";
+            this.regimeIvaCombo.Size = new System.Drawing.Size(221, 21);
+            this.regimeIvaCombo.TabIndex = 37;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(262, 416);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(66, 20);
+            this.label16.TabIndex = 40;
+            this.label16.Text = "Mencao";
+            // 
+            // mencaoCombo
+            // 
+            this.mencaoCombo.FormattingEnabled = true;
+            this.mencaoCombo.Location = new System.Drawing.Point(266, 439);
+            this.mencaoCombo.Name = "mencaoCombo";
+            this.mencaoCombo.Size = new System.Drawing.Size(465, 21);
+            this.mencaoCombo.TabIndex = 39;
+            // 
+            // descricaoIvaTxt
+            // 
+            this.descricaoIvaTxt.AutoSize = true;
+            this.descricaoIvaTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.descricaoIvaTxt.Location = new System.Drawing.Point(266, 475);
+            this.descricaoIvaTxt.Name = "descricaoIvaTxt";
+            this.descricaoIvaTxt.Size = new System.Drawing.Size(119, 20);
+            this.descricaoIvaTxt.TabIndex = 41;
+            this.descricaoIvaTxt.Text = "descricaoIvaTxt";
+            // 
             // Artigo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(798, 528);
+            this.Controls.Add(this.descricaoIvaTxt);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.mencaoCombo);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.regimeIvaCombo);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.comboUnVenda);
             this.Controls.Add(this.label14);
@@ -482,5 +538,10 @@
         private System.Windows.Forms.ComboBox comboUnVenda;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox comboUnCompra;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox regimeIvaCombo;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.ComboBox mencaoCombo;
+        private System.Windows.Forms.Label descricaoIvaTxt;
     }
 }

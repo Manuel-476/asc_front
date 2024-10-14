@@ -156,6 +156,9 @@ namespace AscFrontEnd
                 marcaCombo.Items.Add(item.codigo);
             }
 
+            regimeIvaCombo.Items.Add("Isento");
+            regimeIvaCombo.Items.Add("Geral");
+
             comboUnCompra.Items.Add("Un"); comboUnVenda.Items.Add("Un");
             comboUnCompra.Items.Add("Kg"); comboUnVenda.Items.Add("Kg");
             comboUnCompra.Items.Add("Ltr"); comboUnVenda.Items.Add("Ltr");

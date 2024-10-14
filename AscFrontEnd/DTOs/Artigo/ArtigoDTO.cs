@@ -14,6 +14,8 @@ namespace AscFrontEnd
         public OpcaoBinaria mov_stock { get; set; }
         public OpcaoBinaria mov_lote { get; set; }
         public Status status { get; set; }
+        public OpcaoBinaria regimeIva { get; set; }
+        public string codigoIva { get; set; }
         public string unidadeCompra { get; set; } = string.Empty;
         public string unidadeVenda { get; set; } = string.Empty;
         public FamiliaArtigoDTO familia { get; set; }

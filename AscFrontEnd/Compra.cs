@@ -858,14 +858,19 @@ namespace AscFrontEnd
 
                 StringFormat formatToCenter = new StringFormat();
                 formatToCenter.Alignment = StringAlignment.Near;
+               
+                string empresaNome = $"{fornecedorResult.nome_fantasia.ToUpper()}\n";
+                string empresaCabecalho = $"{fornecedorResult.localizacao}\n" +
+                                          $"Contribuente: {fornecedorResult.nif}\n" +
+                                          $"Email: {fornecedorResult.email}\n" +
+                                          $"Tel: {fornecedorResult.phones.First().telefone}";
 
-                string empresaNome = "Smart Entity\n".ToUpper();
-                string empresaCabecalho = $"Zango2, Viana\nContribuente: 005899553LA042\n" +
-                                          $"Email: SmartEntity476@gmail.com\nTel: 944720430";
-
-                string clienteCabecalho = $"{fornecedorResult.nome_fantasia.ToUpper()}\n";
-                string clienteOutros = $"Fornecedor Nº {fornecedorResult.id}\nEndereco: {fornecedorResult.localizacao}\nContribuente: {fornecedorResult.nif}\n" +
-                                          $"Email: {fornecedorResult.email}\nTel: {fornecedorResult.phones.First().telefone}";
+                string clienteCabecalho = $"{StaticProperty.empresas.Where(x => x.id == StaticProperty.empresaId).First().razao_social}\n".ToUpper();
+                string clienteOutros = $"Fornecedor Nº {StaticProperty.empresas.Where(x => x.id == StaticProperty.empresaId).First().id}\n" +
+                                       $"Endereco: {StaticProperty.empresas.Where(x => x.id == StaticProperty.empresaId).First().endereco}\n" +
+                                       $"Contribuente: {StaticProperty.empresas.Where(x => x.id == StaticProperty.empresaId).First().nif}\n" +
+                                       $"Email: {StaticProperty.empresas.Where(x => x.id == StaticProperty.empresaId).First().email}\n" +
+                                       $"Tel:{StaticProperty.empresas.Where(x => x.id == StaticProperty.empresaId).First().telefone} ";
 
                 Pen caneta = new Pen(Color.Black, 2); // Define a cor e a largura da linha
                 Pen canetaFina = new Pen(Color.Black, 1);
@@ -898,11 +903,11 @@ namespace AscFrontEnd
                 e.Graphics.DrawString("Data Vencimento", fontNormalNegrito, cor, new Rectangle(500, 300, 650, 310));
                 e.Graphics.DrawLine(caneta, 50, 315, 750, 315);
 
-                e.Graphics.DrawString($"{fornecedorResult.nif}", fontNormal, cor, new Rectangle(50, 330, 200, 340));
+                e.Graphics.DrawString($"{StaticProperty.empresas.Where(x => x.id == StaticProperty.empresaId).First().nif}", fontNormal, cor, new Rectangle(50, 330, 200, 340));
                 e.Graphics.DrawString("0,00", fontNormal, cor, new Rectangle(200, 330, 350, 340));
-                e.Graphics.DrawString($"{DateTime.Now.Date.ToString()}", fontNormal, cor, new Rectangle(350, 330, 450, 340));
+                e.Graphics.DrawString($"{DateTime.Now.Date.ToString("dd-MM-yyyy")}", fontNormal, cor, new Rectangle(350, 330, 450, 340));
 
-                if (documento.Text.Equals("VFR") || documento.Text.Equals("VGT"))
+                if (documento.Text.Equals("VFR"))
                 {
                     e.Graphics.DrawString($"{DateTime.Now.Date}", fontNormal, cor, new Rectangle(500, 330, 650, 340));
 
@@ -928,16 +933,16 @@ namespace AscFrontEnd
                     e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
                     e.Graphics.DrawString($"{StaticProperty.artigos.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 350, 425 + i));
                     e.Graphics.DrawString($"{va.qtd}", fontNormal, cor, new Rectangle(350, 410 + i, 450, 425 + i));
-                    e.Graphics.DrawString($"{va.preco.ToString("F2")}", fontNormal, cor, new Rectangle(450, 410 + i, 550, 425 + i));
-                    e.Graphics.DrawString($"{(va.iva).ToString("F2")} %", fontNormal, cor, new Rectangle(550, 410 + i, 650, 425 + i));
-                    e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(650, 410 + i, 750, 425 + i));
+                    e.Graphics.DrawString($"{va.preco.ToString("F4")}", fontNormal, cor, new Rectangle(450, 410 + i, 550, 425 + i));
+                    e.Graphics.DrawString($"{(va.iva).ToString("F4")} %", fontNormal, cor, new Rectangle(550, 410 + i, 650, 425 + i));
+                    e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F4")}", fontNormal, cor, new Rectangle(650, 410 + i, 750, 425 + i));
                     i = i + 15;
                 }
 
                 totalLiquido += total - (total * (totalIva / 100));
 
                 string mercadoria = $"Mercadoria/Serviço:";
-                string iva = $"Iva:{totalIva.ToString("F2")}";
+                string iva = $"Iva:{totalIva.ToString("F4")}";
                 string totalIvaValor = $"Total Iva:";
                 string totalFinal = $"TOTAL";
 
@@ -945,27 +950,24 @@ namespace AscFrontEnd
                 e.Graphics.DrawRectangle(caneta, new Rectangle(540, 520 + i, 210, 65 + i));
 
                 e.Graphics.DrawString(mercadoria, fontCabecalho, cor, new PointF(550, 530 + i), formatToLeft);
-                e.Graphics.DrawString(totalLiquido.ToString("F2"), fontCabecalho, cor, new PointF(680, 530 + i), formatToLeft);
+                e.Graphics.DrawString(totalLiquido.ToString("F4"), fontCabecalho, cor, new PointF(680, 530 + i), formatToLeft);
                 e.Graphics.DrawString(iva, fontCabecalho, cor, new PointF(550, 540 + i), formatToLeft);
-                e.Graphics.DrawString(totalIva.ToString("F2"), fontCabecalho, cor, new PointF(680, 540 + i), formatToLeft);
+                e.Graphics.DrawString(totalIva.ToString("F4"), fontCabecalho, cor, new PointF(680, 540 + i), formatToLeft);
                 e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 550 + i), formatToLeft);
-                e.Graphics.DrawString((total * (totalIva / 100)).ToString("F2"), fontCabecalho, cor, new PointF(680, 550 + i), formatToLeft);
+                e.Graphics.DrawString((total * (totalIva / 100)).ToString("F4"), fontCabecalho, cor, new PointF(680, 550 + i), formatToLeft);
 
                 e.Graphics.DrawLine(canetaFina, 550, 565 + i, 740, 565 + i);
                 e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 575 + i), formatToLeft);
-                e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 575 + i), formatToLeft);
-
-                string conta = $"Conta nº";
-                string iban = $"IBAN ";
-                string banco = $"Banco Angolano de Investimento";
+                e.Graphics.DrawString(total.ToString("F4"), fontNormalNegrito, cor, new PointF(680, 575 + i), formatToLeft);
 
 
-                e.Graphics.DrawString("Dados Bancários", new Font("Arial", 10, FontStyle.Underline, GraphicsUnit.Pixel), cor, new PointF(50, 530 + i), formatToLeft);
+
+             /*   e.Graphics.DrawString("Dados Bancários", new Font("Arial", 10, FontStyle.Underline, GraphicsUnit.Pixel), cor, new PointF(50, 530 + i), formatToLeft);
                 e.Graphics.DrawString(banco, fontCabecalhoNegrito, cor, new PointF(50, 540 + i), formatToLeft);
                 e.Graphics.DrawString(conta, fontCabecalho, cor, new PointF(50, 550 + i), formatToLeft);
                 e.Graphics.DrawString($"24347216720012", fontCabecalho, cor, new PointF(115, 550 + i), formatToLeft);
                 e.Graphics.DrawString(iban, fontCabecalho, cor, new PointF(50, 560 + i), formatToLeft);
-                e.Graphics.DrawString("0040.0000.0305.4378,1012.4", fontCabecalho, cor, new PointF(95, 560 + i), formatToLeft);
+                e.Graphics.DrawString("0040.0000.0305.4378,1012.4", fontCabecalho, cor, new PointF(95, 560 + i), formatToLeft);*/
 
                 e.Graphics.DrawString($"Precessado por programa válido nº{"41/AGT/2020"} Asc - Smart Entity", fontCabecalho, cor, new PointF(280, 700 + i), formatToCenter);
 

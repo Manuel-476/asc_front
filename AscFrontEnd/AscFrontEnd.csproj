@@ -298,6 +298,7 @@
     <Compile Include="DTOs\ContasCorrentes\RegAdiantamentoClienteDTO.cs" />
     <Compile Include="DTOs\ContasCorrentes\RegAdiantamentoFornDTO.cs" />
     <Compile Include="DTOs\Deposito\BancoDTO.cs" />
+    <Compile Include="DTOs\Deposito\BancoFornecedorDTO.cs" />
     <Compile Include="DTOs\Deposito\CaixaDTO.cs" />
     <Compile Include="DTOs\Deposito\FormaPagamentoDTO.cs" />
     <Compile Include="DTOs\Deposito\ParcelasFormaPagamentoDTO.cs" />
