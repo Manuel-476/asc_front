@@ -19,6 +19,8 @@ namespace AscFrontEnd
 {
     public partial class Artigo : Form
     {
+        OpcaoBinaria regimeIva = OpcaoBinaria.Sim;
+        string codigoIva = string.Empty;
         public Artigo()
         {
             InitializeComponent();
@@ -48,6 +50,8 @@ namespace AscFrontEnd
               preco_unitario = float.Parse(precotxt.Text),
               unidadeCompra = comboUnCompra.Text,
               unidadeVenda = comboUnVenda.Text,
+              regimeIva = regimeIva,
+              codigoIva = codigoIva,
               empresaId = StaticProperty.empresaId,
             };
 
@@ -155,6 +159,8 @@ namespace AscFrontEnd
             {
                 marcaCombo.Items.Add(item.codigo);
             }
+            mencaoCombo.Enabled = false;
+            descricaoIvaTxt.Text = "";
 
             regimeIvaCombo.Items.Add("Isento");
             regimeIvaCombo.Items.Add("Geral");
@@ -185,6 +191,49 @@ namespace AscFrontEnd
             foreach (var item in StaticProperty.locationStores.Where(fam => fam.armazemId == armazemId).ToList())
             {              
                 localCombo.Items.Add(item.codigo);
+            }
+        }
+
+        private void regimeIvaCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (string.Equals(regimeIvaCombo.SelectedItem.ToString(), "Geral", StringComparison.OrdinalIgnoreCase)) 
+            {
+                regimeIva = OpcaoBinaria.Sim;
+                mencaoCombo.Enabled = false;
+                mencaoCombo.Items.Clear();
+                descricaoIvaTxt.Text = "";
+            }
+            else if (string.Equals(regimeIvaCombo.SelectedItem.ToString(), "Isento", StringComparison.OrdinalIgnoreCase)) 
+            {
+                regimeIva = OpcaoBinaria.Nao;
+                mencaoCombo.Enabled = true;
+
+                foreach(var motivo in StaticProperty.motivosIsencao) 
+                {
+                    mencaoCombo.Items.Add(motivo.mencao);
+                }
+               
+            }
+        }
+
+        private void mencaoCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(mencaoCombo.SelectedItem.ToString()))
+            {
+                return;
+            }
+            else
+            {
+                if (StaticProperty.motivosIsencao.Where(x => x.mencao == mencaoCombo.SelectedItem.ToString()).Any())
+                {
+                    if (string.IsNullOrEmpty(StaticProperty.motivosIsencao.Where(x => x.mencao == mencaoCombo.SelectedItem.ToString()).First().descricao))
+                    {
+                        descricaoIvaTxt.Text = "";
+                        return; }
+
+                    descricaoIvaTxt.Text = StaticProperty.motivosIsencao.Where(x => x.mencao == mencaoCombo.SelectedItem.ToString()).First().descricao;
+                    this.codigoIva = StaticProperty.motivosIsencao.Where(x => x.mencao == mencaoCombo.SelectedItem.ToString()).First().codigo;
+                }
             }
         }
     }

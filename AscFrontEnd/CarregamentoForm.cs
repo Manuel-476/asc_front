@@ -1,4 +1,5 @@
 ﻿using AscFrontEnd.DTOs;
+using AscFrontEnd.DTOs.Artigo;
 using AscFrontEnd.DTOs.Actividades;
 using AscFrontEnd.DTOs.Cliente;
 using AscFrontEnd.DTOs.ContasCorrentes;
@@ -222,7 +223,17 @@ namespace AscFrontEnd
                     var contentArtigo = await responseArtigo.Content.ReadAsStringAsync();
                     StaticProperty.artigos = JsonConvert.DeserializeObject<List<ArtigoDTO>>(contentArtigo);
 
-                    processValue += 3;
+                    processValue += 2;
+                }
+
+                var responseMotivos = await client.GetAsync($"https://localhost:7200/api/Artigo/Iva/MotivosIsencao");
+
+                if (responseMotivos.IsSuccessStatusCode)
+                {
+                    var contentMotivos = await responseMotivos.Content.ReadAsStringAsync();
+                    StaticProperty.motivosIsencao = JsonConvert.DeserializeObject<List<MotivosIsencaoIvaDTO>>(contentMotivos);
+
+                    processValue += 1;
                 }
 
                 // Amazem

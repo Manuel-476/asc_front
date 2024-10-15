@@ -266,6 +266,7 @@
     <Compile Include="CompraListagem.Designer.cs">
       <DependentUpon>CompraListagem.cs</DependentUpon>
     </Compile>
+    <Compile Include="DTOs\Artigo\MotivosIsencaoIvaDTO.cs" />
     <Compile Include="DTOs\Compra\CotacaoArtigoDTO.cs" />
     <Compile Include="DTOs\Compra\CotacaoDTO.cs" />
     <Compile Include="DTOs\Compra\EcfArtigoDTO.cs" />

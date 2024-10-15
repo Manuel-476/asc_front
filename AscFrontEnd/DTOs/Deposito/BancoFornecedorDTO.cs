@@ -17,6 +17,6 @@ namespace AscFrontEnd.DTOs.Deposito
         public string iban { get; set; }
         public Status status { get; set; }
         public int fornecedorId { get; set; }
-        public FornecedorDTO? fornecedor { get; set; }
+        public FornecedorDTO fornecedor { get; set; }
     }
 }

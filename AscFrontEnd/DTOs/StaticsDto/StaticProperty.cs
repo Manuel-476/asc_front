@@ -1,4 +1,5 @@
 ﻿using AscFrontEnd.DTOs.Actividades;
+using AscFrontEnd.DTOs.Artigo;
 using AscFrontEnd.DTOs.Cliente;
 using AscFrontEnd.DTOs.ContasCorrentes;
 using AscFrontEnd.DTOs.Deposito;
@@ -43,6 +44,7 @@ namespace AscFrontEnd.DTOs.StaticsDto
         public static List<SubFamiliaDTO>subFamilias { get; set; }
         public static List<ModeloDTO> modelos { get; set; }
         public static List<MarcaDTO> marcas { get; set; }
+        public static List<MotivosIsencaoIvaDTO> motivosIsencao { get; set; }
 
         // Actividade
         public static List<ActividadeDTO> actividades { get; set; }
@@ -94,6 +96,7 @@ namespace AscFrontEnd.DTOs.StaticsDto
         public static List<BancoDTO> bancos { get; set; }
         public static List<CaixaDTO> caixas { get; set; }
         public static List<FormaPagamentoDTO> formasPagamento { get; set; }
+
 
         // Empresa
         public static List<EmpresaDTO> empresas { get; set; }

@@ -418,6 +418,7 @@
             this.regimeIvaCombo.Name = "regimeIvaCombo";
             this.regimeIvaCombo.Size = new System.Drawing.Size(221, 21);
             this.regimeIvaCombo.TabIndex = 37;
+            this.regimeIvaCombo.SelectedIndexChanged += new System.EventHandler(this.regimeIvaCombo_SelectedIndexChanged);
             // 
             // label16
             // 
@@ -436,6 +437,7 @@
             this.mencaoCombo.Name = "mencaoCombo";
             this.mencaoCombo.Size = new System.Drawing.Size(465, 21);
             this.mencaoCombo.TabIndex = 39;
+            this.mencaoCombo.SelectedIndexChanged += new System.EventHandler(this.mencaoCombo_SelectedIndexChanged);
             // 
             // descricaoIvaTxt
             // 
