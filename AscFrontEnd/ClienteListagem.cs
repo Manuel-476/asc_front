@@ -73,15 +73,24 @@ namespace AscFrontEnd
 
         private void tabelaCliente_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            try
             {
-                // Obtém o valor da célula clicada
-                string id = tabelaCliente.Rows[e.RowIndex].Cells[0].Value.ToString();
-                string nome = tabelaCliente.Rows[e.RowIndex].Cells[1].Value.ToString();
+                if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+                {
+                    // Obtém o valor da célula clicada
+                    string id = tabelaCliente.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    string nome = tabelaCliente.Rows[e.RowIndex].Cells[1].Value.ToString();
 
-                StaticProperty.entityId = int.Parse(id);
-                StaticProperty.nome = nome;
+                    StaticProperty.entityId = int.Parse(id);
+                    StaticProperty.nome = nome;
+                }
             }
+            catch { return; }
+        }
+
+        private void tabelaCliente_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

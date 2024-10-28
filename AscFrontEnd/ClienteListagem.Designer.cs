@@ -49,6 +49,7 @@
             this.tabelaCliente.Size = new System.Drawing.Size(772, 253);
             this.tabelaCliente.TabIndex = 0;
             this.tabelaCliente.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabelaCliente_CellClick);
+            this.tabelaCliente.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabelaCliente_CellContentClick);
             // 
             // pesqText
             // 

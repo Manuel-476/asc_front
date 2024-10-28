@@ -337,6 +337,7 @@
             this.Name = "Venda";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Venda";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Venda_FormClosing);
             this.Load += new System.EventHandler(this.Venda_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tabelaArtigos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaVenda)).EndInit();

@@ -865,12 +865,12 @@ namespace AscFrontEnd
                                           $"Email: {fornecedorResult.email}\n" +
                                           $"Tel: {fornecedorResult.phones.First().telefone}";
 
-                string clienteCabecalho = $"{StaticProperty.empresas.Where(x => x.id == StaticProperty.empresaId).First().razao_social}\n".ToUpper();
-                string clienteOutros = $"Fornecedor Nº {StaticProperty.empresas.Where(x => x.id == StaticProperty.empresaId).First().id}\n" +
-                                       $"Endereco: {StaticProperty.empresas.Where(x => x.id == StaticProperty.empresaId).First().endereco}\n" +
-                                       $"Contribuente: {StaticProperty.empresas.Where(x => x.id == StaticProperty.empresaId).First().nif}\n" +
-                                       $"Email: {StaticProperty.empresas.Where(x => x.id == StaticProperty.empresaId).First().email}\n" +
-                                       $"Tel:{StaticProperty.empresas.Where(x => x.id == StaticProperty.empresaId).First().telefone} ";
+                string clienteCabecalho = $"{StaticProperty.empresa.nome_fantasia}\n".ToUpper();
+                string clienteOutros = $"Cliente Nº {StaticProperty.empresa.id}\n" +
+                                       $"Endereco: {StaticProperty.empresa.endereco}\n" +
+                                       $"Contribuente: {StaticProperty.empresa.nif}\n" +
+                                       $"Email: {StaticProperty.empresa.email}\n" +
+                                       $"Tel:{StaticProperty.empresa.telefone} ";
 
                 Pen caneta = new Pen(Color.Black, 2); // Define a cor e a largura da linha
                 Pen canetaFina = new Pen(Color.Black, 1);
@@ -969,7 +969,7 @@ namespace AscFrontEnd
                 e.Graphics.DrawString(iban, fontCabecalho, cor, new PointF(50, 560 + i), formatToLeft);
                 e.Graphics.DrawString("0040.0000.0305.4378,1012.4", fontCabecalho, cor, new PointF(95, 560 + i), formatToLeft);*/
 
-                e.Graphics.DrawString($"Precessado por programa válido nº{"41/AGT/2020"} Asc - Smart Entity", fontCabecalho, cor, new PointF(280, 700 + i), formatToCenter);
+                e.Graphics.DrawString($"Processado pelo programa válido nº{"41/AGT/2020"} Asc - Smart Entity", fontCabecalho, cor, new PointF(280, 700 + i), formatToCenter);
 
 
 
@@ -990,6 +990,12 @@ namespace AscFrontEnd
                 Console.WriteLine($"Erro: {ex.Message}");
                 throw new Exception("Erro ao desenhar a string: " + ex.Message);
             }
+        }
+
+        private void Compra_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            timerRefresh.Stop();
+            timerRefresh.Dispose();
         }
     }
     }

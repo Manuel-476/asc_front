@@ -100,5 +100,6 @@ namespace AscFrontEnd.DTOs.StaticsDto
 
         // Empresa
         public static List<EmpresaDTO> empresas { get; set; }
+        public static EmpresaDTO empresa { get; set; }
     }
 }

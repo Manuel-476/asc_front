@@ -9,6 +9,7 @@ using AscFrontEnd.DTOs.Serie;
 using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.DTOs.Stock;
 using AscFrontEnd.DTOs.Venda;
+using AscFrontEnd.DTOs.Empresa;
 using EAscFrontEnd;
 using ERP_Buyer.Application.DTOs.Documentos;
 using ERP_Seller.Application.DTOs.Documentos;
@@ -468,7 +469,19 @@ namespace AscFrontEnd
 
                     StaticProperty.modelos = JsonConvert.DeserializeObject<List<ModeloDTO>>(contentModelo);
 
-                    processValue += 3;
+                    processValue += 2;
+                }
+
+                // Empresa
+                var responseEmpresa = await client.GetAsync($"https://localhost:7200/api/Empresa/{StaticProperty.empresaId}");
+
+                if (responseEmpresa.IsSuccessStatusCode)
+                {
+                    var contentEmpresa = await responseEmpresa.Content.ReadAsStringAsync();
+
+                    StaticProperty.empresa = JsonConvert.DeserializeObject<EmpresaDTO>(contentEmpresa);
+
+                    processValue += 1;
                 }
             }
             catch (Exception ex)
