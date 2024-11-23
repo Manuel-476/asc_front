@@ -32,11 +32,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.senha = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.nivelAcessoLabel = new System.Windows.Forms.Label();
             this.nivelAcesso = new System.Windows.Forms.ComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.titulo = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.infoLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -76,16 +77,16 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "Palavra-Passe:";
             // 
-            // label3
+            // nivelAcessoLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(346, 239);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(103, 20);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Nivel Acesso:";
+            this.nivelAcessoLabel.AutoSize = true;
+            this.nivelAcessoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nivelAcessoLabel.ForeColor = System.Drawing.Color.White;
+            this.nivelAcessoLabel.Location = new System.Drawing.Point(346, 239);
+            this.nivelAcessoLabel.Name = "nivelAcessoLabel";
+            this.nivelAcessoLabel.Size = new System.Drawing.Size(103, 20);
+            this.nivelAcessoLabel.TabIndex = 7;
+            this.nivelAcessoLabel.Text = "Nivel Acesso:";
             // 
             // nivelAcesso
             // 
@@ -106,16 +107,16 @@
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
             // 
-            // label4
+            // titulo
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Arial Narrow", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(46, 22);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(257, 31);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Credenciais De Acesso";
+            this.titulo.AutoSize = true;
+            this.titulo.Font = new System.Drawing.Font("Arial Narrow", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titulo.ForeColor = System.Drawing.Color.White;
+            this.titulo.Location = new System.Drawing.Point(46, 22);
+            this.titulo.Name = "titulo";
+            this.titulo.Size = new System.Drawing.Size(257, 31);
+            this.titulo.TabIndex = 10;
+            this.titulo.Text = "Credenciais De Acesso";
             // 
             // button1
             // 
@@ -130,17 +131,28 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // infoLabel
+            // 
+            this.infoLabel.AutoSize = true;
+            this.infoLabel.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.infoLabel.ForeColor = System.Drawing.Color.White;
+            this.infoLabel.Location = new System.Drawing.Point(48, 53);
+            this.infoLabel.Name = "infoLabel";
+            this.infoLabel.Size = new System.Drawing.Size(0, 20);
+            this.infoLabel.TabIndex = 12;
+            // 
             // UserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(800, 353);
+            this.Controls.Add(this.infoLabel);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.titulo);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.nivelAcesso);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.nivelAcessoLabel);
             this.Controls.Add(this.senha);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.nomeText);
@@ -152,6 +164,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "UserFotm";
+            this.Load += new System.EventHandler(this.UserForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -164,10 +177,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox senha;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label nivelAcessoLabel;
         private System.Windows.Forms.ComboBox nivelAcesso;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label titulo;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label infoLabel;
     }
 }

@@ -418,6 +418,12 @@
     <Compile Include="ListaSeries.Designer.cs">
       <DependentUpon>ListaSeries.cs</DependentUpon>
     </Compile>
+    <Compile Include="MotivoAnulacao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MotivoAnulacao.Designer.cs">
+      <DependentUpon>MotivoAnulacao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -622,6 +628,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ListaSeries.resx">
       <DependentUpon>ListaSeries.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MotivoAnulacao.resx">
+      <DependentUpon>MotivoAnulacao.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RegularAdiantamentoForm.resx">
       <DependentUpon>RegularAdiantamentoForm.cs</DependentUpon>

@@ -37,7 +37,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.titulo = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -134,16 +134,16 @@
             this.label4.TabIndex = 8;
             this.label4.Text = "Gerencie sua empresa como se fosse nada!";
             // 
-            // label5
+            // titulo
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Arial Narrow", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label5.Location = new System.Drawing.Point(517, 25);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(132, 31);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Bem-Vindo";
+            this.titulo.AutoSize = true;
+            this.titulo.Font = new System.Drawing.Font("Arial Narrow", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titulo.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.titulo.Location = new System.Drawing.Point(517, 25);
+            this.titulo.Name = "titulo";
+            this.titulo.Size = new System.Drawing.Size(132, 31);
+            this.titulo.TabIndex = 9;
+            this.titulo.Text = "Bem-Vindo";
             // 
             // label6
             // 
@@ -163,7 +163,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(701, 474);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.titulo);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -200,7 +200,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label titulo;
         private System.Windows.Forms.Label label6;
     }
 }

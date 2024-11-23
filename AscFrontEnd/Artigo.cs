@@ -21,6 +21,7 @@ namespace AscFrontEnd
     {
         OpcaoBinaria regimeIva = OpcaoBinaria.Sim;
         string codigoIva = string.Empty;
+        int localId;
         public Artigo()
         {
             InitializeComponent();
@@ -30,7 +31,8 @@ namespace AscFrontEnd
         {
             try { 
             int armazemId  = StaticProperty.armazens.Where(arm=>arm.codigo == armazemCombo.Text.ToString()).First().id;
-            int localId  = StaticProperty.locationStores.Where(arm => arm.codigo == localCombo.Text.ToString()).First().id;
+
+            
 
             
             var artigo = new ArtigoDTO()
@@ -189,8 +191,15 @@ namespace AscFrontEnd
         {
             int armazemId = StaticProperty.armazens.Where(arm => arm.codigo == armazemCombo.Text && arm.empresaId == 1).First().id;
             foreach (var item in StaticProperty.locationStores.Where(fam => fam.armazemId == armazemId).ToList())
-            {              
-                localCombo.Items.Add(item.codigo);
+            {
+                if (!StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id && x.qtd == 0).Any()) 
+                {
+                    MessageBox.Show("Este armazem não tem localização disponível, todas localizações já armazenam artigos", "Sem Localização disponível", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id).First().qtd == 0)
+                {
+                    localCombo.Items.Add(item.codigo);
+                }
             }
         }
 
@@ -229,10 +238,34 @@ namespace AscFrontEnd
                     if (string.IsNullOrEmpty(StaticProperty.motivosIsencao.Where(x => x.mencao == mencaoCombo.SelectedItem.ToString()).First().descricao))
                     {
                         descricaoIvaTxt.Text = "";
-                        return; }
+
+                        this.codigoIva = StaticProperty.motivosIsencao.Where(x => x.mencao == mencaoCombo.SelectedItem.ToString()).First().codigo;
+
+                        return; 
+                    }
 
                     descricaoIvaTxt.Text = StaticProperty.motivosIsencao.Where(x => x.mencao == mencaoCombo.SelectedItem.ToString()).First().descricao;
                     this.codigoIva = StaticProperty.motivosIsencao.Where(x => x.mencao == mencaoCombo.SelectedItem.ToString()).First().codigo;
+                }
+            }
+        }
+
+        private void localCombo_SelectedValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void localCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.localId = StaticProperty.locationStores.Where(arm => arm.codigo == localCombo.Text.ToString()).First().id;
+
+            if (StaticProperty.locationArtigos.Where(x=>x.locationStoreId == this.localId).Any()) 
+            {
+                var local = StaticProperty.locationArtigos.Where(x => x.locationStoreId == this.localId).First(); 
+
+                if(local.artigoId != 0) 
+                {
+                    MessageBox.Show("Esta localização já tem um artigo predefinido, se continuar substituirá o artigo predefinido pelo  novo artigo","Atenção",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }
             }
         }

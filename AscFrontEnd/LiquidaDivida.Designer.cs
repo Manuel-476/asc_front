@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LiquidaDivida));
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -39,9 +40,13 @@
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.documentoLabel = new System.Windows.Forms.Label();
+            this.preVisualizacaoDialog = new System.Windows.Forms.PrintPreviewDialog();
+            this.Imprimir = new System.Drawing.Printing.PrintDocument();
+            this.tabelaFaturas = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tabelaFaturas)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -156,11 +161,41 @@
             this.documentoLabel.TabIndex = 9;
             this.documentoLabel.Text = "documento";
             // 
+            // preVisualizacaoDialog
+            // 
+            this.preVisualizacaoDialog.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.preVisualizacaoDialog.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.preVisualizacaoDialog.ClientSize = new System.Drawing.Size(400, 300);
+            this.preVisualizacaoDialog.Enabled = true;
+            this.preVisualizacaoDialog.Icon = ((System.Drawing.Icon)(resources.GetObject("preVisualizacaoDialog.Icon")));
+            this.preVisualizacaoDialog.Name = "preVisualizacaoDialog";
+            this.preVisualizacaoDialog.Visible = false;
+            // 
+            // Imprimir
+            // 
+            this.Imprimir.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.Imprimir_PrintPage);
+            // 
+            // tabelaFaturas
+            // 
+            this.tabelaFaturas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tabelaFaturas.BackgroundColor = System.Drawing.Color.White;
+            this.tabelaFaturas.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.tabelaFaturas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.tabelaFaturas.GridColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.tabelaFaturas.Location = new System.Drawing.Point(40, 261);
+            this.tabelaFaturas.Name = "tabelaFaturas";
+            this.tabelaFaturas.ReadOnly = true;
+            this.tabelaFaturas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tabelaFaturas.Size = new System.Drawing.Size(568, 113);
+            this.tabelaFaturas.TabIndex = 10;
+            this.tabelaFaturas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabelaFaturas_CellClick);
+            // 
             // LiquidaDivida
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(636, 249);
+            this.ClientSize = new System.Drawing.Size(636, 386);
+            this.Controls.Add(this.tabelaFaturas);
             this.Controls.Add(this.documentoLabel);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
@@ -181,6 +216,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tabelaFaturas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -199,5 +235,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label documentoLabel;
+        private System.Windows.Forms.PrintPreviewDialog preVisualizacaoDialog;
+        private System.Drawing.Printing.PrintDocument Imprimir;
+        private System.Windows.Forms.DataGridView tabelaFaturas;
     }
 }

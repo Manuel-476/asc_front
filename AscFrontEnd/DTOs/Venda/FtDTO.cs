@@ -19,6 +19,7 @@ namespace EAscFrontEnd
         public string shortHash { get; set; }
         public OpcaoBinaria pago { get; set; }
         public DateTime data { get; set; }
+        public DateTime created_at { get; set; }
         public List<FtArtigoDTO> ftArtigo { get; set; }
         public ICollection<ReciboDTO>  recibos { get; set; }
         public ClienteDTO cliente { get; set; }

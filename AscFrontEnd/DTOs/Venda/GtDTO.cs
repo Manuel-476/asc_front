@@ -19,6 +19,7 @@ namespace EAscFrontEnd
         public int? bancoClienteId { get; set; }
         public int? caixaClienteId { get; set; }
         public DateTime data { get; set; }
+        public DateTime created_at { get; set; }
         public List<GtArtigoDTO> gtArtigo { get; set; }
     }
 }

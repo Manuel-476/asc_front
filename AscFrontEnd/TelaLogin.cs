@@ -23,15 +23,18 @@ namespace AscFrontEnd
         HttpClient client;
         string json = string.Empty;
         UserDTO user;
+        UserDTO resultUser;
         public TelaLogin()
         {
             client = new HttpClient();
             client.BaseAddress = new Uri("https://sua-api.com/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
+            resultUser = new UserDTO();
             InitializeComponent();
         }
+
+
 
         private async void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -63,14 +66,15 @@ namespace AscFrontEnd
                             {
                                 if (!string.IsNullOrWhiteSpace(users.Where(u => u.user_name == user.user_name && u.password == user.password).First().user_name))
                                 {
-                                    var result = users.Where(u => u.user_name == user.user_name && u.password == user.password).First();
-                                    var responseFuncionario = await client.GetAsync($"https://localhost:7200/api/Funcionario/{result.id}");
+                                    resultUser = users.Where(u => u.user_name == user.user_name && u.password == user.password).First();
+
+                                    var responseFuncionario = await client.GetAsync($"https://localhost:7200/api/Funcionario/{resultUser.funcionarioid}");
                                     var contentFuncionario = await responseFuncionario.Content.ReadAsStringAsync();
                                     var funcionario = Newtonsoft.Json.JsonConvert.DeserializeObject<FuncionarioDTO>(contentFuncionario);
 
                                     if (responseFuncionario != null)
                                     {
-                                        StaticProperty.funcionarioId = result.funcionarioid;
+                                        StaticProperty.funcionarioId = resultUser.funcionarioid;
                                         StaticProperty.empresaId = funcionario.empresaid;
                                     }
                                 }
@@ -85,7 +89,14 @@ namespace AscFrontEnd
 
                             this.Hide();
                             StaticProperty.token = token;
-                            new CarregamentoForm().ShowDialog();
+                            if (resultUser.state == DTOs.Enums.Enums.OpcaoBinaria.Nao)
+                            {
+                                new UserForm("Alterar Credencias de Acesso", resultUser.id).ShowDialog();
+                            }
+                            else
+                            {
+                                new CarregamentoForm().ShowDialog();
+                            }
                         }
                     }
                 }
@@ -98,6 +109,7 @@ namespace AscFrontEnd
 
         private async void senhaUsuariotxt_TextChanged(object sender, EventArgs e)
         {
+
            user = new UserDTO() { user_name = nomeUsuariotxt.Text, password = senhaUsuariotxt.Text };
 
             if (!string.IsNullOrWhiteSpace(nomeUsuariotxt.Text.ToString()) && !string.IsNullOrWhiteSpace(senhaUsuariotxt.Text.ToString()))
@@ -126,14 +138,14 @@ namespace AscFrontEnd
                             {
                                 if (!string.IsNullOrWhiteSpace(users.Where(u => u.user_name == user.user_name && u.password == user.password).First().user_name))
                                 {
-                                    var result = users.Where(u => u.user_name == user.user_name && u.password == user.password).First();
-                                    var responseFuncionario = await client.GetAsync($"https://localhost:7200/api/Funcionario/{result.id}");
+                                    resultUser = users.Where(u => u.user_name == user.user_name && u.password == user.password).First();
+                                    var responseFuncionario = await client.GetAsync($"https://localhost:7200/api/Funcionario/{resultUser.funcionarioid}");
                                     var contentFuncionario = await responseFuncionario.Content.ReadAsStringAsync();
                                     var funcionario = Newtonsoft.Json.JsonConvert.DeserializeObject<FuncionarioDTO>(contentFuncionario);
 
                                     if (responseFuncionario != null)
                                     {
-                                        StaticProperty.funcionarioId = result.funcionarioid;
+                                        StaticProperty.funcionarioId = resultUser.funcionarioid;
                                         StaticProperty.empresaId = funcionario.empresaid;
                                     }
                                 }
@@ -148,7 +160,14 @@ namespace AscFrontEnd
 
                             this.Hide();
                             StaticProperty.token = token;
-                            new CarregamentoForm().ShowDialog();
+                            if (resultUser.state == DTOs.Enums.Enums.OpcaoBinaria.Nao)
+                            {
+                                new UserForm("Alterar Credencias de Acesso", resultUser.id).ShowDialog();
+                            }
+                            else
+                            {
+                                new CarregamentoForm().ShowDialog();
+                            }
                         }
                     }
                 }

@@ -1,6 +1,8 @@
-﻿using AscFrontEnd.DTOs.Enums;
+﻿using AscFrontEnd.DTOs.ContasCorrentes;
+using AscFrontEnd.DTOs.Enums;
 using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.DTOs.Stock;
+using EAscFrontEnd;
 using ERP_Buyer.Application.DTOs.Documentos;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -11,6 +13,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,11 +27,18 @@ namespace AscFrontEnd
         List<VftDTO> dados;
         DataTable entidadeTable;
         public int id;
+        HttpClient client;
         public ContasCorrentes()
         {
             InitializeComponent();
             dados = new List<VftDTO>();
-            
+
+            client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            client.BaseAddress = new Uri("https://localhost:7200/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
         }
 
         private async void groupBox1_Enter(object sender, EventArgs e)
@@ -70,9 +81,10 @@ namespace AscFrontEnd
             float result = 0;
             float valorAdiantamento = 0;
 
-          //  radioFornecedor.Checked = true;    
+           radioFornecedor.Checked = true;
+              
 
-            var vftResult = StaticProperty.vfts.Where(x=>x.fornecedor.empresaid == StaticProperty.empresaId).GroupBy(vft => vft.fornecedorId);
+            var vftResult = StaticProperty.vfts.Where(x=>x.fornecedor.empresaid == StaticProperty.empresaId && x.pago == OpcaoBinaria.Nao).GroupBy(vft => vft.fornecedorId);
             var fornecedor = StaticProperty.fornecedores.Where(x => x.empresaid == StaticProperty.empresaId).ToList();
 
             entidadeTable = new DataTable();
@@ -88,6 +100,7 @@ namespace AscFrontEnd
             {
                 foreach (var vft in vftResult)
                 {
+                    
                     result = vft.Sum(vt => vt.vftArtigo.Sum(va => va.preco * va.qtd));
                     valorAdiantamento = StaticProperty.fornecedores.Where(f => f.id == vft.Key).Sum(f => f.adiantamentos.Where(x => x.resolvido == OpcaoBinaria.Nao).Sum(x => x.valorAdiantado));
 
@@ -145,7 +158,6 @@ namespace AscFrontEnd
                 {
                     var result = StaticProperty.vfts.Where(vft => vft.fornecedorId == id).ToList();
                     
-
                     foreach (var item in result)
                     {
                         if(item.pago == Enums.OpcaoBinaria.Nao) 
@@ -246,18 +258,20 @@ namespace AscFrontEnd
                     dataTable.Clear(); // Limpa todas as linhas da fonte de dados
                 }
                 var fornecedor = StaticProperty.fornecedores.Where(x => x.empresaid == StaticProperty.empresaId).ToList();
-                var vftResult = StaticProperty.vfts.Where(x => x.fornecedor.empresaid == StaticProperty.empresaId).GroupBy(vft => vft.fornecedorId);
+                var vftResult = StaticProperty.vfts.Where(x => x.pago == OpcaoBinaria.Nao).GroupBy(vft => vft.fornecedorId);
 
                 // Adicionando linhas ao DataTable
                 if (vftResult.Any())
                 {
                     foreach (var vft in vftResult)
                     {
-                        if (vft.First().vftArtigo.Any())
+                        if (StaticProperty.fornecedores.Where(x => x.id == vft.Key).First().empresaid == StaticProperty.empresaId)
                         {
-                            result = vft.Sum(vt => vt.vftArtigo.Sum(va => va.preco * va.qtd));
+                            if (vft.First().vftArtigo.Any())
+                            {
+                                result = vft.Where(x => x.pago == OpcaoBinaria.Nao).Sum(vt => vt.vftArtigo.Sum(va => va.preco * va.qtd));
+                            }
                         }
-
                         if (StaticProperty.fornecedores.Where(f => f.id == vft.Key).First().adiantamentos.Any()) 
                         {
                             valorAdiantamento = StaticProperty.fornecedores.Where(f => f.id == vft.Key).Sum(f => f.adiantamentos.Where(x => x.resolvido == OpcaoBinaria.Nao).Sum(x => x.valorAdiantado));
@@ -328,16 +342,19 @@ namespace AscFrontEnd
                     dataTable.Clear(); // Limpa todas as linhas da fonte de dados
                 }
 
-                var ftResult = StaticProperty.fts.Where(x => x.cliente.empresaid == StaticProperty.empresaId).GroupBy(ft => ft.clienteId);
+                var ftResult = StaticProperty.fts.Where(x => x.pago == OpcaoBinaria.Nao).GroupBy(ft => ft.clienteId);
 
                 // Adicionando linhas ao DataTable
                 foreach (var ft in ftResult)
                 {
                     if (ftResult.Any())
                     {
-                        if (ftResult.Where(x => x.Key == ft.Key).First().First().ftArtigo.Any())
+                        if (StaticProperty.clientes.Where(x => x.id == ft.Key).First().empresaid == StaticProperty.empresaId)
                         {
-                            result = ft.Sum(vt => vt.ftArtigo.Sum(va => va.preco * va.qtd));
+                            if (ftResult.Where(x => x.Key == ft.Key).First().First().ftArtigo.Any())
+                            {
+                                result = ft.Sum(vt => vt.ftArtigo.Sum(va => va.preco * va.qtd));
+                            }
                         }
                     }
                     if (cliente.Where(f => f.id == ft.Key).First().adiantamentos.Any())
@@ -393,25 +410,32 @@ namespace AscFrontEnd
             aprovaBtn.ForeColor = Color.White;
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
+        private async void pictureBox2_Click(object sender, EventArgs e)
         {
-            LiquidaDivida ld = null;
-            if (this.id > 0)
+            try
             {
-                if (radioCliente.Checked)
+                LiquidaDivida ld = null;
+                if (this.id > 0)
                 {
-                    ld = new LiquidaDivida(id, Entidade.cliente);
+                    if (radioCliente.Checked)
+                    {
+                        ld = new LiquidaDivida(id, Entidade.cliente);
+                        ld.ShowDialog();
+                    }
+                    else if (radioFornecedor.Checked)
+                    {
+                        ld = new LiquidaDivida(id, Entidade.fornecedor);
+                        ld.ShowDialog();
+                    }
+
+                    await this.RefreshDocs();
                 }
-                else if (radioFornecedor.Checked)
+                else
                 {
-                    ld = new LiquidaDivida(id, Entidade.fornecedor);
+                    return;
                 }
-                ld.ShowDialog();
             }
-            else 
-            {
-                return;
-            }
+            catch { return; }
         }
 
         private void aprovaBtn_Click(object sender, EventArgs e)
@@ -451,7 +475,86 @@ namespace AscFrontEnd
             AdiantamentoForm form = new AdiantamentoForm();
             form.ShowDialog();
         }
+
+        private async Task RefreshDocs()
+        {
+            var responseVft = await client.GetAsync($"api/Compra/VftByRelations");
+
+            if (responseVft.IsSuccessStatusCode)
+            {
+                var contentVft = await responseVft.Content.ReadAsStringAsync();
+                StaticProperty.vfts = JsonConvert.DeserializeObject<List<VftDTO>>(contentVft);
+
+            }
+
+            var responseFt = await client.GetAsync($"api/Venda/FtByRelations");
+
+            if (responseFt.IsSuccessStatusCode)
+            {
+                var contentFt = await responseFt.Content.ReadAsStringAsync();
+                StaticProperty.fts = JsonConvert.DeserializeObject<List<FtDTO>>(contentFt);
+            }
+
+            // Nota Pagamento
+            var responseNp = await client.GetAsync($"api/ContaCorrente/Nps");
+
+            if (responseNp.IsSuccessStatusCode)
+            {
+                var contentNp = await responseNp.Content.ReadAsStringAsync();
+                StaticProperty.nps = JsonConvert.DeserializeObject<List<NpDTO>>(contentNp);
+
+            }
+
+            // Recibo
+            var responseRe = await client.GetAsync($"api/ContaCorrente/Res");
+
+            if (responseRe.IsSuccessStatusCode)
+            {
+                var contentRe = await responseRe.Content.ReadAsStringAsync();
+                StaticProperty.recibos = JsonConvert.DeserializeObject<List<ReciboDTO>>(contentRe);
+
+            }
+
+            var responseAdForn = await client.GetAsync($"api/ContaCorrente/Adiantamento/Fornecedor");
+
+            if (responseAdForn.IsSuccessStatusCode)
+            {
+                var contentAdForn = await responseAdForn.Content.ReadAsStringAsync();
+                StaticProperty.adiantamentoForns = JsonConvert.DeserializeObject<List<AdiantamentoFornDTO>>(contentAdForn);
+
+            
+            }
+
+            var responseAdCliente = await client.GetAsync($"api/ContaCorrente/Adiantamento/Cliente");
+
+            if (responseAdCliente.IsSuccessStatusCode)
+            {
+                var contentAdCliente = await responseAdCliente.Content.ReadAsStringAsync();
+                StaticProperty.adiantamentoClientes = JsonConvert.DeserializeObject<List<AdiantamentoClienteDTO>>(contentAdCliente);
+
+            }
+
+            var responseRegAdForn = await client.GetAsync($"api/ContaCorrente/Regular/Adiantamento/Fornecedor/WithRelations");
+
+            if (responseRegAdForn.IsSuccessStatusCode)
+            {
+                var contentRegAdForn = await responseRegAdForn.Content.ReadAsStringAsync();
+                StaticProperty.regAdiantamentoForns = JsonConvert.DeserializeObject<List<RegAdiantamentoFornDTO>>(contentRegAdForn);
+
+            }
+
+            var responseRegAdCliente = await client.GetAsync($"api/ContaCorrente/Regular/Adiantamento/Cliente/WithRelations");
+
+            if (responseRegAdCliente.IsSuccessStatusCode)
+            {
+                var contentRegAdCliente = await responseRegAdCliente.Content.ReadAsStringAsync();
+                StaticProperty.regAdiantamentoClientes = JsonConvert.DeserializeObject<List<RegAdiantamentoClienteDTO>>(contentRegAdCliente);
+
+            }
+
+        }
     }
+
 
 
 }

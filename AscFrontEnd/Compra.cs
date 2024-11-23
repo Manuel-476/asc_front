@@ -154,7 +154,7 @@ namespace AscFrontEnd
                 {
                     return;
                 }
-
+              
             }
 
             if (documento.Text == "VFT")
@@ -392,7 +392,7 @@ namespace AscFrontEnd
 
             
             compraArtigos.Clear();
-
+            if(documento.Text == "VFR") { return; }
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Compra Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
@@ -903,7 +903,8 @@ namespace AscFrontEnd
                 e.Graphics.DrawString("Data Vencimento", fontNormalNegrito, cor, new Rectangle(500, 300, 650, 310));
                 e.Graphics.DrawLine(caneta, 50, 315, 750, 315);
 
-                e.Graphics.DrawString($"{StaticProperty.empresas.Where(x => x.id == StaticProperty.empresaId).First().nif}", fontNormal, cor, new Rectangle(50, 330, 200, 340));
+                
+                e.Graphics.DrawString($"{StaticProperty.empresa.nif}", fontNormal, cor, new Rectangle(50, 330, 200, 340));
                 e.Graphics.DrawString("0,00", fontNormal, cor, new Rectangle(200, 330, 350, 340));
                 e.Graphics.DrawString($"{DateTime.Now.Date.ToString("dd-MM-yyyy")}", fontNormal, cor, new Rectangle(350, 330, 450, 340));
 

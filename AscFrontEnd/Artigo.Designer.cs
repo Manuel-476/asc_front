@@ -227,6 +227,8 @@
             this.localCombo.Name = "localCombo";
             this.localCombo.Size = new System.Drawing.Size(221, 21);
             this.localCombo.TabIndex = 15;
+            this.localCombo.SelectedIndexChanged += new System.EventHandler(this.localCombo_SelectedIndexChanged);
+            this.localCombo.SelectedValueChanged += new System.EventHandler(this.localCombo_SelectedValueChanged);
             // 
             // label8
             // 

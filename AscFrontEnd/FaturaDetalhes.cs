@@ -276,11 +276,26 @@ namespace AscFrontEnd
 
             var response = await client.PostAsync(rota, new StringContent(json, Encoding.UTF8, "application/json"));
 
-            if (!response.IsSuccessStatusCode) 
+            if (!response.IsSuccessStatusCode)
             {
-                MessageBox.Show("Ocorreu um erro ao executar esta operação","Ocorreu um erro",MessageBoxButtons.RetryCancel,MessageBoxIcon.Error);
-                
+                MessageBox.Show("Ocorreu um erro ao executar esta operação", "Ocorreu um erro", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+
                 return;
+            }
+            else 
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                if (result == "-1")
+                {
+                    MessageBox.Show("A data deste documento é inferior a data da ultimo documento", "Não é possível concluir a acão!", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                    return;
+                }
+                else if(result == "-2") 
+                {
+                    MessageBox.Show("A data do sistema não segue a sequencia dos documentos anterior\n Verfique a se a data do sistema está correcto e reinicie", "Não é possível concluir a acão!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                    
+                    return;                 
+                }
             }
             
         }

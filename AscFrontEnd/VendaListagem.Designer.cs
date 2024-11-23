@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VendaListagem));
             this.panel1 = new System.Windows.Forms.Panel();
             this.logoPicture = new System.Windows.Forms.PictureBox();
             this.excelBtn = new System.Windows.Forms.Button();
@@ -46,6 +47,8 @@
             this.anularPicture = new System.Windows.Forms.PictureBox();
             this.estornarPicture = new System.Windows.Forms.PictureBox();
             this.radioEcl = new System.Windows.Forms.RadioButton();
+            this.Imprimir = new System.Drawing.Printing.PrintDocument();
+            this.preVisualizacaoDialog = new System.Windows.Forms.PrintPreviewDialog();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -266,6 +269,20 @@
             this.radioEcl.UseVisualStyleBackColor = true;
             this.radioEcl.CheckedChanged += new System.EventHandler(this.radioEcl_CheckedChanged);
             // 
+            // Imprimir
+            // 
+            this.Imprimir.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.ImprimirPagina_PrintPage);
+            // 
+            // preVisualizacaoDialog
+            // 
+            this.preVisualizacaoDialog.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.preVisualizacaoDialog.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.preVisualizacaoDialog.ClientSize = new System.Drawing.Size(400, 300);
+            this.preVisualizacaoDialog.Enabled = true;
+            this.preVisualizacaoDialog.Icon = ((System.Drawing.Icon)(resources.GetObject("preVisualizacaoDialog.Icon")));
+            this.preVisualizacaoDialog.Name = "preVisualizacaoDialog";
+            this.preVisualizacaoDialog.Visible = false;
+            // 
             // VendaListagem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -325,5 +342,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RadioButton radioEcl;
+        private System.Drawing.Printing.PrintDocument Imprimir;
+        private System.Windows.Forms.PrintPreviewDialog preVisualizacaoDialog;
     }
 }

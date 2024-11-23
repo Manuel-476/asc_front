@@ -16,6 +16,7 @@ namespace ERP_Seller.Application.DTOs.Documentos
         public string fullHash { get; set; }
         public string shortHash { get; set; }
         public DateTime data { get; set; }
+        public DateTime created_at { get; set; }
         public List<NdArtigoDTO> ndArtigo { get; set; }
     }
 }

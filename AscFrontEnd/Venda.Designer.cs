@@ -54,6 +54,8 @@
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.Imprimir = new System.Drawing.Printing.PrintDocument();
             this.preVisualizacaoDialog = new System.Windows.Forms.PrintPreviewDialog();
+            this.dataDocumento = new System.Windows.Forms.DateTimePicker();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaArtigos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaVenda)).BeginInit();
             this.panel1.SuspendLayout();
@@ -313,11 +315,31 @@
             this.preVisualizacaoDialog.Name = "preVisualizacaoDialog";
             this.preVisualizacaoDialog.Visible = false;
             // 
+            // dataDocumento
+            // 
+            this.dataDocumento.Location = new System.Drawing.Point(612, 139);
+            this.dataDocumento.Name = "dataDocumento";
+            this.dataDocumento.Size = new System.Drawing.Size(204, 20);
+            this.dataDocumento.TabIndex = 21;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label6.Location = new System.Drawing.Point(608, 114);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(44, 20);
+            this.label6.TabIndex = 22;
+            this.label6.Text = "Data";
+            // 
             // Venda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1085, 461);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.dataDocumento);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.eliminarBtn);
             this.Controls.Add(this.tabelaVenda);
@@ -375,5 +397,7 @@
         private System.Drawing.Printing.PrintDocument Imprimir;
         private System.Windows.Forms.Button vendaBtn;
         private System.Windows.Forms.PrintPreviewDialog preVisualizacaoDialog;
+        private System.Windows.Forms.DateTimePicker dataDocumento;
+        private System.Windows.Forms.Label label6;
     }
 }

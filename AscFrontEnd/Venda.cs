@@ -46,10 +46,13 @@ namespace AscFrontEnd
         List<int> idVenda;
         DataTable dtVenda;
 
+        MotivoAnulacao formAnulacao;
+
+
         static  int artigoId = 0;
         static float precoArtigo = 0;
 
-        private class vendaArtigo
+        public class vendaArtigo
         {
             public int id { get; set; }
             public string codigo { get; set; }
@@ -106,7 +109,7 @@ namespace AscFrontEnd
             }
 
             // Carregar documentos
-            documento.Items.Add("FP");
+            documento.Items.Add("PP");
             documento.Items.Add("ECL");
             documento.Items.Add("FR");
             documento.Items.Add("FT");
@@ -187,13 +190,13 @@ namespace AscFrontEnd
                 FrDTO frs = new FrDTO()
                 {
                     documento = codigoDocumento.Text,
-                    data = DateTime.Now,
                     clienteId = StaticProperty.entityId,
                     frArtigo = artigos,
                     status = DTOs.Enums.Enums.DocState.ativo,
                     fullHash = string.Empty,
                     shortHash = string.Empty,
-                    created_at = DateTime.Now,
+                    data = DateTime.Parse(dataDocumento.Value.ToString("yyyy-MM-dd")),
+                    created_at = DateTime.Now.Date,
                 };
 
                 form = new FaturaDetalhes(totalPreco,frs);
@@ -211,10 +214,11 @@ namespace AscFrontEnd
                 FtDTO fts = new FtDTO()
                 {
                     documento = codigoDocumento.Text,
-                    data = DateTime.Now,
+                    data = DateTime.Parse(dataDocumento.Value.ToString("yyyy-MM-dd")),
                     clienteId = StaticProperty.entityId,
                     ftArtigo = ftArtigos,
                     status = DTOs.Enums.Enums.DocState.ativo,
+                    created_at = DateTime.Now.Date,
                 };
 
                 ftArtigos.Clear();
@@ -253,17 +257,18 @@ namespace AscFrontEnd
                 FaturaProformaDTO fps = new FaturaProformaDTO()
                 {
                     documento = codigoDocumento.Text,
-                    data = DateTime.Now,
+                    data = DateTime.Parse(dataDocumento.Text),
                     clienteId = StaticProperty.entityId,
                     fpArtigo = fpArtigos,
                     status = DTOs.Enums.Enums.DocState.ativo,
+                    created_at = DateTime.Now.Date,
                 };
 
                 // Conversão do objeto Film para JSON
                 string json = System.Text.Json.JsonSerializer.Serialize(fps);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Venda/Fp", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Venda/Fp/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "GT")
@@ -283,10 +288,11 @@ namespace AscFrontEnd
                 GtDTO gts = new GtDTO()
                 {
                     documento = codigoDocumento.Text,
-                    data = DateTime.Now,
+                    data = DateTime.Parse(dataDocumento.Text),
                     clienteId = StaticProperty.entityId,
                     gtArtigo = gtArtigos,
                     status =  DTOs.Enums.Enums.DocState.ativo,
+                    created_at = DateTime.Now.Date,
                 };
 
                 string json = System.Text.Json.JsonSerializer.Serialize(gts);
@@ -312,22 +318,24 @@ namespace AscFrontEnd
                 EncomendaClienteDTO ecls = new EncomendaClienteDTO()
                 {
                     documento = codigoDocumento.Text,
-                    data = DateTime.Now,
+                    data = DateTime.Parse(dataDocumento.Text),
                     clienteId = StaticProperty.entityId,
                     eclArtigo = eclArtigos,
                     status = DTOs.Enums.Enums.DocState.ativo,
+                    created = DateTime.Now.Date,
                 };
 
                 // Conversão do objeto Film para JSON
                 string json = System.Text.Json.JsonSerializer.Serialize(ecls);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync("https://localhost:7200/api/Venda/Ecl", new StringContent(json, Encoding.UTF8, "application/json")); 
+                response = await client.PostAsync($"https://localhost:7200/api/Venda/Ecl/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json")); 
             }
 
             if (documento.Text == "NC")
             {
                 ncArtigos.Clear();
+
                 foreach (var vendaArtigo in vendaArtigos)
                 {
                     ncArtigos.Add(new NcArtigoDTO()
@@ -339,21 +347,28 @@ namespace AscFrontEnd
                     });
                 }
 
-                NcDTO ncs = new NcDTO()
+                formAnulacao = new MotivoAnulacao(OpcaoBinaria.Nao);
+                formAnulacao.ShowDialog();
+                if (formAnulacao.DialogResult == DialogResult.OK)
                 {
-                    documento = codigoDocumento.Text,
-                    data = DateTime.Now,
-                    clienteId = StaticProperty.entityId,
-                    ncArtigo = ncArtigos,
-                    status = DTOs.Enums.Enums.DocState.ativo,
-                };
+                   NcDTO ncs = new NcDTO()
+                   {
+                      documento = codigoDocumento.Text,
+                      data = DateTime.Parse(dataDocumento.Text),
+                      clienteId = StaticProperty.entityId,
+                      documentoOrigem = StaticProperty.documentoOrigem,
+                      motivo = StaticProperty.motivoAnulacao,
+                      ncArtigo = ncArtigos,
+                      status = DTOs.Enums.Enums.DocState.ativo,
+                      created_at = DateTime.Now.Date,
+                   };
 
-                // Conversão do objeto Film para JSON
-                string json = System.Text.Json.JsonSerializer.Serialize(ncs);
+                    // Conversão do objeto Film para JSON
+                    string json = System.Text.Json.JsonSerializer.Serialize(ncs);
 
-                // Envio dos dados para a API
-               response = await client.PostAsync($"https://localhost:7200/api/Venda/Nc/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
-  
+                    // Envio dos dados para a API
+                    response = await client.PostAsync($"https://localhost:7200/api/Venda/Nc/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                }
             }
 
             if (documento.Text == "ND")
@@ -372,17 +387,18 @@ namespace AscFrontEnd
                 NdDTO nds = new NdDTO()
                 {
                     documento = codigoDocumento.Text,
-                    data = DateTime.Now,
+                    data = DateTime.Parse(dataDocumento.Text),
                     clienteId = StaticProperty.entityId,
                     ndArtigo = ndArtigos,
                     status = DTOs.Enums.Enums.DocState.ativo,
+                    created_at = DateTime.Now.Date, 
                 };
 
                 // Conversão do objeto Film para JSON
                 string json = System.Text.Json.JsonSerializer.Serialize(nds);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync("https://localhost:7200/api/Venda/Nd", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"https://localhost:7200/api/Venda/Nd/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             var responseGet = await clientGet.GetAsync($"https://localhost:7200/api/Cliente/{StaticProperty.entityId}");
@@ -392,20 +408,25 @@ namespace AscFrontEnd
                 var content = await responseGet.Content.ReadAsStringAsync();
                 clienteResult = JsonConvert.DeserializeObject<ClienteDTO>(content);
             }
-            preVisualizacaoDialog.Document = Imprimir;
-
-            if (preVisualizacaoDialog.ShowDialog() == DialogResult.OK) 
-            {
-                Imprimir.Print();
-            }
-     
-             vendaArtigos.Clear();
+         
+            
             if (documento.Text != "FR") {
                 if (response.IsSuccessStatusCode)
                 {
-                    dtVenda.Rows.Clear();
+                    var result = await response.Content.ReadAsStringAsync();
+                    if(result == "-1") 
+                    {
+                        MessageBox.Show("A data deste documento é inferior a data da ultimo documento\n", "Não é possível concluir a acão!", MessageBoxButtons.OKCancel,MessageBoxIcon.Error);
+                        return;
+                    }
+                    else if (result == "-2")
+                    {
+                        MessageBox.Show("A data do sistema não segue a sequencia dos documentos anterior\n Verfique a se a data do sistema está correcto e reinicie o programa", "Não é possível concluir a acão!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
 
-                    MessageBox.Show("Venda Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+                        return;
+                    }
+
+                 
 
                     // Venda
                     var responseFr = await client.GetAsync($"https://localhost:7200/api/Venda/FrByRelations");
@@ -456,11 +477,25 @@ namespace AscFrontEnd
                         StaticProperty.nds = JsonConvert.DeserializeObject<List<NdDTO>>(contentNd);
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
+                    return;
+                }
             }
-            else
+
+
+            preVisualizacaoDialog.Document = Imprimir;
+
+            if (preVisualizacaoDialog.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
+                Imprimir.Print();
             }
+
+            vendaArtigos.Clear();
+            dtVenda.Rows.Clear();
+
+            MessageBox.Show("Venda Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
         }
 
         private async void textBox1_TextChanged(object sender, EventArgs e)
@@ -867,6 +902,15 @@ namespace AscFrontEnd
                 e.Graphics.DrawString(clienteCabecalho, fontNormalNegrito, cor, new PointF(550, 138), formatToLeft);
                 e.Graphics.DrawString(clienteOutros, fontCabecalho, cor, pontoRight, formatToLeft);
 
+                if (documento.Text.Equals("NC"))
+                {
+                    e.Graphics.DrawString("Anulação", fontNormalNegrito, cor, new PointF(550, 215), formatToLeft);
+                    e.Graphics.DrawString("Motivo:", fontNormalNegrito, cor, new PointF(550, 230), formatToLeft);
+                    e.Graphics.DrawString($"{StaticProperty.motivoAnulacao.ToString()}", fontNormal, cor, new PointF(600, 230), formatToLeft);
+                    e.Graphics.DrawString("Documento de Origem:", fontNormalNegrito, cor, new PointF(550, 245), formatToLeft);
+                    e.Graphics.DrawString($"{StaticProperty.documentoOrigem.ToString()}", fontNormal, cor, new PointF(690, 247), formatToLeft);
+                }
+
                 e.Graphics.DrawString($"Factura  {codigoDocumento.Text}", fontNormalNegrito, cor, new PointF(50, 280), formatToLeft);
                 e.Graphics.DrawLine(canetaFina, 50, 295, 250, 295);
                 e.Graphics.DrawString("Contribuente", fontNormalNegrito, cor, new Rectangle(50, 300, 200, 310));
@@ -882,7 +926,6 @@ namespace AscFrontEnd
                 if (documento.Text.Equals("FR"))
                 {
                     e.Graphics.DrawString($"{DateTime.Now.Date}", fontNormal, cor, new Rectangle(500, 330, 650, 340));
-
                 }
                 else
                 {
@@ -906,7 +949,7 @@ namespace AscFrontEnd
                     e.Graphics.DrawString($"{dados.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 350, 425 + i));
                     e.Graphics.DrawString($"{va.qtd}", fontNormal, cor, new Rectangle(350, 410 + i, 450, 425 + i));
                     e.Graphics.DrawString($"{va.preco.ToString("F2")}", fontNormal, cor, new Rectangle(450, 410 + i, 550, 425 + i));
-                    e.Graphics.DrawString($"{(va.iva).ToString("F2")} %", fontNormal, cor, new Rectangle(550, 410 + i, 650, 425 + i));
+                    e.Graphics.DrawString($"{(dados.Where(art => art.codigo == va.codigo).First().regimeIva == OpcaoBinaria.Sim? va.iva:0).ToString("F2")} %", fontNormal, cor, new Rectangle(550, 410 + i, 650, 425 + i));
                     e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(650, 410 + i, 750, 425 + i));
                     i = i + 15;
                 }
@@ -921,16 +964,16 @@ namespace AscFrontEnd
 
                 e.Graphics.DrawRectangle(caneta, new Rectangle(540, 530 + i, 210, 65 + i));
 
-                e.Graphics.DrawString(mercadoria, fontCabecalho, cor, new PointF(550, 530 + i), formatToLeft);
-                e.Graphics.DrawString(totalLiquido.ToString("F2"), fontCabecalho, cor, new PointF(680, 530 + i), formatToLeft);
-                e.Graphics.DrawString(iva, fontCabecalho, cor, new PointF(550, 540 + i), formatToLeft);
-                e.Graphics.DrawString(totalIva.ToString("F2"), fontCabecalho, cor, new PointF(680, 540 + i), formatToLeft);
-                e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 550 + i), formatToLeft);
-                e.Graphics.DrawString((total * (totalIva / 100)).ToString("F2"), fontCabecalho, cor, new PointF(680, 550 + i), formatToLeft);
+                e.Graphics.DrawString(mercadoria, fontCabecalho, cor, new PointF(550, 545 + i), formatToLeft);
+                e.Graphics.DrawString(totalLiquido.ToString("F2"), fontCabecalho, cor, new PointF(680, 545 + i), formatToLeft);
+                e.Graphics.DrawString(iva, fontCabecalho, cor, new PointF(550, 555 + i), formatToLeft);
+                e.Graphics.DrawString(totalIva.ToString("F2"), fontCabecalho, cor, new PointF(680, 555 + i), formatToLeft);
+                e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 565 + i), formatToLeft);
+                e.Graphics.DrawString((total * (totalIva / 100)).ToString("F2"), fontCabecalho, cor, new PointF(680, 565 + i), formatToLeft);
 
-                e.Graphics.DrawLine(canetaFina, 550, 565 + i, 740, 565 + i);
-                e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 575 + i), formatToLeft);
-                e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 575 + i), formatToLeft);
+                e.Graphics.DrawLine(canetaFina, 550, 583 + i, 740, 583 + i);
+                e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 590 + i), formatToLeft);
+                e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 590 + i), formatToLeft);
 
                 string conta = $"Conta nº";
                 string iban = $"IBAN ";
@@ -944,7 +987,7 @@ namespace AscFrontEnd
                 e.Graphics.DrawString("Taxa %", fontCabecalhoNegrito, cor, new PointF(130, 540 + i), formatToLeft);
                 e.Graphics.DrawString("Incidência", fontCabecalho, cor, new PointF(200, 540 + i), formatToLeft);
                 e.Graphics.DrawString($"Valor imposto", fontCabecalho, cor, new PointF(300, 540 + i), formatToLeft);
-                e.Graphics.DrawString("Motivo Isenção", fontCabecalho, cor, new PointF(430, 540 + i), formatToLeft);
+                e.Graphics.DrawString("Motivo Isenção", fontCabecalho, cor, new PointF(400, 540 + i), formatToLeft);
 
 
                 // Pegar os dados dos artigo com iva aplicado
@@ -984,15 +1027,16 @@ namespace AscFrontEnd
                             }
                         }
                     }
-                    if (valorImposto > 0)
+                    if (incidencia > 0)
                     {
 
                         e.Graphics.DrawString("Isento", fontCabecalhoNegrito, cor, new PointF(50, 560 + i), formatToLeft);
                         e.Graphics.DrawString("0,00", new Font("Arial", 10, FontStyle.Underline, GraphicsUnit.Pixel), cor, new PointF(130, 560 + i), formatToLeft);
                         e.Graphics.DrawString(incidencia.ToString("F4"), fontCabecalho, cor, new PointF(200, 560 + i), formatToLeft);
                         e.Graphics.DrawString("0,00", fontCabecalho, cor, new PointF(300, 560 + i), formatToLeft);
-                        e.Graphics.DrawString($"{motivo.mencao}", fontCabecalho, cor, new PointF(430, 560 + i), formatToLeft);
+                        e.Graphics.DrawString($"{motivo.mencao}", fontCabecalho, cor, new PointF(400, 560 + i), formatToLeft);
                         i = i + 10;
+                        incidencia = 0;
                     }
 
                 }
@@ -1004,7 +1048,7 @@ namespace AscFrontEnd
                 }
                 else if (documento.Text.Equals("FT") || documento.Text.Equals("FR"))
                 {
-                    e.Graphics.DrawString($"Os bens/serviços foram colocados á disposição do adquirente na data e local do documento", fontCabecalho, new SolidBrush(Color.Red), new PointF(280, 720 + i), formatToCenter);
+                    e.Graphics.DrawString($"Os bens/serviços foram colocados á disposição do adquirente na data e local do documento", fontCabecalho, new SolidBrush(Color.Black), new PointF(280, 720 + i), formatToCenter);
                 }
 
                 // Desenhando a imagem no documento
