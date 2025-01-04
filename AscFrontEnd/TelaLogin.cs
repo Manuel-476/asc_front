@@ -38,79 +38,8 @@ namespace AscFrontEnd
 
         private async void textBox1_TextChanged(object sender, EventArgs e)
         {
-            user = new UserDTO() { user_name = nomeUsuariotxt.Text, password = senhaUsuariotxt.Text};
 
-            if(!string.IsNullOrWhiteSpace(nomeUsuariotxt.Text.ToString()) && !string.IsNullOrWhiteSpace(senhaUsuariotxt.Text.ToString()))
-            {
-                json = JsonSerializer.Serialize(user);
-                HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Funcionario/User/Login", new StringContent(json, Encoding.UTF8, "application/json"));
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-
-                    string token = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(content);
-
-                    using (HttpClient client = new HttpClient())
-                    {
-                        // Adiciona o token JWT no cabeçalho
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                        HttpResponseMessage responseUsers = await client.GetAsync($"https://localhost:7200/api/Funcionario/User/GetUsers");
-
-                        if (responseUsers.IsSuccessStatusCode)
-                        {
-                            var contentUser = await responseUsers.Content.ReadAsStringAsync();
-                            List<UserDTO> users = Newtonsoft.Json.JsonConvert.DeserializeObject<List<UserDTO>>(contentUser);
-
-                            try
-                            {
-                                if (!string.IsNullOrWhiteSpace(users.Where(u => u.user_name == user.user_name && u.password == user.password).First().user_name))
-                                {
-                                    resultUser = users.Where(u => u.user_name == user.user_name && u.password == user.password).First();
-
-                                    var responseFuncionario = await client.GetAsync($"https://localhost:7200/api/Funcionario/{resultUser.funcionarioid}");
-                                    var contentFuncionario = await responseFuncionario.Content.ReadAsStringAsync();
-                                    var funcionario = Newtonsoft.Json.JsonConvert.DeserializeObject<FuncionarioDTO>(contentFuncionario);
-
-                                    if (responseFuncionario != null)
-                                    {
-                                        StaticProperty.funcionarioId = resultUser.funcionarioid;
-                                        StaticProperty.empresaId = funcionario.empresaid;
-                                    }
-                                }
-                                else
-                                {
-                                    return;
-                                }
-                            }
-                            catch { return; }
-
-
-
-                            this.Hide();
-                            StaticProperty.token = token;
-                            if (resultUser.state == DTOs.Enums.Enums.OpcaoBinaria.Nao)
-                            {
-                                new UserForm("Alterar Credencias de Acesso", resultUser.id).ShowDialog();
-                            }
-                            else
-                            {
-                                new CarregamentoForm().ShowDialog();
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    return;
-                }
-            }
-        }
-
-        private async void senhaUsuariotxt_TextChanged(object sender, EventArgs e)
-        {
-
-           user = new UserDTO() { user_name = nomeUsuariotxt.Text, password = senhaUsuariotxt.Text };
+            user = new UserDTO() { user_name = nomeUsuariotxt.Text, password = senhaUsuariotxt.Text };
 
             if (!string.IsNullOrWhiteSpace(nomeUsuariotxt.Text.ToString()) && !string.IsNullOrWhiteSpace(senhaUsuariotxt.Text.ToString()))
             {
@@ -120,47 +49,93 @@ namespace AscFrontEnd
                 {
                     var content = await response.Content.ReadAsStringAsync();
 
-                    string token = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(content);
+                    UserResult userResult = Newtonsoft.Json.JsonConvert.DeserializeObject<UserResult>(content);
 
                     using (HttpClient client = new HttpClient())
                     {
                         // Adiciona o token JWT no cabeçalho
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userResult.token);
 
-                        HttpResponseMessage responseUsers = await client.GetAsync($"https://localhost:7200/api/Funcionario/User/GetUsers");
-
-                        if (responseUsers.IsSuccessStatusCode)
+                        try
                         {
-                            var contentUser = await responseUsers.Content.ReadAsStringAsync();
-                            List<UserDTO> users = Newtonsoft.Json.JsonConvert.DeserializeObject<List<UserDTO>>(contentUser);
+                            var responseFuncionario = await client.GetAsync($"https://localhost:7200/api/Funcionario/{userResult.user.funcionarioid}");
+                            var contentFuncionario = await responseFuncionario.Content.ReadAsStringAsync();
+                            var funcionario = Newtonsoft.Json.JsonConvert.DeserializeObject<FuncionarioDTO>(contentFuncionario);
+
+                            if (responseFuncionario != null)
+                            {
+                                StaticProperty.funcionarioId = userResult.user.funcionarioid;
+                                StaticProperty.empresaId = funcionario.empresaid;
+                            }
+
+                        }
+                        catch { return; }
+
+
+
+                        this.Hide();
+                        StaticProperty.token = userResult.token;
+                        if (userResult.user.state == DTOs.Enums.Enums.OpcaoBinaria.Nao)
+                        {
+                            new UserForm("Alterar Credencias de Acesso", resultUser.id).ShowDialog();
+                        }
+                        else
+                        {
+                            new CarregamentoForm().ShowDialog();
+                        }
+
+                    }
+                }
+
+                else
+                {
+                    return;
+                    MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
+                }
+            }
+        }
+
+        private async void senhaUsuariotxt_TextChanged(object sender, EventArgs e)
+        {
+            
+           user = new UserDTO() { user_name = nomeUsuariotxt.Text, password = senhaUsuariotxt.Text };
+
+            if (!string.IsNullOrWhiteSpace(nomeUsuariotxt.Text.ToString()) && !string.IsNullOrWhiteSpace(senhaUsuariotxt.Text.ToString()))
+            {
+                json = JsonSerializer.Serialize(user);
+                
+                HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Funcionario/User/Login", new StringContent(json, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+
+                    UserResult userResult = Newtonsoft.Json.JsonConvert.DeserializeObject<UserResult>(content);
+
+                    using (HttpClient client = new HttpClient())
+                    {
+                        // Adiciona o token JWT no cabeçalho
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userResult.token);
 
                             try
                             {
-                                if (!string.IsNullOrWhiteSpace(users.Where(u => u.user_name == user.user_name && u.password == user.password).First().user_name))
-                                {
-                                    resultUser = users.Where(u => u.user_name == user.user_name && u.password == user.password).First();
-                                    var responseFuncionario = await client.GetAsync($"https://localhost:7200/api/Funcionario/{resultUser.funcionarioid}");
-                                    var contentFuncionario = await responseFuncionario.Content.ReadAsStringAsync();
-                                    var funcionario = Newtonsoft.Json.JsonConvert.DeserializeObject<FuncionarioDTO>(contentFuncionario);
+                                        var responseFuncionario = await client.GetAsync($"https://localhost:7200/api/Funcionario/{userResult.user.funcionarioid}");
+                                        var contentFuncionario = await responseFuncionario.Content.ReadAsStringAsync();
+                                        var funcionario = Newtonsoft.Json.JsonConvert.DeserializeObject<FuncionarioDTO>(contentFuncionario);
 
-                                    if (responseFuncionario != null)
-                                    {
-                                        StaticProperty.funcionarioId = resultUser.funcionarioid;
-                                        StaticProperty.empresaId = funcionario.empresaid;
-                                    }
-                                }
-                                else
-                                {
-                                    return;
-                                }
+                                        if (responseFuncionario != null)
+                                        {
+                                            StaticProperty.funcionarioId = userResult.user.funcionarioid;
+                                            StaticProperty.empresaId = funcionario.empresaid;
+                                        }
+                                
                             }
                             catch { return; }
 
 
 
                             this.Hide();
-                            StaticProperty.token = token;
-                            if (resultUser.state == DTOs.Enums.Enums.OpcaoBinaria.Nao)
+                            StaticProperty.token = userResult.token;
+                            if (userResult.user.state == DTOs.Enums.Enums.OpcaoBinaria.Nao)
                             {
                                 new UserForm("Alterar Credencias de Acesso", resultUser.id).ShowDialog();
                             }
@@ -168,7 +143,7 @@ namespace AscFrontEnd
                             {
                                 new CarregamentoForm().ShowDialog();
                             }
-                        }
+                        
                     }
                 }
 
@@ -183,7 +158,7 @@ namespace AscFrontEnd
 
         private void TelaLogin_Load(object sender, EventArgs e)
         {
-
+            senhaUsuariotxt.PasswordChar = '*';
         }
     }
 }

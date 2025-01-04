@@ -41,7 +41,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.codigoDocumento = new System.Windows.Forms.Label();
             this.Qtd = new System.Windows.Forms.TextBox();
-            this.iva = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.clientetxt = new System.Windows.Forms.Label();
@@ -56,6 +55,11 @@
             this.preVisualizacaoDialog = new System.Windows.Forms.PrintPreviewDialog();
             this.dataDocumento = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
+            this.descontoTxt = new System.Windows.Forms.TextBox();
+            this.ivaTotal = new System.Windows.Forms.Label();
+            this.descontoTotal = new System.Windows.Forms.Label();
+            this.totalBruto = new System.Windows.Forms.Label();
+            this.precoLiquido = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaArtigos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaVenda)).BeginInit();
             this.panel1.SuspendLayout();
@@ -68,7 +72,7 @@
             this.documento.FormattingEnabled = true;
             this.documento.Location = new System.Drawing.Point(12, 136);
             this.documento.Name = "documento";
-            this.documento.Size = new System.Drawing.Size(261, 21);
+            this.documento.Size = new System.Drawing.Size(198, 21);
             this.documento.TabIndex = 0;
             this.documento.ValueMember = "FR";
             this.documento.SelectedIndexChanged += new System.EventHandler(this.documento_SelectedIndexChanged);
@@ -95,7 +99,7 @@
             this.tabelaArtigos.Name = "tabelaArtigos";
             this.tabelaArtigos.ReadOnly = true;
             this.tabelaArtigos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tabelaArtigos.Size = new System.Drawing.Size(526, 251);
+            this.tabelaArtigos.Size = new System.Drawing.Size(567, 251);
             this.tabelaArtigos.TabIndex = 2;
             this.tabelaArtigos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabelaArtigos_CellClick);
             // 
@@ -112,9 +116,9 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(294, 136);
+            this.textBox1.Location = new System.Drawing.Point(373, 140);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(234, 20);
+            this.textBox1.Size = new System.Drawing.Size(206, 20);
             this.textBox1.TabIndex = 4;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
@@ -123,7 +127,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label3.Location = new System.Drawing.Point(290, 110);
+            this.label3.Location = new System.Drawing.Point(369, 114);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(82, 20);
             this.label3.TabIndex = 5;
@@ -170,9 +174,10 @@
             // codigoDocumento
             // 
             this.codigoDocumento.AutoSize = true;
-            this.codigoDocumento.Location = new System.Drawing.Point(538, 136);
+            this.codigoDocumento.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.codigoDocumento.Location = new System.Drawing.Point(229, 138);
             this.codigoDocumento.Name = "codigoDocumento";
-            this.codigoDocumento.Size = new System.Drawing.Size(0, 13);
+            this.codigoDocumento.Size = new System.Drawing.Size(0, 18);
             this.codigoDocumento.TabIndex = 11;
             // 
             // Qtd
@@ -182,18 +187,6 @@
             this.Qtd.Size = new System.Drawing.Size(102, 20);
             this.Qtd.TabIndex = 12;
             this.Qtd.Text = "0";
-            // 
-            // iva
-            // 
-            this.iva.FormattingEnabled = true;
-            this.iva.Items.AddRange(new object[] {
-            "5",
-            "7",
-            "14"});
-            this.iva.Location = new System.Drawing.Point(942, 139);
-            this.iva.Name = "iva";
-            this.iva.Size = new System.Drawing.Size(111, 21);
-            this.iva.TabIndex = 13;
             // 
             // label4
             // 
@@ -213,9 +206,9 @@
             this.label5.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label5.Location = new System.Drawing.Point(938, 113);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(30, 20);
+            this.label5.Size = new System.Drawing.Size(78, 20);
             this.label5.TabIndex = 15;
-            this.label5.Text = "Iva";
+            this.label5.Text = "Desconto";
             // 
             // clientetxt
             // 
@@ -333,11 +326,68 @@
             this.label6.TabIndex = 22;
             this.label6.Text = "Data";
             // 
+            // descontoTxt
+            // 
+            this.descontoTxt.Location = new System.Drawing.Point(942, 139);
+            this.descontoTxt.Name = "descontoTxt";
+            this.descontoTxt.Size = new System.Drawing.Size(102, 20);
+            this.descontoTxt.TabIndex = 23;
+            this.descontoTxt.Text = "0";
+            // 
+            // ivaTotal
+            // 
+            this.ivaTotal.AutoSize = true;
+            this.ivaTotal.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ivaTotal.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.ivaTotal.Location = new System.Drawing.Point(474, 87);
+            this.ivaTotal.Name = "ivaTotal";
+            this.ivaTotal.Size = new System.Drawing.Size(54, 19);
+            this.ivaTotal.TabIndex = 24;
+            this.ivaTotal.Text = "label7";
+            // 
+            // descontoTotal
+            // 
+            this.descontoTotal.AutoSize = true;
+            this.descontoTotal.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.descontoTotal.ForeColor = System.Drawing.Color.Red;
+            this.descontoTotal.Location = new System.Drawing.Point(666, 87);
+            this.descontoTotal.Name = "descontoTotal";
+            this.descontoTotal.Size = new System.Drawing.Size(54, 19);
+            this.descontoTotal.TabIndex = 25;
+            this.descontoTotal.Text = "label7";
+            // 
+            // totalBruto
+            // 
+            this.totalBruto.AutoSize = true;
+            this.totalBruto.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.totalBruto.ForeColor = System.Drawing.Color.Green;
+            this.totalBruto.Location = new System.Drawing.Point(870, 87);
+            this.totalBruto.Name = "totalBruto";
+            this.totalBruto.Size = new System.Drawing.Size(54, 19);
+            this.totalBruto.TabIndex = 26;
+            this.totalBruto.Text = "label7";
+            // 
+            // precoLiquido
+            // 
+            this.precoLiquido.AutoSize = true;
+            this.precoLiquido.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.precoLiquido.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.precoLiquido.Location = new System.Drawing.Point(255, 87);
+            this.precoLiquido.Name = "precoLiquido";
+            this.precoLiquido.Size = new System.Drawing.Size(54, 19);
+            this.precoLiquido.TabIndex = 27;
+            this.precoLiquido.Text = "label7";
+            // 
             // Venda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1085, 461);
+            this.Controls.Add(this.precoLiquido);
+            this.Controls.Add(this.totalBruto);
+            this.Controls.Add(this.descontoTotal);
+            this.Controls.Add(this.ivaTotal);
+            this.Controls.Add(this.descontoTxt);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.dataDocumento);
             this.Controls.Add(this.panel1);
@@ -345,7 +395,6 @@
             this.Controls.Add(this.tabelaVenda);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.iva);
             this.Controls.Add(this.Qtd);
             this.Controls.Add(this.codigoDocumento);
             this.Controls.Add(this.button1);
@@ -384,7 +433,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label codigoDocumento;
         private System.Windows.Forms.TextBox Qtd;
-        private System.Windows.Forms.ComboBox iva;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label clientetxt;
@@ -399,5 +447,10 @@
         private System.Windows.Forms.PrintPreviewDialog preVisualizacaoDialog;
         private System.Windows.Forms.DateTimePicker dataDocumento;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox descontoTxt;
+        private System.Windows.Forms.Label ivaTotal;
+        private System.Windows.Forms.Label descontoTotal;
+        private System.Windows.Forms.Label totalBruto;
+        private System.Windows.Forms.Label precoLiquido;
     }
 }

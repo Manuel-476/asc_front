@@ -35,7 +35,7 @@ namespace AscFrontEnd
         string codigoDocumento;
         VftDTO vftResult;
         FtDTO ftResult;
-        List<vendaArtigo> vendaArtigos;
+        List<VendaArtigo> vendaArtigos;
         List<ArtigoDTO> dados;
         DataTable faturas;
         HttpClient client;
@@ -50,7 +50,7 @@ namespace AscFrontEnd
             this._entidade = entidade;
             vftResult = new VftDTO();
             ftResult = new FtDTO();
-            vendaArtigos = new List<vendaArtigo>();
+            vendaArtigos = new List<VendaArtigo>();
             dados = new List<ArtigoDTO>();
             faturas = new DataTable();
 
@@ -444,7 +444,7 @@ namespace AscFrontEnd
             {
                 foreach(var item in StaticProperty.fts.Where(x => x.id == _docId && x.pago == OpcaoBinaria.Nao).First().ftArtigo) 
                 {
-                    vendaArtigos.Add(new vendaArtigo() { codigo = dados.Where(x=>x.id == item.artigoId).First().codigo,
+                    vendaArtigos.Add(new VendaArtigo() { codigo = dados.Where(x=>x.id == item.artigoId).First().codigo,
                                                          preco = item.preco,
                                                          iva = item.iva,
                                                          qtd = item.qtd});
@@ -454,7 +454,7 @@ namespace AscFrontEnd
             {
                 foreach (var item in StaticProperty.vfts.Where(x => x.id == _docId && x.pago == OpcaoBinaria.Nao).First().vftArtigo)
                 {
-                    vendaArtigos.Add(new vendaArtigo()
+                    vendaArtigos.Add(new VendaArtigo()
                     {
                         codigo = dados.Where(x => x.id == item.artigoId).First().codigo,
                         preco = item.preco,

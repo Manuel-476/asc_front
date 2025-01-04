@@ -192,11 +192,11 @@ namespace AscFrontEnd
             int armazemId = StaticProperty.armazens.Where(arm => arm.codigo == armazemCombo.Text && arm.empresaId == 1).First().id;
             foreach (var item in StaticProperty.locationStores.Where(fam => fam.armazemId == armazemId).ToList())
             {
-                if (!StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id && x.qtd == 0).Any()) 
+                if (!StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id && x.qtd == 0).Any() && StaticProperty.locationArtigos.Any()) 
                 {
                     MessageBox.Show("Este armazem não tem localização disponível, todas localizações já armazenam artigos", "Sem Localização disponível", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                else if (StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id).First().qtd == 0)
+                else if (StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id && x.qtd == 0).Any() || !StaticProperty.locationArtigos.Any())
                 {
                     localCombo.Items.Add(item.codigo);
                 }
@@ -268,6 +268,11 @@ namespace AscFrontEnd
                     MessageBox.Show("Esta localização já tem um artigo predefinido, se continuar substituirá o artigo predefinido pelo  novo artigo","Atenção",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }
             }
+        }
+
+        private void armazemCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

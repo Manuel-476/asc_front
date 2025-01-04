@@ -22,6 +22,8 @@ using AscFrontEnd.DTOs.StaticsDto;
 using System.Drawing.Printing;
 using DocumentFormat.OpenXml.Drawing.Wordprocessing;
 using static AscFrontEnd.DTOs.Enums.Enums;
+using AscFrontEnd.Application;
+using AscFrontEnd.Files;
 
 
 namespace AscFrontEnd
@@ -42,7 +44,7 @@ namespace AscFrontEnd
         string descricaoDocumento = string.Empty;
         string motivosIsencao = string.Empty;
 
-        List<vendaArtigo> vendaArtigos;
+        List<VendaArtigo> vendaArtigos;
         List<int> idVenda;
         DataTable dtVenda;
 
@@ -52,13 +54,14 @@ namespace AscFrontEnd
         static  int artigoId = 0;
         static float precoArtigo = 0;
 
-        public class vendaArtigo
+        public class VendaArtigo
         {
             public int id { get; set; }
             public string codigo { get; set; }
             public float preco { get; set; }
             public int qtd { get; set; }
             public float iva { get; set; }
+            public float desconto { get; set; }
         }
 
         public Venda()
@@ -72,7 +75,7 @@ namespace AscFrontEnd
             ncArtigos = new List<NcArtigoDTO>();
             ndArtigos = new List<NdArtigoDTO>();
             dados = new List<ArtigoDTO>();
-            vendaArtigos = new List<vendaArtigo>();
+            vendaArtigos = new List<VendaArtigo>();
             dtVenda = new DataTable();
             idVenda = new List<int>();
             dtVenda = new DataTable();
@@ -89,8 +92,9 @@ namespace AscFrontEnd
                 dtVenda.Columns.Add("Preco", typeof(float));
                 dtVenda.Columns.Add("Qtd", typeof(int));
                 dtVenda.Columns.Add("Iva", typeof(float));
+                dtVenda.Columns.Add("Desconto", typeof(float));
 
-                DataTable dt = new DataTable();
+            DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Artigo", typeof(string));
                 dt.Columns.Add("Descricao", typeof(string));
@@ -118,6 +122,11 @@ namespace AscFrontEnd
             documento.Items.Add("ND");
 
             eliminarBtn.Enabled = false;
+
+            totalBruto.Text = $"Total: {CalculosVendaCompra.TotalVenda(vendaArtigos).ToString("F2")}";
+            ivaTotal.Text = $"Iva: {CalculosVendaCompra.TotalIvaVenda(vendaArtigos).ToString("F2")}";
+            descontoTotal.Text = $"Desconto: {CalculosVendaCompra.TotalDescontoVenda(vendaArtigos).ToString("F2")}";
+            precoLiquido.Text = $"Preço: {vendaArtigos.Sum(x => x.preco * x.qtd).ToString("F2")}";
 
             timerRefresh.Start();
         }
@@ -241,7 +250,7 @@ namespace AscFrontEnd
 
             }
 
-            if (documento.Text == "FP")
+            if (documento.Text == "PP")
             {
                 fpArtigos.Clear();
                 foreach (var vendaArtigo in vendaArtigos)
@@ -531,6 +540,18 @@ namespace AscFrontEnd
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+
+            if(!StaticProperty.series.Where(x => x.status == OpcaoBinaria.Sim).Any())
+            {
+                if(MessageBox.Show("Nenhuma serie foi criada\nDeseja criar uma serie?","Imposivel concluir a acao",MessageBoxButtons.OKCancel,MessageBoxIcon.Question) == DialogResult.OK) 
+                {
+                    new SerieForm().ShowDialog();
+                }
+                else 
+                {
+                    return;
+                }
+            }
             var response = await client.GetAsync($"https://localhost:7200/api/serie/codigoDocumento/{documento.Text}/{StaticProperty.empresaId}");
 
             if (response.IsSuccessStatusCode)
@@ -571,7 +592,7 @@ namespace AscFrontEnd
                 }
                 string codigo;
                 int idVendaArtigo = tabelaVenda.Rows.Count;
-                List<vendaArtigo> refreshVendaArtigo = new List<vendaArtigo>();
+                List<VendaArtigo> refreshVendaArtigo = new List<VendaArtigo>();
                 int i = 1;
 
                 dtVenda.Rows.Clear();
@@ -581,13 +602,14 @@ namespace AscFrontEnd
 
                 foreach (var va in vendaArtigos)
                 {
-                    var vArtigo = new vendaArtigo
+                    var vArtigo = new VendaArtigo
                     {
                         id = i,
                         codigo = va.codigo,
                         preco = va.preco,
                         qtd = va.qtd,
                         iva = va.iva,
+                        desconto = va.desconto,
                     };
                     refreshVendaArtigo.Add(vArtigo);
                     i++;
@@ -597,13 +619,14 @@ namespace AscFrontEnd
 
                 vendaArtigos = refreshVendaArtigo;
 
-                vendaArtigos.Add(new vendaArtigo()
+                vendaArtigos.Add(new VendaArtigo()
                 {
                     id = idVendaArtigo,
                     codigo = codigo,
                     preco = precoArtigo,
                     qtd = int.Parse(Qtd.Text),
-                    iva = float.Parse(iva.Text)
+                    iva = dados.Where(art => art.id == artigoId).First().iva,
+                    desconto = float.Parse(descontoTxt.Text.ToString()),
 
                 });
 
@@ -614,14 +637,15 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = precoArtigo,
                         qtd = int.Parse(Qtd.Text),
-                        iva = float.Parse(iva.Text)
+                        iva = dados.Where(art => art.id == artigoId).First().iva,
+                        desconto = float.Parse(descontoTxt.Text.ToString())
                     });
 
 
                     foreach (var fr in vendaArtigos)
                     {
 
-                        dtVenda.Rows.Add(fr.id, fr.codigo, fr.preco, fr.qtd, fr.iva);
+                        dtVenda.Rows.Add(fr.id, fr.codigo, fr.preco, fr.qtd, fr.iva,fr.desconto);
 
                         tabelaVenda.DataSource = dtVenda;
                     }
@@ -634,13 +658,14 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = precoArtigo,
                         qtd = int.Parse(Qtd.Text),
-                        iva = float.Parse(iva.Text)
+                        iva = dados.Where(art => art.id == artigoId).First().iva,
+                        desconto = float.Parse(descontoTxt.Text.ToString())
                     });
 
                     foreach (var ft in vendaArtigos)
                     {
 
-                        dtVenda.Rows.Add(ft.id, ft.codigo, ft.preco, ft.qtd, ft.iva);
+                        dtVenda.Rows.Add(ft.id, ft.codigo, ft.preco, ft.qtd, ft.iva,ft.desconto);
 
                         tabelaVenda.DataSource = dtVenda;
                     }
@@ -652,7 +677,8 @@ namespace AscFrontEnd
                     {
                         artigoId = artigoId,
                         preco = precoArtigo,
-                        iva = float.Parse(iva.Text)
+                        iva = dados.Where(art => art.id == artigoId).First().iva,
+                        desconto = float.Parse(descontoTxt.Text.ToString())
                     });
 
                     foreach (var fp in vendaArtigos)
@@ -671,13 +697,14 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = precoArtigo,
                         qtd = int.Parse(Qtd.Text),
-                        iva = float.Parse(iva.Text)
+                        iva = dados.Where(art => art.id == artigoId).First().iva,
+                        desconto = float.Parse(descontoTxt.Text.ToString())
                     });
 
                     foreach (var ecl in vendaArtigos)
                     {
 
-                        dtVenda.Rows.Add(ecl.id, ecl.codigo, ecl.preco, ecl.qtd, ecl.iva);
+                        dtVenda.Rows.Add(ecl.id, ecl.codigo, ecl.preco, ecl.qtd, ecl.iva,ecl.desconto);
 
                         tabelaVenda.DataSource = dtVenda;
                     }
@@ -690,7 +717,8 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = precoArtigo,
                         qtd = int.Parse(Qtd.Text),
-                        iva = float.Parse(iva.Text)
+                        iva = dados.Where(art => art.id == artigoId).First().iva,
+                        desconto = float.Parse (descontoTxt.Text.ToString())
                     });
 
                     foreach (var gt in vendaArtigos)
@@ -709,7 +737,8 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = precoArtigo,
                         qtd = int.Parse(Qtd.Text),
-                        iva = float.Parse(iva.Text)
+                        iva = dados.Where(art => art.id == artigoId).First().iva,
+                        desconto = float.Parse(descontoTxt.Text.ToString())
                     });
 
                     foreach (var nc in vendaArtigos)
@@ -728,17 +757,23 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = precoArtigo,
                         qtd = int.Parse(Qtd.Text),
-                        iva = float.Parse(iva.Text)
+                        iva = dados.Where(art => art.id == artigoId).First().iva,
+                        desconto = float.Parse(descontoTxt.Text.ToString())
                     });
 
                     foreach (var nd in vendaArtigos)
                     {
 
-                        dtVenda.Rows.Add(nd.id, nd.codigo, nd.preco, nd.qtd, nd.iva);
+                        dtVenda.Rows.Add(nd.id, nd.codigo, nd.preco, nd.qtd, nd.iva,nd.desconto);
 
                         tabelaVenda.DataSource = dtVenda;
                     }
                 }
+
+                totalBruto.Text = $"Total: {CalculosVendaCompra.TotalVenda(vendaArtigos).ToString("F2")}";
+                ivaTotal.Text = $"Iva: {CalculosVendaCompra.TotalIvaVenda(vendaArtigos).ToString("F2")}";
+                descontoTotal.Text = $"Desconto: {CalculosVendaCompra.TotalDescontoVenda(vendaArtigos).ToString("F2")}";
+                precoLiquido.Text = $"Preço: {vendaArtigos.Sum(x => x.preco * x.qtd).ToString("F2")}";
             }
             catch { return; }
         }
@@ -940,7 +975,7 @@ namespace AscFrontEnd
                 e.Graphics.DrawString($"Valor", fontNormalNegrito, cor, new Rectangle(650, 400, 750, 420));
                 e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
                 int i = 15;
-                foreach (vendaArtigo va in vendaArtigos)
+                foreach (VendaArtigo va in vendaArtigos)
                 {
                     totalIva += va.iva;
                     total += va.preco * float.Parse(va.qtd.ToString());
@@ -962,7 +997,7 @@ namespace AscFrontEnd
                 string totalFinal = $"TOTAL";
 
 
-                e.Graphics.DrawRectangle(caneta, new Rectangle(540, 530 + i, 210, 65 + i));
+                e.Graphics.DrawRectangle(caneta, new Rectangle(540, 530 + i, 210, 70 + i));
 
                 e.Graphics.DrawString(mercadoria, fontCabecalho, cor, new PointF(550, 545 + i), formatToLeft);
                 e.Graphics.DrawString(totalLiquido.ToString("F2"), fontCabecalho, cor, new PointF(680, 545 + i), formatToLeft);
@@ -970,10 +1005,12 @@ namespace AscFrontEnd
                 e.Graphics.DrawString(totalIva.ToString("F2"), fontCabecalho, cor, new PointF(680, 555 + i), formatToLeft);
                 e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 565 + i), formatToLeft);
                 e.Graphics.DrawString((total * (totalIva / 100)).ToString("F2"), fontCabecalho, cor, new PointF(680, 565 + i), formatToLeft);
+                e.Graphics.DrawString("Desconto", fontCabecalho, cor, new PointF(550, 595 + i), formatToLeft);
+                e.Graphics.DrawString($"{CalculosVendaCompra.TotalDescontoVenda(vendaArtigos).ToString("F2")}", fontCabecalho, cor, new PointF(680, 595 + i), formatToLeft);
 
                 e.Graphics.DrawLine(canetaFina, 550, 583 + i, 740, 583 + i);
-                e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 590 + i), formatToLeft);
-                e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 590 + i), formatToLeft);
+                e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 600 + i), formatToLeft);
+                e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 600 + i), formatToLeft);
 
                 string conta = $"Conta nº";
                 string iban = $"IBAN ";
@@ -1090,6 +1127,9 @@ namespace AscFrontEnd
         {
             timerRefresh.Stop();
             timerRefresh.Dispose();
+
+            StaticProperty.nome = string.Empty;
+            StaticProperty.entityId = 0;
         }
     }
 

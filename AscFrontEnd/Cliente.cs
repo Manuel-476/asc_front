@@ -69,7 +69,7 @@ namespace AscFrontEnd
             {
                 MessageBox.Show("Cliente Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
-                var responseCliente = await client.GetAsync($"https://localhost:7200/api/Cliente/ClientesByRelations");
+                var responseCliente = await client.GetAsync($"https://localhost:7200/api/Cliente/ClientesByRelation");
 
                 if (responseCliente.IsSuccessStatusCode)
                 {

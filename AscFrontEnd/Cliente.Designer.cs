@@ -285,7 +285,9 @@
             // 
             this.espacoFiscalCombo.AutoCompleteCustomSource.AddRange(new string[] {
             "Nacional"});
-            this.espacoFiscalCombo.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.espacoFiscalCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.espacoFiscalCombo.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.espacoFiscalCombo.ForeColor = System.Drawing.SystemColors.ControlText;
             this.espacoFiscalCombo.FormattingEnabled = true;
             this.espacoFiscalCombo.Location = new System.Drawing.Point(539, 171);
             this.espacoFiscalCombo.Name = "espacoFiscalCombo";
@@ -294,11 +296,9 @@
             // 
             // pessoaCombo
             // 
-            this.pessoaCombo.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.pessoaCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.pessoaCombo.ForeColor = System.Drawing.SystemColors.ControlText;
             this.pessoaCombo.FormattingEnabled = true;
-            this.pessoaCombo.Items.AddRange(new object[] {
-            "Singular",
-            "Colectiva"});
             this.pessoaCombo.Location = new System.Drawing.Point(351, 172);
             this.pessoaCombo.Name = "pessoaCombo";
             this.pessoaCombo.Size = new System.Drawing.Size(172, 21);
@@ -404,10 +404,10 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(29, 334);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(63, 25);
+            this.label10.Size = new System.Drawing.Size(75, 25);
             this.label10.TabIndex = 63;
             this.label10.Text = "Filiais";
             // 

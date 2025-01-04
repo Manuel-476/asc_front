@@ -1,8 +1,10 @@
-﻿using AscFrontEnd.DTOs;
+﻿using AscFrontEnd.Application;
+using AscFrontEnd.DTOs;
 using AscFrontEnd.DTOs.Cliente;
 using AscFrontEnd.DTOs.Fornecedor;
 using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.DTOs.Venda;
+using AscFrontEnd.Files;
 using EAscFrontEnd;
 using ERP_Buyer.Application.DTOs.Documentos;
 using Newtonsoft.Json;
@@ -18,6 +20,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static AscFrontEnd.DTOs.Enums.Enums;
+using static AscFrontEnd.Venda;
 
 namespace AscFrontEnd
 {
@@ -31,19 +35,20 @@ namespace AscFrontEnd
         List<VgtArtigoDTO> vgtArtigos;
         List<VncArtigoDTO> vncArtigos;
         List<VndArtigoDTO> vndArtigos;
-        List<compraArtigo> compraArtigos;
+        List<CompraArtigo> compraArtigos;
         List<int> idCompra; 
         static int artigoId = 0;
         DataTable dtCompra;
         FornecedorDTO fornecedorResult;
 
-        private class compraArtigo 
+        public class CompraArtigo 
         {
             public int id {  get; set; }
             public string codigo { get; set; }
             public float preco { get; set; }
             public int qtd { get; set; }
             public float iva { get; set; }
+            public float desconto { get; set; }
         }
         public Compra()
         {
@@ -56,23 +61,22 @@ namespace AscFrontEnd
             vgtArtigos = new List<VgtArtigoDTO>();
             vncArtigos = new List<VncArtigoDTO>();
             vndArtigos = new List<VndArtigoDTO>();
-            compraArtigos = new List<compraArtigo>();
+            compraArtigos = new List<CompraArtigo>();
             dtCompra = new DataTable();
             idCompra = new List<int>();
             fornecedorResult = new FornecedorDTO();
 
         }
         private async void Compra_Load(object sender, EventArgs e)
-        {
-
-           
+        {           
                 dtCompra.Columns.Add("id", typeof(int));
                 dtCompra.Columns.Add("Artigo", typeof(string));
                 dtCompra.Columns.Add("Preco", typeof(float));
                 dtCompra.Columns.Add("Qtd", typeof(int));
                 dtCompra.Columns.Add("Iva", typeof(float));
+                dtCompra.Columns.Add("Desconto", typeof(float));
 
-                DataTable dt = new DataTable();
+            DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Artigo", typeof(string));
                 dt.Columns.Add("Descricao", typeof(string));
@@ -97,7 +101,10 @@ namespace AscFrontEnd
 
                 eliminarBtn.Enabled = false;
 
-            
+            totalBruto.Text = $"Total: {CalculosVendaCompra.TotalCompra(compraArtigos).ToString("F2")}";
+            ivaTotal.Text = $"Iva: {CalculosVendaCompra.TotalIvaCompra(compraArtigos).ToString("F2")}";
+            descontoTotal.Text = $"Desconto: {CalculosVendaCompra.TotalDescontoCompra(compraArtigos).ToString("F2")}";
+            precoLiquido.Text = $"Preço: {compraArtigos.Sum(x => x.preco * x.qtd).ToString("F2")}";
 
             timerRefresh.Start();
         }
@@ -134,7 +141,8 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
-                        iva = compraArtigo.iva
+                        iva = compraArtigo.iva,
+                        desconto = compraArtigo.desconto,
                     });
                 }
 
@@ -169,7 +177,8 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
-                        iva = compraArtigo.iva
+                        iva = compraArtigo.iva,
+                        desconto=compraArtigo.desconto,
                     });
                 }
 
@@ -200,7 +209,8 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
-                        iva = compraArtigo.iva
+                        iva = compraArtigo.iva,
+                        desconto = compraArtigo.desconto,
                     });
                 }
 
@@ -231,7 +241,8 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
-                        iva = compraArtigo.iva
+                        iva = compraArtigo.iva,
+                        desconto=compraArtigo.desconto,
                     });
                 }
 
@@ -261,7 +272,8 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
-                        iva = compraArtigo.iva
+                        iva = compraArtigo.iva,
+                        desconto = compraArtigo.desconto,
                     });
                 }
 
@@ -299,7 +311,8 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
-                        iva = compraArtigo.iva
+                        iva = compraArtigo.iva,
+                        desconto = compraArtigo.desconto,
                     });
                 }
 
@@ -321,7 +334,8 @@ namespace AscFrontEnd
                     {
                         artigoId = artigoId,
                         preco = compraArtigo.preco,
-                        iva = compraArtigo.iva
+                        iva = compraArtigo.iva,
+                        desconto = compraArtigo.desconto
                     });
                 }
 
@@ -353,7 +367,8 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
-                        iva = compraArtigo.iva
+                        iva = compraArtigo.iva,
+                        desconto =compraArtigo.desconto
                     });
                 }
 
@@ -503,7 +518,7 @@ namespace AscFrontEnd
 
                 string codigo;
                 int idCompraArtigo = tabelaCompra.Rows.Count;
-                List<compraArtigo> refreshCompraArtigo = new List<compraArtigo>();
+                List<CompraArtigo> refreshCompraArtigo = new List<CompraArtigo>();
                 int i = 1;
 
                 dtCompra.Rows.Clear();
@@ -513,13 +528,14 @@ namespace AscFrontEnd
 
                 foreach (var ca in compraArtigos) 
                 {
-                    var cArtigo = new compraArtigo
+                    var cArtigo = new CompraArtigo
                     {
                         id = i,
                         codigo = ca.codigo,
                         preco = ca.preco,
                         qtd = ca.qtd,
                         iva = ca.iva,
+                        desconto = ca.desconto,
                     };
                     refreshCompraArtigo.Add(cArtigo);
                     i++;          
@@ -529,13 +545,14 @@ namespace AscFrontEnd
 
                 compraArtigos = refreshCompraArtigo;
 
-                compraArtigos.Add(new compraArtigo()
+                compraArtigos.Add(new CompraArtigo()
                 {
                     id = idCompraArtigo,
                     codigo = codigo,
                     preco = float.Parse(precotxt.Text),
                     qtd = int.Parse(Qtd.Text),
-                    iva = float.Parse(iva.Text)
+                    iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
+                    desconto = float.Parse(descontoTxt.Text.ToString())
 
                 });
 
@@ -546,13 +563,14 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = float.Parse(precotxt.Text),
                         qtd = int.Parse(Qtd.Text),
-                        iva = float.Parse(iva.Text)
+                        iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
+                        desconto = float.Parse(descontoTxt.Text.ToString())
                     });
 
                     foreach (var vfr in compraArtigos)
                     {
 
-                        dtCompra.Rows.Add(vfr.id, vfr.codigo, vfr.preco, vfr.qtd, vfr.iva);
+                        dtCompra.Rows.Add(vfr.id, vfr.codigo, vfr.preco, vfr.qtd, vfr.iva,vfr.desconto);
 
                         tabelaCompra.DataSource = dtCompra;
                     }
@@ -565,14 +583,15 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = float.Parse(precotxt.Text),
                         qtd = int.Parse(Qtd.Text),
-                        iva = float.Parse(iva.Text),
-                        
+                        iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
+                        desconto = float.Parse(descontoTxt.Text.ToString())
+
                     });
 
                     foreach (var vft in compraArtigos)
                     {
                         idCompraArtigo = tabelaCompra.Rows.Count;
-                        dtCompra.Rows.Add(vft.id, vft.codigo, vft.preco, vft.qtd, vft.iva);
+                        dtCompra.Rows.Add(vft.id, vft.codigo, vft.preco, vft.qtd, vft.iva,vft.desconto);
 
                         tabelaCompra.DataSource = dtCompra;
                     }
@@ -584,7 +603,8 @@ namespace AscFrontEnd
                     {
                         artigoId = artigoId,
                         preco = float.Parse(precotxt.Text),
-                        iva = float.Parse(iva.Text)
+                        iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
+                        desconto = float.Parse(descontoTxt.Text.ToString())
                     });
 
 
@@ -605,14 +625,15 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = float.Parse(precotxt.Text),
                         qtd = int.Parse(Qtd.Text),
-                        iva = float.Parse(iva.Text)
+                        iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
+                        desconto = float.Parse(descontoTxt.Text.ToString())
                     });
 
 
                     foreach (var cot in compraArtigos)
                     {
 
-                        dtCompra.Rows.Add(cot.id, cot.codigo, cot.preco, cot.qtd, cot.iva);
+                        dtCompra.Rows.Add(cot.id, cot.codigo, cot.preco, cot.qtd, cot.iva, cot.desconto);
 
                         tabelaCompra.DataSource = dtCompra;
                     }
@@ -625,12 +646,13 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = float.Parse(precotxt.Text),
                         qtd = int.Parse(Qtd.Text),
-                        iva = float.Parse(iva.Text)
+                        iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
+                        desconto = float.Parse(descontoTxt.Text.ToString())
                     });
 
                     foreach (var vnd in compraArtigos)
                     {
-                        dtCompra.Rows.Add(vnd.id, vnd.codigo, vnd.preco, vnd.qtd, vnd.iva);
+                        dtCompra.Rows.Add(vnd.id, vnd.codigo, vnd.preco, vnd.qtd, vnd.iva,vnd.desconto);
 
                         tabelaCompra.DataSource = dtCompra;
                     }
@@ -643,12 +665,13 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = float.Parse(precotxt.Text),
                         qtd = int.Parse(Qtd.Text),
-                        iva = float.Parse(iva.Text)
+                        iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
+                        desconto = float.Parse(descontoTxt.Text.ToString())
                     });
 
                     foreach (var vnc in compraArtigos)
                     {
-                        dtCompra.Rows.Add(vnc.id, vnc.codigo, vnc.preco, vnc.qtd, vnc.iva);
+                        dtCompra.Rows.Add(vnc.id, vnc.codigo, vnc.preco, vnc.qtd, vnc.iva, vnc.desconto);
 
                         tabelaCompra.DataSource = dtCompra;
                     }
@@ -660,16 +683,22 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = float.Parse(precotxt.Text),
                         qtd = int.Parse(Qtd.Text),
-                        iva = float.Parse(iva.Text)
+                        iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
+                        desconto = float.Parse(descontoTxt.Text.ToString())
                     });
 
                     foreach (var vgt in compraArtigos)
                     {
-                        dtCompra.Rows.Add(vgt.id, vgt.codigo, vgt.preco, vgt.qtd, vgt.iva);
+                        dtCompra.Rows.Add(vgt.id, vgt.codigo, vgt.preco, vgt.qtd, vgt.iva, vgt.desconto);
 
                         tabelaCompra.DataSource = dtCompra;
                     }
                 }
+
+                totalBruto.Text = $"Total: {CalculosVendaCompra.TotalCompra(compraArtigos).ToString("F2")}";
+                ivaTotal.Text = $"Iva: {CalculosVendaCompra.TotalIvaCompra(compraArtigos).ToString("F2")}";
+                descontoTotal.Text = $"Desconto: {CalculosVendaCompra.TotalDescontoCompra(compraArtigos).ToString("F2")}";
+                precoLiquido.Text = $"Preço: {compraArtigos.Sum(x => x.preco * x.qtd).ToString("F2")}";
             }
             catch { return; }
         }
@@ -694,11 +723,18 @@ namespace AscFrontEnd
         {
             var client = new HttpClient();
 
-            if(StaticProperty.series == null) 
+            if (!StaticProperty.series.Where(x => x.status == OpcaoBinaria.Sim).Any())
             {
-                MessageBox.Show("Nenhuma Serie Foi Criada","Precisa de uma Serie",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                return;
+                if (MessageBox.Show("Nenhuma serie foi criada\nDeseja criar uma serie?", "Imposivel concluir a acao", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                {
+                    new SerieForm().ShowDialog();
+                }
+                else
+                {
+                    return;
+                }
             }
+
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             var response = await client.GetAsync($"https://localhost:7200/api/serie/codigoDocumento/{documento.Text}/{StaticProperty.empresaId}");
 
@@ -742,7 +778,7 @@ namespace AscFrontEnd
             foreach (var ca in compraArtigos)
             {
 
-                dtCompra.Rows.Add(ca.id, ca.codigo.ToString(), ca.preco, ca.qtd, ca.iva);
+                dtCompra.Rows.Add(ca.id, ca.codigo.ToString(), ca.preco, ca.qtd, ca.iva,ca.desconto);
 
                 tabelaCompra.DataSource = dtCompra;
             }
@@ -926,7 +962,7 @@ namespace AscFrontEnd
                 e.Graphics.DrawString($"Valor", fontNormalNegrito, cor, new Rectangle(650, 400, 750, 420));
                 e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
                 int i = 15;
-                foreach (compraArtigo va in compraArtigos)
+                foreach (CompraArtigo va in compraArtigos)
                 {
                     totalIva += va.iva;
                     total += va.preco * float.Parse(va.qtd.ToString());
@@ -948,7 +984,7 @@ namespace AscFrontEnd
                 string totalFinal = $"TOTAL";
 
 
-                e.Graphics.DrawRectangle(caneta, new Rectangle(540, 520 + i, 210, 65 + i));
+                e.Graphics.DrawRectangle(caneta, new Rectangle(540, 520 + i, 210, 70 + i));
 
                 e.Graphics.DrawString(mercadoria, fontCabecalho, cor, new PointF(550, 530 + i), formatToLeft);
                 e.Graphics.DrawString(totalLiquido.ToString("F4"), fontCabecalho, cor, new PointF(680, 530 + i), formatToLeft);
@@ -956,10 +992,12 @@ namespace AscFrontEnd
                 e.Graphics.DrawString(totalIva.ToString("F4"), fontCabecalho, cor, new PointF(680, 540 + i), formatToLeft);
                 e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 550 + i), formatToLeft);
                 e.Graphics.DrawString((total * (totalIva / 100)).ToString("F4"), fontCabecalho, cor, new PointF(680, 550 + i), formatToLeft);
+                e.Graphics.DrawString("Desconto", fontCabecalho, cor, new PointF(550, 575 + i), formatToLeft);
+                e.Graphics.DrawString($"{CalculosVendaCompra.TotalDescontoCompra(compraArtigos).ToString("F2")}", fontCabecalho, cor, new PointF(680, 575 + i), formatToLeft);
 
                 e.Graphics.DrawLine(canetaFina, 550, 565 + i, 740, 565 + i);
-                e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 575 + i), formatToLeft);
-                e.Graphics.DrawString(total.ToString("F4"), fontNormalNegrito, cor, new PointF(680, 575 + i), formatToLeft);
+                e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 595 + i), formatToLeft);
+                e.Graphics.DrawString(total.ToString("F4"), fontNormalNegrito, cor, new PointF(680, 595 + i), formatToLeft);
 
 
 
@@ -997,6 +1035,14 @@ namespace AscFrontEnd
         {
             timerRefresh.Stop();
             timerRefresh.Dispose();
+
+            StaticProperty.nome = string.Empty;
+            StaticProperty.entityId = 0;
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
     }

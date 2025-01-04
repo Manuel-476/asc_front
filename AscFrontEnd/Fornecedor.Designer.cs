@@ -50,13 +50,13 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabelaFilial = new System.Windows.Forms.DataGridView();
             this.label9 = new System.Windows.Forms.Label();
             this.addFilialBtn = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tabelaFilial)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tabelaFilial)).BeginInit();
             this.SuspendLayout();
             // 
             // nomeFantasiatxt
@@ -75,11 +75,9 @@
             // 
             // pessoaCombo
             // 
-            this.pessoaCombo.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.pessoaCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.pessoaCombo.ForeColor = System.Drawing.SystemColors.ControlText;
             this.pessoaCombo.FormattingEnabled = true;
-            this.pessoaCombo.Items.AddRange(new object[] {
-            "Singular",
-            "Colectiva"});
             this.pessoaCombo.Location = new System.Drawing.Point(360, 153);
             this.pessoaCombo.Name = "pessoaCombo";
             this.pessoaCombo.Size = new System.Drawing.Size(172, 21);
@@ -89,7 +87,8 @@
             // 
             this.espacoFiscalCombo.AutoCompleteCustomSource.AddRange(new string[] {
             "Nacional"});
-            this.espacoFiscalCombo.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.espacoFiscalCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.espacoFiscalCombo.ForeColor = System.Drawing.SystemColors.ControlText;
             this.espacoFiscalCombo.FormattingEnabled = true;
             this.espacoFiscalCombo.Location = new System.Drawing.Point(548, 152);
             this.espacoFiscalCombo.Name = "espacoFiscalCombo";
@@ -301,11 +300,11 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Arial Narrow", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.White;
             this.label8.Location = new System.Drawing.Point(123, 31);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(189, 43);
+            this.label8.Size = new System.Drawing.Size(220, 42);
             this.label8.TabIndex = 29;
             this.label8.Text = "Fornecedor";
             // 
@@ -353,6 +352,16 @@
             this.button1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.button1_MouseMove);
             this.button1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.button1_MouseUp);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_supplier_80;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(114, 100);
+            this.pictureBox1.TabIndex = 30;
+            this.pictureBox1.TabStop = false;
+            // 
             // tabelaFilial
             // 
             this.tabelaFilial.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -383,16 +392,6 @@
             this.addFilialBtn.Text = "Adicionar";
             this.addFilialBtn.UseVisualStyleBackColor = true;
             this.addFilialBtn.Click += new System.EventHandler(this.addFilialBtn_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_supplier_80;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(114, 100);
-            this.pictureBox1.TabIndex = 30;
-            this.pictureBox1.TabStop = false;
             // 
             // Form1
             // 
@@ -437,8 +436,8 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tabelaFilial)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tabelaFilial)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

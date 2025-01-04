@@ -57,6 +57,8 @@ namespace AscFrontEnd
                 StaticProperty.entityId = int.Parse(id);
                 StaticProperty.nome = nome;
             }
+
+            this.Close();
         }
 
         private async void pesqText_TextChanged(object sender, EventArgs e)

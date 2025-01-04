@@ -33,7 +33,7 @@ namespace AscFrontEnd
         string json = string.Empty;
 
         List<DocumentoVenda> documentoVendas;
-        List<vendaArtigo> vendaArtigos;
+        List<VendaArtigo> vendaArtigos;
         List<ArtigoDTO> dados;
         NcDTO nc;
         HttpClient client;
@@ -44,7 +44,7 @@ namespace AscFrontEnd
             InitializeComponent();
 
             documentoVendas = new List<DocumentoVenda>();
-            vendaArtigos = new List<vendaArtigo>();
+            vendaArtigos = new List<VendaArtigo>();
             clienteResult = new ClienteDTO();
             dados = StaticProperty.artigos;
             nc = new NcDTO();
@@ -335,7 +335,7 @@ namespace AscFrontEnd
 
                         foreach (var item in fr.frArtigo)
                         {
-                            vendaArtigos.Add(new Venda.vendaArtigo()
+                            vendaArtigos.Add(new Venda.VendaArtigo()
                             {
                                 codigo = StaticProperty.artigos.Where(x => x.id == item.artigoId).First().codigo,
                                 iva = item.iva,
@@ -373,7 +373,7 @@ namespace AscFrontEnd
 
                         foreach (var item in ft.ftArtigo)
                         {
-                            vendaArtigos.Add(new Venda.vendaArtigo()
+                            vendaArtigos.Add(new Venda.VendaArtigo()
                             {
                                 codigo = StaticProperty.artigos.Where(x => x.id == item.artigoId).First().codigo,
                                 iva = item.iva,
@@ -1003,7 +1003,7 @@ namespace AscFrontEnd
                 e.Graphics.DrawString($"Valor", fontNormalNegrito, cor, new Rectangle(650, 400, 750, 420));
                 e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
                 int i = 15;
-                foreach (vendaArtigo va in vendaArtigos)
+                foreach (VendaArtigo va in vendaArtigos)
                 {
                     totalIva += va.iva;
                     total += va.preco * float.Parse(va.qtd.ToString());
@@ -1025,7 +1025,7 @@ namespace AscFrontEnd
                 string totalFinal = $"TOTAL";
 
 
-                e.Graphics.DrawRectangle(caneta, new Rectangle(540, 530 + i, 210, 65 + i));
+                e.Graphics.DrawRectangle(caneta, new Rectangle(540, 530 + i, 210, 70 + i));
 
                 e.Graphics.DrawString(mercadoria, fontCabecalho, cor, new PointF(550, 545 + i), formatToLeft);
                 e.Graphics.DrawString(totalLiquido.ToString("F2"), fontCabecalho, cor, new PointF(680, 545 + i), formatToLeft);
@@ -1033,10 +1033,12 @@ namespace AscFrontEnd
                 e.Graphics.DrawString(totalIva.ToString("F2"), fontCabecalho, cor, new PointF(680, 555 + i), formatToLeft);
                 e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 565 + i), formatToLeft);
                 e.Graphics.DrawString((total * (totalIva / 100)).ToString("F2"), fontCabecalho, cor, new PointF(680, 565 + i), formatToLeft);
+                e.Graphics.DrawString("Desconto", fontCabecalho, cor, new PointF(550, 595 + i), formatToLeft);
+                e.Graphics.DrawString($"{CalculosVendaCompra.TotalDescontoVenda(vendaArtigos)}", fontCabecalho, cor, new PointF(680, 595 + i), formatToLeft);
 
                 e.Graphics.DrawLine(canetaFina, 550, 583 + i, 740, 583 + i);
-                e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 580 + i), formatToLeft);
-                e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 590 + i), formatToLeft);
+                e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 600 + i), formatToLeft);
+                e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 600 + i), formatToLeft);
 
                 string conta = $"Conta nº";
                 string iban = $"IBAN ";

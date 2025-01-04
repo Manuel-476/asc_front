@@ -199,11 +199,11 @@ namespace AscFrontEnd
 
         private bool hasSellCliente(int clienteId)
         {
-            if (StaticProperty.frs.Where(x => x.clienteId == clienteId).First() == null &&
-               StaticProperty.fts.Where(x => x.clienteId == clienteId).First() == null &&
-               StaticProperty.fps.Where(x => x.clienteId == clienteId).First() == null &&
-               StaticProperty.ecls.Where(x => x.clienteId == clienteId).First() == null)
-            { return true; }
+            if (!StaticProperty.frs.Where(x => x.clienteId == clienteId).Any() && !StaticProperty.fts.Where(x => x.clienteId == clienteId).Any() && !StaticProperty.fps.Where(x => x.clienteId == clienteId).Any() &&
+               !StaticProperty.ecls.Where(x => x.clienteId == clienteId).Any())
+            {
+               return true; 
+            }
             else { return false; }
         }
     }

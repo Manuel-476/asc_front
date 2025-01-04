@@ -11,6 +11,7 @@ namespace AscFrontEnd
         public float preco_unitario { get; set; }
         public string num_serie { get; set; } = string.Empty;
         public string codigo_barra { get; set; } = string.Empty;
+        public float iva { get; set; }
         public OpcaoBinaria mov_stock { get; set; }
         public OpcaoBinaria mov_lote { get; set; }
         public Status status { get; set; }

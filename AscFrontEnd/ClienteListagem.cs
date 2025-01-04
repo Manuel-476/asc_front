@@ -84,6 +84,8 @@ namespace AscFrontEnd
                     StaticProperty.entityId = int.Parse(id);
                     StaticProperty.nome = nome;
                 }
+
+                this.Close();
             }
             catch { return; }
         }
