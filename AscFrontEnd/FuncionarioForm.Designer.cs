@@ -49,7 +49,6 @@
             this.paisCombo = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.provinciaCombo = new System.Windows.Forms.ComboBox();
-            this.naturalidadeText = new System.Windows.Forms.TextBox();
             this.Naturalidade = new System.Windows.Forms.Label();
             this.telText = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -61,6 +60,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.numIdent = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.naturalidadeCombo = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -245,6 +245,7 @@
             this.paisCombo.Name = "paisCombo";
             this.paisCombo.Size = new System.Drawing.Size(269, 21);
             this.paisCombo.TabIndex = 13;
+            this.paisCombo.SelectedIndexChanged += new System.EventHandler(this.paisCombo_SelectedIndexChanged);
             // 
             // label9
             // 
@@ -263,13 +264,7 @@
             this.provinciaCombo.Name = "provinciaCombo";
             this.provinciaCombo.Size = new System.Drawing.Size(302, 21);
             this.provinciaCombo.TabIndex = 15;
-            // 
-            // naturalidadeText
-            // 
-            this.naturalidadeText.Location = new System.Drawing.Point(647, 272);
-            this.naturalidadeText.Name = "naturalidadeText";
-            this.naturalidadeText.Size = new System.Drawing.Size(269, 20);
-            this.naturalidadeText.TabIndex = 18;
+            this.provinciaCombo.SelectedIndexChanged += new System.EventHandler(this.provinciaCombo_SelectedIndexChanged);
             // 
             // Naturalidade
             // 
@@ -374,11 +369,21 @@
             this.label13.TabIndex = 31;
             this.label13.Text = "Nº B.I";
             // 
+            // naturalidadeCombo
+            // 
+            this.naturalidadeCombo.FormattingEnabled = true;
+            this.naturalidadeCombo.Location = new System.Drawing.Point(647, 272);
+            this.naturalidadeCombo.Name = "naturalidadeCombo";
+            this.naturalidadeCombo.Size = new System.Drawing.Size(269, 21);
+            this.naturalidadeCombo.TabIndex = 33;
+            this.naturalidadeCombo.SelectedIndexChanged += new System.EventHandler(this.naturalidadeCombo_SelectedIndexChanged);
+            // 
             // FuncionarioForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(928, 499);
+            this.Controls.Add(this.naturalidadeCombo);
             this.Controls.Add(this.numIdent);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.email);
@@ -389,7 +394,6 @@
             this.Controls.Add(this.label12);
             this.Controls.Add(this.telText);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.naturalidadeText);
             this.Controls.Add(this.Naturalidade);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.provinciaCombo);
@@ -415,6 +419,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FuncionarioForm";
+            this.Load += new System.EventHandler(this.FuncionarioForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -446,7 +451,6 @@
         private System.Windows.Forms.ComboBox paisCombo;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox provinciaCombo;
-        private System.Windows.Forms.TextBox naturalidadeText;
         private System.Windows.Forms.Label Naturalidade;
         private System.Windows.Forms.TextBox telText;
         private System.Windows.Forms.Label label11;
@@ -458,5 +462,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox numIdent;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox naturalidadeCombo;
     }
 }

@@ -19,6 +19,9 @@ namespace AscFrontEnd
 {
     public partial class FuncionarioForm : Form
     {
+        int paisId;
+        int naturalidadeId;
+        int provinciaId;
         public FuncionarioForm()
         {
             InitializeComponent();
@@ -55,8 +58,8 @@ namespace AscFrontEnd
                 status = DTOs.Enums.Enums.Status.activo,
                 users = StaticProperty.user,
                 empresaid = StaticProperty.empresaId,
-                paisId = 1,
-                provinciaId = 1,
+                paisId = paisId,
+                provinciaId = provinciaId,
                 phones = phones,
                 email = email.Text,
                 nif = numIdent.Text,
@@ -103,6 +106,52 @@ namespace AscFrontEnd
         {
             FuncionarioListagem funcionario = new FuncionarioListagem();
             funcionario.ShowDialog();
+        }
+
+        private void FuncionarioForm_Load(object sender, EventArgs e)
+        {
+            foreach (var item in StaticProperty.paises) 
+            {
+                paisCombo.Items.Add(item.nome);
+                naturalidadeCombo.Items.Add(item.nome);
+            }
+        }
+
+        private void paisCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string pais = paisCombo.SelectedItem.ToString();
+
+            if (StaticProperty.paises.Where(x => x.nome == pais).Any())
+            {
+                var paisResult = StaticProperty.paises.Where(x => x.nome == pais).First();
+
+                paisId = paisResult.id;
+
+                foreach(var item in paisResult.provincias) 
+                {
+                    provinciaCombo.Items.Add(item.nome);
+                }
+            }
+        }
+
+        private void provinciaCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string provincia = provinciaCombo.SelectedItem.ToString();
+
+            if (StaticProperty.provincias.Where(x => x.nome == provincia).Any())
+            {
+                provinciaId = StaticProperty.provincias.Where(x => x.nome == provincia).First().id;
+            }
+        }
+
+        private void naturalidadeCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string pais = naturalidadeCombo.SelectedItem.ToString();
+
+            if (StaticProperty.paises.Where(x => x.nome == pais).Any())
+            {
+                naturalidadeId = StaticProperty.paises.Where(x => x.nome == pais).First().id;
+            }
         }
     }
 }

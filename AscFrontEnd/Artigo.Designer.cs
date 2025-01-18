@@ -67,6 +67,8 @@
             this.label16 = new System.Windows.Forms.Label();
             this.mencaoCombo = new System.Windows.Forms.ComboBox();
             this.descricaoIvaTxt = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.ivaCombo = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -438,7 +440,7 @@
             this.mencaoCombo.FormattingEnabled = true;
             this.mencaoCombo.Location = new System.Drawing.Point(266, 439);
             this.mencaoCombo.Name = "mencaoCombo";
-            this.mencaoCombo.Size = new System.Drawing.Size(465, 21);
+            this.mencaoCombo.Size = new System.Drawing.Size(297, 21);
             this.mencaoCombo.TabIndex = 39;
             this.mencaoCombo.SelectedIndexChanged += new System.EventHandler(this.mencaoCombo_SelectedIndexChanged);
             // 
@@ -452,11 +454,31 @@
             this.descricaoIvaTxt.TabIndex = 41;
             this.descricaoIvaTxt.Text = "descricaoIvaTxt";
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(581, 416);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(30, 20);
+            this.label17.TabIndex = 43;
+            this.label17.Text = "Iva";
+            // 
+            // ivaCombo
+            // 
+            this.ivaCombo.FormattingEnabled = true;
+            this.ivaCombo.Location = new System.Drawing.Point(585, 439);
+            this.ivaCombo.Name = "ivaCombo";
+            this.ivaCombo.Size = new System.Drawing.Size(146, 21);
+            this.ivaCombo.TabIndex = 42;
+            // 
             // Artigo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(798, 528);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.ivaCombo);
             this.Controls.Add(this.descricaoIvaTxt);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.mencaoCombo);
@@ -548,5 +570,7 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.ComboBox mencaoCombo;
         private System.Windows.Forms.Label descricaoIvaTxt;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ComboBox ivaCombo;
     }
 }

@@ -141,37 +141,41 @@ namespace AscFrontEnd
 
         private void Artigo_Load(object sender, EventArgs e)
         {
-            foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == 1).ToList())
+            foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == StaticProperty.empresaId).ToList())
             {
                 armazemCombo.Items.Add(item.codigo);
             }
-            foreach (var item in StaticProperty.familias.Where(fam => fam.empresaId == 1).ToList())
+            foreach (var item in StaticProperty.familias.Where(fam => fam.empresaId == StaticProperty.empresaId).ToList())
             {
                 familiaCombo.Items.Add(item.codigo);
             }
-            foreach (var item in StaticProperty.subFamilias.Where(fam => fam.empresaId == 1).ToList())
+            foreach (var item in StaticProperty.subFamilias.Where(fam => fam.empresaId == StaticProperty.empresaId).ToList())
             {
                 subFamiliaCombo.Items.Add(item.codigo);
             }
-            foreach (var item in StaticProperty.modelos.Where(fam => fam.empresaId == 1).ToList())
+            foreach (var item in StaticProperty.modelos.Where(fam => fam.empresaId == StaticProperty.empresaId).ToList())
             {
                 modeloCombo.Items.Add(item.codigo);
             }
-            foreach (var item in StaticProperty.marcas.Where(fam => fam.empresaId == 1).ToList())
+            foreach (var item in StaticProperty.marcas.Where(fam => fam.empresaId == StaticProperty.empresaId).ToList())
             {
                 marcaCombo.Items.Add(item.codigo);
             }
+            foreach (var item in StaticProperty.ivas.Where(iva => iva.empresaId == 0 && iva.empresaId == StaticProperty.empresaId).ToList())
+            {
+                ivaCombo.Items.Add(item.valorIva);
+            }
+            foreach (var item in StaticProperty.unidades.Where(x => x.empresaId == 0 && x.empresaId == StaticProperty.empresaId).ToList())
+            {
+                comboUnCompra.Items.Add(item.codigo);
+                comboUnVenda.Items.Add(item.codigo);
+            }
+
             mencaoCombo.Enabled = false;
             descricaoIvaTxt.Text = "";
 
             regimeIvaCombo.Items.Add("Isento");
             regimeIvaCombo.Items.Add("Geral");
-
-            comboUnCompra.Items.Add("Un"); comboUnVenda.Items.Add("Un");
-            comboUnCompra.Items.Add("Kg"); comboUnVenda.Items.Add("Kg");
-            comboUnCompra.Items.Add("Ltr"); comboUnVenda.Items.Add("Ltr");
-            comboUnCompra.Items.Add("m"); comboUnVenda.Items.Add("m");
-            comboUnCompra.Items.Add("Cx"); comboUnVenda.Items.Add("Cx");
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)

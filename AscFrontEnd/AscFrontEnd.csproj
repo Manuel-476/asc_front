@@ -267,7 +267,10 @@
     <Compile Include="CompraListagem.Designer.cs">
       <DependentUpon>CompraListagem.cs</DependentUpon>
     </Compile>
+    <Compile Include="DTOs\Artigo\IvaDTO.cs" />
     <Compile Include="DTOs\Artigo\MotivosIsencaoIvaDTO.cs" />
+    <Compile Include="DTOs\Regiao\PaisDTO.cs" />
+    <Compile Include="DTOs\Artigo\UnidadeDTO.cs" />
     <Compile Include="DTOs\Compra\CotacaoArtigoDTO.cs" />
     <Compile Include="DTOs\Compra\CotacaoDTO.cs" />
     <Compile Include="DTOs\Compra\EcfArtigoDTO.cs" />
@@ -315,6 +318,7 @@
     <Compile Include="DTOs\Funcionario\PhoneDTO.cs" />
     <Compile Include="DTOs\Funcionario\UserDTO.cs" />
     <Compile Include="DTOs\Pessoa\PessoaDTO.cs" />
+    <Compile Include="DTOs\Regiao\ProvinciaDTO.cs" />
     <Compile Include="DTOs\Serie\SerieDTO.cs" />
     <Compile Include="DTOs\StaticsDto\StaticProperty.cs" />
     <Compile Include="DTOs\Stock\ArmazemDTO.cs" />

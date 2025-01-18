@@ -6,6 +6,7 @@ using AscFrontEnd.DTOs.Deposito;
 using AscFrontEnd.DTOs.Empresa;
 using AscFrontEnd.DTOs.Fornecedor;
 using AscFrontEnd.DTOs.Funcionario;
+using AscFrontEnd.DTOs.Regiao;
 using AscFrontEnd.DTOs.Serie;
 using AscFrontEnd.DTOs.Stock;
 using AscFrontEnd.DTOs.Venda;
@@ -43,10 +44,15 @@ namespace AscFrontEnd.DTOs.StaticsDto
         //Artigo
         public static List<ArtigoDTO> artigos { get; set; }
         public static List<FamiliaArtigoDTO> familias { get; set; }
-        public static List<SubFamiliaDTO>subFamilias { get; set; }
+        public static List<SubFamiliaDTO> subFamilias { get; set; }
         public static List<ModeloDTO> modelos { get; set; }
         public static List<MarcaDTO> marcas { get; set; }
         public static List<MotivosIsencaoIvaDTO> motivosIsencao { get; set; }
+        public static List<IvaDTO> ivas { get; set; }
+        public static List<UnidadeDTO> unidades { get; set; }
+        public static List<PaisDTO> paises { get; set; }
+        public static List<ProvinciaDTO> provincias { get; set; }
+
 
         // Actividade
         public static List<ActividadeDTO> actividades { get; set; }

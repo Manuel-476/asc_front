@@ -26,6 +26,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AscFrontEnd.DTOs.Regiao;
 
 namespace AscFrontEnd
 {
@@ -401,7 +402,7 @@ namespace AscFrontEnd
                     var contentCaixa = await responseCaixa.Content.ReadAsStringAsync();
                     StaticProperty.caixas = JsonConvert.DeserializeObject<List<CaixaDTO>>(contentCaixa);
 
-                    processValue += 6;
+                    processValue += 2;
                 }
 
                 var responseFormaPagamento = await client.GetAsync($"https://localhost:7200/api/Deposito/FormaPagamento");
@@ -480,6 +481,51 @@ namespace AscFrontEnd
                     var contentEmpresa = await responseEmpresa.Content.ReadAsStringAsync();
 
                     StaticProperty.empresa = JsonConvert.DeserializeObject<EmpresaDTO>(contentEmpresa);
+
+                    processValue += 1;
+                }
+
+                // Outros
+                var responseIva = await client.GetAsync($"https://localhost:7200/api/iva");
+
+                if (responseIva.IsSuccessStatusCode)
+                {
+                    var contentIva = await responseIva.Content.ReadAsStringAsync();
+
+                    StaticProperty.ivas = JsonConvert.DeserializeObject < List<IvaDTO>>(contentIva);
+
+                    processValue += 1;
+                }
+
+                var responseUnidade = await client.GetAsync($"https://localhost:7200/api/Unidade");
+
+                if (responseUnidade.IsSuccessStatusCode)
+                {
+                    var contentUnidade = await responseUnidade.Content.ReadAsStringAsync();
+
+                    StaticProperty.unidades = JsonConvert.DeserializeObject<List<UnidadeDTO>>(contentUnidade);
+
+                    processValue += 1;
+                }
+
+                var responsePais = await client.GetAsync($"https://localhost:7200/api/pais/WithRelations");
+
+                if (responsePais.IsSuccessStatusCode)
+                {
+                    var contentPais = await responsePais.Content.ReadAsStringAsync();
+
+                    StaticProperty.paises = JsonConvert.DeserializeObject<List<PaisDTO>>(contentPais);
+
+                    processValue += 1;
+                }
+
+                var responseProvincia = await client.GetAsync($"https://localhost:7200/api/Provincia");
+
+                if (responseProvincia.IsSuccessStatusCode)
+                {
+                    var contentProvincia = await responseProvincia.Content.ReadAsStringAsync();
+
+                    StaticProperty.provincias = JsonConvert.DeserializeObject<List<ProvinciaDTO>>(contentProvincia);
 
                     processValue += 1;
                 }
