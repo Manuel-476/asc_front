@@ -77,7 +77,7 @@ namespace AscFrontEnd
                         StaticProperty.token = userResult.token;
                         if (userResult.user.state == DTOs.Enums.Enums.OpcaoBinaria.Nao)
                         {
-                            new UserForm("Alterar Credencias de Acesso", resultUser.id).ShowDialog();
+                            new UserForm("Alterar Credencias de Acesso", userResult.user.id).ShowDialog();
                         }
                         else
                         {
@@ -137,7 +137,7 @@ namespace AscFrontEnd
                             StaticProperty.token = userResult.token;
                             if (userResult.user.state == DTOs.Enums.Enums.OpcaoBinaria.Nao)
                             {
-                                new UserForm("Alterar Credencias de Acesso", resultUser.id).ShowDialog();
+                                new UserForm("Alterar Credencias de Acesso", userResult.user.id).ShowDialog();
                             }
                             else
                             {

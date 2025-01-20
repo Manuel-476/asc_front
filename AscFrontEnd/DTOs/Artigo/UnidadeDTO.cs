@@ -14,5 +14,6 @@ namespace AscFrontEnd.DTOs.Artigo
         public string descricao { get; set; } = string.Empty;
         public Status state { get; set; }
         public int? empresaId { get; set; }
+        public DateTime? created_at { get; set; }
     }
 }

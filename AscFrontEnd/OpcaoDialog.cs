@@ -86,5 +86,35 @@ namespace AscFrontEnd
         {
 
         }
+
+        private void pictureBox1_MouseLeave(object sender, EventArgs e)
+        {
+            ivaPicture.BackColor = Color.FromArgb(0, 120, 215);
+        }
+
+        private void ivaPicture_MouseMove(object sender, MouseEventArgs e)
+        {
+            ivaPicture.BackColor = Color.DeepSkyBlue;
+        }
+
+        private void pictureBox2_MouseLeave(object sender, EventArgs e)
+        {
+            unidadePicture.BackColor = Color.FromArgb(0, 120, 215);
+        }
+
+        private void unidadePicture_MouseMove(object sender, MouseEventArgs e)
+        {
+            unidadePicture.BackColor = Color.DeepSkyBlue;
+        }
+
+        private void ivaPicture_Click(object sender, EventArgs e)
+        {
+            new IvaForm().ShowDialog();
+        }
+
+        private void unidadePicture_Click(object sender, EventArgs e)
+        {
+            new UnidadeForm().ShowDialog();
+        }
     }
 }

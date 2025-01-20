@@ -246,6 +246,7 @@
             this.paisCombo.Size = new System.Drawing.Size(269, 21);
             this.paisCombo.TabIndex = 13;
             this.paisCombo.SelectedIndexChanged += new System.EventHandler(this.paisCombo_SelectedIndexChanged);
+            this.paisCombo.SelectedValueChanged += new System.EventHandler(this.paisCombo_SelectedValueChanged);
             // 
             // label9
             // 

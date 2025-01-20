@@ -60,6 +60,7 @@
             this.totalBruto = new System.Windows.Forms.Label();
             this.descontoTotal = new System.Windows.Forms.Label();
             this.ivaTotal = new System.Windows.Forms.Label();
+            this.descricaoLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaArtigos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaCompra)).BeginInit();
             this.panel1.SuspendLayout();
@@ -383,11 +384,22 @@
             this.ivaTotal.TabIndex = 43;
             this.ivaTotal.Text = "label7";
             // 
+            // descricaoLabel
+            // 
+            this.descricaoLabel.AutoSize = true;
+            this.descricaoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.descricaoLabel.Location = new System.Drawing.Point(12, 96);
+            this.descricaoLabel.Name = "descricaoLabel";
+            this.descricaoLabel.Size = new System.Drawing.Size(77, 20);
+            this.descricaoLabel.TabIndex = 47;
+            this.descricaoLabel.Text = "descricao";
+            // 
             // Compra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1081, 461);
+            this.Controls.Add(this.descricaoLabel);
             this.Controls.Add(this.precoLiquido);
             this.Controls.Add(this.totalBruto);
             this.Controls.Add(this.descontoTotal);
@@ -459,5 +471,6 @@
         private System.Windows.Forms.Label totalBruto;
         private System.Windows.Forms.Label descontoTotal;
         private System.Windows.Forms.Label ivaTotal;
+        private System.Windows.Forms.Label descricaoLabel;
     }
 }

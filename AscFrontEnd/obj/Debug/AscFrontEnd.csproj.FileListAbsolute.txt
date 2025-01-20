@@ -454,3 +454,5 @@ C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontE
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFront.B658B33A.Up2Date
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.exe
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.pdb
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.IvaForm.resources
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.UnidadeForm.resources

@@ -44,8 +44,8 @@ namespace AscFrontEnd
             HttpResponseMessage response = null;
 
             List<FuncionarioPhoneDTO> phones = new List<FuncionarioPhoneDTO>();
-            phones.Add(new FuncionarioPhoneDTO() { telefone=telText.ToString() });
-            phones.Add(new FuncionarioPhoneDTO() { telefone = tel2Text.ToString() });
+            phones.Add(new FuncionarioPhoneDTO() { telefone=telText.Text.ToString() });
+            phones.Add(new FuncionarioPhoneDTO() { telefone = tel2Text.Text.ToString() });
 
             FuncionarioDTO funcionario = new FuncionarioDTO()
             {
@@ -115,6 +115,9 @@ namespace AscFrontEnd
                 paisCombo.Items.Add(item.nome);
                 naturalidadeCombo.Items.Add(item.nome);
             }
+
+            generoCombo.Items.Add("M");
+            generoCombo.Items.Add("F");
         }
 
         private void paisCombo_SelectedIndexChanged(object sender, EventArgs e)
@@ -127,7 +130,7 @@ namespace AscFrontEnd
 
                 paisId = paisResult.id;
 
-                foreach(var item in paisResult.provincias) 
+                foreach(var item in StaticProperty.provincias.Where(x => x.paisId == paisId)) 
                 {
                     provinciaCombo.Items.Add(item.nome);
                 }
@@ -152,6 +155,11 @@ namespace AscFrontEnd
             {
                 naturalidadeId = StaticProperty.paises.Where(x => x.nome == pais).First().id;
             }
+        }
+
+        private void paisCombo_SelectedValueChanged(object sender, EventArgs e)
+        {
+           
         }
     }
 }

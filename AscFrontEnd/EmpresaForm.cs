@@ -57,8 +57,9 @@ namespace AscFrontEnd
                            status = DTOs.Enums.Enums.Status.activo,
                            foto = string.Empty,
                            bairro = bairroTxt.Text,
-                           pronvicia = provinciaTxt.Text,
+                           pronvicia = provinciaCombo.Text,
                            website = siteTxt.Text,
+                           telefone = telText.Text,
                        };
 
             // Conversão do objeto Film para JSON
@@ -118,6 +119,14 @@ namespace AscFrontEnd
         private void pictureBox4_MouseMove(object sender, MouseEventArgs e)
         {
             pictureBox4.BackColor = Color.Gray;
+        }
+
+        private void EmpresaForm_Load(object sender, EventArgs e)
+        {
+            foreach (var item in StaticProperty.provincias)
+            {
+                provinciaCombo.Items.Add(item.nome);
+            }
         }
     }
 }

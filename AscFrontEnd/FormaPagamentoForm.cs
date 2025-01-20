@@ -26,9 +26,21 @@ namespace AscFrontEnd
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            httpClient.BaseAddress = new Uri("https://sua-api.com/");
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
             string json = string.Empty;
             try
             {
+                if (string.IsNullOrWhiteSpace(codigoTxt.Text.ToString()) || string.IsNullOrWhiteSpace(descricaoTxt.Text.ToString()))
+                {
+                    MessageBox.Show("Todos os campos precisam ser premchido os campos","Impossivel concluir a acao",MessageBoxButtons.OK,MessageBoxIcon.Information);
+
+                    return;
+                }
                 var formaPagamento = new FormaPagamentoDTO()
                 {
                     codigo = codigoTxt.Text.ToString(),
@@ -38,12 +50,7 @@ namespace AscFrontEnd
 
                 json = System.Text.Json.JsonSerializer.Serialize(formaPagamento);
 
-                httpClient = new HttpClient();
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                httpClient.BaseAddress = new Uri("https://sua-api.com/");
-                httpClient.DefaultRequestHeaders.Accept.Clear();
-                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-      
+
 
                 var resposta = await httpClient.PostAsync("https://localhost:7200/api/Deposito/FormaPagamento", new StringContent(json, Encoding.UTF8, "application/json"));
 
@@ -73,7 +80,7 @@ namespace AscFrontEnd
             }
         }
 
-        private async void FormaPagamentoForm_Load(object sender, EventArgs e)
+        private  void FormaPagamentoForm_Load(object sender, EventArgs e)
         {
            
         }

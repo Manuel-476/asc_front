@@ -189,7 +189,7 @@ namespace AscFrontEnd
 
                 if (responseGt.IsSuccessStatusCode)
                 {
-                    var contentGt = await responseNd.Content.ReadAsStringAsync();
+                    var contentGt = await responseGt.Content.ReadAsStringAsync();
                     StaticProperty.gts = JsonConvert.DeserializeObject<List<GtDTO>>(contentGt);
 
                     processValue += 3;
@@ -519,7 +519,7 @@ namespace AscFrontEnd
                     processValue += 1;
                 }
 
-                var responseProvincia = await client.GetAsync($"https://localhost:7200/api/Provincia");
+                var responseProvincia = await client.GetAsync($"https://localhost:7200/api/pais/provincia");
 
                 if (responseProvincia.IsSuccessStatusCode)
                 {

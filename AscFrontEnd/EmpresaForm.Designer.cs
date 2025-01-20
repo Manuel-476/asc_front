@@ -58,8 +58,8 @@
             this.label12 = new System.Windows.Forms.Label();
             this.bairroTxt = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.provinciaTxt = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.provinciaCombo = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -365,13 +365,6 @@
             this.label13.TabIndex = 27;
             this.label13.Text = "Bairro:";
             // 
-            // provinciaTxt
-            // 
-            this.provinciaTxt.Location = new System.Drawing.Point(23, 316);
-            this.provinciaTxt.Name = "provinciaTxt";
-            this.provinciaTxt.Size = new System.Drawing.Size(291, 20);
-            this.provinciaTxt.TabIndex = 26;
-            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -383,17 +376,25 @@
             this.label14.TabIndex = 25;
             this.label14.Text = "Provincia";
             // 
+            // provinciaCombo
+            // 
+            this.provinciaCombo.FormattingEnabled = true;
+            this.provinciaCombo.Location = new System.Drawing.Point(23, 316);
+            this.provinciaCombo.Name = "provinciaCombo";
+            this.provinciaCombo.Size = new System.Drawing.Size(291, 21);
+            this.provinciaCombo.TabIndex = 31;
+            // 
             // EmpresaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(941, 493);
+            this.Controls.Add(this.provinciaCombo);
             this.Controls.Add(this.siteTxt);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.bairroTxt);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.provinciaTxt);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.telText);
             this.Controls.Add(this.Telefone);
@@ -426,6 +427,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EmpresaForm";
+            this.Load += new System.EventHandler(this.EmpresaForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -469,7 +471,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox bairroTxt;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox provinciaTxt;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox provinciaCombo;
     }
 }

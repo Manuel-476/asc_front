@@ -54,6 +54,7 @@ namespace AscFrontEnd
               unidadeVenda = comboUnVenda.Text,
               regimeIva = regimeIva,
               codigoIva = codigoIva,
+              iva = float.Parse(ivaCombo.Text),
               empresaId = StaticProperty.empresaId,
             };
 
@@ -161,11 +162,11 @@ namespace AscFrontEnd
             {
                 marcaCombo.Items.Add(item.codigo);
             }
-            foreach (var item in StaticProperty.ivas.Where(iva => iva.empresaId == 0 && iva.empresaId == StaticProperty.empresaId).ToList())
+            foreach (var item in StaticProperty.ivas.Where(iva => iva.empresaId == 0 || iva.empresaId == StaticProperty.empresaId).ToList())
             {
                 ivaCombo.Items.Add(item.valorIva);
             }
-            foreach (var item in StaticProperty.unidades.Where(x => x.empresaId == 0 && x.empresaId == StaticProperty.empresaId).ToList())
+            foreach (var item in StaticProperty.unidades.Where(x => x.empresaId == 0 ||  x.empresaId == StaticProperty.empresaId).ToList())
             {
                 comboUnCompra.Items.Add(item.codigo);
                 comboUnVenda.Items.Add(item.codigo);
@@ -173,7 +174,7 @@ namespace AscFrontEnd
 
             mencaoCombo.Enabled = false;
             descricaoIvaTxt.Text = "";
-
+             
             regimeIvaCombo.Items.Add("Isento");
             regimeIvaCombo.Items.Add("Geral");
         }
@@ -213,6 +214,7 @@ namespace AscFrontEnd
             {
                 regimeIva = OpcaoBinaria.Sim;
                 mencaoCombo.Enabled = false;
+                ivaCombo.Enabled = true;
                 mencaoCombo.Items.Clear();
                 descricaoIvaTxt.Text = "";
             }
@@ -220,6 +222,7 @@ namespace AscFrontEnd
             {
                 regimeIva = OpcaoBinaria.Nao;
                 mencaoCombo.Enabled = true;
+                ivaCombo.Enabled = false;
 
                 foreach(var motivo in StaticProperty.motivosIsencao) 
                 {

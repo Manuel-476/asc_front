@@ -7,7 +7,7 @@
       "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\funcionarioform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\funcionarioform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\funcionarioform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\funcionarioform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
@@ -15,68 +15,36 @@
       "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\carregamentoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\carregamentoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\carregamentoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\carregamentoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\empresaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\empresaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\empresaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\empresaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\empresaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\artigo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\artigo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\userform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\userform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\artigo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\artigo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\telalogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\telalogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\dtos\\artigo\\ivadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\dtos\\artigo\\ivadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\telalogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\telalogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\dtos\\artigo\\artigodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\dtos\\artigo\\artigodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\dtos\\venda\\gtdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\dtos\\venda\\gtdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\dtos\\staticsdto\\staticproperty.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\dtos\\staticsdto\\staticproperty.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\dtos\\regiao\\provinciadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\dtos\\regiao\\provinciadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\dtos\\regiao\\paisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\dtos\\regiao\\paisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\dtos\\artigo\\unidadedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\dtos\\artigo\\unidadedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\formapagamentoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\formapagamentoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\menuprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\menuprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\venda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\venda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\compra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\compra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\dtos\\venda\\gtartigodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\dtos\\venda\\gtartigodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\venda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -85,6 +53,94 @@
     {
       "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\compra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\compra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\compra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\compra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\artigo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\artigo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\venda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\venda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\artigo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\artigo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\dtos\\artigo\\unidadedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\dtos\\artigo\\unidadedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\dtos\\staticsdto\\staticproperty.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\dtos\\staticsdto\\staticproperty.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\unidadeform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\unidadeform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\unidadeform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\unidadeform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\ivaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\ivaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\application\\requisicoes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\application\\requisicoes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\formapagamentoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\formapagamentoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\opcaodialog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\opcaodialog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\opcaodialog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\opcaodialog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|c:\\users\\smart entity\\documents\\github\\asc_front\\ascfrontend\\ivaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\ivaform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\formapagamentoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\formapagamentoform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\dtos\\regiao\\paisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\dtos\\regiao\\paisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\dtos\\artigo\\ivadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\dtos\\artigo\\ivadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\dtos\\artigo\\artigodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\dtos\\artigo\\artigodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\dtos\\regiao\\provinciadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\dtos\\regiao\\provinciadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\menuprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\menuprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\clientestable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -97,10 +153,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\faturadetalhes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\faturadetalhes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\dtos\\venda\\gtdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\dtos\\venda\\gtdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\dtos\\venda\\nddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -131,10 +183,6 @@
       "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\userform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\userform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\userform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\ascfrontend\\dtos\\artigo\\motivosisencaoivadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B9A6BA8F-87D6-450F-9EC4-DF8CF9CBF69D}|AscFrontEnd\\AscFrontEnd.csproj|solutionrelative:ascfrontend\\dtos\\artigo\\motivosisencaoivadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -157,6 +205,48 @@
           "SelectedChildIndex": 2,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CarregamentoForm.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\CarregamentoForm.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\CarregamentoForm.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\CarregamentoForm.cs",
+              "RelativeToolTip": "AscFrontEnd\\CarregamentoForm.cs",
+              "ViewState": "AgIAAAICAAAAAAAAAAAnwP4BAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-11T17:43:36.002Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FuncionarioForm.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\FuncionarioForm.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\FuncionarioForm.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\FuncionarioForm.cs",
+              "RelativeToolTip": "AscFrontEnd\\FuncionarioForm.cs",
+              "ViewState": "AgIAAGEAAAAAAAAAAAAWwHUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-02T17:04:22.993Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "EmpresaForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\EmpresaForm.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\EmpresaForm.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\EmpresaForm.cs [Design]",
+              "RelativeToolTip": "AscFrontEnd\\EmpresaForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-12T13:37:26.66Z",
+              "EditorCaption": " [Design]"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "FuncionarioForm.cs [Design]",
@@ -170,31 +260,6 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Cliente.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Cliente.cs",
-              "RelativeDocumentMoniker": "AscFrontEnd\\Cliente.cs",
-              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Cliente.cs [Design]",
-              "RelativeToolTip": "AscFrontEnd\\Cliente.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-12T13:36:17.981Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "FuncionarioForm.cs",
-              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\FuncionarioForm.cs",
-              "RelativeDocumentMoniker": "AscFrontEnd\\FuncionarioForm.cs",
-              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\FuncionarioForm.cs",
-              "RelativeToolTip": "AscFrontEnd\\FuncionarioForm.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAkwBcAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-02T17:04:22.993Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 3,
               "Title": "CarregamentoForm.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\CarregamentoForm.cs",
@@ -202,89 +267,203 @@
               "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\CarregamentoForm.cs [Design]",
               "RelativeToolTip": "AscFrontEnd\\CarregamentoForm.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-11T17:43:34.353Z",
+              "WhenOpened": "2025-01-20T17:48:05.848Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CarregamentoForm.cs",
-              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\CarregamentoForm.cs",
-              "RelativeDocumentMoniker": "AscFrontEnd\\CarregamentoForm.cs",
-              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\CarregamentoForm.cs",
-              "RelativeToolTip": "AscFrontEnd\\CarregamentoForm.cs",
-              "ViewState": "AgIAAPgBAAAAAAAAAADgv/4BAABoAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "EmpresaForm.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\EmpresaForm.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\EmpresaForm.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\EmpresaForm.cs",
+              "RelativeToolTip": "AscFrontEnd\\EmpresaForm.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAiwDsAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-11T17:43:36.002Z",
+              "WhenOpened": "2025-01-20T16:21:04.969Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "EmpresaForm.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\EmpresaForm.cs",
-              "RelativeDocumentMoniker": "AscFrontEnd\\EmpresaForm.cs",
-              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\EmpresaForm.cs [Design]",
-              "RelativeToolTip": "AscFrontEnd\\EmpresaForm.cs [Design]",
+              "DocumentIndex": 8,
+              "Title": "TelaLogin.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\TelaLogin.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\TelaLogin.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\TelaLogin.cs [Design]",
+              "RelativeToolTip": "AscFrontEnd\\TelaLogin.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-12T13:37:26.66Z",
+              "WhenOpened": "2025-01-20T17:05:06.759Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
+              "Title": "TelaLogin.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\TelaLogin.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\TelaLogin.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\TelaLogin.cs",
+              "RelativeToolTip": "AscFrontEnd\\TelaLogin.cs",
+              "ViewState": "AgIAAH8AAAAAAAAAAAAvwIoAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T17:05:10.394Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UserForm.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\UserForm.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\UserForm.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\UserForm.cs",
+              "RelativeToolTip": "AscFrontEnd\\UserForm.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAADwv0IAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-19T02:48:05.92Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GtDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Venda\\GtDTO.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\Venda\\GtDTO.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Venda\\GtDTO.cs",
+              "RelativeToolTip": "AscFrontEnd\\DTOs\\Venda\\GtDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-22T02:53:16.886Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Compra.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Compra.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\Compra.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Compra.cs [Design]",
+              "RelativeToolTip": "AscFrontEnd\\Compra.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-04T14:51:25.175Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Venda.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Venda.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\Venda.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Venda.cs",
+              "RelativeToolTip": "AscFrontEnd\\Venda.cs",
+              "ViewState": "AgIAACsEAAAAAAAAAAAYwEoEAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-16T03:02:05.425Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Venda.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Venda.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\Venda.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Venda.cs [Design]",
+              "RelativeToolTip": "AscFrontEnd\\Venda.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T12:59:25.943Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "IvaForm.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\IvaForm.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\IvaForm.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\IvaForm.cs",
+              "RelativeToolTip": "AscFrontEnd\\IvaForm.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAiwC0AAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-19T10:40:46.151Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "UnidadeDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Artigo\\UnidadeDTO.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\Artigo\\UnidadeDTO.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Artigo\\UnidadeDTO.cs",
+              "RelativeToolTip": "AscFrontEnd\\DTOs\\Artigo\\UnidadeDTO.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAArwBAAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-11T17:48:15.434Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "Artigo.cs",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Artigo.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\Artigo.cs",
               "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Artigo.cs",
               "RelativeToolTip": "AscFrontEnd\\Artigo.cs",
-              "ViewState": "AgIAAJsAAAAAAAAAAADgv6wAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACkAAAAAAAAAAAAowDgAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-12T13:23:16.635Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "IvaDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Artigo\\IvaDTO.cs",
-              "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\Artigo\\IvaDTO.cs",
-              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Artigo\\IvaDTO.cs",
-              "RelativeToolTip": "AscFrontEnd\\DTOs\\Artigo\\IvaDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAADwvwkAAAAKAAAAAAAAAA==",
+              "DocumentIndex": 10,
+              "Title": "GtArtigoDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Venda\\GtArtigoDTO.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\Venda\\GtArtigoDTO.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Venda\\GtArtigoDTO.cs",
+              "RelativeToolTip": "AscFrontEnd\\DTOs\\Venda\\GtArtigoDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-11T17:47:32.635Z",
+              "WhenOpened": "2025-01-20T16:12:06.509Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "StaticProperty.cs",
-              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\StaticsDto\\StaticProperty.cs",
-              "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\StaticsDto\\StaticProperty.cs",
-              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\StaticsDto\\StaticProperty.cs",
-              "RelativeToolTip": "AscFrontEnd\\DTOs\\StaticsDto\\StaticProperty.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAUwC4AAAAqAAAAAAAAAA==",
+              "DocumentIndex": 12,
+              "Title": "Compra.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Compra.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\Compra.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Compra.cs",
+              "RelativeToolTip": "AscFrontEnd\\Compra.cs",
+              "ViewState": "AgIAAAcEAAAAAAAAAAAAwLoDAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-12T12:59:42.858Z",
+              "WhenOpened": "2024-11-19T00:26:40.262Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Cliente.cs",
-              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Cliente.cs",
-              "RelativeDocumentMoniker": "AscFrontEnd\\Cliente.cs",
-              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Cliente.cs",
-              "RelativeToolTip": "AscFrontEnd\\Cliente.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAASwCMAAAAMAAAAAAAAAA==",
+              "DocumentIndex": 19,
+              "Title": "UnidadeForm.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\UnidadeForm.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\UnidadeForm.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\UnidadeForm.cs",
+              "RelativeToolTip": "AscFrontEnd\\UnidadeForm.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAADgvy0AAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-04T11:49:40.333Z",
+              "WhenOpened": "2025-01-19T10:38:03.652Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 20,
+              "Title": "UnidadeForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\UnidadeForm.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\UnidadeForm.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\UnidadeForm.cs [Design]",
+              "RelativeToolTip": "AscFrontEnd\\UnidadeForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-19T10:36:53.257Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
               "Title": "Artigo.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Artigo.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\Artigo.cs",
@@ -296,7 +475,142 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 18,
+              "Title": "StaticProperty.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\StaticsDto\\StaticProperty.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\StaticsDto\\StaticProperty.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\StaticsDto\\StaticProperty.cs",
+              "RelativeToolTip": "AscFrontEnd\\DTOs\\StaticsDto\\StaticProperty.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAArwDMAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-12T12:59:42.858Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "IvaForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\IvaForm.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\IvaForm.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\IvaForm.cs [Design]",
+              "RelativeToolTip": "AscFrontEnd\\IvaForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-19T10:36:14.764Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Requisicoes.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Application\\Requisicoes.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\Application\\Requisicoes.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Application\\Requisicoes.cs",
+              "RelativeToolTip": "AscFrontEnd\\Application\\Requisicoes.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAIAxwCkAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T06:44:41.908Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "FormaPagamentoForm.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\FormaPagamentoForm.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\FormaPagamentoForm.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\FormaPagamentoForm.cs",
+              "RelativeToolTip": "AscFrontEnd\\FormaPagamentoForm.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAUwFIAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T09:09:11.985Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "OpcaoDialog.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\OpcaoDialog.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\OpcaoDialog.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\OpcaoDialog.cs [Design]",
+              "RelativeToolTip": "AscFrontEnd\\OpcaoDialog.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T09:18:43.939Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "OpcaoDialog.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\OpcaoDialog.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\OpcaoDialog.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\OpcaoDialog.cs",
+              "RelativeToolTip": "AscFrontEnd\\OpcaoDialog.cs",
+              "ViewState": "AgIAAGsAAAAAAAAAAAArwHQAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T09:28:02.287Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "FormaPagamentoForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\FormaPagamentoForm.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\FormaPagamentoForm.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\FormaPagamentoForm.cs [Design]",
+              "RelativeToolTip": "AscFrontEnd\\FormaPagamentoForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-11T17:31:46.586Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "PaisDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Regiao\\PaisDTO.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\Regiao\\PaisDTO.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Regiao\\PaisDTO.cs",
+              "RelativeToolTip": "AscFrontEnd\\DTOs\\Regiao\\PaisDTO.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAkwAwAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-11T17:49:49.381Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "IvaDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Artigo\\IvaDTO.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\Artigo\\IvaDTO.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Artigo\\IvaDTO.cs",
+              "RelativeToolTip": "AscFrontEnd\\DTOs\\Artigo\\IvaDTO.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAADwvwkAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-11T17:47:32.635Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "Cliente.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Cliente.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\Cliente.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Cliente.cs [Design]",
+              "RelativeToolTip": "AscFrontEnd\\Cliente.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-12T13:36:17.981Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "Cliente.cs",
+              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Cliente.cs",
+              "RelativeDocumentMoniker": "AscFrontEnd\\Cliente.cs",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Cliente.cs",
+              "RelativeToolTip": "AscFrontEnd\\Cliente.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAASwCMAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-04T11:49:40.333Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
               "Title": "ArtigoDTO.cs",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Artigo\\ArtigoDTO.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\Artigo\\ArtigoDTO.cs",
@@ -304,12 +618,11 @@
               "RelativeToolTip": "AscFrontEnd\\DTOs\\Artigo\\ArtigoDTO.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAqwA0AAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-13T17:57:20.76Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-13T17:57:20.76Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 33,
               "Title": "ProvinciaDTO.cs",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Regiao\\ProvinciaDTO.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\Regiao\\ProvinciaDTO.cs",
@@ -317,94 +630,23 @@
               "RelativeToolTip": "AscFrontEnd\\DTOs\\Regiao\\ProvinciaDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-12T12:58:07.913Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-12T12:58:07.913Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "PaisDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Regiao\\PaisDTO.cs",
-              "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\Regiao\\PaisDTO.cs",
-              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Regiao\\PaisDTO.cs",
-              "RelativeToolTip": "AscFrontEnd\\DTOs\\Regiao\\PaisDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-11T17:49:49.381Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "UnidadeDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Artigo\\UnidadeDTO.cs",
-              "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\Artigo\\UnidadeDTO.cs",
-              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Artigo\\UnidadeDTO.cs",
-              "RelativeToolTip": "AscFrontEnd\\DTOs\\Artigo\\UnidadeDTO.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAAAA4AAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-11T17:48:15.434Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "FormaPagamentoForm.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\FormaPagamentoForm.cs",
-              "RelativeDocumentMoniker": "AscFrontEnd\\FormaPagamentoForm.cs",
-              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\FormaPagamentoForm.cs [Design]",
-              "RelativeToolTip": "AscFrontEnd\\FormaPagamentoForm.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-11T17:31:46.586Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 34,
               "Title": "MenuPrincipal.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\MenuPrincipal.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\MenuPrincipal.cs",
               "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\MenuPrincipal.cs [Design]",
               "RelativeToolTip": "AscFrontEnd\\MenuPrincipal.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-04T15:53:19.133Z"
+              "WhenOpened": "2025-01-04T15:53:19.133Z",
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "Venda.cs",
-              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Venda.cs",
-              "RelativeDocumentMoniker": "AscFrontEnd\\Venda.cs",
-              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Venda.cs",
-              "RelativeToolTip": "AscFrontEnd\\Venda.cs",
-              "ViewState": "AgIAAGgAAAAAAAAAAAAYwIAAAABiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-16T03:02:05.425Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "Compra.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Compra.cs",
-              "RelativeDocumentMoniker": "AscFrontEnd\\Compra.cs",
-              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Compra.cs [Design]",
-              "RelativeToolTip": "AscFrontEnd\\Compra.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-04T14:51:25.175Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "Compra.cs",
-              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Compra.cs",
-              "RelativeDocumentMoniker": "AscFrontEnd\\Compra.cs",
-              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Compra.cs",
-              "RelativeToolTip": "AscFrontEnd\\Compra.cs",
-              "ViewState": "AgIAAF8AAAAAAAAAAAAYwGoAAABjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-19T00:26:40.262Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 35,
               "Title": "ClientesTable.cs",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\ClientesTable.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\ClientesTable.cs",
@@ -416,22 +658,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Venda.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Venda.cs",
-              "RelativeDocumentMoniker": "AscFrontEnd\\Venda.cs",
-              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\Venda.cs [Design]",
-              "RelativeToolTip": "AscFrontEnd\\Venda.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T12:59:25.943Z"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 39,
               "Title": "NcDTO.cs",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Venda\\NcDTO.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\Venda\\NcDTO.cs",
@@ -443,7 +670,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 36,
               "Title": "UserDTO.cs",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Funcionario\\UserDTO.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\Funcionario\\UserDTO.cs",
@@ -455,7 +682,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 37,
               "Title": "FaturaDetalhes.cs",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\FaturaDetalhes.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\FaturaDetalhes.cs",
@@ -463,11 +690,12 @@
               "RelativeToolTip": "AscFrontEnd\\FaturaDetalhes.cs",
               "ViewState": "AgIAAPUAAAAAAAAAAAAUwBQBAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T14:30:43.8Z"
+              "WhenOpened": "2024-11-21T14:30:43.8Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 41,
               "Title": "ContasCorrentes.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\ContasCorrentes.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\ContasCorrentes.cs",
@@ -478,19 +706,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "GtDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Venda\\GtDTO.cs",
-              "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\Venda\\GtDTO.cs",
-              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Venda\\GtDTO.cs",
-              "RelativeToolTip": "AscFrontEnd\\DTOs\\Venda\\GtDTO.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAA1wBUAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-22T02:53:16.886Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 38,
               "Title": "NdDTO.cs",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Venda\\NdDTO.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\Venda\\NdDTO.cs",
@@ -502,7 +718,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 40,
               "Title": "LiquidaDivida.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\LiquidaDivida.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\LiquidaDivida.cs",
@@ -513,7 +729,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 42,
               "Title": "ContasCorrentes.cs",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\ContasCorrentes.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\ContasCorrentes.cs",
@@ -525,7 +741,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 43,
               "Title": "DocumentosDetalhesForm.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DocumentosDetalhesForm.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\DocumentosDetalhesForm.cs",
@@ -536,30 +752,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 44,
               "Title": "UserForm.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\UserForm.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\UserForm.cs",
-              "ToolTip": "C:\\Users\\i 3 8 GERACAO\\Documents\\GitHub\\asc_front\\AscFrontEnd\\UserForm.cs [Design]",
-              "RelativeToolTip": "..\\..\\..\\..\\i 3 8 GERACAO\\Documents\\GitHub\\asc_front\\AscFrontEnd\\UserForm.cs [Design]",
+              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\UserForm.cs [Design]",
+              "RelativeToolTip": "AscFrontEnd\\UserForm.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-19T02:47:59.143Z"
+              "WhenOpened": "2024-11-19T02:47:59.143Z",
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "UserForm.cs",
-              "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\UserForm.cs",
-              "RelativeDocumentMoniker": "AscFrontEnd\\UserForm.cs",
-              "ToolTip": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\UserForm.cs",
-              "RelativeToolTip": "AscFrontEnd\\UserForm.cs",
-              "ViewState": "AQIAAEoAAAAAAAAAAAAwwF8AAAArAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-19T02:48:05.92Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 45,
               "Title": "MotivosIsencaoIvaDTO.cs",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Artigo\\MotivosIsencaoIvaDTO.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\Artigo\\MotivosIsencaoIvaDTO.cs",
@@ -571,7 +776,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 46,
               "Title": "ArtigoEditar.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\ArtigoEditar.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\ArtigoEditar.cs",
@@ -582,7 +787,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 47,
               "Title": "FornecedorDTO.cs",
               "DocumentMoniker": "C:\\Users\\Smart Entity\\Documents\\GitHub\\asc_front\\AscFrontEnd\\DTOs\\Fornecedor\\FornecedorDTO.cs",
               "RelativeDocumentMoniker": "AscFrontEnd\\DTOs\\Fornecedor\\FornecedorDTO.cs",

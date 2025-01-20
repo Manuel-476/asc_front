@@ -120,6 +120,7 @@ namespace AscFrontEnd
             documento.Items.Add("GT");
             documento.Items.Add("NC");
             documento.Items.Add("ND");
+            descricaoLabel.Text = string.Empty;
 
             eliminarBtn.Enabled = false;
 
@@ -565,9 +566,11 @@ namespace AscFrontEnd
             else if (documento.Text == "FT") { descricaoDocumento = "Factura"; }
             else if(documento.Text == "ECL") { descricaoDocumento = "Encomenda a Cliente"; }
             else if (documento.Text == "GT") { descricaoDocumento = "Guia de Transporte"; }
-            else if (documento.Text == "FP") { descricaoDocumento = "Factura Proforma"; }
+            else if (documento.Text == "PP") { descricaoDocumento = "Factura Proforma"; }
             else if (documento.Text == "NC") { descricaoDocumento = "Nota Credito"; }
             else if (documento.Text == "ND") { descricaoDocumento = "Nota Debito"; }
+
+            descricaoLabel.Text = descricaoDocumento;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -946,7 +949,7 @@ namespace AscFrontEnd
                     e.Graphics.DrawString($"{StaticProperty.documentoOrigem.ToString()}", fontNormal, cor, new PointF(690, 247), formatToLeft);
                 }
 
-                e.Graphics.DrawString($"Factura  {codigoDocumento.Text}", fontNormalNegrito, cor, new PointF(50, 280), formatToLeft);
+                e.Graphics.DrawString($"{descricaoDocumento}  {codigoDocumento.Text}", fontNormalNegrito, cor, new PointF(50, 280), formatToLeft);
                 e.Graphics.DrawLine(canetaFina, 50, 295, 250, 295);
                 e.Graphics.DrawString("Contribuente", fontNormalNegrito, cor, new Rectangle(50, 300, 200, 310));
                 e.Graphics.DrawString("Desc. Cli", fontNormalNegrito, cor, new Rectangle(200, 300, 350, 310));
@@ -1086,6 +1089,14 @@ namespace AscFrontEnd
                 else if (documento.Text.Equals("FT") || documento.Text.Equals("FR"))
                 {
                     e.Graphics.DrawString($"Os bens/serviços foram colocados á disposição do adquirente na data e local do documento", fontCabecalho, new SolidBrush(Color.Black), new PointF(280, 720 + i), formatToCenter);
+                }
+                else if (documento.Text.Equals("GT")) 
+                {
+                    e.Graphics.DrawString("Entreguei", fontCabecalho, cor, new PointF(100, 720 + i), formatToLeft);
+                    e.Graphics.DrawLine(caneta, 50, 780 + i, 200, 780 + i);
+
+                    e.Graphics.DrawString("Recebi", fontCabecalho, cor, new PointF(660, 720 + i), formatToLeft);
+                    e.Graphics.DrawLine(caneta, 600, 780 + i, 750, 780 + i);
                 }
 
                 // Desenhando a imagem no documento

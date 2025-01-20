@@ -60,6 +60,7 @@
             this.descontoTotal = new System.Windows.Forms.Label();
             this.totalBruto = new System.Windows.Forms.Label();
             this.precoLiquido = new System.Windows.Forms.Label();
+            this.descricaoLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaArtigos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaVenda)).BeginInit();
             this.panel1.SuspendLayout();
@@ -378,11 +379,22 @@
             this.precoLiquido.TabIndex = 27;
             this.precoLiquido.Text = "label7";
             // 
+            // descricaoLabel
+            // 
+            this.descricaoLabel.AutoSize = true;
+            this.descricaoLabel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.descricaoLabel.Location = new System.Drawing.Point(12, 87);
+            this.descricaoLabel.Name = "descricaoLabel";
+            this.descricaoLabel.Size = new System.Drawing.Size(77, 18);
+            this.descricaoLabel.TabIndex = 28;
+            this.descricaoLabel.Text = "descricao";
+            // 
             // Venda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1085, 461);
+            this.Controls.Add(this.descricaoLabel);
             this.Controls.Add(this.precoLiquido);
             this.Controls.Add(this.totalBruto);
             this.Controls.Add(this.descontoTotal);
@@ -452,5 +464,6 @@
         private System.Windows.Forms.Label descontoTotal;
         private System.Windows.Forms.Label totalBruto;
         private System.Windows.Forms.Label precoLiquido;
+        private System.Windows.Forms.Label descricaoLabel;
     }
 }

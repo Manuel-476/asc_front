@@ -293,6 +293,16 @@ namespace AscFrontEnd.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_diversity_50 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-diversity-50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_edit_40 {
             get {
                 object obj = ResourceManager.GetObject("icons8-edit-40", resourceCulture);
@@ -513,6 +523,16 @@ namespace AscFrontEnd.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_tax_64 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-tax-64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_transformation_48 {
             get {
                 object obj = ResourceManager.GetObject("icons8-transformation-48", resourceCulture);
@@ -576,6 +596,16 @@ namespace AscFrontEnd.Properties {
         internal static System.Drawing.Bitmap Smart_Entity {
             get {
                 object obj = ResourceManager.GetObject("Smart_Entity", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tax {
+            get {
+                object obj = ResourceManager.GetObject("tax", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

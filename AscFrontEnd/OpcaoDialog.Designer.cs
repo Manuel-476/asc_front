@@ -33,10 +33,16 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.titulo = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.unidadePicture = new System.Windows.Forms.PictureBox();
+            this.ivaPicture = new System.Windows.Forms.PictureBox();
             this.modeloPicture = new System.Windows.Forms.PictureBox();
             this.marcaPicture = new System.Windows.Forms.PictureBox();
             this.subfamiliaPicture = new System.Windows.Forms.PictureBox();
             this.familiaPicture = new System.Windows.Forms.PictureBox();
+            this.label6 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.unidadePicture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ivaPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.modeloPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.marcaPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.subfamiliaPicture)).BeginInit();
@@ -98,6 +104,45 @@
             this.titulo.TabIndex = 8;
             this.titulo.Text = "Criar";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label5.Location = new System.Drawing.Point(725, 161);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(30, 20);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Iva";
+            // 
+            // unidadePicture
+            // 
+            this.unidadePicture.BackColor = System.Drawing.SystemColors.Highlight;
+            this.unidadePicture.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_diversity_50;
+            this.unidadePicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.unidadePicture.Location = new System.Drawing.Point(829, 53);
+            this.unidadePicture.Name = "unidadePicture";
+            this.unidadePicture.Size = new System.Drawing.Size(122, 94);
+            this.unidadePicture.TabIndex = 11;
+            this.unidadePicture.TabStop = false;
+            this.unidadePicture.Click += new System.EventHandler(this.unidadePicture_Click);
+            this.unidadePicture.MouseLeave += new System.EventHandler(this.pictureBox2_MouseLeave);
+            this.unidadePicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.unidadePicture_MouseMove);
+            // 
+            // ivaPicture
+            // 
+            this.ivaPicture.BackColor = System.Drawing.SystemColors.Highlight;
+            this.ivaPicture.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_tax_64;
+            this.ivaPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.ivaPicture.Location = new System.Drawing.Point(680, 53);
+            this.ivaPicture.Name = "ivaPicture";
+            this.ivaPicture.Size = new System.Drawing.Size(122, 94);
+            this.ivaPicture.TabIndex = 9;
+            this.ivaPicture.TabStop = false;
+            this.ivaPicture.Click += new System.EventHandler(this.ivaPicture_Click);
+            this.ivaPicture.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
+            this.ivaPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ivaPicture_MouseMove);
+            // 
             // modeloPicture
             // 
             this.modeloPicture.BackColor = System.Drawing.SystemColors.Highlight;
@@ -154,11 +199,26 @@
             this.familiaPicture.MouseLeave += new System.EventHandler(this.familiaPicture_MouseLeave);
             this.familiaPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.familiaPicture_MouseMove);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label6.Location = new System.Drawing.Point(857, 161);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(69, 20);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Unidade";
+            // 
             // OpcaoDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(660, 210);
+            this.ClientSize = new System.Drawing.Size(973, 210);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.unidadePicture);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.ivaPicture);
             this.Controls.Add(this.titulo);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -175,6 +235,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "OpcaoDialog";
             this.Load += new System.EventHandler(this.OpcaoDialog_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.unidadePicture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ivaPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.modeloPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.marcaPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.subfamiliaPicture)).EndInit();
@@ -195,5 +257,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label titulo;
+        private System.Windows.Forms.PictureBox ivaPicture;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.PictureBox unidadePicture;
+        private System.Windows.Forms.Label label6;
     }
 }

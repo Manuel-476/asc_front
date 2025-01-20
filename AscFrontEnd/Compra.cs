@@ -41,6 +41,7 @@ namespace AscFrontEnd
         DataTable dtCompra;
         FornecedorDTO fornecedorResult;
 
+        string descricaoDocumento = string.Empty;
         public class CompraArtigo 
         {
             public int id {  get; set; }
@@ -98,6 +99,7 @@ namespace AscFrontEnd
                 documento.Items.Add("VGT");
                 documento.Items.Add("VNC");
                 documento.Items.Add("VND");
+                descricaoLabel.Text = string.Empty;
 
                 eliminarBtn.Enabled = false;
 
@@ -746,6 +748,18 @@ namespace AscFrontEnd
                 codigoDocumentotxt.Text = dados.ToString();
             }
 
+            if (documento.Text == "VFR") { descricaoDocumento = "V/Factura Recibo"; }
+            else if (documento.Text == "VFT") { descricaoDocumento = "V/Factura"; }
+            else if (documento.Text == "ECF") { descricaoDocumento = "Encomenda a Fornecedor"; }
+            else if (documento.Text == "VGT") { descricaoDocumento = "V/Guia de Transporte"; }
+            else if (documento.Text == "PCO") { descricaoDocumento = "Pedido Cotação"; }
+            else if (documento.Text == "COT") { descricaoDocumento = "Cotação"; }
+            else if (documento.Text == "VNC") { descricaoDocumento = "V/Nota Crédito"; }
+            else if (documento.Text == "VND") { descricaoDocumento = "V/Nota Débito"; }
+
+
+            descricaoLabel.Text = descricaoDocumento;
+
         }
 
         private void eliminarBtn_Click(object sender, EventArgs e)
@@ -931,7 +945,7 @@ namespace AscFrontEnd
                 e.Graphics.DrawString(clienteCabecalho, fontNormalNegrito, cor, new PointF(550, 138), formatToLeft);
                 e.Graphics.DrawString(clienteOutros, fontCabecalho, cor, pontoRight, formatToLeft);
 
-                e.Graphics.DrawString($"Factura  {codigoDocumentotxt.Text}", fontNormalNegrito, cor, new PointF(50, 280), formatToLeft);
+                e.Graphics.DrawString($"{descricaoDocumento}  {codigoDocumentotxt.Text}", fontNormalNegrito, cor, new PointF(50, 280), formatToLeft);
                 e.Graphics.DrawLine(canetaFina, 50, 295, 250, 295);
                 e.Graphics.DrawString("Contribuente", fontNormalNegrito, cor, new Rectangle(50, 300, 200, 310));
                 e.Graphics.DrawString("Desc. Cli", fontNormalNegrito, cor, new Rectangle(200, 300, 350, 310));

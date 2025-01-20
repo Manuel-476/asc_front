@@ -140,6 +140,7 @@
     </Compile>
     <Compile Include="Application\CalculosVendaCompra.cs" />
     <Compile Include="Application\Documento.cs" />
+    <Compile Include="Application\Requisicoes.cs" />
     <Compile Include="AprovaPagamento.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -405,6 +406,12 @@
     <Compile Include="IncrementarStock.Designer.cs">
       <DependentUpon>IncrementarStock.cs</DependentUpon>
     </Compile>
+    <Compile Include="IvaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IvaForm.Designer.cs">
+      <DependentUpon>IvaForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LiquidaDivida.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -507,6 +514,12 @@
     </Compile>
     <Compile Include="TransferenciaArmazem.Designer.cs">
       <DependentUpon>TransferenciaArmazem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnidadeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UnidadeForm.Designer.cs">
+      <DependentUpon>UnidadeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UserForm.cs">
       <SubType>Form</SubType>
@@ -625,6 +638,9 @@
     <EmbeddedResource Include="IncrementarStock.resx">
       <DependentUpon>IncrementarStock.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IvaForm.resx">
+      <DependentUpon>IvaForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LiquidaDivida.resx">
       <DependentUpon>LiquidaDivida.cs</DependentUpon>
     </EmbeddedResource>
@@ -677,6 +693,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TransferenciaArmazem.resx">
       <DependentUpon>TransferenciaArmazem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UnidadeForm.resx">
+      <DependentUpon>UnidadeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserForm.resx">
       <DependentUpon>UserForm.cs</DependentUpon>
@@ -756,8 +775,12 @@
     <Content Include="Files\loadImage.png" />
     <Content Include="Files\remove.png" />
     <Content Include="Files\Smart_Entity.png" />
+    <Content Include="Files\tax.png" />
     <Content Include="Files\transfer.png" />
     <Content Include="Files\warehouse.png" />
+    <None Include="Resources\icons8-diversity-50.png" />
+    <None Include="Resources\icons8-tax-64.png" />
+    <None Include="Resources\tax.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
