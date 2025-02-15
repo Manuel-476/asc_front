@@ -27,16 +27,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AscFrontEnd.DTOs.Regiao;
+using AscFrontEnd.DTOs.Funcionario;
 
 namespace AscFrontEnd
 {
     public partial class CarregamentoForm : Form
     {
         int processValue = 0;
-        public CarregamentoForm()
+        UserDTO _user;
+
+        public CarregamentoForm(UserDTO user)
         {
+            _user = user;
             InitializeComponent();
         }
+
 
         private async void CarregamentoForm_Load(object sender, EventArgs e)
         {
@@ -298,7 +303,7 @@ namespace AscFrontEnd
                     var contentRe = await responseRe.Content.ReadAsStringAsync();
                     StaticProperty.recibos = JsonConvert.DeserializeObject<List<ReciboDTO>>(contentRe);
 
-                    processValue += 5;
+                    processValue += 4;
                 }
 
 
@@ -423,6 +428,18 @@ namespace AscFrontEnd
                     var contentFuncionario = await responseFuncionario.Content.ReadAsStringAsync();
 
                     StaticProperty.funcionarios = JsonConvert.DeserializeObject<List<FuncionarioDTO>>(contentFuncionario);
+
+                    processValue += 1;
+                }
+
+                // Permissoes
+                var responsePermissions = await client.GetAsync($"https://localhost:7200/api/Funcionario/Permissions");
+
+                if (responsePermissions.IsSuccessStatusCode)
+                {
+                    var contentPermissions = await responsePermissions.Content.ReadAsStringAsync();
+
+                    StaticProperty.permissions = JsonConvert.DeserializeObject<List<UserPermissionsDTO>>(contentPermissions);
 
                     processValue += 1;
                 }
@@ -552,7 +569,7 @@ namespace AscFrontEnd
 
                 this.Hide();
 
-                MenuPrincipal menuForm = new MenuPrincipal();
+                MenuPrincipal menuForm = new MenuPrincipal(_user);
                 menuForm.ShowDialog();
             }
         }

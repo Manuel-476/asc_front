@@ -270,6 +270,8 @@
     </Compile>
     <Compile Include="DTOs\Artigo\IvaDTO.cs" />
     <Compile Include="DTOs\Artigo\MotivosIsencaoIvaDTO.cs" />
+    <Compile Include="DTOs\Funcionario\RelationUserPermissionDTO.cs" />
+    <Compile Include="DTOs\Funcionario\UserPermissionsDTO.cs" />
     <Compile Include="DTOs\Regiao\PaisDTO.cs" />
     <Compile Include="DTOs\Artigo\UnidadeDTO.cs" />
     <Compile Include="DTOs\Compra\CotacaoArtigoDTO.cs" />

@@ -33,7 +33,7 @@ namespace AscFrontEnd
                 dt.Columns.Add("localizacao", typeof(string));
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.clientes.Where(x => x.empresaid == StaticProperty.empresaId && x.status == DTOs.Enums.Enums.Status.activo))
+                foreach (var item in StaticProperty.clientes.Where(x => x.empresaid == StaticProperty.empresaId && x.id != 1 && x.status == DTOs.Enums.Enums.Status.activo))
                 {
                     dt.Rows.Add(item.id, item.nome_fantasia, item.email,item.nif,item.pessoa,item.localizacao);
 
@@ -75,6 +75,12 @@ namespace AscFrontEnd
         {
             try
             {
+                if (checkDesconhecido.Checked) 
+                {
+                    StaticProperty.entityId = 1;
+                    return;
+                }
+
                 if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
                 {
                     // Obtém o valor da célula clicada
@@ -93,6 +99,14 @@ namespace AscFrontEnd
         private void tabelaCliente_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkDesconhecido.Checked) 
+            {
+                StaticProperty.entityId = 1;
+            }
         }
     }
 }

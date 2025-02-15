@@ -37,11 +37,11 @@ namespace AscFrontEnd.DTOs.StaticsDto
         public static List<ClienteDTO> clientes { get; set; }
         public static List<ClienteFilialDTO> clienteFiliais { get; set; }
 
-        //Fornecedor
+        // Fornecedor
         public static List<FornecedorDTO> fornecedores { get; set; }
         public static List<FornecedorFilialDTO> fornFilais { get; set; }
 
-        //Artigo
+        // Artigo
         public static List<ArtigoDTO> artigos { get; set; }
         public static List<FamiliaArtigoDTO> familias { get; set; }
         public static List<SubFamiliaDTO> subFamilias { get; set; }
@@ -109,5 +109,9 @@ namespace AscFrontEnd.DTOs.StaticsDto
         // Empresa
         public static List<EmpresaDTO> empresas { get; set; }
         public static EmpresaDTO empresa { get; set; }
+
+        // Permissions
+        public static List<UserPermissionsDTO> permissions { get; set; }
+        public static List<RelationUserPermissionDTO> relationUserPermissions { get; set; }
     }
 }

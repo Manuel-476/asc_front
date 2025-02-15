@@ -1,4 +1,7 @@
-﻿using AscFrontEnd.Files;
+﻿using AscFrontEnd.DTOs.Funcionario;
+using AscFrontEnd.DTOs.StaticsDto;
+using AscFrontEnd.Files;
+using DocumentFormat.OpenXml;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,10 +16,13 @@ namespace AscFrontEnd
 {
     public partial class MenuPrincipal : Form
     {
-        public MenuPrincipal()
+        UserDTO _user;
+        public MenuPrincipal(UserDTO user)
         {
+            _user = user;
             InitializeComponent();
         }
+
 
         private void fornecedorToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -119,5 +125,31 @@ namespace AscFrontEnd
         {
             new  FormaPagamentoForm().ShowDialog();
         }
+
+        private void MenuPrincipal_Load(object sender, EventArgs e)
+        {
+            this.ApagarTodosTools();
+
+            foreach (var item in _user.userPermissions) 
+            {
+                if(StaticProperty.permissions.Where(x => x.Id == item.permissionId).Any()) 
+                {
+                    var permission = StaticProperty.permissions.Where(x => x.Id == item.permissionId).First();
+                    if (string.Compare(permission.descricao, "Criar e editar pedidos de venda.",true) == 0)
+                    {
+                        vendaToolStripMenuItem.Visible = true;
+                    }
+                }
+            }
+        }
+
+        public bool ApagarTodosTools() 
+        {
+            vendaToolStripMenuItem.Visible = false;
+
+            return true;
+        }
     }
 }
+
+

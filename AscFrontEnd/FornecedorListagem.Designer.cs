@@ -34,6 +34,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.checkDesconhecido = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaFornecedor)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -99,11 +100,24 @@
             this.label8.TabIndex = 29;
             this.label8.Text = "Fornecedor";
             // 
+            // checkDesconhecido
+            // 
+            this.checkDesconhecido.AutoSize = true;
+            this.checkDesconhecido.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkDesconhecido.Location = new System.Drawing.Point(600, 109);
+            this.checkDesconhecido.Name = "checkDesconhecido";
+            this.checkDesconhecido.Size = new System.Drawing.Size(170, 21);
+            this.checkDesconhecido.TabIndex = 32;
+            this.checkDesconhecido.Text = "Cliente Desconhecido";
+            this.checkDesconhecido.UseVisualStyleBackColor = true;
+            this.checkDesconhecido.CheckedChanged += new System.EventHandler(this.checkDesconhecido_CheckedChanged);
+            // 
             // FornecedorListagem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 429);
+            this.Controls.Add(this.checkDesconhecido);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pesqText);
@@ -131,5 +145,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckBox checkDesconhecido;
     }
 }

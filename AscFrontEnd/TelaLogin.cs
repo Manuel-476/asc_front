@@ -38,7 +38,7 @@ namespace AscFrontEnd
 
         private async void textBox1_TextChanged(object sender, EventArgs e)
         {
-
+            try { 
             user = new UserDTO() { user_name = nomeUsuariotxt.Text, password = senhaUsuariotxt.Text };
 
             if (!string.IsNullOrWhiteSpace(nomeUsuariotxt.Text.ToString()) && !string.IsNullOrWhiteSpace(senhaUsuariotxt.Text.ToString()))
@@ -66,6 +66,7 @@ namespace AscFrontEnd
                             {
                                 StaticProperty.funcionarioId = userResult.user.funcionarioid;
                                 StaticProperty.empresaId = funcionario.empresaid;
+                                StaticProperty.relationUserPermissions = userResult.user.userPermissions as List<RelationUserPermissionDTO>;
                             }
 
                         }
@@ -81,53 +82,59 @@ namespace AscFrontEnd
                         }
                         else
                         {
-                            new CarregamentoForm().ShowDialog();
+                            new CarregamentoForm(userResult.user).ShowDialog();
                         }
 
                     }
                 }
-
                 else
                 {
                     return;
                     MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
                 }
+             }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erro ao logar", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Error);
             }
         }
 
         private async void senhaUsuariotxt_TextChanged(object sender, EventArgs e)
         {
-            
-           user = new UserDTO() { user_name = nomeUsuariotxt.Text, password = senhaUsuariotxt.Text };
-
-            if (!string.IsNullOrWhiteSpace(nomeUsuariotxt.Text.ToString()) && !string.IsNullOrWhiteSpace(senhaUsuariotxt.Text.ToString()))
+            try
             {
-                json = JsonSerializer.Serialize(user);
-                
-                HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Funcionario/User/Login", new StringContent(json, Encoding.UTF8, "application/json"));
-                if (response.IsSuccessStatusCode)
+                user = new UserDTO() { user_name = nomeUsuariotxt.Text, password = senhaUsuariotxt.Text };
+
+                if (!string.IsNullOrWhiteSpace(nomeUsuariotxt.Text.ToString()) && !string.IsNullOrWhiteSpace(senhaUsuariotxt.Text.ToString()))
                 {
-                    var content = await response.Content.ReadAsStringAsync();
+                    json = JsonSerializer.Serialize(user);
 
-                    UserResult userResult = Newtonsoft.Json.JsonConvert.DeserializeObject<UserResult>(content);
-
-                    using (HttpClient client = new HttpClient())
+                    HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Funcionario/User/Login", new StringContent(json, Encoding.UTF8, "application/json"));
+                    if (response.IsSuccessStatusCode)
                     {
-                        // Adiciona o token JWT no cabeçalho
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userResult.token);
+                        var content = await response.Content.ReadAsStringAsync();
+
+                        UserResult userResult = Newtonsoft.Json.JsonConvert.DeserializeObject<UserResult>(content);
+
+                        using (HttpClient client = new HttpClient())
+                        {
+                            // Adiciona o token JWT no cabeçalho
+                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userResult.token);
 
                             try
                             {
-                                        var responseFuncionario = await client.GetAsync($"https://localhost:7200/api/Funcionario/{userResult.user.funcionarioid}");
-                                        var contentFuncionario = await responseFuncionario.Content.ReadAsStringAsync();
-                                        var funcionario = Newtonsoft.Json.JsonConvert.DeserializeObject<FuncionarioDTO>(contentFuncionario);
+                                var responseFuncionario = await client.GetAsync($"https://localhost:7200/api/Funcionario/{userResult.user.funcionarioid}");
+                                var contentFuncionario = await responseFuncionario.Content.ReadAsStringAsync();
+                                var funcionario = Newtonsoft.Json.JsonConvert.DeserializeObject<FuncionarioDTO>(contentFuncionario);
 
-                                        if (responseFuncionario != null)
-                                        {
-                                            StaticProperty.funcionarioId = userResult.user.funcionarioid;
-                                            StaticProperty.empresaId = funcionario.empresaid;
-                                        }
-                                
+                                if (responseFuncionario != null)
+                                {
+                                    StaticProperty.funcionarioId = userResult.user.funcionarioid;
+                                    StaticProperty.empresaId = funcionario.empresaid;
+                                    StaticProperty.relationUserPermissions = userResult.user.userPermissions as List<RelationUserPermissionDTO>;
+                                }
+
                             }
                             catch { return; }
 
@@ -141,18 +148,23 @@ namespace AscFrontEnd
                             }
                             else
                             {
-                                new CarregamentoForm().ShowDialog();
+                                new CarregamentoForm(userResult.user).ShowDialog();
                             }
-                        
+
+                        }
+                    }
+
+                    else
+                    {
+                        return;
+                        MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
                     }
                 }
 
-                else
-                {
-                    return;
-                    MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
-                }
-                
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message,"Erro ao logar",MessageBoxButtons.YesNoCancel,MessageBoxIcon.Error);
             }
         }
 

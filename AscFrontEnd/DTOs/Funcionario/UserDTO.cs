@@ -17,6 +17,7 @@ namespace AscFrontEnd.DTOs.Funcionario
         public string salt { get; set; } = string.Empty;
         public int funcionarioid { get; set; }
         public OpcaoBinaria state { get; set; }
+        public ICollection<RelationUserPermissionDTO> userPermissions { get; set; }
     }
 
     public class UserResult

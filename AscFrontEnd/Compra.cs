@@ -504,8 +504,14 @@ namespace AscFrontEnd
             {
                 if (StaticProperty.entityId <= 0)
                 {
-                    MessageBox.Show("Precisas Selecionar o Fornecedor", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
+                    if (MessageBox.Show("Precisas Selecionar o fornecedor, caso o contrario o fornecedor passará como desconhecido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information) == DialogResult.OK)
+                    {
+                        StaticProperty.entityId = 1;
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
                 if (artigoId <= 0)
                 {

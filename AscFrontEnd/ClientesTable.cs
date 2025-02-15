@@ -41,7 +41,7 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.clientes.Where(c=>c.status == Status.activo && c.empresaid == StaticProperty.empresaId))
+                foreach (var item in StaticProperty.clientes.Where(c=>c.status == Status.activo && c.id != 1 && c.empresaid == StaticProperty.empresaId))
                 {
                     dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
 

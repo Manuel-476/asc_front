@@ -36,7 +36,7 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.fornecedores.Where(f=>f.status == DTOs.Enums.Enums.Status.activo && f.empresaid == StaticProperty.empresaId))
+                foreach (var item in StaticProperty.fornecedores.Where(f=>f.status == DTOs.Enums.Enums.Status.activo && f.id != 1 && f.empresaid == StaticProperty.empresaId))
                 {
                     dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
 
@@ -48,6 +48,12 @@ namespace AscFrontEnd
 
         private void tabelaFornecedor_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (checkDesconhecido.Checked)
+            {
+                StaticProperty.entityId = 1;
+                return;
+            }
+
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 // Obtém o valor da célula clicada
@@ -81,6 +87,14 @@ namespace AscFrontEnd
                     tabelaFornecedor.DataSource = dt;
                 }
             
+        }
+
+        private void checkDesconhecido_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkDesconhecido.Checked)
+            {
+                StaticProperty.entityId = 1;
+            }
         }
     }
 }
