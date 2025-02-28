@@ -38,6 +38,7 @@
             this.titulo = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.infoLabel = new System.Windows.Forms.Label();
+            this.linkPermissions = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -110,11 +111,11 @@
             // titulo
             // 
             this.titulo.AutoSize = true;
-            this.titulo.Font = new System.Drawing.Font("Arial Narrow", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titulo.ForeColor = System.Drawing.Color.White;
             this.titulo.Location = new System.Drawing.Point(46, 22);
             this.titulo.Name = "titulo";
-            this.titulo.Size = new System.Drawing.Size(257, 31);
+            this.titulo.Size = new System.Drawing.Size(318, 31);
             this.titulo.TabIndex = 10;
             this.titulo.Text = "Credenciais De Acesso";
             // 
@@ -134,12 +135,25 @@
             // infoLabel
             // 
             this.infoLabel.AutoSize = true;
-            this.infoLabel.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.infoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.infoLabel.ForeColor = System.Drawing.Color.White;
             this.infoLabel.Location = new System.Drawing.Point(48, 53);
             this.infoLabel.Name = "infoLabel";
             this.infoLabel.Size = new System.Drawing.Size(0, 20);
             this.infoLabel.TabIndex = 12;
+            // 
+            // linkPermissions
+            // 
+            this.linkPermissions.AutoSize = true;
+            this.linkPermissions.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkPermissions.ForeColor = System.Drawing.SystemColors.Control;
+            this.linkPermissions.Location = new System.Drawing.Point(347, 295);
+            this.linkPermissions.Name = "linkPermissions";
+            this.linkPermissions.Size = new System.Drawing.Size(88, 16);
+            this.linkPermissions.TabIndex = 13;
+            this.linkPermissions.TabStop = true;
+            this.linkPermissions.Text = "Permissões...";
+            this.linkPermissions.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkPermissions_LinkClicked);
             // 
             // UserForm
             // 
@@ -147,6 +161,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(800, 353);
+            this.Controls.Add(this.linkPermissions);
             this.Controls.Add(this.infoLabel);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.titulo);
@@ -157,13 +172,13 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.nomeText);
             this.Controls.Add(this.label2);
+            this.ForeColor = System.Drawing.SystemColors.Control;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "UserForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "UserFotm";
             this.Load += new System.EventHandler(this.UserForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -183,5 +198,6 @@
         private System.Windows.Forms.Label titulo;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label infoLabel;
+        private System.Windows.Forms.LinkLabel linkPermissions;
     }
 }

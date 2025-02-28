@@ -139,6 +139,55 @@ namespace AscFrontEnd
                     {
                         vendaToolStripMenuItem.Visible = true;
                     }
+                    if (string.Compare(permission.descricao, "Gerenciar clientes e contatos.", true) == 0)
+                    {
+                        clienteToolStripMenuItem1.Visible = true;
+
+                        clienteToolStripMenuItem.Visible = true;
+                    }
+                    if (string.Compare(permission.descricao, "Criar e editar pedidos de compra.", true) == 0)
+                    {
+                        compraToolStripMenuItem.Visible = true;
+                    }
+                    if (string.Compare(permission.descricao, "Gerenciar fornecedores e contratos.", true) == 0)
+                    {
+                        fornecedorToolStripMenuItem1.Visible = true;
+
+                        fornecedorToolStripMenuItem.Visible = true;
+                    }
+                    if (string.Compare(permission.descricao, "Visualizar e ajustar níveis de estoque.", true) == 0)
+                    {
+                        listaToolStripMenuItem.Visible = true;
+                    }
+                    if (string.Compare(permission.descricao, "Gerenciar contas a pagar e a receber.", true) == 0)
+                    {
+                        contaCorrenteToolStripMenuItem.Visible=true;
+                    }
+                    if (string.Compare(permission.descricao, "Criar Serie.", true) == 0)
+                    {
+                        criacaoSerieToolStripMenuItem.Visible = true;
+                    }
+                    if (string.Compare(permission.descricao, "Criar e ver fluxo de depositos Depositos.", true) == 0)
+                    {
+                        depositoToolStripMenuItem.Visible = true;
+                    }
+                    if (string.Compare(permission.descricao, "Cadastrar artigos.", true) == 0)
+                    {
+                        cadastroToolStripMenuItem.Visible = true;
+                    }
+                    if (string.Compare(_user.nivel_acesso, "Tecnico", true) == 0 || string.Compare(_user.nivel_acesso, "Administrador", true) == 0)
+                    {
+                        funcionarioToolStripMenuItem.Visible = true;         
+                    }
+                    if (string.Compare(_user.nivel_acesso, "Tecnico", true) == 0)
+                    {
+                        empresaToolStripMenuItem.Visible = true;
+                    }
+                    if (string.Compare(permission.descricao, "Gerar relatórios.", true) == 0)
+                    {
+                        relatoriosToolStripMenuItem.Visible = true;
+                    }
+                    //Gerar relatórios.
                 }
             }
         }
@@ -147,7 +196,48 @@ namespace AscFrontEnd
         {
             vendaToolStripMenuItem.Visible = false;
 
+            fornecedorToolStripMenuItem1.Visible = false;
+
+            fornecedorToolStripMenuItem.Visible = false;
+
+            clienteToolStripMenuItem1.Visible = false;
+
+            clienteToolStripMenuItem.Visible = false;
+
+            cadastroToolStripMenuItem.Visible=false;
+
+            compraToolStripMenuItem.Visible = false;
+
+            cadastroToolStripMenuItem1.Visible=false;
+
+            listaToolStripMenuItem.Visible = false;
+
+            contaCorrenteToolStripMenuItem.Visible = false;
+
+            criacaoSerieToolStripMenuItem.Visible = false;
+
+            funcionarioToolStripMenuItem.Visible = false;
+
+            empresaToolStripMenuItem.Visible = false;
+
+            bancoToolStripMenuItem.Visible = false;
+
+            caixaToolStripMenuItem.Visible = false ;
+
+            depositoToolStripMenuItem.Visible = false;
+
+            // historicoToolStripMenuItem.Visible = false;
+
+            // formaPagamentoToolStripMenuItem.Visible = false;
+
+            relatoriosToolStripMenuItem.Visible = false;
+
             return true;
+        }
+
+        private void relatoriosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new RelatorioForm(_user).ShowDialog();
         }
     }
 }

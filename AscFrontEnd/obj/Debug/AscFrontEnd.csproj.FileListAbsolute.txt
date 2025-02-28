@@ -456,3 +456,6 @@ C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontE
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.pdb
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.IvaForm.resources
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.UnidadeForm.resources
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.PermissionsForm.resources
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.UsersListaForm.resources
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.RelatorioForm.resources

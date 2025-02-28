@@ -60,7 +60,7 @@
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(778, 71);
+            this.panel1.Size = new System.Drawing.Size(794, 71);
             this.panel1.TabIndex = 1;
             // 
             // label1
@@ -107,6 +107,7 @@
             this.editarPicture.Size = new System.Drawing.Size(71, 50);
             this.editarPicture.TabIndex = 10;
             this.editarPicture.TabStop = false;
+            this.editarPicture.Click += new System.EventHandler(this.editarPicture_Click);
             this.editarPicture.MouseLeave += new System.EventHandler(this.editarPicture_MouseLeave);
             this.editarPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.editarPicture_MouseMove);
             // 

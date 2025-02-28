@@ -56,6 +56,7 @@ namespace AscFrontEnd
                 user_name = nomeText.Text,
                 password = senha.Text,
                 nivel_acesso = nivelAcesso.Text,
+                userPermissions = StaticProperty.relationUserPermissions,
             };
 
             if (string.IsNullOrEmpty(_tittle))
@@ -92,9 +93,16 @@ namespace AscFrontEnd
                 titulo.Text = _tittle;
                 infoLabel.Text = "É necessario alterar as tuas credencias para manter os teus dados em segurança\n" +
                                  "Garanta que só você tem acesso as suas credenciais!";
+
                 nivelAcesso.Dispose();
                 nivelAcessoLabel.Dispose();
+                linkPermissions.Dispose();
             }
+        }
+
+        private void linkPermissions_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            new PermissionsForm(null,DTOs.Enums.Enums.Acao.Salvar).ShowDialog();
         }
     }
 }

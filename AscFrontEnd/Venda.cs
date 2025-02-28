@@ -107,9 +107,8 @@ namespace AscFrontEnd
                 foreach (var item in StaticProperty.artigos.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
                     dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario);
-
-                    tabelaArtigos.DataSource = dt;
                 }
+                tabelaArtigos.DataSource = dt;
             }
 
             // Carregar documentos
@@ -1147,6 +1146,11 @@ namespace AscFrontEnd
 
             StaticProperty.nome = string.Empty;
             StaticProperty.entityId = 0;
+        }
+
+        private void tabelaArtigos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 

@@ -45,7 +45,11 @@ namespace AscFrontEnd
 
             List<FuncionarioPhoneDTO> phones = new List<FuncionarioPhoneDTO>();
             phones.Add(new FuncionarioPhoneDTO() { telefone=telText.Text.ToString() });
-            phones.Add(new FuncionarioPhoneDTO() { telefone = tel2Text.Text.ToString() });
+
+            if (!string.IsNullOrWhiteSpace(tel2Text.Text.ToString()))
+            {
+                phones.Add(new FuncionarioPhoneDTO() { telefone = tel2Text.Text.ToString() });
+            }
 
             FuncionarioDTO funcionario = new FuncionarioDTO()
             {
@@ -93,6 +97,7 @@ namespace AscFrontEnd
             else 
             {
                 throw new Exception("Erro ao tentar salvar");
+                return;
             }
         }
 

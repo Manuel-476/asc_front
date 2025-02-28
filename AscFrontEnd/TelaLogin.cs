@@ -66,7 +66,7 @@ namespace AscFrontEnd
                             {
                                 StaticProperty.funcionarioId = userResult.user.funcionarioid;
                                 StaticProperty.empresaId = funcionario.empresaid;
-                                StaticProperty.relationUserPermissions = userResult.user.userPermissions as List<RelationUserPermissionDTO>;
+                             //   StaticProperty.relationUserPermissions = userResult.user.userPermissions as List<RelationUserPermissionDTO>;
                             }
 
                         }
@@ -132,7 +132,7 @@ namespace AscFrontEnd
                                 {
                                     StaticProperty.funcionarioId = userResult.user.funcionarioid;
                                     StaticProperty.empresaId = funcionario.empresaid;
-                                    StaticProperty.relationUserPermissions = userResult.user.userPermissions as List<RelationUserPermissionDTO>;
+                                 //   StaticProperty.relationUserPermissions = userResult.user.userPermissions as List<RelationUserPermissionDTO>;
                                 }
 
                             }

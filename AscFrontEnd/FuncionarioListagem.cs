@@ -16,6 +16,9 @@ using System.Text.Json;
 using Color = System.Drawing.Color;
 using AscFrontEnd.DTOs.Fornecedor;
 using AscFrontEnd.DTOs;
+using AscFrontEnd.DTOs.Funcionario;
+using ERP_Buyer.Application.DTOs.Documentos;
+using Newtonsoft.Json;
 
 
 namespace AscFrontEnd
@@ -85,15 +88,15 @@ namespace AscFrontEnd
                 { 
                    var client = new HttpClient();
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                    client.BaseAddress = new Uri("https://sua-api.com/");
+                    client.BaseAddress = new Uri("https://localhost:7200/");
                    client.DefaultRequestHeaders.Accept.Clear();
                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                    // Conversão do objeto Film para JSON
-                   string json = JsonSerializer.Serialize(id);
+                   string json = System.Text.Json.JsonSerializer.Serialize(id);
 
                    // Envio dos dados para a API
-                   HttpResponseMessage response = await client.PutAsync($"https://localhost:7200/api/Funcionario/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json"));
+                   HttpResponseMessage response = await client.PutAsync($"api/Funcionario/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                    if (response.IsSuccessStatusCode)
                    {
@@ -116,7 +119,7 @@ namespace AscFrontEnd
             var client = new HttpClient();
             List<FuncionarioDTO> dados = null;
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.BaseAddress = new Uri("https://localhost:7200");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -129,7 +132,7 @@ namespace AscFrontEnd
             dt.Columns.Add("localizacao", typeof(string));
             dt.Columns.Add("Data Nascimento", typeof(string));
 
-            var response = await client.GetAsync($"https://localhost:7200/api/Funcionario/Search/{pesqText.Text}");
+            var response = await client.GetAsync($"/api/Funcionario/Search/{pesqText.Text}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -143,6 +146,42 @@ namespace AscFrontEnd
                 dt.Rows.Add(item.Id, item.Nome, item.email, item.nif, item.morada, item.data_nascimento);
 
                 dataGridView1.DataSource = dt;
+            }
+        }
+
+        private async void editarPicture_Click(object sender, EventArgs e)
+        {
+            var client = new HttpClient();
+           UserDTO user = null;
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            client.BaseAddress = new Uri("https://localhost:7200");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            // 
+
+            var response = await client.GetAsync($"/api/Funcionario/User/GetUser/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+
+                user = JsonConvert.DeserializeObject<UserDTO>(content);
+
+                if(user == null) 
+                {
+                    MessageBox.Show("Nenhum registro encontrado", "Funcionário Sem Credências de usuario", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+
+                    return;
+                }
+
+                new PermissionsForm(user, DTOs.Enums.Enums.Acao.Editar).ShowDialog();
+            }
+            else 
+            {
+                MessageBox.Show("Ocorreu um Erro","Não foi possivel acessar as permissões do funcionario",MessageBoxButtons.RetryCancel,MessageBoxIcon.Error);
+            
+                return;
             }
         }
     }

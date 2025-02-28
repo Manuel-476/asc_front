@@ -103,6 +103,7 @@
             this.tabelaArtigos.Size = new System.Drawing.Size(567, 251);
             this.tabelaArtigos.TabIndex = 2;
             this.tabelaArtigos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabelaArtigos_CellClick);
+            this.tabelaArtigos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabelaArtigos_CellContentClick);
             // 
             // label2
             // 

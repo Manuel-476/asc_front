@@ -43,6 +43,13 @@ namespace AscFrontEnd.DTOs.Enums
             destinoIvalido,
             success
         }
+        public enum Acao 
+        {
+            Salvar, 
+            Editar, 
+            Eliminar, 
+            Ler 
+        };
         public enum Actividade
         {
             cliente = 0,
