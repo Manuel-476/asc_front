@@ -120,6 +120,7 @@
             this.pictureFinanceiro.Size = new System.Drawing.Size(117, 150);
             this.pictureFinanceiro.TabIndex = 6;
             this.pictureFinanceiro.TabStop = false;
+            this.pictureFinanceiro.Click += new System.EventHandler(this.pictureFinanceiro_Click);
             this.pictureFinanceiro.MouseLeave += new System.EventHandler(this.pictureFinanceiro_MouseLeave);
             this.pictureFinanceiro.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureFinanceiro_MouseMove);
             // 
@@ -133,6 +134,7 @@
             this.pictureStock.Size = new System.Drawing.Size(117, 150);
             this.pictureStock.TabIndex = 5;
             this.pictureStock.TabStop = false;
+            this.pictureStock.Click += new System.EventHandler(this.pictureStock_Click);
             this.pictureStock.MouseLeave += new System.EventHandler(this.pictureStock_MouseLeave);
             this.pictureStock.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureStock_MouseMove);
             // 
@@ -160,6 +162,7 @@
             this.pictureVenda.Size = new System.Drawing.Size(117, 150);
             this.pictureVenda.TabIndex = 0;
             this.pictureVenda.TabStop = false;
+            this.pictureVenda.Click += new System.EventHandler(this.pictureVenda_Click);
             this.pictureVenda.MouseLeave += new System.EventHandler(this.pictureVenda_MouseLeave);
             this.pictureVenda.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureVenda_MouseMove);
             // 

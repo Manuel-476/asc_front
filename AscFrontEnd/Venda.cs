@@ -183,13 +183,13 @@ namespace AscFrontEnd
             
             if (documento.Text == "FR")
             {
-
+                //actualizar a lista de artigos
                 artigos.Clear();
                 foreach (var vendaArtigo in vendaArtigos)
                 {
                     artigos.Add(new FrArtigoDTO()
                     {
-                        artigoId = artigoId,
+                        artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id:0,
                         preco = vendaArtigo.preco,
                         qtd = vendaArtigo.qtd,
                         iva = vendaArtigo.iva
@@ -229,13 +229,13 @@ namespace AscFrontEnd
                     status = DTOs.Enums.Enums.DocState.ativo,
                     created_at = DateTime.Now.Date,
                 };
-
+                //Actualizar lista de artigos
                 ftArtigos.Clear();
                 foreach (var vendaArtigo in vendaArtigos)
                 {
                     ftArtigos.Add(new FtArtigoDTO()
                     {
-                        artigoId = artigoId,
+                        artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id : 0,
                         preco = vendaArtigo.preco,
                         qtd = vendaArtigo.qtd,
                         iva = vendaArtigo.iva,
@@ -252,12 +252,13 @@ namespace AscFrontEnd
 
             if (documento.Text == "PP")
             {
+                // Actualizar a lista de artigos
                 fpArtigos.Clear();
                 foreach (var vendaArtigo in vendaArtigos)
                 {
                     fpArtigos.Add(new FaturaProformaArtigoDTO()
                     {
-                        artigoId = artigoId,
+                        artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id : 0,
                         preco = vendaArtigo.preco,
                         iva = vendaArtigo.iva
                     });
@@ -282,12 +283,13 @@ namespace AscFrontEnd
 
             if (documento.Text == "GT")
             {
+                //Actualizar lista de artigo
                 gtArtigos.Clear();
                 foreach (var vendaArtigo in vendaArtigos)
                 {
                     gtArtigos.Add(new GtArtigoDTO()
                     {
-                        artigoId = artigoId,
+                        artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id : 0,
                         preco = vendaArtigo.preco,
                         qtd = vendaArtigo.qtd,
                         iva = vendaArtigo.iva
@@ -317,7 +319,7 @@ namespace AscFrontEnd
                 {
                     eclArtigos.Add(new EclArtigoDTO()
                     {
-                        artigoId = artigoId,
+                        artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id : 0,
                         preco = vendaArtigo.preco,
                         qtd = vendaArtigo.qtd,
                         iva = vendaArtigo.iva
@@ -349,7 +351,7 @@ namespace AscFrontEnd
                 {
                     ncArtigos.Add(new NcArtigoDTO()
                     {
-                        artigoId = artigoId,
+                        artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id : 0,
                         preco = vendaArtigo.preco,
                         qtd = vendaArtigo.qtd,
                         iva = vendaArtigo.iva
@@ -387,7 +389,7 @@ namespace AscFrontEnd
                 {
                     ndArtigos.Add(new NdArtigoDTO()
                     {
-                        artigoId = artigoId,
+                        artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id : 0,
                         preco = vendaArtigo.preco,
                         qtd = vendaArtigo.qtd,
                         iva = vendaArtigo.iva

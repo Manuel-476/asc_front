@@ -16,9 +16,19 @@ namespace AscFrontEnd
 {
     public partial class ArmazemListagem : Form
     {
-        int id;
+        int id=0;
+        bool _multi = false;
+
+        List<int> _armazemIds;
         public ArmazemListagem()
         {
+            InitializeComponent();
+        }
+        public ArmazemListagem(bool multi)
+        {
+            _multi = multi;
+
+            _armazemIds = new List<int>();
             InitializeComponent();
         }
 
@@ -38,6 +48,17 @@ namespace AscFrontEnd
                 dt.Rows.Add(item.id, item.codigo, item.descricao);
 
                 dataGridView1.DataSource = dt;
+            }
+
+            if (_multi) 
+            {
+                dataGridView1.MultiSelect = true;
+                editarPicture.Visible = false;
+                eliminarPicture.Visible = false;
+            }
+            else 
+            {
+                dataGridView1.MultiSelect= false;
             }
         }
 
@@ -92,13 +113,35 @@ namespace AscFrontEnd
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            id = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
+            try
+            {
+                string nome = string.Empty;
+
+                if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+                {
+                    // Obtém o valor da célula clicada
+                    id = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
+
+                    var idAdd = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
+
+                    nome = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
+
+                    if (!_armazemIds.Contains(idAdd))
+                    {
+                        _armazemIds.Add(idAdd);
+                    }
+                    else
+                    {
+                        _armazemIds.Remove(idAdd);
+                    }
+                }
+            }
+            catch { return; }
         }
 
         private async void eliminarPicture_Click(object sender, EventArgs e)
         {
             string nome = StaticProperty.armazens.Where(c => c.id == id).First().codigo;
-
 
             try
             {
@@ -130,7 +173,11 @@ namespace AscFrontEnd
             {
                 MessageBox.Show($"Erro ao desactivar Armazem: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
 
+        public List<int> GetArmazemIdList()
+        {
+            return _armazemIds;
         }
     }
 }

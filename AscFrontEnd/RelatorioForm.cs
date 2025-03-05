@@ -45,7 +45,7 @@ namespace AscFrontEnd
 
         private void pictureCompra_Click(object sender, EventArgs e)
         {
-
+            new RelatorioFiltros(DTOs.Enums.Enums.OpcaoBinaria.Sim, DTOs.Enums.Enums.Consulta.compra).ShowDialog();
         }
 
         private void pictureCompra_MouseLeave(object sender, EventArgs e)
@@ -115,6 +115,21 @@ namespace AscFrontEnd
             pictureFinanceiro.Enabled = false;
 
             return true;
+        }
+
+        private void pictureVenda_Click(object sender, EventArgs e)
+        {
+            new RelatorioFiltros(DTOs.Enums.Enums.OpcaoBinaria.Sim,DTOs.Enums.Enums.Consulta.venda).ShowDialog();
+        }
+
+        private void pictureStock_Click(object sender, EventArgs e)
+        {
+            new RelatorioFiltros(DTOs.Enums.Enums.OpcaoBinaria.Nao, DTOs.Enums.Enums.Consulta.stock).ShowDialog();
+        }
+
+        private void pictureFinanceiro_Click(object sender, EventArgs e)
+        {
+            new RelatorioFiltros(DTOs.Enums.Enums.OpcaoBinaria.Sim, DTOs.Enums.Enums.Consulta.financeira).ShowDialog();
         }
     }
 }

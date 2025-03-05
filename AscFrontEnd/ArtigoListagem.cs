@@ -18,30 +18,52 @@ namespace AscFrontEnd
 {
     public partial class ArtigoListagem : Form
     {
-        int id;
+        int id = 0;
+        bool _multi = false;
+        List<int> _artigoIds;
         public ArtigoListagem()
         {
             InitializeComponent();
         }
 
+        public ArtigoListagem(bool multi)
+        {
+            InitializeComponent();
+
+            _multi = multi;
+            _artigoIds = new List<int>();
+        }
+
         private async void ArtigoListagem_Load(object sender, EventArgs e)
         {
-                DataTable dt = new DataTable();
-                dt.Columns.Add("id", typeof(int));
-                dt.Columns.Add("Codigo", typeof(string));
-                dt.Columns.Add("descricao", typeof(string));
-                dt.Columns.Add("P. Unitario", typeof(string));
-                dt.Columns.Add("mov. Stock", typeof(string));
-                dt.Columns.Add("mov. Lote", typeof(string));
+            DataTable dt = new DataTable();
+            dt.Columns.Add("id", typeof(int));
+            dt.Columns.Add("Codigo", typeof(string));
+            dt.Columns.Add("descricao", typeof(string));
+            dt.Columns.Add("P. Unitario", typeof(string));
+            dt.Columns.Add("mov. Stock", typeof(string));
+            dt.Columns.Add("mov. Lote", typeof(string));
 
 
-                // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.artigos.Where(x => x.empresaId == StaticProperty.empresaId))
-                {
-                    dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario, item.mov_stock, item.mov_lote);
+            // Adicionando linhas ao DataTable
+            foreach (var item in StaticProperty.artigos.Where(x => x.empresaId == StaticProperty.empresaId))
+            {
+                dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario, item.mov_stock, item.mov_lote);
 
-                    dataGridView1.DataSource = dt;
-                }
+                dataGridView1.DataSource = dt;
+            }
+
+            if (_multi)
+            {
+                editarPicture.Visible = false;
+                eliminarPicture.Visible = false;
+
+                dataGridView1.MultiSelect = true;
+            }
+            else 
+            {
+                dataGridView1.MultiSelect = false;
+            }
 
                 editarPicture.Enabled = false;
         }
@@ -114,10 +136,25 @@ namespace AscFrontEnd
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            try {
+            try
+            {
                 id = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
 
-                if(StaticProperty.frs.Where(x=>x.frArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() == null &&
+                if (_multi)
+                {
+                    var id = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
+
+                    if (!_artigoIds.Contains(id))
+                    {
+                        _artigoIds.Add(id);
+                    }
+                    else
+                    {
+                        _artigoIds.Remove(id);
+                    }
+                }
+
+                if (StaticProperty.frs.Where(x => x.frArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() == null &&
                    StaticProperty.fts.Where(x => x.ftArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() == null &&
                    StaticProperty.fps.Where(x => x.fpArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() == null &&
                    StaticProperty.ecls.Where(x => x.eclArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() != null &&
@@ -125,13 +162,15 @@ namespace AscFrontEnd
                    StaticProperty.vfts.Where(x => x.vftArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() != null &&
                    StaticProperty.ecfs.Where(x => x.ecfArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() != null &&
                    StaticProperty.cots.Where(x => x.cArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() != null &&
-                   StaticProperty.pcos.Where(x => x.pcArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() != null )
+                   StaticProperty.pcos.Where(x => x.pcArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() != null)
                 {
                     editarPicture.Enabled = true;
                 }
                 else { editarPicture.Enabled = false; }
+
+
             }
-            catch { return; } 
+            catch { return; }
         }
 
         private void editarPicture_Click(object sender, EventArgs e)
@@ -172,6 +211,15 @@ namespace AscFrontEnd
             {
                 throw new Exception($"Ocorreu um erro ao desactivar o artigo: {ex.Message}");
             }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+        public List<int> GetArtigoIdList()
+        {
+            return _artigoIds;
         }
     }
 }

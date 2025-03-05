@@ -50,6 +50,16 @@ namespace AscFrontEnd.DTOs.Enums
             Eliminar, 
             Ler 
         };
+
+        public enum Consulta
+        {
+            venda = 0,
+            compra,
+            stock,
+            conta_corrente,
+            financeira
+        };
+
         public enum Actividade
         {
             cliente = 0,

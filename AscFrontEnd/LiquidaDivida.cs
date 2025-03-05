@@ -63,9 +63,6 @@ namespace AscFrontEnd
 
         private async void LiquidaDivida_Load(object sender, EventArgs e)
         {
-            
-            
-
             dados = StaticProperty.artigos;
             
 

@@ -29,13 +29,20 @@ namespace AscFrontEnd
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            try { 
-            int armazemId  = StaticProperty.armazens.Where(arm=>arm.codigo == armazemCombo.Text.ToString()).First().id;
+            try {
+                int armazemId = 0;
+                if (checkBox1.Checked)
+                {
+                    if (StaticProperty.armazens.Where(arm => arm.codigo == armazemCombo.Text.ToString()).Any())
+                    {
+                        armazemId = StaticProperty.armazens.Where(arm => arm.codigo == armazemCombo.Text.ToString()).First().id;
+                    }
+                }
+   
 
-            
 
-            
-            var artigo = new ArtigoDTO()
+
+                var artigo = new ArtigoDTO()
             {
               codigo = codigotxt.Text,
               armazemId = armazemId,
@@ -54,7 +61,7 @@ namespace AscFrontEnd
               unidadeVenda = comboUnVenda.Text,
               regimeIva = regimeIva,
               codigoIva = codigoIva,
-              iva = float.Parse(ivaCombo.Text),
+              iva = string.IsNullOrEmpty(ivaCombo.Text)?0:float.Parse(ivaCombo.Text),
               empresaId = StaticProperty.empresaId,
             };
 

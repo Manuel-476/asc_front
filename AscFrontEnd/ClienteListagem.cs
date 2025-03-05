@@ -1,5 +1,6 @@
 ﻿using AscFrontEnd.DTOs.Cliente;
 using AscFrontEnd.DTOs.StaticsDto;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,19 @@ namespace AscFrontEnd
 {
     public partial class ClienteListagem : Form
     {
+        bool _multi = false;
+        List<int> _clienteIds;
         public ClienteListagem()
         {
             InitializeComponent();
+         
+        }
+        public ClienteListagem(bool multi)
+        {
+            InitializeComponent();
+
+            _multi = multi;
+            _clienteIds = new List<int>();
         }
 
         private async void ClienteListagem_Load(object sender, EventArgs e)
@@ -38,6 +49,25 @@ namespace AscFrontEnd
                     dt.Rows.Add(item.id, item.nome_fantasia, item.email,item.nif,item.pessoa,item.localizacao);
 
                     tabelaCliente.DataSource = dt;
+                }
+
+                if(StaticProperty.entityId == 1) 
+                {
+                checkDesconhecido.Checked = true;
+                }
+                else 
+                {
+                   checkDesconhecido.Checked = false;
+                }
+
+                if (_multi) 
+                {
+                   tabelaCliente.MultiSelect = true;
+                  checkDesconhecido.Visible = false;
+                }
+                else
+                {
+                  tabelaCliente.MultiSelect= false;
                 }
         }
 
@@ -75,23 +105,38 @@ namespace AscFrontEnd
         {
             try
             {
-                if (checkDesconhecido.Checked) 
-                {
-                    StaticProperty.entityId = 1;
-                    return;
-                }
+                string id = string.Empty;
+                string nome = string.Empty;
 
                 if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
                 {
                     // Obtém o valor da célula clicada
-                    string id = tabelaCliente.Rows[e.RowIndex].Cells[0].Value.ToString();
-                    string nome = tabelaCliente.Rows[e.RowIndex].Cells[1].Value.ToString();
+                     id = tabelaCliente.Rows[e.RowIndex].Cells[0].Value.ToString();
+                     nome = tabelaCliente.Rows[e.RowIndex].Cells[1].Value.ToString();
+                }
+
+                if (!_multi)
+                {
+                    if (checkDesconhecido.Checked) 
+                    {
+                        checkDesconhecido.Checked = false;                  
+                    }
 
                     StaticProperty.entityId = int.Parse(id);
                     StaticProperty.nome = nome;
+                    this.Close();
                 }
-
-                this.Close();
+                else 
+                {
+                    if (!_clienteIds.Contains(int.Parse(id))) 
+                    {
+                        _clienteIds.Add(int.Parse(id));
+                    }
+                    else 
+                    {
+                        _clienteIds.Remove(int.Parse(id));
+                    }
+                }
             }
             catch { return; }
         }
@@ -107,6 +152,16 @@ namespace AscFrontEnd
             {
                 StaticProperty.entityId = 1;
             }
+        }
+
+        private void tabelaCliente_MultiSelectChanged(object sender, EventArgs e)
+        {
+           // MessageBox.Show("Estou funcionando");
+        }
+
+        public List<int> GetClienteIdList() 
+        {
+            return _clienteIds;
         }
     }
 }

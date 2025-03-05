@@ -49,6 +49,7 @@
             this.tabelaCliente.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tabelaCliente.Size = new System.Drawing.Size(772, 253);
             this.tabelaCliente.TabIndex = 0;
+            this.tabelaCliente.MultiSelectChanged += new System.EventHandler(this.tabelaCliente_MultiSelectChanged);
             this.tabelaCliente.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabelaCliente_CellClick);
             this.tabelaCliente.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabelaCliente_CellContentClick);
             // 

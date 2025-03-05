@@ -17,15 +17,23 @@ namespace AscFrontEnd
 {
     public partial class FornecedorListagem : Form
     {
+        bool _multi = false;
+        List<int> _fornecedorIds;
         public FornecedorListagem()
         {
             InitializeComponent();
         }
+        public FornecedorListagem(bool multi)
+        {
+            InitializeComponent();
+
+            _multi = multi;
+
+            _fornecedorIds = new List<int>();
+        }
 
         private async void FornecedorListagem_Load(object sender, EventArgs e)
         {
-
-
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Nome", typeof(string));
@@ -42,29 +50,67 @@ namespace AscFrontEnd
 
                     tabelaFornecedor.DataSource = dt;
                 }
-            
+
+            if (StaticProperty.entityId == 1)
+            {
+                checkDesconhecido.Checked = true;
+            }
+            else
+            {
+                checkDesconhecido.Checked = false;
+            }
+
+            if (_multi)
+            {
+                tabelaFornecedor.MultiSelect = true;
+                checkDesconhecido.Visible = false;
+            }
+            else
+            {
+                tabelaFornecedor.MultiSelect = false;
+            }
         }
 
 
         private void tabelaFornecedor_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (checkDesconhecido.Checked)
+            try
             {
-                StaticProperty.entityId = 1;
-                return;
+                string id = string.Empty;
+                string nome = string.Empty;
+
+                if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+                {
+                    // Obtém o valor da célula clicada
+                    id = tabelaFornecedor.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    nome = tabelaFornecedor.Rows[e.RowIndex].Cells[1].Value.ToString();
+                }
+
+                if (!_multi)
+                {
+                    if (checkDesconhecido.Checked)
+                    {
+                        checkDesconhecido.Checked = false;
+                    }
+
+                    StaticProperty.entityId = int.Parse(id);
+                    StaticProperty.nome = nome;
+
+                    this.Close();
+                }
+                else
+                {
+                    if (!_fornecedorIds.Contains(int.Parse(id)))
+                    {
+                        _fornecedorIds.Add(int.Parse(id));
+                    }
+                    else
+                    {
+                        _fornecedorIds.Remove(int.Parse(id));
+                    }
+                }
             }
-
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
-            {
-                // Obtém o valor da célula clicada
-                string id = tabelaFornecedor.Rows[e.RowIndex].Cells[0].Value.ToString();
-                string nome = tabelaFornecedor.Rows[e.RowIndex].Cells[1].Value.ToString();
-
-                StaticProperty.entityId = int.Parse(id);
-                StaticProperty.nome = nome;
-            }
-
-            this.Close();
+            catch { return; }
         }
 
         private async void pesqText_TextChanged(object sender, EventArgs e)
@@ -95,6 +141,11 @@ namespace AscFrontEnd
             {
                 StaticProperty.entityId = 1;
             }
+        }
+
+        public List<int> GetFornecedorIdList()
+        {
+            return _fornecedorIds;
         }
     }
 }

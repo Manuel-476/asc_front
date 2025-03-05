@@ -270,6 +270,7 @@
     </Compile>
     <Compile Include="DTOs\Artigo\IvaDTO.cs" />
     <Compile Include="DTOs\Artigo\MotivosIsencaoIvaDTO.cs" />
+    <Compile Include="DTOs\Compra\CompraDTO.cs" />
     <Compile Include="DTOs\Funcionario\RelationUserPermissionDTO.cs" />
     <Compile Include="DTOs\Funcionario\UserPermissionsDTO.cs" />
     <Compile Include="DTOs\Regiao\PaisDTO.cs" />
@@ -342,6 +343,7 @@
     <Compile Include="DTOs\Venda\NcDTO.cs" />
     <Compile Include="DTOs\Venda\NdArtigoDTO.cs" />
     <Compile Include="DTOs\Venda\NdDTO.cs" />
+    <Compile Include="DTOs\Venda\VendaDTO.cs" />
     <Compile Include="EmpresaForm.cs">
       <SubType>Form</SubType>
     </Compile>

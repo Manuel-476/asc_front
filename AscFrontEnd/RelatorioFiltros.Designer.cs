@@ -29,27 +29,36 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dataInicioCombo = new System.Windows.Forms.DateTimePicker();
             this.dataFinalCombo = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.artigoList = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.armazemList = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.entidadeList = new System.Windows.Forms.Label();
             this.documentoCombo = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.btnImprimir = new System.Windows.Forms.Button();
             this.btnArmazem = new System.Windows.Forms.Button();
             this.btnEntidade = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btnArtigo = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.documentoList = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -63,6 +72,16 @@
             this.panel1.TabIndex = 4;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::AscFrontEnd.Properties.Resources.relatorio_de_noticias;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(30, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(97, 90);
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -74,16 +93,6 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Relatórios";
             this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = global::AscFrontEnd.Properties.Resources.relatorio_de_noticias;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(30, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(97, 90);
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
             // 
             // label2
             // 
@@ -151,10 +160,74 @@
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.groupBox2.Location = new System.Drawing.Point(12, 269);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(568, 171);
+            this.groupBox2.Size = new System.Drawing.Size(568, 187);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Periodo";
+            this.groupBox2.Text = "Documento";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.artigoList);
+            this.groupBox5.Location = new System.Drawing.Point(394, 97);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(158, 84);
+            this.groupBox5.TabIndex = 12;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Artigo";
+            // 
+            // artigoList
+            // 
+            this.artigoList.AutoSize = true;
+            this.artigoList.Location = new System.Drawing.Point(6, 21);
+            this.artigoList.Name = "artigoList";
+            this.artigoList.Size = new System.Drawing.Size(0, 17);
+            this.artigoList.TabIndex = 0;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.armazemList);
+            this.groupBox4.Location = new System.Drawing.Point(216, 97);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(158, 84);
+            this.groupBox4.TabIndex = 11;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Armazem";
+            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
+            // 
+            // armazemList
+            // 
+            this.armazemList.AutoSize = true;
+            this.armazemList.Location = new System.Drawing.Point(7, 21);
+            this.armazemList.Name = "armazemList";
+            this.armazemList.Size = new System.Drawing.Size(0, 17);
+            this.armazemList.TabIndex = 0;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.entidadeList);
+            this.groupBox3.Location = new System.Drawing.Point(19, 91);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(175, 90);
+            this.groupBox3.TabIndex = 10;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Entidade";
+            // 
+            // entidadeList
+            // 
+            this.entidadeList.AutoSize = true;
+            this.entidadeList.Location = new System.Drawing.Point(7, 25);
+            this.entidadeList.Name = "entidadeList";
+            this.entidadeList.Size = new System.Drawing.Size(0, 17);
+            this.entidadeList.TabIndex = 0;
+            // 
+            // documentoCombo
+            // 
+            this.documentoCombo.FormattingEnabled = true;
+            this.documentoCombo.Location = new System.Drawing.Point(19, 60);
+            this.documentoCombo.Name = "documentoCombo";
+            this.documentoCombo.Size = new System.Drawing.Size(513, 25);
+            this.documentoCombo.TabIndex = 9;
+            this.documentoCombo.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -166,15 +239,6 @@
             this.label4.Size = new System.Drawing.Size(84, 17);
             this.label4.TabIndex = 5;
             this.label4.Text = "Documento";
-            // 
-            // documentoCombo
-            // 
-            this.documentoCombo.FormattingEnabled = true;
-            this.documentoCombo.Location = new System.Drawing.Point(19, 60);
-            this.documentoCombo.Name = "documentoCombo";
-            this.documentoCombo.Size = new System.Drawing.Size(513, 25);
-            this.documentoCombo.TabIndex = 9;
-            this.documentoCombo.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // btnImprimir
             // 
@@ -188,17 +252,19 @@
             this.btnImprimir.TabIndex = 11;
             this.btnImprimir.Text = "Imprimir";
             this.btnImprimir.UseVisualStyleBackColor = false;
+            this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
             // 
             // btnArmazem
             // 
             this.btnArmazem.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.btnArmazem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnArmazem.Location = new System.Drawing.Point(611, 190);
+            this.btnArmazem.Location = new System.Drawing.Point(611, 231);
             this.btnArmazem.Name = "btnArmazem";
             this.btnArmazem.Size = new System.Drawing.Size(197, 37);
             this.btnArmazem.TabIndex = 12;
             this.btnArmazem.Text = "Selecionar Armazem";
             this.btnArmazem.UseVisualStyleBackColor = false;
+            this.btnArmazem.Click += new System.EventHandler(this.btnArmazem_Click);
             // 
             // btnEntidade
             // 
@@ -209,54 +275,47 @@
             this.btnEntidade.Name = "btnEntidade";
             this.btnEntidade.Size = new System.Drawing.Size(197, 37);
             this.btnEntidade.TabIndex = 13;
-            this.btnEntidade.Text = "Selecionar Cliente";
+            this.btnEntidade.Text = "Selecionar Entidade";
             this.btnEntidade.UseVisualStyleBackColor = false;
+            this.btnEntidade.Click += new System.EventHandler(this.btnEntidade_Click);
             // 
-            // button1
+            // btnArtigo
             // 
-            this.button1.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(611, 247);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(197, 37);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "Selecionar Localização";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnArtigo.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.btnArtigo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnArtigo.Location = new System.Drawing.Point(611, 178);
+            this.btnArtigo.Name = "btnArtigo";
+            this.btnArtigo.Size = new System.Drawing.Size(197, 37);
+            this.btnArtigo.TabIndex = 14;
+            this.btnArtigo.Text = "Selecionar Artigo";
+            this.btnArtigo.UseVisualStyleBackColor = false;
+            this.btnArtigo.Click += new System.EventHandler(this.btnArtigo_Click);
             // 
-            // groupBox3
+            // groupBox6
             // 
-            this.groupBox3.Location = new System.Drawing.Point(19, 91);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(175, 74);
-            this.groupBox3.TabIndex = 10;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Entidade";
+            this.groupBox6.Controls.Add(this.documentoList);
+            this.groupBox6.Location = new System.Drawing.Point(611, 316);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(197, 124);
+            this.groupBox6.TabIndex = 11;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Documentos Selecionados";
             // 
-            // groupBox4
+            // documentoList
             // 
-            this.groupBox4.Location = new System.Drawing.Point(216, 97);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(158, 68);
-            this.groupBox4.TabIndex = 11;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Armazem";
-            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Location = new System.Drawing.Point(394, 97);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(158, 68);
-            this.groupBox5.TabIndex = 12;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Localização";
+            this.documentoList.AutoSize = true;
+            this.documentoList.Location = new System.Drawing.Point(7, 20);
+            this.documentoList.Name = "documentoList";
+            this.documentoList.Size = new System.Drawing.Size(0, 14);
+            this.documentoList.TabIndex = 0;
             // 
             // RelatorioFiltros
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(839, 502);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.groupBox6);
+            this.Controls.Add(this.btnArtigo);
             this.Controls.Add(this.btnEntidade);
             this.Controls.Add(this.btnArmazem);
             this.Controls.Add(this.btnImprimir);
@@ -276,6 +335,14 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -296,9 +363,14 @@
         private System.Windows.Forms.Button btnImprimir;
         private System.Windows.Forms.Button btnArmazem;
         private System.Windows.Forms.Button btnEntidade;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnArtigo;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label documentoList;
+        private System.Windows.Forms.Label entidadeList;
+        private System.Windows.Forms.Label artigoList;
+        private System.Windows.Forms.Label armazemList;
     }
 }
