@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RelatorioFiltros));
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -51,6 +52,10 @@
             this.btnArtigo = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.documentoList = new System.Windows.Forms.Label();
+            this.printVenda = new System.Drawing.Printing.PrintDocument();
+            this.printCompra = new System.Drawing.Printing.PrintDocument();
+            this.printArmazem = new System.Drawing.Printing.PrintDocument();
+            this.printPreview = new System.Windows.Forms.PrintPreviewDialog();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -309,6 +314,20 @@
             this.documentoList.Size = new System.Drawing.Size(0, 14);
             this.documentoList.TabIndex = 0;
             // 
+            // printVenda
+            // 
+            this.printVenda.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printVenda_PrintPage);
+            // 
+            // printPreview
+            // 
+            this.printPreview.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreview.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreview.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreview.Enabled = true;
+            this.printPreview.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreview.Icon")));
+            this.printPreview.Name = "printPreview";
+            this.printPreview.Visible = false;
+            // 
             // RelatorioFiltros
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
@@ -372,5 +391,9 @@
         private System.Windows.Forms.Label entidadeList;
         private System.Windows.Forms.Label artigoList;
         private System.Windows.Forms.Label armazemList;
+        private System.Drawing.Printing.PrintDocument printVenda;
+        private System.Drawing.Printing.PrintDocument printCompra;
+        private System.Drawing.Printing.PrintDocument printArmazem;
+        private System.Windows.Forms.PrintPreviewDialog printPreview;
     }
 }
