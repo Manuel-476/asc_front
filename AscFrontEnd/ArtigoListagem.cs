@@ -26,15 +26,15 @@ namespace AscFrontEnd
             InitializeComponent();
         }
 
-        public ArtigoListagem(bool multi)
+        public ArtigoListagem(bool multi,List<int> artigoIds)
         {
             InitializeComponent();
 
             _multi = multi;
-            _artigoIds = new List<int>();
+            _artigoIds = artigoIds ?? new List<int>();
         }
 
-        private async void ArtigoListagem_Load(object sender, EventArgs e)
+        private void ArtigoListagem_Load(object sender, EventArgs e)
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("id", typeof(int));
@@ -46,22 +46,49 @@ namespace AscFrontEnd
 
 
             // Adicionando linhas ao DataTable
-            foreach (var item in StaticProperty.artigos.Where(x => x.empresaId == StaticProperty.empresaId))
-            {
-                dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario, item.mov_stock, item.mov_lote);
 
-                dataGridView1.DataSource = dt;
-            }
 
             if (_multi)
             {
                 editarPicture.Visible = false;
                 eliminarPicture.Visible = false;
 
+                // Adiciona linhas ao DataTable
+                foreach (var item in StaticProperty.artigos.Where(x => x.empresaId == StaticProperty.empresaId))
+                {
+                    dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario, item.mov_stock, item.mov_lote);
+                }
+
+                // Define o DataSource do DataGridView (fora do loop)
+                dataGridView1.DataSource = dt;
+
+                // Seleciona automaticamente as linhas cujos IDs estão em _artigoIds
+                if (_artigoIds != null && _artigoIds.Any())
+                {
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        int id = Convert.ToInt32(row.Cells["id"].Value); // Pega o valor da coluna "id"
+                        if (_artigoIds.Contains(id))
+                        {
+                            row.Selected = true; // Seleciona a linha
+                        }
+                    }
+                }
+
+                // Opcional: Garante que o DataGridView permita seleção múltipla
+                dataGridView1.MultiSelect = true;
+
                 dataGridView1.MultiSelect = true;
             }
             else 
             {
+                foreach (var item in StaticProperty.artigos.Where(x => x.empresaId == StaticProperty.empresaId))
+                {
+                    dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario, item.mov_stock, item.mov_lote);   
+                }
+
+                dataGridView1.DataSource = dt;
+
                 dataGridView1.MultiSelect = false;
             }
 
@@ -151,7 +178,7 @@ namespace AscFrontEnd
                     else
                     {
                         _artigoIds.Remove(id);
-                    }
+                     }
                 }
 
                 if (StaticProperty.frs.Where(x => x.frArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() == null &&

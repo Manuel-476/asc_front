@@ -15,6 +15,7 @@ namespace AscFrontEnd.DTOs
         public int fornecedorId { get; set; }
         public DocState status { get; set; }
         public DateTime data { get; set; }
+        public int empresaId { get; set; }
         public List<VncArtigoDTO> vncArtigo { get; set; }
         public FornecedorDTO fornecedor { get; set; }
     }

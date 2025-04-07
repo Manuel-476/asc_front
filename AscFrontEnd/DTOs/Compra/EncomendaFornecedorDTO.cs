@@ -15,6 +15,7 @@ namespace AscFrontEnd.DTOs
         public DocState status { get; set; }
         public DateTime data { get; set; }
         public DateTime created { get; set; } = DateTime.Now;
+        public int empresaId { get; set; }
         public List<EcfArtigoDTO> ecfArtigo { get; set; }
         public FornecedorDTO fornecedor { get; set; }
     }

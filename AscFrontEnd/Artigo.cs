@@ -39,9 +39,6 @@ namespace AscFrontEnd
                     }
                 }
    
-
-
-
                 var artigo = new ArtigoDTO()
             {
               codigo = codigotxt.Text,

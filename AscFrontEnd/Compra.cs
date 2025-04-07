@@ -154,6 +154,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     vfrArtigo = artigos,
+                    empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
                     created_at = DateTime.Now,
                 };
@@ -190,6 +191,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     vftArtigo = vftArtigos,
+                    empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
@@ -222,6 +224,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     vgtArtigo = vgtArtigos,
+                    empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
@@ -254,6 +257,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     ecfArtigo = ecfArtigos,
+                    empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
@@ -285,6 +289,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     vncArtigo = vncArtigos,
+                    empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
@@ -303,6 +308,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     vndArtigo = vndArtigos,
+                    empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
                 };
                 vndArtigos.Clear();
@@ -347,6 +353,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     pcArtigo = pcoArtigos,
+                    empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
                     
                 };
@@ -381,6 +388,7 @@ namespace AscFrontEnd
                     data = DateTime.Now,
                     fornecedorId = StaticProperty.entityId,
                     cArtigo = cotArtigos,
+                    empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
                 };
 

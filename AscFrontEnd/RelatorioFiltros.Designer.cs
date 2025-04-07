@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RelatorioFiltros));
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -56,6 +57,7 @@
             this.printCompra = new System.Drawing.Printing.PrintDocument();
             this.printArmazem = new System.Drawing.Printing.PrintDocument();
             this.printPreview = new System.Windows.Forms.PrintPreviewDialog();
+            this.timerRelatorio = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -318,6 +320,14 @@
             // 
             this.printVenda.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printVenda_PrintPage);
             // 
+            // printCompra
+            // 
+            this.printCompra.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printCompra_PrintPage);
+            // 
+            // printArmazem
+            // 
+            this.printArmazem.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printArmazem_PrintPage);
+            // 
             // printPreview
             // 
             this.printPreview.AutoScrollMargin = new System.Drawing.Size(0, 0);
@@ -327,6 +337,10 @@
             this.printPreview.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreview.Icon")));
             this.printPreview.Name = "printPreview";
             this.printPreview.Visible = false;
+            // 
+            // timerRelatorio
+            // 
+            this.timerRelatorio.Tick += new System.EventHandler(this.timerRelatorio_Tick);
             // 
             // RelatorioFiltros
             // 
@@ -346,6 +360,8 @@
             this.MinimizeBox = false;
             this.Name = "RelatorioFiltros";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RelatorioFiltros_FormClosing);
             this.Load += new System.EventHandler(this.RelatorioFiltros_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -395,5 +411,6 @@
         private System.Drawing.Printing.PrintDocument printCompra;
         private System.Drawing.Printing.PrintDocument printArmazem;
         private System.Windows.Forms.PrintPreviewDialog printPreview;
+        private System.Windows.Forms.Timer timerRelatorio;
     }
 }

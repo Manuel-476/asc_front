@@ -122,17 +122,20 @@ namespace AscFrontEnd
                     // Obtém o valor da célula clicada
                     id = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
 
-                    var idAdd = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
-
-                    nome = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
-
-                    if (!_armazemIds.Contains(idAdd))
+                    if (_multi)
                     {
-                        _armazemIds.Add(idAdd);
-                    }
-                    else
-                    {
-                        _armazemIds.Remove(idAdd);
+                        var idAdd = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
+
+                        nome = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
+
+                        if (!_armazemIds.Contains(idAdd))
+                        {
+                            _armazemIds.Add(idAdd);
+                        }
+                        else
+                        {
+                            _armazemIds.Remove(idAdd);
+                        }
                     }
                 }
             }

@@ -11,8 +11,10 @@ namespace AscFrontEnd.DTOs.Stock
         public int id { get; set; }
         public int armazemId { get; set; }
         public int localizacaoId { get; set; }
+        public int artigoId { get; set; }
         public int qtd { get; set; }
         public int empresaId { get; set; }
         public int funcionarioId { get; set; }
+        public DateTime created_at { get; set; }
     }
 }

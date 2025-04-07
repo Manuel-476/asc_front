@@ -1,6 +1,7 @@
 ﻿using AscFrontEnd.DTOs.Actividades;
 using AscFrontEnd.DTOs.Artigo;
 using AscFrontEnd.DTOs.Cliente;
+using AscFrontEnd.DTOs.Configuration;
 using AscFrontEnd.DTOs.ContasCorrentes;
 using AscFrontEnd.DTOs.Deposito;
 using AscFrontEnd.DTOs.Empresa;
@@ -25,6 +26,7 @@ namespace AscFrontEnd.DTOs.StaticsDto
     {
         public static int entityId {  get; set; }
         public static int funcionarioId { get; set; }
+        public static int userId { get; set; }
         public static int empresaId {get; set;}
         public static string nome { get; set; }
         public static string codigo { get; set; }
@@ -113,5 +115,8 @@ namespace AscFrontEnd.DTOs.StaticsDto
         // Permissions
         public static List<UserPermissionsDTO> permissions { get; set; }
         public static List<RelationUserPermissionDTO> relationUserPermissions { get; set; }
+
+        //Stock Minimo
+        public static List<StockMinimDTO> stockMinims { get; set; }
     }
 }

@@ -20,12 +20,18 @@ namespace AscFrontEnd
         List<StockDTO> dados;
         DataTable stockTable;
         int id;
+        HttpClient client;
         public Stock()
         {
             InitializeComponent();
 
             dados = new List<StockDTO>();
             stockTable = new DataTable();
+            client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:7200");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -40,8 +46,8 @@ namespace AscFrontEnd
 
         private async void pesqText_TextChanged(object sender, EventArgs e)
         {
-            var client = new HttpClient();
-            var response = await client.GetAsync($"https://localhost:7200/api/Armazem/Stock/Artigo/{StaticProperty.empresaId}");
+          
+            var response = await client.GetAsync($"api/Armazem/Stock/Artigo/{StaticProperty.empresaId}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -76,9 +82,8 @@ namespace AscFrontEnd
 
         private async void Stock_Load(object sender, EventArgs e)
         {
-            var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            var response = await client.GetAsync($"https://localhost:7200/api/Armazem/Stock/Artigo/{StaticProperty.empresaId}");
+            var response = await client.GetAsync($"api/Armazem/Stock/Artigo/{StaticProperty.empresaId}");
 
             if (response.IsSuccessStatusCode)
             {

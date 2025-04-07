@@ -39,6 +39,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.titulo = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.smsErro = new System.Windows.Forms.Label();
+            this.checkView = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -60,7 +62,7 @@
             // 
             this.nomeUsuariotxt.Location = new System.Drawing.Point(487, 203);
             this.nomeUsuariotxt.Name = "nomeUsuariotxt";
-            this.nomeUsuariotxt.Size = new System.Drawing.Size(198, 20);
+            this.nomeUsuariotxt.Size = new System.Drawing.Size(242, 20);
             this.nomeUsuariotxt.TabIndex = 3;
             this.nomeUsuariotxt.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
@@ -68,7 +70,7 @@
             // 
             this.senhaUsuariotxt.Location = new System.Drawing.Point(487, 264);
             this.senhaUsuariotxt.Name = "senhaUsuariotxt";
-            this.senhaUsuariotxt.Size = new System.Drawing.Size(198, 20);
+            this.senhaUsuariotxt.Size = new System.Drawing.Size(242, 20);
             this.senhaUsuariotxt.TabIndex = 4;
             this.senhaUsuariotxt.TextChanged += new System.EventHandler(this.senhaUsuariotxt_TextChanged);
             // 
@@ -78,7 +80,7 @@
             this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox3.Location = new System.Drawing.Point(478, 360);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(218, 102);
+            this.pictureBox3.Size = new System.Drawing.Size(251, 102);
             this.pictureBox3.TabIndex = 5;
             this.pictureBox3.TabStop = false;
             // 
@@ -104,44 +106,44 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label2.Location = new System.Drawing.Point(484, 177);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(108, 15);
+            this.label2.Size = new System.Drawing.Size(130, 13);
             this.label2.TabIndex = 6;
             this.label2.Text = "Nome Usuario / Email";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label3.Location = new System.Drawing.Point(484, 248);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(69, 15);
+            this.label3.Size = new System.Drawing.Size(88, 13);
             this.label3.TabIndex = 7;
             this.label3.Text = "Palavra-Passe";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Arial Narrow", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label4.Location = new System.Drawing.Point(484, 108);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(205, 15);
+            this.label4.Size = new System.Drawing.Size(254, 13);
             this.label4.TabIndex = 8;
             this.label4.Text = "Gerencie sua empresa como se fosse nada!";
             // 
             // titulo
             // 
             this.titulo.AutoSize = true;
-            this.titulo.Font = new System.Drawing.Font("Arial Narrow", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titulo.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.titulo.Location = new System.Drawing.Point(517, 25);
+            this.titulo.Location = new System.Drawing.Point(531, 24);
             this.titulo.Name = "titulo";
-            this.titulo.Size = new System.Drawing.Size(132, 31);
+            this.titulo.Size = new System.Drawing.Size(156, 31);
             this.titulo.TabIndex = 9;
             this.titulo.Text = "Bem-Vindo";
             // 
@@ -150,18 +152,43 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Arial", 20.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label6.Location = new System.Drawing.Point(551, 78);
+            this.label6.Location = new System.Drawing.Point(572, 76);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(59, 32);
             this.label6.TabIndex = 10;
             this.label6.Text = "asc";
+            // 
+            // smsErro
+            // 
+            this.smsErro.AutoSize = true;
+            this.smsErro.Font = new System.Drawing.Font("Arial", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.smsErro.ForeColor = System.Drawing.Color.Red;
+            this.smsErro.Location = new System.Drawing.Point(506, 308);
+            this.smsErro.Name = "smsErro";
+            this.smsErro.Size = new System.Drawing.Size(11, 16);
+            this.smsErro.TabIndex = 11;
+            this.smsErro.Text = " ";
+            // 
+            // checkView
+            // 
+            this.checkView.AutoSize = true;
+            this.checkView.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkView.Location = new System.Drawing.Point(649, 290);
+            this.checkView.Name = "checkView";
+            this.checkView.Size = new System.Drawing.Size(79, 19);
+            this.checkView.TabIndex = 12;
+            this.checkView.Text = "visualizar";
+            this.checkView.UseVisualStyleBackColor = true;
+            this.checkView.CheckedChanged += new System.EventHandler(this.checkView_CheckedChanged);
             // 
             // TelaLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(701, 474);
+            this.ClientSize = new System.Drawing.Size(741, 474);
+            this.Controls.Add(this.checkView);
+            this.Controls.Add(this.smsErro);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.titulo);
             this.Controls.Add(this.label4);
@@ -202,5 +229,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label titulo;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label smsErro;
+        private System.Windows.Forms.CheckBox checkView;
     }
 }

@@ -19,6 +19,7 @@ namespace AscFrontEnd.DTOs.Venda
         public int? caixaClienteId { get; set; }
         public DateTime data { get; set; }
         public DateTime created_at { get; set; }
+        public int empresaId { get; set; }
         public List<FrArtigoDTO> frArtigo { get; set; }
         public List<ParcelasFormaPagamentoDTO> parcelas { get; set; }
         public List<BancoDTO> bancos { get; set; }

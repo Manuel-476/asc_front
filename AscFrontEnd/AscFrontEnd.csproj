@@ -120,6 +120,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -138,7 +139,14 @@
     <Compile Include="AdiantamentoForm.Designer.cs">
       <DependentUpon>AdiantamentoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AlterarImagemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlterarImagemForm.Designer.cs">
+      <DependentUpon>AlterarImagemForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Application\CalculosVendaCompra.cs" />
+    <Compile Include="Application\DashBoard.cs" />
     <Compile Include="Application\Documento.cs" />
     <Compile Include="Application\Requisicoes.cs" />
     <Compile Include="AprovaPagamento.cs">
@@ -243,11 +251,35 @@
     <Compile Include="Compra.Designer.cs">
       <DependentUpon>Compra.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigForm.Designer.cs">
+      <DependentUpon>ConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigIpServerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigIpServerForm.Designer.cs">
+      <DependentUpon>ConfigIpServerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigStock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigStock.Designer.cs">
+      <DependentUpon>ConfigStock.cs</DependentUpon>
+    </Compile>
     <Compile Include="ContasCorrentes.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ContasCorrentes.Designer.cs">
       <DependentUpon>ContasCorrentes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DashBoardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DashBoardForm.Designer.cs">
+      <DependentUpon>DashBoardForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DecrementarStock.cs">
       <SubType>Form</SubType>
@@ -271,6 +303,7 @@
     <Compile Include="DTOs\Artigo\IvaDTO.cs" />
     <Compile Include="DTOs\Artigo\MotivosIsencaoIvaDTO.cs" />
     <Compile Include="DTOs\Compra\CompraDTO.cs" />
+    <Compile Include="DTOs\Configuration\StockMinimDTO.cs" />
     <Compile Include="DTOs\Funcionario\RelationUserPermissionDTO.cs" />
     <Compile Include="DTOs\Funcionario\UserPermissionsDTO.cs" />
     <Compile Include="DTOs\Regiao\PaisDTO.cs" />
@@ -440,6 +473,12 @@
     <Compile Include="MotivoAnulacao.Designer.cs">
       <DependentUpon>MotivoAnulacao.cs</DependentUpon>
     </Compile>
+    <Compile Include="NotificacoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NotificacoForm.Designer.cs">
+      <DependentUpon>NotificacoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PermissionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -570,6 +609,9 @@
     <EmbeddedResource Include="AdiantamentoForm.resx">
       <DependentUpon>AdiantamentoForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AlterarImagemForm.resx">
+      <DependentUpon>AlterarImagemForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AprovaPagamento.resx">
       <DependentUpon>AprovaPagamento.cs</DependentUpon>
     </EmbeddedResource>
@@ -621,8 +663,20 @@
     <EmbeddedResource Include="Compra.resx">
       <DependentUpon>Compra.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ConfigForm.resx">
+      <DependentUpon>ConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConfigIpServerForm.resx">
+      <DependentUpon>ConfigIpServerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConfigStock.resx">
+      <DependentUpon>ConfigStock.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ContasCorrentes.resx">
       <DependentUpon>ContasCorrentes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DashBoardForm.resx">
+      <DependentUpon>DashBoardForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DecrementarStock.resx">
       <DependentUpon>DecrementarStock.cs</DependentUpon>
@@ -680,6 +734,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MotivoAnulacao.resx">
       <DependentUpon>MotivoAnulacao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotificacoForm.resx">
+      <DependentUpon>NotificacoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PermissionsForm.resx">
       <DependentUpon>PermissionsForm.cs</DependentUpon>
@@ -818,6 +875,10 @@
     <Content Include="Files\tax.png" />
     <Content Include="Files\transfer.png" />
     <Content Include="Files\warehouse.png" />
+    <None Include="Resources\alert %281%29.png" />
+    <None Include="Resources\alert.png" />
+    <None Include="Resources\package.png" />
+    <None Include="Resources\dashboard.png" />
     <None Include="Resources\relatorio-de-noticias.png" />
     <None Include="Resources\report %281%29.png" />
     <None Include="Resources\candlestick.png" />

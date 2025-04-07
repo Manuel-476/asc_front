@@ -27,7 +27,7 @@ namespace AscFrontEnd
         public TelaLogin()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.BaseAddress = new Uri("https://localhost:7200");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             resultUser = new UserDTO();
@@ -44,13 +44,17 @@ namespace AscFrontEnd
             if (!string.IsNullOrWhiteSpace(nomeUsuariotxt.Text.ToString()) && !string.IsNullOrWhiteSpace(senhaUsuariotxt.Text.ToString()))
             {
                 json = JsonSerializer.Serialize(user);
-                HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Funcionario/User/Login", new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage response = await client.PostAsync($"api/Funcionario/User/Login", new StringContent(json, Encoding.UTF8, "application/json"));
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
 
                     UserResult userResult = Newtonsoft.Json.JsonConvert.DeserializeObject<UserResult>(content);
-
+                    if(userResult.user  == null) 
+                    {
+                            smsErro.ForeColor = Color.Black;
+                            smsErro.Text = "Verificando usuario...";
+                    }
                     using (HttpClient client = new HttpClient())
                     {
                         // Adiciona o token JWT no cabeçalho
@@ -76,9 +80,12 @@ namespace AscFrontEnd
 
                         this.Hide();
                         StaticProperty.token = userResult.token;
+                        StaticProperty.userId = userResult.user.id;
+
                         if (userResult.user.state == DTOs.Enums.Enums.OpcaoBinaria.Nao)
                         {
-                            new UserForm("Alterar Credencias de Acesso", userResult.user.id).ShowDialog();
+                                smsErro.ForeColor = Color.Red;
+                                new UserForm("Alterar Credencias de Acesso", userResult.user.id).ShowDialog();
                         }
                         else
                         {
@@ -89,8 +96,9 @@ namespace AscFrontEnd
                 }
                 else
                 {
+                    smsErro.Text = "Nome de usuario ou senha errada!";
                     return;
-                    MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
+                    
                 }
              }
             }
@@ -110,12 +118,18 @@ namespace AscFrontEnd
                 {
                     json = JsonSerializer.Serialize(user);
 
-                    HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Funcionario/User/Login", new StringContent(json, Encoding.UTF8, "application/json"));
+                    HttpResponseMessage response = await client.PostAsync($"api/Funcionario/User/Login", new StringContent(json, Encoding.UTF8, "application/json"));
                     if (response.IsSuccessStatusCode)
                     {
                         var content = await response.Content.ReadAsStringAsync();
 
                         UserResult userResult = Newtonsoft.Json.JsonConvert.DeserializeObject<UserResult>(content);
+
+                        if (userResult.user == null)
+                        {
+                            smsErro.ForeColor = Color.Black;
+                            smsErro.Text = "Verificando usuario...";
+                        }
 
                         using (HttpClient client = new HttpClient())
                         {
@@ -142,6 +156,8 @@ namespace AscFrontEnd
 
                             this.Hide();
                             StaticProperty.token = userResult.token;
+                            StaticProperty.userId = userResult.user.id;
+
                             if (userResult.user.state == DTOs.Enums.Enums.OpcaoBinaria.Nao)
                             {
                                 new UserForm("Alterar Credencias de Acesso", userResult.user.id).ShowDialog();
@@ -156,8 +172,9 @@ namespace AscFrontEnd
 
                     else
                     {
+                        smsErro.ForeColor = Color.Red;
+                        smsErro.Text = "Nome de usuario ou senha errada!";
                         return;
-                        MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
                     }
                 }
 
@@ -168,9 +185,63 @@ namespace AscFrontEnd
             }
         }
 
-        private void TelaLogin_Load(object sender, EventArgs e)
+        private async void TelaLogin_Load(object sender, EventArgs e)
         {
             senhaUsuariotxt.PasswordChar = '*';
+            smsErro.Text = "";
+
+            await VerifyServerConnectionAsync();
+
+        }
+
+        private void checkView_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkView.Checked) 
+            {
+                senhaUsuariotxt.PasswordChar = '\0';
+            }
+            else 
+            {
+                senhaUsuariotxt.PasswordChar = '*';
+            }
+        }
+
+        public async Task<bool> VerifyServerConnectionAsync() 
+        {
+            try
+            {
+                var response = await client.GetAsync($"api/Configuration/Verificacao/Teste");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    if (MessageBox.Show("Não foi possivel acessar o servidor\nVerifica se o servidor esta ligado ou o ip esta correcto", "Servidor não detectado", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.Cancel)
+                    {
+                        await VerifyServerConnectionAsync();
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch 
+            {
+                if (MessageBox.Show("Não foi possivel acessar o servidor\nVerifica se o servidor esta ligado ou o ip esta correcto", "Servidor não detectado", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.Cancel)
+                {
+                    await VerifyServerConnectionAsync();
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
         }
     }
+    
 }

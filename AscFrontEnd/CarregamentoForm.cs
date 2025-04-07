@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AscFrontEnd.DTOs.Regiao;
 using AscFrontEnd.DTOs.Funcionario;
+using AscFrontEnd.DTOs.Configuration;
 
 namespace AscFrontEnd
 {
@@ -48,11 +49,23 @@ namespace AscFrontEnd
             timer1.Start();
 
             var client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:7200");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             try
             {
+
+                var responseStock = await client.GetAsync($"api/Configuration/StockMinimo/{StaticProperty.empresaId}");
+
+                if (responseStock.IsSuccessStatusCode)
+                {
+                    var contentStock = await responseStock.Content.ReadAsStringAsync();
+
+                    StaticProperty.stockMinims = JsonConvert.DeserializeObject<List<StockMinimDTO>>(contentStock);
+
+                    processValue += 1;
+                }
                 // Compra
-                var responseVft = await client.GetAsync($"https://localhost:7200/api/Compra/VftByRelations");
+                var responseVft = await client.GetAsync($"api/Compra/VftByRelations");
 
                 if (responseVft.IsSuccessStatusCode)
                 {
@@ -62,7 +75,7 @@ namespace AscFrontEnd
                     processValue += 3;
                 }
 
-                var responseVfr = await client.GetAsync($"https://localhost:7200/api/Compra/VfrByRelations");
+                var responseVfr = await client.GetAsync($"api/Compra/VfrByRelations");
 
                 if (responseVfr.IsSuccessStatusCode)
                 {
@@ -72,7 +85,7 @@ namespace AscFrontEnd
                     processValue += 3;
                 }
 
-                var responseVgt = await client.GetAsync($"https://localhost:7200/api/Compra/VgtByRelation");
+                var responseVgt = await client.GetAsync($"api/Compra/VgtByRelation");
 
                 if (responseVgt.IsSuccessStatusCode)
                 {
@@ -82,7 +95,7 @@ namespace AscFrontEnd
                     processValue += 4;
                 }
 
-                var responsePco = await client.GetAsync($"https://localhost:7200/api/Compra/PcoByRelation");
+                var responsePco = await client.GetAsync($"api/Compra/PcoByRelation");
 
                 if (responsePco.IsSuccessStatusCode)
                 {
@@ -92,7 +105,7 @@ namespace AscFrontEnd
                     processValue += 5;
                 }
 
-                var responseCot = await client.GetAsync($"https://localhost:7200/api/Compra/CotByRelation");
+                var responseCot = await client.GetAsync($"api/Compra/CotByRelation");
 
                 if (responseCot.IsSuccessStatusCode)
                 {
@@ -102,7 +115,7 @@ namespace AscFrontEnd
                     processValue += 3;
                 }
 
-                var responseEcf = await client.GetAsync($"https://localhost:7200/api/Compra/EcfByRelations");
+                var responseEcf = await client.GetAsync($"api/Compra/EcfByRelations");
 
                 if (responseEcf.IsSuccessStatusCode)
                 {
@@ -111,7 +124,7 @@ namespace AscFrontEnd
                     processValue += 2;
                 }
 
-                var responseVnc = await client.GetAsync($"https://localhost:7200/api/Compra/VncByRelations");
+                var responseVnc = await client.GetAsync($"api/Compra/VncByRelations");
 
                 if (responseVnc.IsSuccessStatusCode)
                 {
@@ -121,7 +134,7 @@ namespace AscFrontEnd
                     processValue += 1;
                 }
 
-                var responseVnd = await client.GetAsync($"https://localhost:7200/api/Compra/VndByRelation");
+                var responseVnd = await client.GetAsync($"api/Compra/VndByRelation");
 
                 if (responseVnd.IsSuccessStatusCode)
                 {
@@ -132,7 +145,7 @@ namespace AscFrontEnd
                 }
 
                 // Venda
-                var responseFr = await client.GetAsync($"https://localhost:7200/api/Venda/FrByRelations");
+                var responseFr = await client.GetAsync($"api/Venda/FrByRelations");
 
                 if (responseFr.IsSuccessStatusCode)
                 {
@@ -142,7 +155,7 @@ namespace AscFrontEnd
                     processValue += 2;
                 }
 
-                var responseFt = await client.GetAsync($"https://localhost:7200/api/Venda/FtByRelations");
+                var responseFt = await client.GetAsync($"api/Venda/FtByRelations");
 
                 if (responseFt.IsSuccessStatusCode)
                 {
@@ -151,7 +164,7 @@ namespace AscFrontEnd
                     processValue += 2;
                 }
 
-                var responseEcl = await client.GetAsync($"https://localhost:7200/api/Venda/EclByRelations");
+                var responseEcl = await client.GetAsync($"api/Venda/EclByRelations");
 
                 if (responseEcl.IsSuccessStatusCode)
                 {
@@ -161,7 +174,7 @@ namespace AscFrontEnd
                     processValue += 1;
                 }
 
-                var responseFp = await client.GetAsync($"https://localhost:7200/api/Venda/FpByRelations");
+                var responseFp = await client.GetAsync($"api/Venda/FpByRelations");
 
                 if (responseFp.IsSuccessStatusCode)
                 {
@@ -171,7 +184,7 @@ namespace AscFrontEnd
                     processValue += 5;
                 }
 
-                var responseNc = await client.GetAsync($"https://localhost:7200/api/Venda/NcByRelations");
+                var responseNc = await client.GetAsync($"api/Venda/NcByRelations");
 
                 if (responseNc.IsSuccessStatusCode)
                 {
@@ -181,7 +194,7 @@ namespace AscFrontEnd
                     processValue += 5;
                 }
 
-                var responseNd = await client.GetAsync($"https://localhost:7200/api/Venda/NdByRelations");
+                var responseNd = await client.GetAsync($"api/Venda/NdByRelations");
 
                 if (responseNd.IsSuccessStatusCode)
                 {
@@ -190,7 +203,7 @@ namespace AscFrontEnd
                     processValue += 7;
                 }
 
-                var responseGt = await client.GetAsync($"https://localhost:7200/api/Venda/GtByRelations");
+                var responseGt = await client.GetAsync($"api/Venda/GtByRelations");
 
                 if (responseGt.IsSuccessStatusCode)
                 {
@@ -201,7 +214,7 @@ namespace AscFrontEnd
                 }
 
                 // Cliente
-                var responseCliente = await client.GetAsync($"https://localhost:7200/api/Cliente/ClientesByRelation");
+                var responseCliente = await client.GetAsync($"api/Cliente/ClientesByRelation");
 
                 if (responseCliente.IsSuccessStatusCode)
                 {
@@ -212,7 +225,7 @@ namespace AscFrontEnd
                 }
 
                 // Fornecedor
-                var responseFornecedor = await client.GetAsync($"https://localhost:7200/api/Fornecedor/FornecedoresByRelation");
+                var responseFornecedor = await client.GetAsync($"api/Fornecedor/FornecedoresByRelation");
 
                 if (responseFornecedor.IsSuccessStatusCode)
                 {
@@ -223,7 +236,7 @@ namespace AscFrontEnd
                 }
 
                 // Artigo
-                var responseArtigo = await client.GetAsync($"https://localhost:7200/api/Artigo");
+                var responseArtigo = await client.GetAsync($"api/Artigo");
 
                 if (responseArtigo.IsSuccessStatusCode)
                 {
@@ -233,7 +246,7 @@ namespace AscFrontEnd
                     processValue += 2;
                 }
 
-                var responseMotivos = await client.GetAsync($"https://localhost:7200/api/Artigo/Iva/MotivosIsencao");
+                var responseMotivos = await client.GetAsync($"api/Artigo/Iva/MotivosIsencao");
 
                 if (responseMotivos.IsSuccessStatusCode)
                 {
@@ -244,7 +257,7 @@ namespace AscFrontEnd
                 }
 
                 // Amazem
-                var responseArmazem = await client.GetAsync($"https://localhost:7200/api/Armazem/ArmazensByRelations");
+                var responseArmazem = await client.GetAsync($"api/Armazem/ArmazensByRelations");
 
                 if (responseArmazem.IsSuccessStatusCode)
                 {
@@ -254,7 +267,7 @@ namespace AscFrontEnd
                     processValue += 1;
                 }
 
-                var responseLocationStore = await client.GetAsync($"https://localhost:7200/api/Armazem/LocationStore");
+                var responseLocationStore = await client.GetAsync($"api/Armazem/LocationStore");
 
                 if (responseLocationStore.IsSuccessStatusCode)
                 {
@@ -264,7 +277,7 @@ namespace AscFrontEnd
                     processValue += 1;
                 }
 
-                var responseLocationArtigo = await client.GetAsync($"https://localhost:7200/api/Armazem/LocationArtigo");
+                var responseLocationArtigo = await client.GetAsync($"api/Armazem/LocationArtigo");
                 
                 if (responseLocationArtigo.IsSuccessStatusCode)
                 {
@@ -274,7 +287,7 @@ namespace AscFrontEnd
                     processValue += 1;
                 }
 
-                var responseHistorico  = await client.GetAsync($"https://localhost:7200/api/Stock/Historico");
+                var responseHistorico  = await client.GetAsync($"api/Stock/Historico");
 
                 if (responseHistorico.IsSuccessStatusCode)
                 {
@@ -286,7 +299,7 @@ namespace AscFrontEnd
                 }
 
                 // Nota Pagamento
-                var responseNp = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Nps");
+                var responseNp = await client.GetAsync($"api/ContaCorrente/Nps");
 
                   if (responseNp.IsSuccessStatusCode)
                   {
@@ -296,7 +309,7 @@ namespace AscFrontEnd
                 }
 
                 // Recibo
-                var responseRe = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Res");
+                var responseRe = await client.GetAsync($"api/ContaCorrente/Res");
 
                 if (responseRe.IsSuccessStatusCode)
                 {
@@ -308,7 +321,7 @@ namespace AscFrontEnd
 
 
                 // Conta Corrente
-                var responseCCf = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/divida/Fornecedor");
+                var responseCCf = await client.GetAsync($"api/ContaCorrente/divida/Fornecedor");
 
                 if (responseCCf.IsSuccessStatusCode)
                 {
@@ -318,7 +331,7 @@ namespace AscFrontEnd
                     processValue += 5;
                 }
 
-                var responseCCc = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/divida/Cliente");
+                var responseCCc = await client.GetAsync($"api/ContaCorrente/divida/Cliente");
 
                 if (responseCCc.IsSuccessStatusCode)
                 {
@@ -328,7 +341,7 @@ namespace AscFrontEnd
                     processValue += 3;
                 }
 
-                var responseAdForn = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Fornecedor");
+                var responseAdForn = await client.GetAsync($"api/ContaCorrente/Adiantamento/Fornecedor");
 
                 if (responseAdForn.IsSuccessStatusCode)
                 {
@@ -338,7 +351,7 @@ namespace AscFrontEnd
                     processValue += 1;
                 }
 
-                var responseAdCliente = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Cliente");
+                var responseAdCliente = await client.GetAsync($"api/ContaCorrente/Adiantamento/Cliente");
 
                 if (responseAdCliente.IsSuccessStatusCode)
                 {
@@ -348,7 +361,7 @@ namespace AscFrontEnd
                     processValue += 1;
                 }
 
-                var responseRegAdForn = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Regular/Adiantamento/Fornecedor/WithRelations");
+                var responseRegAdForn = await client.GetAsync($"api/ContaCorrente/Regular/Adiantamento/Fornecedor/WithRelations");
 
                 if (responseRegAdForn.IsSuccessStatusCode)
                 {
@@ -358,7 +371,7 @@ namespace AscFrontEnd
                     processValue += 1;
                 }
 
-                var responseRegAdCliente = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Regular/Adiantamento/Cliente/WithRelations");
+                var responseRegAdCliente = await client.GetAsync($"api/ContaCorrente/Regular/Adiantamento/Cliente/WithRelations");
 
                 if (responseRegAdCliente.IsSuccessStatusCode)
                 {
@@ -369,7 +382,7 @@ namespace AscFrontEnd
                 }
 
                 // Serie
-                var responseSerie = await client.GetAsync($"https://localhost:7200/api/Serie");
+                var responseSerie = await client.GetAsync($"api/Serie");
 
                 if (responseSerie.IsSuccessStatusCode)
                 {
@@ -379,7 +392,7 @@ namespace AscFrontEnd
                 }
 
                 // Actividade
-                var responseAct = await client.GetAsync($"https://localhost:7200/api/Actividade/WithRelations");
+                var responseAct = await client.GetAsync($"api/Actividade/WithRelations");
 
                 if (responseAct.IsSuccessStatusCode)
                 {
@@ -390,17 +403,17 @@ namespace AscFrontEnd
                 }
 
                 // Depositos
-                var responseBanco = await client.GetAsync($"https://localhost:7200/api/Deposito/Bancos");
+                var responseBanco = await client.GetAsync($"api/Deposito/Bancos");
 
                 if (responseBanco.IsSuccessStatusCode)
                 {
                     var contentBanco = await responseBanco.Content.ReadAsStringAsync();
                     StaticProperty.bancos = JsonConvert.DeserializeObject<List<BancoDTO>>(contentBanco);
 
-                    processValue += 4;
+                    processValue += 3;
                 }
 
-                var responseCaixa = await client.GetAsync($"https://localhost:7200/api/Deposito/Caixa");
+                var responseCaixa = await client.GetAsync($"api/Deposito/Caixa");
 
                 if (responseCaixa.IsSuccessStatusCode)
                 {
@@ -410,7 +423,7 @@ namespace AscFrontEnd
                     processValue += 2;
                 }
 
-                var responseFormaPagamento = await client.GetAsync($"https://localhost:7200/api/Deposito/FormaPagamento");
+                var responseFormaPagamento = await client.GetAsync($"api/Deposito/FormaPagamento");
 
                 if (responseFormaPagamento.IsSuccessStatusCode)
                 {
@@ -421,7 +434,7 @@ namespace AscFrontEnd
                 }
 
                 // Funcionario
-                var responseFuncionario = await client.GetAsync($"https://localhost:7200/api/Funcionario/WithRelations");
+                var responseFuncionario = await client.GetAsync($"api/Funcionario/WithRelations");
 
                 if (responseFuncionario.IsSuccessStatusCode)
                 {
@@ -433,7 +446,7 @@ namespace AscFrontEnd
                 }
 
                 // Permissoes
-                var responsePermissions = await client.GetAsync($"https://localhost:7200/api/Funcionario/Permissions");
+                var responsePermissions = await client.GetAsync($"api/Funcionario/Permissions");
 
                 if (responsePermissions.IsSuccessStatusCode)
                 {
@@ -445,7 +458,7 @@ namespace AscFrontEnd
                 }
 
                 // Familia
-                var responseFamilia= await client.GetAsync($"https://localhost:7200/api/Artigo/Familia");
+                var responseFamilia= await client.GetAsync($"api/Artigo/Familia");
 
                 if (responseFamilia.IsSuccessStatusCode)
                 {
@@ -456,7 +469,7 @@ namespace AscFrontEnd
                 }
 
                 // Sub-Familia
-                var responseSubFamilia = await client.GetAsync($"https://localhost:7200/api/Artigo/SubFamilia");
+                var responseSubFamilia = await client.GetAsync($"api/Artigo/SubFamilia");
 
                 if (responseSubFamilia.IsSuccessStatusCode)
                 {
@@ -467,7 +480,7 @@ namespace AscFrontEnd
                 }
 
                 // Marca
-                var responseMarca = await client.GetAsync($"https://localhost:7200/api/Artigo/Marca");
+                var responseMarca = await client.GetAsync($"api/Artigo/Marca");
 
                 if (responseMarca.IsSuccessStatusCode)
                 {
@@ -479,7 +492,7 @@ namespace AscFrontEnd
                 }
 
                 // Modelo
-                var responseModelo = await client.GetAsync($"https://localhost:7200/api/Artigo/Modelo");
+                var responseModelo = await client.GetAsync($"api/Artigo/Modelo");
 
                 if (responseModelo.IsSuccessStatusCode)
                 {
@@ -491,7 +504,7 @@ namespace AscFrontEnd
                 }
 
                 // Empresa
-                var responseEmpresa = await client.GetAsync($"https://localhost:7200/api/Empresa/{StaticProperty.empresaId}");
+                var responseEmpresa = await client.GetAsync($"api/Empresa/{StaticProperty.empresaId}");
 
                 if (responseEmpresa.IsSuccessStatusCode)
                 {
@@ -503,7 +516,7 @@ namespace AscFrontEnd
                 }
 
                 // Outros
-                var responseIva = await client.GetAsync($"https://localhost:7200/api/iva");
+                var responseIva = await client.GetAsync($"api/iva");
 
                 if (responseIva.IsSuccessStatusCode)
                 {
@@ -514,7 +527,7 @@ namespace AscFrontEnd
                     processValue += 1;
                 }
 
-                var responseUnidade = await client.GetAsync($"https://localhost:7200/api/Unidade");
+                var responseUnidade = await client.GetAsync($"api/Unidade");
 
                 if (responseUnidade.IsSuccessStatusCode)
                 {
@@ -525,7 +538,7 @@ namespace AscFrontEnd
                     processValue += 1;
                 }
 
-                var responsePais = await client.GetAsync($"https://localhost:7200/api/pais/WithRelations");
+                var responsePais = await client.GetAsync($"api/pais/WithRelations");
 
                 if (responsePais.IsSuccessStatusCode)
                 {
@@ -536,7 +549,7 @@ namespace AscFrontEnd
                     processValue += 1;
                 }
 
-                var responseProvincia = await client.GetAsync($"https://localhost:7200/api/pais/provincia");
+                var responseProvincia = await client.GetAsync($"api/pais/provincia");
 
                 if (responseProvincia.IsSuccessStatusCode)
                 {
@@ -546,6 +559,8 @@ namespace AscFrontEnd
 
                     processValue += 1;
                 }
+
+
             }
             catch (Exception ex)
             {          

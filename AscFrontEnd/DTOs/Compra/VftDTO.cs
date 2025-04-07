@@ -18,6 +18,7 @@ namespace ERP_Buyer.Application.DTOs.Documentos
         public OpcaoBinaria pago { get; set; }
         public OpcaoBinaria apr { get; set; }
         public DateTime data { get; set; }
+        public int empresaId { get; set; }
         public List<VftArtigoDTO> vftArtigo { get; set; }
         public ICollection<NpDTO> nps { get; set; }
         public FornecedorDTO fornecedor { get; set; }

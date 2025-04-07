@@ -9,6 +9,8 @@ using AscFrontEnd.DTOs;
 using AscFrontEnd.DTOs.Actividades;
 using AscFrontEnd.DTOs.Artigo;
 using AscFrontEnd.DTOs.Cliente;
+using AscFrontEnd.DTOs.Compra;
+using AscFrontEnd.DTOs.Configuration;
 using AscFrontEnd.DTOs.ContasCorrentes;
 using AscFrontEnd.DTOs.Deposito;
 using AscFrontEnd.DTOs.Empresa;
@@ -353,7 +355,7 @@ namespace AscFrontEnd.Application
 
                     return ncs;
                 }
-                else 
+                else
                 {
                     return null;
                 }
@@ -374,7 +376,7 @@ namespace AscFrontEnd.Application
                 {
                     var contentNd = await responseNd.Content.ReadAsStringAsync();
                     var nds = JsonConvert.DeserializeObject<List<NdDTO>>(contentNd);
-                    
+
                     return nds;
                 }
                 else
@@ -809,7 +811,7 @@ namespace AscFrontEnd.Application
                 {
                     var contentSerie = await responseSerie.Content.ReadAsStringAsync();
                     var series = JsonConvert.DeserializeObject<List<SerieDTO>>(contentSerie);
-                    
+
                     return series;
                 }
                 else
@@ -955,7 +957,7 @@ namespace AscFrontEnd.Application
                     var contentFamilia = await responseFamilia.Content.ReadAsStringAsync();
 
                     var familias = JsonConvert.DeserializeObject<List<FamiliaArtigoDTO>>(contentFamilia);
-                    
+
                     return familias;
                 }
                 else
@@ -1166,6 +1168,78 @@ namespace AscFrontEnd.Application
             catch (Exception ex)
             {
                 throw new Exception($"Ocorreu um erro: {ex.Message}");
+            }
+        }
+
+        public async Task<List<StockMinimDTO>> GetStockMinim()
+        {
+            try
+            {
+                var responseStock = await _httpClient.GetAsync($"api/Configuration/StockMinimo/{StaticProperty.empresaId}");
+
+                if (responseStock.IsSuccessStatusCode)
+                {
+                    var contentStock = await responseStock.Content.ReadAsStringAsync();
+
+                    var stockMinim = JsonConvert.DeserializeObject<List<StockMinimDTO>>(contentStock);
+
+                    return stockMinim;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocorreu um erro: {ex.Message}");
+            }
+        }
+
+        public async Task<List<StockDTO>> GetStockArtigo()
+        {
+            var response = await _httpClient.GetAsync($"api/Armazem/Stock/Artigo/{StaticProperty.empresaId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<StockDTO>>(content);
+            }
+            else 
+            {
+                return new List<StockDTO>();
+            }
+        }
+
+        public async Task<List<VendaDTO>> GetVendas()
+        {
+            var response = await _httpClient.GetAsync($"api/Relatorio/Vendas/{StaticProperty.empresaId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+
+                return JsonConvert.DeserializeObject<List<VendaDTO>>(content);
+            }
+            else
+            {
+                return new List<VendaDTO>();
+            }
+        }
+
+        public async Task<List<CompraDTO>> GetCompras()
+        {
+            var response = await _httpClient.GetAsync($"api/Relatorio/Compras/{StaticProperty.empresaId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+
+                return JsonConvert.DeserializeObject<List<CompraDTO>>(content);
+            }
+            else
+            {
+                return new List<CompraDTO>();
             }
         }
     }

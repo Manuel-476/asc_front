@@ -17,6 +17,7 @@ namespace EAscFrontEnd
         public string shortHash { get; set; } = string.Empty;
         public DateTime data { get; set; }
         public DateTime created_at { get; set; }
+        public int empresaId { get; set; }
         public List<NcArtigoDTO> ncArtigo { get; set; }
     }
 }

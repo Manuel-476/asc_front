@@ -28,7 +28,7 @@ namespace AscFrontEnd
             clientes = new List<ClienteDTO>();
         }
 
-        private async void ClientesTable_Load(object sender, EventArgs e)
+        private  void ClientesTable_Load(object sender, EventArgs e)
         {
 
                 DataTable dt = new DataTable();

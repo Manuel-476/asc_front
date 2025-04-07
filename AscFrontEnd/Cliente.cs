@@ -105,7 +105,7 @@ namespace AscFrontEnd
             this.Close();
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private  void button1_Click(object sender, EventArgs e)
         {
             exportar exp = new exportar();
             exp.ShowDialog();

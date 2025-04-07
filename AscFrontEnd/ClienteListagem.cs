@@ -33,7 +33,7 @@ namespace AscFrontEnd
             _clienteIds = new List<int>();
         }
 
-        private async void ClienteListagem_Load(object sender, EventArgs e)
+        private void ClienteListagem_Load(object sender, EventArgs e)
         {
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));

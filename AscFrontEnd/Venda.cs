@@ -204,6 +204,7 @@ namespace AscFrontEnd
                     status = DTOs.Enums.Enums.DocState.ativo,
                     fullHash = string.Empty,
                     shortHash = string.Empty,
+                    empresaId = StaticProperty.empresaId,
                     data = DateTime.Parse(dataDocumento.Value.ToString("yyyy-MM-dd")),
                     created_at = DateTime.Now.Date,
                 };
@@ -227,6 +228,7 @@ namespace AscFrontEnd
                     clienteId = StaticProperty.entityId,
                     ftArtigo = ftArtigos,
                     status = DTOs.Enums.Enums.DocState.ativo,
+                    empresaId = StaticProperty.empresaId,
                     created_at = DateTime.Now.Date,
                 };
                 //Actualizar lista de artigos
@@ -270,6 +272,7 @@ namespace AscFrontEnd
                     data = DateTime.Parse(dataDocumento.Text),
                     clienteId = StaticProperty.entityId,
                     fpArtigo = fpArtigos,
+                    empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
                     created_at = DateTime.Now.Date,
                 };
@@ -302,6 +305,7 @@ namespace AscFrontEnd
                     data = DateTime.Parse(dataDocumento.Text),
                     clienteId = StaticProperty.entityId,
                     gtArtigo = gtArtigos,
+                    empresaId = StaticProperty.empresaId,
                     status =  DTOs.Enums.Enums.DocState.ativo,
                     created_at = DateTime.Now.Date,
                 };
@@ -332,6 +336,7 @@ namespace AscFrontEnd
                     data = DateTime.Parse(dataDocumento.Text),
                     clienteId = StaticProperty.entityId,
                     eclArtigo = eclArtigos,
+                    empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
                     created = DateTime.Now.Date,
                 };
@@ -370,7 +375,8 @@ namespace AscFrontEnd
                       documentoOrigem = StaticProperty.documentoOrigem,
                       motivo = StaticProperty.motivoAnulacao,
                       ncArtigo = ncArtigos,
-                      status = DTOs.Enums.Enums.DocState.ativo,
+                       empresaId = StaticProperty.empresaId,
+                       status = DTOs.Enums.Enums.DocState.ativo,
                       created_at = DateTime.Now.Date,
                    };
 
@@ -401,6 +407,7 @@ namespace AscFrontEnd
                     data = DateTime.Parse(dataDocumento.Text),
                     clienteId = StaticProperty.entityId,
                     ndArtigo = ndArtigos,
+                    empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
                     created_at = DateTime.Now.Date, 
                 };
