@@ -1,6 +1,7 @@
 ﻿using AscFrontEnd.DTOs.Actividades;
 using AscFrontEnd.DTOs.Artigo;
 using AscFrontEnd.DTOs.Cliente;
+using AscFrontEnd.DTOs.Compra;
 using AscFrontEnd.DTOs.Configuration;
 using AscFrontEnd.DTOs.ContasCorrentes;
 using AscFrontEnd.DTOs.Deposito;
@@ -24,6 +25,7 @@ namespace AscFrontEnd.DTOs.StaticsDto
 {
     public class StaticProperty
     {
+
         public static int entityId {  get; set; }
         public static int funcionarioId { get; set; }
         public static int userId { get; set; }
@@ -63,6 +65,7 @@ namespace AscFrontEnd.DTOs.StaticsDto
         public static List<VftDTO> vfts { get; set; }
         public static List<VfrDTO> vfrs { get; set; }
         public static List<VgtDTO> vgts { get; set; }
+        public static List<VgrDTO> vgrs { get; set; }
         public static List<VncDTO> vncs { get; set; }
         public static List<VndDTO> vnds { get; set; }
         public static List<EncomendaFornecedorDTO> ecfs { get; set; }
@@ -73,8 +76,10 @@ namespace AscFrontEnd.DTOs.StaticsDto
         public static List<FtDTO> fts { get; set; }
         public static List<FrDTO> frs { get; set; }
         public static List<GtDTO> gts { get; set; }
+        public static List<GrDTO> grs { get; set; }
         public static List<NcDTO> ncs { get; set; }
         public static List<NdDTO> nds { get; set; }
+        public static List<OrDTO> ors { get; set; }
         public static List<EncomendaClienteDTO> ecls { get; set; }
         public static List<FaturaProformaDTO> fps { get; set; }
 

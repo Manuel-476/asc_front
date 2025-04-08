@@ -23,13 +23,13 @@ namespace AscFrontEnd
         {
             InitializeComponent();
         }
-        public FornecedorListagem(bool multi)
+        public FornecedorListagem(bool multi, List<int> fornecedorIds)
         {
             InitializeComponent();
 
             _multi = multi;
 
-            _fornecedorIds = new List<int>();
+            _fornecedorIds = fornecedorIds ?? new List<int>();
         }
 
         private async void FornecedorListagem_Load(object sender, EventArgs e)
@@ -42,33 +42,58 @@ namespace AscFrontEnd
                 dt.Columns.Add("pessoa", typeof(string));
                 dt.Columns.Add("localizacao", typeof(string));
 
-
-                // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.fornecedores.Where(f=>f.status == DTOs.Enums.Enums.Status.activo && f.id != 1 && f.empresaid == StaticProperty.empresaId))
-                {
-                    dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
-
-                    tabelaFornecedor.DataSource = dt;
-                }
-
-            if (StaticProperty.entityId == 1)
-            {
-                checkDesconhecido.Checked = true;
-            }
-            else
-            {
-                checkDesconhecido.Checked = false;
-            }
-
             if (_multi)
             {
                 tabelaFornecedor.MultiSelect = true;
                 checkDesconhecido.Visible = false;
+
+                // Adiciona linhas ao DataTable
+                foreach (var item in StaticProperty.fornecedores.Where(f => f.status == DTOs.Enums.Enums.Status.activo && f.id != 1 && f.empresaid == StaticProperty.empresaId))
+                {
+                    dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
+
+                }
+                    tabelaFornecedor.DataSource = dt;
+                // Define o DataSource do DataGridView (fora do loop)
+            
+
+                // Seleciona automaticamente as linhas cujos IDs estão em _artigoIds
+                if (_fornecedorIds != null && _fornecedorIds.Any())
+                {
+                    foreach (DataGridViewRow row in tabelaFornecedor.Rows)
+                    {
+                        int id = Convert.ToInt32(row.Cells["id"].Value); // Pega o valor da coluna "id"
+                        if (_fornecedorIds.Contains(id))
+                        {
+                            row.Selected = true; // Seleciona a linha
+                        }
+                    }
+                }
+
+                // Opcional: Garante que o DataGridView permita seleção múltipla
             }
             else
             {
                 tabelaFornecedor.MultiSelect = false;
+
+                // Adicionando linhas ao DataTable
+                foreach (var item in StaticProperty.fornecedores.Where(f => f.status == DTOs.Enums.Enums.Status.activo && f.id != 1 && f.empresaid == StaticProperty.empresaId))
+                {
+                    dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
+
+                }
+                    tabelaFornecedor.DataSource = dt;
+
+                if (StaticProperty.entityId == 1)
+                {
+                    checkDesconhecido.Checked = true;
+                }
+                else
+                {
+                    checkDesconhecido.Checked = false;
+                }
             }
+
         }
 
 

@@ -35,8 +35,10 @@ namespace AscFrontEnd
         List<FaturaProformaArtigoDTO> fpArtigos;
         List<EclArtigoDTO> eclArtigos;
         List<GtArtigoDTO> gtArtigos;
+        List<GrArtigoDTO> grArtigos;
         List<NcArtigoDTO> ncArtigos;
         List<NdArtigoDTO> ndArtigos;
+        List<OrArtigoDTO> orArtigos;
         List<ArtigoDTO> dados;
         ClienteDTO clienteResult;
 
@@ -59,7 +61,7 @@ namespace AscFrontEnd
             public int id { get; set; }
             public string codigo { get; set; }
             public float preco { get; set; }
-            public int qtd { get; set; }
+            public float qtd { get; set; }
             public float iva { get; set; }
             public float desconto { get; set; }
         }
@@ -72,8 +74,10 @@ namespace AscFrontEnd
             fpArtigos = new List<FaturaProformaArtigoDTO>();
             eclArtigos = new List<EclArtigoDTO>();
             gtArtigos = new List<GtArtigoDTO>();
+            grArtigos = new List<GrArtigoDTO> ();
             ncArtigos = new List<NcArtigoDTO>();
             ndArtigos = new List<NdArtigoDTO>();
+            orArtigos = new List<OrArtigoDTO>();
             dados = new List<ArtigoDTO>();
             vendaArtigos = new List<VendaArtigo>();
             dtVenda = new DataTable();
@@ -82,7 +86,7 @@ namespace AscFrontEnd
             clienteResult = new ClienteDTO();
         }
 
-        private async void Venda_Load(object sender, EventArgs e)
+        private  void Venda_Load(object sender, EventArgs e)
         {
                 dados = StaticProperty.artigos;
                 clientetxt.Text = "cliente: " + ClienteDTO.clienteId;
@@ -117,8 +121,11 @@ namespace AscFrontEnd
             documento.Items.Add("FR");
             documento.Items.Add("FT");
             documento.Items.Add("GT");
+            documento.Items.Add("GR");
             documento.Items.Add("NC");
             documento.Items.Add("ND");
+            documento.Items.Add("OR");
+
             descricaoLabel.Text = string.Empty;
 
             eliminarBtn.Enabled = false;
@@ -175,9 +182,17 @@ namespace AscFrontEnd
             clientGet.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
 
             // Configuração do HttpClient
-            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.BaseAddress = new Uri("https://localhost:7200/");
+            clientGet.BaseAddress = new Uri("https://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            if(!vendaArtigos.Any() || vendaArtigos == null) 
+            {
+                MessageBox.Show("Nenhum artigo foi selecionado", "Impossivel concluir a ação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
 
             float totalPreco = vendaArtigos.Sum(x => x.preco * x.qtd);
             
@@ -192,7 +207,9 @@ namespace AscFrontEnd
                         artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id:0,
                         preco = vendaArtigo.preco,
                         qtd = vendaArtigo.qtd,
-                        iva = vendaArtigo.iva
+                        iva = vendaArtigo.iva,
+                        desconto = vendaArtigo.desconto,
+
                     });
                 }
 
@@ -241,6 +258,7 @@ namespace AscFrontEnd
                         preco = vendaArtigo.preco,
                         qtd = vendaArtigo.qtd,
                         iva = vendaArtigo.iva,
+                        desconto = vendaArtigo.desconto,
                     });
                 }
 
@@ -248,7 +266,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(fts);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Venda/Ft/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"api/Venda/Ft/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
 
             }
 
@@ -262,7 +280,9 @@ namespace AscFrontEnd
                     {
                         artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id : 0,
                         preco = vendaArtigo.preco,
-                        iva = vendaArtigo.iva
+                        iva = vendaArtigo.iva,
+                        qtd = vendaArtigo.qtd,
+                        desconto = vendaArtigo.desconto,
                     });
                 }
 
@@ -281,7 +301,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(fps);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Venda/Fp/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"api/Venda/Fp/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "GT")
@@ -295,7 +315,8 @@ namespace AscFrontEnd
                         artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id : 0,
                         preco = vendaArtigo.preco,
                         qtd = vendaArtigo.qtd,
-                        iva = vendaArtigo.iva
+                        iva = vendaArtigo.iva,
+                        desconto = vendaArtigo.desconto,
                     });
                 }
 
@@ -313,7 +334,40 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(gts);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Venda/Gt/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"api/Venda/Gt/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+            }
+
+            if (documento.Text == "GR")
+            {
+                GrDTO grs = new GrDTO()
+                {
+                    documento = codigoDocumento.Text,
+                    data = DateTime.Parse(dataDocumento.Value.ToString("yyyy-MM-dd")),
+                    clienteId = StaticProperty.entityId,
+                    grArtigo = grArtigos,
+                    status = DTOs.Enums.Enums.DocState.ativo,
+                    empresaId = StaticProperty.empresaId,
+                    created_at = DateTime.Now.Date,
+                };
+                //Actualizar lista de artigos
+                grArtigos.Clear();
+                foreach (var vendaArtigo in vendaArtigos)
+                {
+                    grArtigos.Add(new GrArtigoDTO()
+                    {
+                        artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id : 0,
+                        preco = vendaArtigo.preco,
+                        qtd = vendaArtigo.qtd,
+                        iva = vendaArtigo.iva,
+                       desconto = vendaArtigo.desconto 
+                    });
+                }
+
+                // Conversão do objeto Film para JSON
+                string json = System.Text.Json.JsonSerializer.Serialize(grs);
+
+                // Envio dos dados para a API
+                response = await client.PostAsync($"api/Venda/Gr/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "ECL")
@@ -326,7 +380,8 @@ namespace AscFrontEnd
                         artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id : 0,
                         preco = vendaArtigo.preco,
                         qtd = vendaArtigo.qtd,
-                        iva = vendaArtigo.iva
+                        iva = vendaArtigo.iva,
+                        desconto= vendaArtigo.desconto,
                     });
                 }
 
@@ -345,7 +400,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(ecls);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Venda/Ecl/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json")); 
+                response = await client.PostAsync($"api/Venda/Ecl/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json")); 
             }
 
             if (documento.Text == "NC")
@@ -359,7 +414,8 @@ namespace AscFrontEnd
                         artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id : 0,
                         preco = vendaArtigo.preco,
                         qtd = vendaArtigo.qtd,
-                        iva = vendaArtigo.iva
+                        iva = vendaArtigo.iva,
+                        desconto = vendaArtigo.desconto,
                     });
                 }
 
@@ -384,7 +440,7 @@ namespace AscFrontEnd
                     string json = System.Text.Json.JsonSerializer.Serialize(ncs);
 
                     // Envio dos dados para a API
-                    response = await client.PostAsync($"https://localhost:7200/api/Venda/Nc/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                    response = await client.PostAsync($"api/Venda/Nc/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
                 }
             }
 
@@ -398,7 +454,8 @@ namespace AscFrontEnd
                         artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id : 0,
                         preco = vendaArtigo.preco,
                         qtd = vendaArtigo.qtd,
-                        iva = vendaArtigo.iva
+                        iva = vendaArtigo.iva,
+                        desconto = vendaArtigo.desconto,
                     });
                 }
                 NdDTO nds = new NdDTO()
@@ -416,18 +473,51 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(nds);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Venda/Nd/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"api/Venda/Nd/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
-            var responseGet = await clientGet.GetAsync($"https://localhost:7200/api/Cliente/{StaticProperty.entityId}");
+            var responseGet = await clientGet.GetAsync($"api/Cliente/{StaticProperty.entityId}");
 
             if (responseGet.IsSuccessStatusCode)
             {
                 var content = await responseGet.Content.ReadAsStringAsync();
                 clienteResult = JsonConvert.DeserializeObject<ClienteDTO>(content);
             }
-         
-            
+
+            if (documento.Text == "OR")
+            {
+                OrDTO ors = new OrDTO()
+                {
+                    documento = codigoDocumento.Text,
+                    data = DateTime.Parse(dataDocumento.Value.ToString("yyyy-MM-dd")),
+                    clienteId = StaticProperty.entityId,
+                    orArtigos = orArtigos,
+                    status = DTOs.Enums.Enums.DocState.ativo,
+                    empresaId = StaticProperty.empresaId,
+                    created_at = DateTime.Now.Date,
+                };
+                //Actualizar lista de artigos
+                orArtigos.Clear();
+
+                foreach (var vendaArtigo in vendaArtigos)
+                {
+                    orArtigos.Add(new OrArtigoDTO()
+                    {
+                        artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id : 0,
+                        preco = vendaArtigo.preco,
+                        qtd = vendaArtigo.qtd,
+                        iva = vendaArtigo.iva,
+                        desconto = vendaArtigo.desconto,
+                    });
+                }
+
+                // Conversão do objeto Film para JSON
+                string json = System.Text.Json.JsonSerializer.Serialize(ors);
+
+                // Envio dos dados para a API
+                response = await client.PostAsync($"api/Venda/Or/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+            }
+
             if (documento.Text != "FR") {
                 if (response.IsSuccessStatusCode)
                 {
@@ -447,7 +537,7 @@ namespace AscFrontEnd
                  
 
                     // Venda
-                    var responseFr = await client.GetAsync($"https://localhost:7200/api/Venda/FrByRelations");
+                    var responseFr = await client.GetAsync($"api/Venda/FrByRelations");
 
                     if (responseFr.IsSuccessStatusCode)
                     {
@@ -455,7 +545,7 @@ namespace AscFrontEnd
                         StaticProperty.frs = JsonConvert.DeserializeObject<List<FrDTO>>(contentFr);
                     }
 
-                    var responseFt = await client.GetAsync($"https://localhost:7200/api/Venda/FtByRelations");
+                    var responseFt = await client.GetAsync($"api/Venda/FtByRelations");
 
                     if (responseFt.IsSuccessStatusCode)
                     {
@@ -463,7 +553,7 @@ namespace AscFrontEnd
                         StaticProperty.fts = JsonConvert.DeserializeObject<List<FtDTO>>(contentFt);
                     }
 
-                    var responseEcl = await client.GetAsync($"https://localhost:7200/api/Venda/EclByRelations");
+                    var responseEcl = await client.GetAsync($"api/Venda/EclByRelations");
 
                     if (responseEcl.IsSuccessStatusCode)
                     {
@@ -471,7 +561,7 @@ namespace AscFrontEnd
                         StaticProperty.ecls = JsonConvert.DeserializeObject<List<EncomendaClienteDTO>>(contentEcl);
                     }
 
-                    var responseFp = await client.GetAsync($"https://localhost:7200/api/Venda/FpByRelations");
+                    var responseFp = await client.GetAsync($"api/Venda/FpByRelations");
 
                     if (responseFp.IsSuccessStatusCode)
                     {
@@ -479,7 +569,7 @@ namespace AscFrontEnd
                         StaticProperty.fps = JsonConvert.DeserializeObject<List<FaturaProformaDTO>>(contentFp);
                     }
 
-                    var responseNc = await client.GetAsync($"https://localhost:7200/api/Venda/NcByRelations");
+                    var responseNc = await client.GetAsync($"api/Venda/NcByRelations");
 
                     if (responseNc.IsSuccessStatusCode)
                     {
@@ -487,7 +577,7 @@ namespace AscFrontEnd
                         StaticProperty.ncs = JsonConvert.DeserializeObject<List<NcDTO>>(contentNc);
                     }
 
-                    var responseNd = await client.GetAsync($"https://localhost:7200/api/Venda/NdByRelations");
+                    var responseNd = await client.GetAsync($"api/Venda/NdByRelations");
 
                     if (responseNd.IsSuccessStatusCode)
                     {
@@ -574,16 +664,18 @@ namespace AscFrontEnd
             else if (documento.Text == "FT") { descricaoDocumento = "Factura"; }
             else if(documento.Text == "ECL") { descricaoDocumento = "Encomenda a Cliente"; }
             else if (documento.Text == "GT") { descricaoDocumento = "Guia de Transporte"; }
+            else if (documento.Text == "GR") { descricaoDocumento = "Guia de Remessa"; }
             else if (documento.Text == "PP") { descricaoDocumento = "Factura Proforma"; }
             else if (documento.Text == "NC") { descricaoDocumento = "Nota Credito"; }
             else if (documento.Text == "ND") { descricaoDocumento = "Nota Debito"; }
+            else if (documento.Text == "OR") { descricaoDocumento = "Orçamento"; }
 
             descricaoLabel.Text = descricaoDocumento;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            string codigo;
             try
             {
                 if (StaticProperty.entityId <=0) 
@@ -607,7 +699,19 @@ namespace AscFrontEnd
                     MessageBox.Show("Selecione um documento de Venda", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                string codigo;
+                if (int.Parse(Qtd.Text) <= 0)
+                {
+                    MessageBox.Show("A quantidade nao pode ser igual a 0", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                codigo = dados.Where(art => art.id == artigoId).First().codigo;
+
+                if (vendaArtigos.Where(x => x.codigo == codigo).Any()) 
+                {
+                    return;
+                }
+                
                 int idVendaArtigo = tabelaVenda.Rows.Count;
                 List<VendaArtigo> refreshVendaArtigo = new List<VendaArtigo>();
                 int i = 1;
@@ -615,7 +719,7 @@ namespace AscFrontEnd
                 dtVenda.Rows.Clear();
                 tabelaVenda.DataSource = dtVenda;
 
-                codigo = dados.Where(art => art.id == artigoId).First().codigo;
+                
 
                 foreach (var va in vendaArtigos)
                 {
@@ -747,6 +851,26 @@ namespace AscFrontEnd
                     }
                 }
 
+                if (documento.Text == "GR")
+                {
+                    grArtigos.Add(new GrArtigoDTO()
+                    {
+                        artigoId = artigoId,
+                        preco = precoArtigo,
+                        qtd = int.Parse(Qtd.Text),
+                        iva = dados.Where(art => art.id == artigoId).First().iva,
+                        desconto = float.Parse(descontoTxt.Text.ToString())
+                    });
+
+                    foreach (var gr in vendaArtigos)
+                    {
+
+                        dtVenda.Rows.Add(gr.id, gr.codigo, gr.preco, gr.qtd, gr.iva);
+
+                        tabelaVenda.DataSource = dtVenda;
+                    }
+                }
+
                 if (documento.Text == "NC")
                 {
                     ncArtigos.Add(new NcArtigoDTO()
@@ -786,6 +910,28 @@ namespace AscFrontEnd
                         tabelaVenda.DataSource = dtVenda;
                     }
                 }
+
+                if (documento.Text == "OR")
+                {
+                    orArtigos.Add(new OrArtigoDTO()
+                    {
+                        artigoId = artigoId,
+                        preco = precoArtigo,
+                        qtd = int.Parse(Qtd.Text),
+                        iva = dados.Where(art => art.id == artigoId).First().iva,
+                        desconto = float.Parse(descontoTxt.Text.ToString())
+                    });
+
+                    foreach (var or in vendaArtigos)
+                    {
+
+                        dtVenda.Rows.Add(or.id, or.codigo, or.preco, or.qtd, or.iva);
+
+                        tabelaVenda.DataSource = dtVenda;
+                    }
+                }
+
+                artigoId = 0;
 
                 totalBruto.Text = $"Total: {CalculosVendaCompra.TotalVenda(vendaArtigos).ToString("F2")}";
                 ivaTotal.Text = $"Iva: {CalculosVendaCompra.TotalIvaVenda(vendaArtigos).ToString("F2")}";
@@ -927,9 +1073,11 @@ namespace AscFrontEnd
                 string empresaCabecalho = $"{empresa.endereco}\nContribuente: {empresa.nif}\n" +
                                           $"Email: {empresa.email}\nTel: {empresa.telefone}";
 
+                var tel = clienteResult.phones.Any() ? clienteResult.phones.First().telefone : "000000000";
+
                 string clienteCabecalho = $"{clienteResult.nome_fantasia.ToUpper()}\n";
                 string clienteOutros = $"Cliente Nº {clienteResult.id}\nEndereco: {clienteResult.localizacao}\nContribuente: {clienteResult.nif}\n" +
-                                          $"Email: {clienteResult.email}\nTel: {clienteResult.phones.First().telefone}";
+                                          $"Email: {clienteResult.email}\nTel: {tel}";
 
                 Pen caneta = new Pen(Color.Black, 2); // Define a cor e a largura da linha
                 Pen canetaFina = new Pen(Color.Black, 1);
@@ -1126,6 +1274,7 @@ namespace AscFrontEnd
             catch (Exception ex)
             {
                 Console.WriteLine($"Erro: {ex.Message}");
+
                 throw new Exception("Erro ao desenhar a string: " + ex.Message);
             }
         }

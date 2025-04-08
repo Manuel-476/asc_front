@@ -20,6 +20,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AscFrontEnd.DTOs.Compra;
 using static AscFrontEnd.DTOs.Enums.Enums;
 using static AscFrontEnd.Venda;
 
@@ -33,6 +34,7 @@ namespace AscFrontEnd
         List<CotacaoArtigoDTO> cotArtigos;
         List<EcfArtigoDTO> ecfArtigos;
         List<VgtArtigoDTO> vgtArtigos;
+        List<VgrArtigoDTO> vgrArtigos;
         List<VncArtigoDTO> vncArtigos;
         List<VndArtigoDTO> vndArtigos;
         List<CompraArtigo> compraArtigos;
@@ -47,7 +49,7 @@ namespace AscFrontEnd
             public int id {  get; set; }
             public string codigo { get; set; }
             public float preco { get; set; }
-            public int qtd { get; set; }
+            public float qtd { get; set; }
             public float iva { get; set; }
             public float desconto { get; set; }
         }
@@ -60,6 +62,7 @@ namespace AscFrontEnd
             cotArtigos = new List<CotacaoArtigoDTO> ();
             ecfArtigos = new List<EcfArtigoDTO>();
             vgtArtigos = new List<VgtArtigoDTO>();
+            vgrArtigos = new List<VgrArtigoDTO>();
             vncArtigos = new List<VncArtigoDTO>();
             vndArtigos = new List<VndArtigoDTO>();
             compraArtigos = new List<CompraArtigo>();
@@ -68,7 +71,7 @@ namespace AscFrontEnd
             fornecedorResult = new FornecedorDTO();
 
         }
-        private async void Compra_Load(object sender, EventArgs e)
+        private  void Compra_Load(object sender, EventArgs e)
         {           
                 dtCompra.Columns.Add("id", typeof(int));
                 dtCompra.Columns.Add("Artigo", typeof(string));
@@ -97,9 +100,11 @@ namespace AscFrontEnd
                 documento.Items.Add("VFR");
                 documento.Items.Add("VFT");
                 documento.Items.Add("VGT");
+                documento.Items.Add("VGR");
                 documento.Items.Add("VNC");
                 documento.Items.Add("VND");
-                descricaoLabel.Text = string.Empty;
+
+            descricaoLabel.Text = string.Empty;
 
                 eliminarBtn.Enabled = false;
 
@@ -121,13 +126,21 @@ namespace AscFrontEnd
 
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.BaseAddress = new Uri("https://localhost:7200/");
+            clientGet.BaseAddress = new Uri("https://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             if (StaticProperty.series == null)
             {
                 MessageBox.Show("Nenhuma Serie Foi Criada", "Precisa de uma Serie", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (!compraArtigos.Any() || compraArtigos == null)
+            {
+                MessageBox.Show("Nenhum artigo foi selecionado", "Impossivel concluir a ação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 return;
             }
             float totalPreco = compraArtigos.Sum(x=> x.preco * x.qtd);
@@ -199,7 +212,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(vfts);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Compra/Vft/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"api/Compra/Vft/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "VGT")
@@ -231,7 +244,39 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(vgts);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Compra/Vgt/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"api/Compra/Vgt/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+            }
+
+            if (documento.Text == "VGR")
+            {
+                vgrArtigos.Clear();
+
+                foreach (var compraArtigo in compraArtigos)
+                {
+                    vgrArtigos.Add(new VgrArtigoDTO()
+                    {
+                        artigoId = artigoId,
+                        preco = compraArtigo.preco,
+                        qtd = compraArtigo.qtd,
+                        iva = compraArtigo.iva,
+                        desconto = compraArtigo.desconto,
+                    });
+                }
+
+                VgrDTO vgrs = new VgrDTO()
+                {
+                    documento = codigoDocumentotxt.Text,
+                    data = DateTime.Now,
+                    fornecedorId = StaticProperty.entityId,
+                    vgrArtigo = vgrArtigos,
+                    empresaId = StaticProperty.empresaId,
+                    status = DTOs.Enums.Enums.DocState.ativo,
+                };
+
+                string json = System.Text.Json.JsonSerializer.Serialize(vgrs);
+
+                // Envio dos dados para a API
+                response = await client.PostAsync($"api/Compra/Vgr/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "ECF")
@@ -265,7 +310,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(ecfs);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Compra/Ecf", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"api/Compra/Ecf", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "VNC")
@@ -297,7 +342,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(vncs);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Compra/Vnc/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"api/Compra/Vnc/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "VND")
@@ -328,7 +373,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(vncs);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Compra/Vnd", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"api/Compra/Vnd", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "PCO")
@@ -343,6 +388,7 @@ namespace AscFrontEnd
                         artigoId = artigoId,
                         preco = compraArtigo.preco,
                         iva = compraArtigo.iva,
+                        qtd = compraArtigo.qtd,
                         desconto = compraArtigo.desconto
                     });
                 }
@@ -362,7 +408,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(pcos);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Compra/Pco", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"api/Compra/Pco", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "COT")
@@ -396,11 +442,11 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(cots);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"https://localhost:7200/api/Compra/Cot", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"api/Compra/Cot", new StringContent(json, Encoding.UTF8, "application/json"));
 
             }
 
-            var responseGet = await clientGet.GetAsync($"https://localhost:7200/api/Fornecedor/{StaticProperty.entityId}");
+            var responseGet = await clientGet.GetAsync($"api/Fornecedor/{StaticProperty.entityId}");
 
             if (responseGet.IsSuccessStatusCode)
             {
@@ -424,7 +470,7 @@ namespace AscFrontEnd
 
 
                 // Compra
-                var responseVft = await client.GetAsync($"https://localhost:7200/api/Compra/VftByRelations");
+                var responseVft = await client.GetAsync($"api/Compra/VftByRelations");
 
                 if (responseVft.IsSuccessStatusCode)
                 {
@@ -432,7 +478,7 @@ namespace AscFrontEnd
                     StaticProperty.vfts = JsonConvert.DeserializeObject<List<VftDTO>>(contentVft);
                 }
 
-                var responseVfr = await client.GetAsync($"https://localhost:7200/api/Compra/VfrByRelations");
+                var responseVfr = await client.GetAsync($"api/Compra/VfrByRelations");
 
                 if (responseVfr.IsSuccessStatusCode)
                 {
@@ -440,7 +486,7 @@ namespace AscFrontEnd
                     StaticProperty.vfrs = JsonConvert.DeserializeObject<List<VfrDTO>>(contentVfr);
                 }
 
-                var responseVgt = await client.GetAsync($"https://localhost:7200/api/Compra/VgtByRelations");
+                var responseVgt = await client.GetAsync($"api/Compra/VgtByRelations");
 
                 if (responseVgt.IsSuccessStatusCode)
                 {
@@ -448,7 +494,7 @@ namespace AscFrontEnd
                     StaticProperty.vgts = JsonConvert.DeserializeObject<List<VgtDTO>>(contentVgt);
                 }
 
-                var responsePco = await client.GetAsync($"https://localhost:7200/api/Compra/PcoByRelations");
+                var responsePco = await client.GetAsync($"api/Compra/PcoByRelations");
 
                 if (responsePco.IsSuccessStatusCode)
                 {
@@ -456,7 +502,7 @@ namespace AscFrontEnd
                     StaticProperty.pcos = JsonConvert.DeserializeObject<List<PedidoCotacaoDTO>>(contentPco);
                 }
 
-                var responseCot = await client.GetAsync($"https://localhost:7200/api/Compra/CotByRelations");
+                var responseCot = await client.GetAsync($"api/Compra/CotByRelations");
 
                 if (responseCot.IsSuccessStatusCode)
                 {
@@ -464,7 +510,7 @@ namespace AscFrontEnd
                     StaticProperty.cots = JsonConvert.DeserializeObject<List<CotacaoDTO>>(contentCot);
                 }
 
-                var responseEcf = await client.GetAsync($"https://localhost:7200/api/Compra/EcfByRelations");
+                var responseEcf = await client.GetAsync($"api/Compra/EcfByRelations");
 
                 if (responseEcf.IsSuccessStatusCode)
                 {
@@ -472,7 +518,7 @@ namespace AscFrontEnd
                     StaticProperty.ecfs = JsonConvert.DeserializeObject<List<EncomendaFornecedorDTO>>(contentEcf);
                 }
 
-                var responseVnc = await client.GetAsync($"https://localhost:7200/api/Compra/VncByRelations");
+                var responseVnc = await client.GetAsync($"api/Compra/VncByRelations");
 
                 if (responseVnc.IsSuccessStatusCode)
                 {
@@ -480,7 +526,7 @@ namespace AscFrontEnd
                     StaticProperty.vncs = JsonConvert.DeserializeObject<List<VncDTO>>(contentVnc);
                 }
 
-                var responseVnd = await client.GetAsync($"https://localhost:7200/api/Compra/VndByRelations");
+                var responseVnd = await client.GetAsync($"api/Compra/VndByRelations");
 
                 if (responseVnd.IsSuccessStatusCode)
                 {
@@ -503,6 +549,7 @@ namespace AscFrontEnd
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string codigo;
             if (StaticProperty.series == null)
             {
                 MessageBox.Show("Nenhuma Serie Foi Criada", "Precisa de uma Serie", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -531,8 +578,19 @@ namespace AscFrontEnd
                     MessageBox.Show("Selecione um documento de Compra", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
+                if(int.Parse(Qtd.Text) <= 0) 
+                {
+                    MessageBox.Show("A quantidade nao pode ser igual a 0", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
-                string codigo;
+                codigo = StaticProperty.artigos.Where(art => art.id == artigoId).First().codigo;
+
+                if (compraArtigos.Where(x => x.codigo == codigo).Any())
+                {
+                    return;
+                }
+                        
                 int idCompraArtigo = tabelaCompra.Rows.Count;
                 List<CompraArtigo> refreshCompraArtigo = new List<CompraArtigo>();
                 int i = 1;
@@ -540,7 +598,7 @@ namespace AscFrontEnd
                 dtCompra.Rows.Clear();
                 tabelaCompra.DataSource = dtCompra;
 
-                codigo = StaticProperty.artigos.Where(art => art.id == artigoId).First().codigo;
+               
 
                 foreach (var ca in compraArtigos) 
                 {
@@ -710,6 +768,7 @@ namespace AscFrontEnd
                         tabelaCompra.DataSource = dtCompra;
                     }
                 }
+                artigoId = 0;
 
                 totalBruto.Text = $"Total: {CalculosVendaCompra.TotalCompra(compraArtigos).ToString("F2")}";
                 ivaTotal.Text = $"Iva: {CalculosVendaCompra.TotalIvaCompra(compraArtigos).ToString("F2")}";
@@ -766,6 +825,7 @@ namespace AscFrontEnd
             else if (documento.Text == "VFT") { descricaoDocumento = "V/Factura"; }
             else if (documento.Text == "ECF") { descricaoDocumento = "Encomenda a Fornecedor"; }
             else if (documento.Text == "VGT") { descricaoDocumento = "V/Guia de Transporte"; }
+            else if (documento.Text == "VGR") { descricaoDocumento = "V/Guia de Remessa"; }
             else if (documento.Text == "PCO") { descricaoDocumento = "Pedido Cotação"; }
             else if (documento.Text == "COT") { descricaoDocumento = "Cotação"; }
             else if (documento.Text == "VNC") { descricaoDocumento = "V/Nota Crédito"; }
@@ -898,7 +958,6 @@ namespace AscFrontEnd
             {
                 float totalLiquido = 0f;
                 float totalIva = 0f;
-                float ivaValorTotal = 0f;
                 float total = 0f;
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
@@ -922,12 +981,14 @@ namespace AscFrontEnd
 
                 StringFormat formatToCenter = new StringFormat();
                 formatToCenter.Alignment = StringAlignment.Near;
-               
+
+                var tel = fornecedorResult.phones.Any() ? fornecedorResult.phones.First().telefone : "000000000";
+
                 string empresaNome = $"{fornecedorResult.nome_fantasia.ToUpper()}\n";
                 string empresaCabecalho = $"{fornecedorResult.localizacao}\n" +
                                           $"Contribuente: {fornecedorResult.nif}\n" +
-                                          $"Email: {fornecedorResult.email}\n" +
-                                          $"Tel: {fornecedorResult.phones.First().telefone}";
+                                          $"Email: {fornecedorResult.email ?? ""}\n" +
+                                          $"Tel: {tel}";
 
                 string clienteCabecalho = $"{StaticProperty.empresa.nome_fantasia}\n".ToUpper();
                 string clienteOutros = $"Cliente Nº {StaticProperty.empresa.id}\n" +

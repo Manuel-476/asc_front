@@ -303,6 +303,8 @@
     <Compile Include="DTOs\Artigo\IvaDTO.cs" />
     <Compile Include="DTOs\Artigo\MotivosIsencaoIvaDTO.cs" />
     <Compile Include="DTOs\Compra\CompraDTO.cs" />
+    <Compile Include="DTOs\Compra\VgrArtigoDTO.cs" />
+    <Compile Include="DTOs\Compra\VgrDTO.cs" />
     <Compile Include="DTOs\Configuration\StockMinimDTO.cs" />
     <Compile Include="DTOs\Funcionario\RelationUserPermissionDTO.cs" />
     <Compile Include="DTOs\Funcionario\UserPermissionsDTO.cs" />
@@ -370,12 +372,16 @@
     <Compile Include="DTOs\Venda\FrDTO.cs" />
     <Compile Include="DTOs\Venda\FtArtigoDTO.cs" />
     <Compile Include="DTOs\Venda\FtDTO.cs" />
+    <Compile Include="DTOs\Venda\GrArtigoDTO.cs" />
+    <Compile Include="DTOs\Venda\GrDTO.cs" />
     <Compile Include="DTOs\Venda\GtArtigoDTO.cs" />
     <Compile Include="DTOs\Venda\GtDTO.cs" />
     <Compile Include="DTOs\Venda\NcArtigoDTO.cs" />
     <Compile Include="DTOs\Venda\NcDTO.cs" />
     <Compile Include="DTOs\Venda\NdArtigoDTO.cs" />
     <Compile Include="DTOs\Venda\NdDTO.cs" />
+    <Compile Include="DTOs\Venda\OrArtigoDTO.cs" />
+    <Compile Include="DTOs\Venda\OrDTO.cs" />
     <Compile Include="DTOs\Venda\VendaDTO.cs" />
     <Compile Include="EmpresaForm.cs">
       <SubType>Form</SubType>
@@ -888,7 +894,10 @@
     <None Include="Resources\icons8-tax-64.png" />
     <None Include="Resources\tax.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Application\Compra\" />
+    <Folder Include="Application\Venda\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

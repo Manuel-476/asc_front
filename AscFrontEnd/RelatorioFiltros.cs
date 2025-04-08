@@ -66,9 +66,9 @@ namespace AscFrontEnd
             _historicoStock = new List<ArmazemHistoricoDTO>();
 
             dialogArtigo = new ArtigoListagem(true, null);
-            dialogArmazem = new ArmazemListagem(true);
-            dialogEntidadeCl = new ClienteListagem(true);
-            dialogEntidadeForn = new FornecedorListagem(true);
+            dialogArmazem = new ArmazemListagem(true, null);
+            dialogEntidadeCl = new ClienteListagem(true, null);
+            dialogEntidadeForn = new FornecedorListagem(true, null);
 
             _httpClient = new HttpClient();
 
@@ -111,9 +111,9 @@ namespace AscFrontEnd
             if (_financeira == OpcaoBinaria.Sim)
             {
                 btnArmazem.Visible = false;
-               // btnArtigo.Visible = false;
+                // btnArtigo.Visible = false;
             }
-            else 
+            else
             {
                 btnEntidade.Visible = false;
                 documentoCombo.Enabled = false;
@@ -154,7 +154,7 @@ namespace AscFrontEnd
             {
                 _documentos.Add(doc);
             }
-            else 
+            else
             {
                 _documentos.Remove(doc);
             }
@@ -176,7 +176,8 @@ namespace AscFrontEnd
         {
             if (_consulta == Consulta.venda)
             {
-               
+                dialogEntidadeCl = new ClienteListagem(true, _entidadeIds);
+
                 dialogEntidadeCl.ShowDialog();
 
                 _entidadeIds = dialogEntidadeCl.GetClienteIdList();
@@ -186,9 +187,9 @@ namespace AscFrontEnd
                     entidadeList.Text += $"{StaticProperty.clientes.Where(x => x.id == item).First().nome_fantasia}\n";
                 };
             }
-            else 
+            else
             {
-                dialogEntidadeForn = new FornecedorListagem(true);
+                dialogEntidadeForn = new FornecedorListagem(true, _entidadeIds);
                 dialogEntidadeForn.ShowDialog();
 
                 _entidadeIds = dialogEntidadeForn.GetFornecedorIdList();
@@ -202,17 +203,17 @@ namespace AscFrontEnd
 
         private void btnArmazem_Click(object sender, EventArgs e)
         {
-           dialogArmazem = new ArmazemListagem(true);
-           dialogArmazem.ShowDialog();
+            dialogArmazem = new ArmazemListagem(true, _armazemIds);
+            dialogArmazem.ShowDialog();
 
             armazemList.Text = "";
 
             _armazemIds = dialogArmazem.GetArmazemIdList();
 
-           foreach (var item in _armazemIds)
-           {
+            foreach (var item in _armazemIds)
+            {
                 armazemList.Text += $"{StaticProperty.armazens.Where(x => x.id == item).First().descricao}\n";
-           }
+            }
         }
 
         private void btnArtigo_Click(object sender, EventArgs e)
@@ -227,17 +228,17 @@ namespace AscFrontEnd
 
             foreach (var item in _artigoIds)
             {
-                artigoList.Text += $"{StaticProperty.artigos.Where(x => x.id == item).First().descricao}\n";    
+                artigoList.Text += $"{StaticProperty.artigos.Where(x => x.id == item).First().descricao}\n";
             }
         }
 
         private async void btnImprimir_Click(object sender, EventArgs e)
         {
 
-                DateTime dateStart = dataInicioCombo.Value; // Pegue do DateTimePicker
-                DateTime dateEnd = dataFinalCombo.Value; // Pegue do DateTimePicker
+            DateTime dateStart = dataInicioCombo.Value; // Pegue do DateTimePicker
+            DateTime dateEnd = dataFinalCombo.Value; // Pegue do DateTimePicker
 
-                // Construa a query string
+            // Construa a query string
 
 
             if (_consulta == Consulta.venda)
@@ -325,7 +326,7 @@ namespace AscFrontEnd
 
                 }
             }
-            }
+        }
 
         private void printVenda_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
@@ -414,7 +415,7 @@ namespace AscFrontEnd
                         total += va.preco * float.Parse(va.qtd.ToString());
                         desconto += (va.preco * float.Parse(va.qtd.ToString()) * (va.desconto / 100));
                         var valorIva = (va.preco * float.Parse(va.qtd.ToString()) * (va.iva / 100));
-                        var descontoLinha = (va.preco * float.Parse(va.qtd.ToString()) * (va.desconto/100));
+                        var descontoLinha = (va.preco * float.Parse(va.qtd.ToString()) * (va.desconto / 100));
 
                         if (_artigoIds.Any())
                         {
@@ -433,7 +434,7 @@ namespace AscFrontEnd
                                 e.Graphics.DrawString($"{(venda.data.ToString("dd-MM-yyyy"))}", fontNormal, cor, new Rectangle(700, 290 + i, 750, 305 + i));
                             }
                         }
-                        else 
+                        else
                         {
                             e.Graphics.DrawString($"{_dados.Where(art => art.id == va.artigoId).First().codigo}", fontNormal, cor, new Rectangle(50, 290 + i, 110, 305 + i));
                             e.Graphics.DrawString($"{_dados.Where(art => art.id == va.artigoId).First().descricao}", fontNormal, cor, new Rectangle(110, 290 + i, 200, 305 + i));
@@ -734,14 +735,14 @@ namespace AscFrontEnd
                 foreach (var hs in _historicoStock)
                 {
 
-                                e.Graphics.DrawString($"{StaticProperty.armazens.Where(arm => arm.id == hs.armazemId).First().codigo}", fontNormal, cor, new Rectangle(50, 290 + i, 200, 305 + i));
-                                e.Graphics.DrawString($"{StaticProperty.locationStores.Where(loc => loc.id == hs.localizacaoId).First().codigo}", fontNormal, cor, new Rectangle(200, 290 + i, 300, 305 + i));
-                                e.Graphics.DrawString($"{StaticProperty.artigos.Where(loc => loc.id == hs.artigoId).First().codigo}", fontNormal, cor, new Rectangle(350, 290 + i, 450, 305 + i));
-                                e.Graphics.DrawString($"{hs.qtd.ToString("F2")}", fontNormal, cor, new Rectangle(500, 290 + i, 590, 305 + i));
-                                e.Graphics.DrawString($"{hs.created_at.ToString("dd-MM-yyyy")}", fontNormal, cor, new Rectangle(600, 290 + i, 700, 305 + i));
+                    e.Graphics.DrawString($"{StaticProperty.armazens.Where(arm => arm.id == hs.armazemId).First().codigo}", fontNormal, cor, new Rectangle(50, 290 + i, 200, 305 + i));
+                    e.Graphics.DrawString($"{StaticProperty.locationStores.Where(loc => loc.id == hs.localizacaoId).First().codigo}", fontNormal, cor, new Rectangle(200, 290 + i, 300, 305 + i));
+                    e.Graphics.DrawString($"{StaticProperty.artigos.Where(loc => loc.id == hs.artigoId).First().codigo}", fontNormal, cor, new Rectangle(350, 290 + i, 450, 305 + i));
+                    e.Graphics.DrawString($"{hs.qtd.ToString("F2")}", fontNormal, cor, new Rectangle(500, 290 + i, 590, 305 + i));
+                    e.Graphics.DrawString($"{hs.created_at.ToString("dd-MM-yyyy")}", fontNormal, cor, new Rectangle(600, 290 + i, 700, 305 + i));
 
-                        i = i + 15;
-                    
+                    i = i + 15;
+
                 }
 
                 totalLiquido += total - desconto;
@@ -801,9 +802,13 @@ namespace AscFrontEnd
 
             if (_consulta == Consulta.venda)
             {
+                _entidadeIds = dialogEntidadeCl.GetClienteIdList();
+
+                entidadeList.Text = "";
+
                 if (_entidadeIds != null && _entidadeIds.Any())
                 {
-                    _entidadeIds = dialogEntidadeCl.GetClienteIdList();
+
 
                     foreach (var item in _entidadeIds)
                     {
@@ -814,16 +819,31 @@ namespace AscFrontEnd
             else
             {
                 _entidadeIds = dialogEntidadeForn.GetFornecedorIdList();
+
                 if (_entidadeIds != null && _entidadeIds.Any())
                 {
+                    entidadeList.Text = "";
+
                     foreach (var item in _entidadeIds)
                     {
                         entidadeList.Text += $"{StaticProperty.fornecedores.Where(x => x.id == item).First().nome_fantasia}\n";
                     };
                 }
             }
-        }
 
+
+
+            _armazemIds = dialogArmazem.GetArmazemIdList();
+            armazemList.Text = "";
+            if (_armazemIds != null && _armazemIds.Any())
+            {
+
+                foreach (var item in _armazemIds)
+                {
+                    armazemList.Text += $"{StaticProperty.armazens.Where(x => x.id == item).First().descricao}\n";
+                }
+            }
+        }
         private void RelatorioFiltros_FormClosing(object sender, FormClosingEventArgs e)
         {
             timerRelatorio.Stop();

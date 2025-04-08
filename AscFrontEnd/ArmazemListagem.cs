@@ -24,11 +24,11 @@ namespace AscFrontEnd
         {
             InitializeComponent();
         }
-        public ArmazemListagem(bool multi)
+        public ArmazemListagem(bool multi,List<int> armazemIds)
         {
             _multi = multi;
 
-            _armazemIds = new List<int>();
+            _armazemIds = armazemIds ?? new List<int>();
             InitializeComponent();
         }
 
@@ -41,24 +41,46 @@ namespace AscFrontEnd
             dt.Columns.Add("P. Unitario", typeof(string));
             dt.Columns.Add("mov. Stock", typeof(string));
             dt.Columns.Add("mov. Lote", typeof(string));
-
-            // Adicionando linhas ao DataTable
-            foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == StaticProperty.empresaId))
-            {
-                dt.Rows.Add(item.id, item.codigo, item.descricao);
-
-                dataGridView1.DataSource = dt;
-            }
-
-            if (_multi) 
+            if (_multi)
             {
                 dataGridView1.MultiSelect = true;
                 editarPicture.Visible = false;
                 eliminarPicture.Visible = false;
+
+                // Adiciona linhas ao DataTable
+                foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == StaticProperty.empresaId))
+                {
+                    dt.Rows.Add(item.id, item.codigo, item.descricao);
+
+                }
+                    dataGridView1.DataSource = dt;
+
+
+                // Seleciona automaticamente as linhas cujos IDs estão em _artigoIds
+                if (_armazemIds != null && _armazemIds.Any())
+                {
+                    foreach (DataGridViewRow row in dataGridView1.Rows)
+                    {
+                        int id = Convert.ToInt32(row.Cells["id"].Value); // Pega o valor da coluna "id"
+                        if (_armazemIds.Contains(id))
+                        {
+                            row.Selected = true; // Seleciona a linha
+                        }
+                    }
+                }
             }
-            else 
+            else
             {
-                dataGridView1.MultiSelect= false;
+                dataGridView1.MultiSelect = false;
+
+                // Adicionando linhas ao DataTable
+                foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == StaticProperty.empresaId))
+                {
+                    dt.Rows.Add(item.id, item.codigo, item.descricao);
+
+                }
+                    dataGridView1.DataSource = dt;
+
             }
         }
 

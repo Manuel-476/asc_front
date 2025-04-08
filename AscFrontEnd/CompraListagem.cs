@@ -16,6 +16,9 @@ using AscFrontEnd.DTOs.Fornecedor;
 using AscFrontEnd.DTOs;
 using ERP_Buyer.Application.DTOs.Documentos;
 using Newtonsoft.Json;
+using AscFrontEnd.DTOs.Venda;
+using EAscFrontEnd;
+using ERP_Seller.Application.DTOs.Documentos;
 
 namespace AscFrontEnd
 {
@@ -33,23 +36,29 @@ namespace AscFrontEnd
 
         private void radioFp_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioPco.Checked) 
-            { 
-               DataTable dt = new DataTable();
-               dt.Columns.Add("id", typeof(int));
-               dt.Columns.Add("Fornecedor", typeof(string));
-               dt.Columns.Add("Documento", typeof(string));
-               dt.Columns.Add("Data", typeof(string));
+            if (radioPco.Checked)
+            {
+                CleanDataGridView();
+
+                DataTable dt = new DataTable();
+                dt.Columns.Add("id", typeof(int));
+                dt.Columns.Add("Fornecedor", typeof(string));
+                dt.Columns.Add("Documento", typeof(string));
+                dt.Columns.Add("Estado", typeof(string));
+                dt.Columns.Add("Data", typeof(string));
 
 
-              // Adicionando linhas ao DataTable
-              foreach (var item in StaticProperty.pcos.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
-              {
-                fornecedorNome = StaticProperty.fornecedores.Where(f =>f.id == item.fornecedorId).First().nome_fantasia;
-                dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+                // Adicionando linhas ao DataTable
+                foreach (var item in StaticProperty.pcos.Where(f => f.status != DocState.anulado && f.empresaId == StaticProperty.empresaId))
+                {
+                    fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
 
-                dataGridView1.DataSource = dt;
-              }
+                    var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+
+                    dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
+
+                }
+                    dataGridView1.DataSource = dt;
             }
         }
 
@@ -57,18 +66,24 @@ namespace AscFrontEnd
         {
             if (radioCot.Checked)
             {
+                CleanDataGridView();
+
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Fornecedor", typeof(string));
                 dt.Columns.Add("Documento", typeof(string));
+                dt.Columns.Add("Estado", typeof(string));
                 dt.Columns.Add("Data", typeof(string));
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.cots.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+                foreach (var item in StaticProperty.cots.Where(f => f.status != DocState.anulado && f.empresaId == StaticProperty.empresaId))
                 {
                     fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                    var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+
+                    dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
 
                     dataGridView1.DataSource = dt;
                 }
@@ -77,137 +92,58 @@ namespace AscFrontEnd
 
         private void CompraListagem_Load(object sender, EventArgs e)
         {
-            radioPco.Enabled = true;
+            radioGeral.Checked = true;
             estornarPicture.Enabled = false;
 
             DataTable dt = new DataTable();
             dt.Columns.Add("id", typeof(int));
             dt.Columns.Add("Fornecedor", typeof(string));
             dt.Columns.Add("Documento", typeof(string));
+            dt.Columns.Add("Estado", typeof(string));
             dt.Columns.Add("Data", typeof(string));
 
 
             // Adicionando linhas ao DataTable
-            foreach (var item in StaticProperty.pcos.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+            this.SetCompras();
+            foreach (var item in documentoCompras.OrderByDescending(x => x.data))
             {
-                fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
-                dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+                if (StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).Any())
+                {
+                    fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                }
+                var estado = string.Empty;
+                if (item.status == DocState.anulado) { estado = "Anulado"; }
+                else if (item.status == DocState.estornado) { estado = "Estornado"; }
+                else { estado = "activo"; }
 
-                dataGridView1.DataSource = dt;
-            }
+                dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
 
-            foreach (var item in StaticProperty.pcos)
-            {
-                documentoCompras.Add(new DocumentoCompra() { id = item.id,
-                                                             fornecedorId=item.fornecedorId,
-                                                             fornecedor=item.fornecedor,
-                                                             documento = item.documento,
-                                                             data=item.data,
-                                                             status = item.status});
             }
-            foreach (var item in StaticProperty.cots)
-            {
-                documentoCompras.Add(new DocumentoCompra()
-                {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    fornecedor = item.fornecedor,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
-            }
-            foreach (var item in StaticProperty.vfts)
-            {
-                documentoCompras.Add(new DocumentoCompra()
-                {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    fornecedor = item.fornecedor,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
-            }
-            foreach (var item in StaticProperty.vfrs)
-            {
-                documentoCompras.Add(new DocumentoCompra()
-                {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    fornecedor = item.fornecedor,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
-            }
-            foreach (var item in StaticProperty.ecfs)
-            {
-                documentoCompras.Add(new DocumentoCompra()
-                {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    fornecedor = item.fornecedor,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
-            }
-            foreach (var item in StaticProperty.vgts)
-            {
-                documentoCompras.Add(new DocumentoCompra()
-                {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    fornecedor = item.fornecedor,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
-            }
-            foreach (var item in StaticProperty.vncs)
-            {
-                documentoCompras.Add(new DocumentoCompra()
-                {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    fornecedor = item.fornecedor,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
-            }
-            foreach (var item in StaticProperty.vnds)
-            {
-                documentoCompras.Add(new DocumentoCompra()
-                {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    fornecedor = item.fornecedor,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
-            }
-
+            dataGridView1.DataSource = dt;
         }
 
         private void radioVft_CheckedChanged(object sender, EventArgs e)
         {
             if (radioVft.Checked)
             {
+                CleanDataGridView();
+
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Fornecedor", typeof(string));
                 dt.Columns.Add("Documento", typeof(string));
+                dt.Columns.Add("Estado", typeof(string));
                 dt.Columns.Add("Data", typeof(string));
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vfts.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+                foreach (var item in StaticProperty.vfts.Where(f => f.status != DocState.anulado && f.empresaId == StaticProperty.empresaId))
                 {
                     fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                    var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+
+                    dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
 
                     dataGridView1.DataSource = dt;
                 }
@@ -218,22 +154,28 @@ namespace AscFrontEnd
         {
             if (radioVfr.Checked)
             {
+                CleanDataGridView();
+
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Fornecedor", typeof(string));
                 dt.Columns.Add("Documento", typeof(string));
+                dt.Columns.Add("Estado", typeof(string));
                 dt.Columns.Add("Data", typeof(string));
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vfrs.Where(f => f.status != DocState.anulado && f.status != DocState.estornado && f.fornecedor.empresaid == StaticProperty.empresaId).ToList())
+                foreach (var item in StaticProperty.vfrs.Where(f => f.status != DocState.anulado && f.status != DocState.estornado && f.empresaId == StaticProperty.empresaId).ToList())
                 {
                     fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                    var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+
+                    dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
 
                     dataGridView1.DataSource = dt;
                 }
-                
+
             }
         }
 
@@ -241,18 +183,52 @@ namespace AscFrontEnd
         {
             if (radioVgt.Checked)
             {
+                CleanDataGridView();
+
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Fornecedor", typeof(string));
                 dt.Columns.Add("Documento", typeof(string));
+                dt.Columns.Add("Estado", typeof(string));
                 dt.Columns.Add("Data", typeof(string));
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vgts.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+                foreach (var item in StaticProperty.vgts.Where(f => f.status != DocState.anulado && f.empresaId == StaticProperty.empresaId))
                 {
                     fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                    var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+
+                    dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
+
+                    dataGridView1.DataSource = dt;
+                }
+            }
+        }
+
+        private void radioVgr_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioVgr.Checked)
+            {
+                CleanDataGridView();
+
+                DataTable dt = new DataTable();
+                dt.Columns.Add("id", typeof(int));
+                dt.Columns.Add("Fornecedor", typeof(string));
+                dt.Columns.Add("Documento", typeof(string));
+                dt.Columns.Add("Estado", typeof(string));
+                dt.Columns.Add("Data", typeof(string));
+
+
+                // Adicionando linhas ao DataTable
+                foreach (var item in StaticProperty.vgrs.Where(f => f.status != DocState.anulado && f.empresaId == StaticProperty.empresaId))
+                {
+                    fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+
+                    var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+
+                    dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
 
                     dataGridView1.DataSource = dt;
                 }
@@ -263,18 +239,24 @@ namespace AscFrontEnd
         {
             if (radioVnc.Checked)
             {
+                CleanDataGridView();
+
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Fornecedor", typeof(string));
                 dt.Columns.Add("Documento", typeof(string));
+                dt.Columns.Add("Estado", typeof(string));
                 dt.Columns.Add("Data", typeof(string));
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vncs.Where(x => x.fornecedor.empresaid == StaticProperty.empresaId))
+                foreach (var item in StaticProperty.vncs.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
                     fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                    var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+
+                    dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
 
                     dataGridView1.DataSource = dt;
                 }
@@ -292,17 +274,17 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in documentoCompras.Where(f => f.status == DocState.anulado).OrderByDescending(x=>x.data))
+                foreach (var item in documentoCompras.Where(f => f.status == DocState.anulado).OrderByDescending(x => x.data))
                 {
-                    if(StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First() != null) 
+                    if (StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First() != null)
                     {
                         fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
                     }
-                    
+
                     dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
 
-                    dataGridView1.DataSource = dt;
                 }
+                dataGridView1.DataSource = dt;
             }
         }
 
@@ -388,7 +370,7 @@ namespace AscFrontEnd
                 }
                 foreach (var item2 in StaticProperty.fornecedores.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text)))
                 {
-                    foreach (var item in StaticProperty.vgts.Where(f => f.fornecedorId == item2.id && f.status != DocState.anulado ).ToList())
+                    foreach (var item in StaticProperty.vgts.Where(f => f.fornecedorId == item2.id && f.status != DocState.anulado).ToList())
                     {
                         fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
                         dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
@@ -443,41 +425,79 @@ namespace AscFrontEnd
 
         private async void estornarPicture_Click(object sender, EventArgs e)
         {
-            if (radioVfr.Checked)
+
+            var client = new HttpClient();
+            try
             {
-                var client = new HttpClient();
-                try
+
+                client.BaseAddress = new Uri("https://localhost:7200/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                if (radioVfr.Checked)
                 {
                     string documento = StaticProperty.vfrs.Where(cl => cl.id == id).First().documento;
-
-                    client.BaseAddress = new Uri("https://sua-api.com/");
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                     // Conversão do objeto Film para JSON
                     string json = System.Text.Json.JsonSerializer.Serialize(DocState.estornado);
 
                     // Envio dos dados para a API
-                    HttpResponseMessage responseFr = await client.PutAsync($"https://localhost:7200/api/Compra/Vfr/Change/State/{id}/{DocState.estornado}", new StringContent(json, Encoding.UTF8, "application/json"));
+                    HttpResponseMessage responseFr = await client.PutAsync($"api/Compra/Vfr/Change/State/{id}/{DocState.estornado}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                     if (responseFr.IsSuccessStatusCode)
                     {
                         MessageBox.Show($"O documento {documento} foi estornado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-                catch (Exception ex)
+                if (radioVft.Checked)
                 {
-                    MessageBox.Show($"Ocorreu um erro mo processo de estorno: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                    string documento = StaticProperty.vfts.Where(cl => cl.id == id).First().documento;
+
+
+                    // Conversão do objeto Film para JSON
+                    string json = System.Text.Json.JsonSerializer.Serialize(DocState.estornado);
+
+                    // Envio dos dados para a API
+                    HttpResponseMessage responseFt = await client.PutAsync($"api/Compra/Vft/Change/State/{id}/{DocState.estornado}", new StringContent(json, Encoding.UTF8, "application/json"));
+
+                    if (responseFt.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show($"O documento {documento} foi estornado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
+                if (radioVgr.Checked)
+                {
+                    string documento = StaticProperty.vfts.Where(cl => cl.id == id).First().documento;
+
+
+                    // Conversão do objeto Film para JSON
+                    string json = System.Text.Json.JsonSerializer.Serialize(DocState.estornado);
+
+                    // Envio dos dados para a API
+                    HttpResponseMessage responseFt = await client.PutAsync($"api/Compra/Vgr/Change/State/{id}/{DocState.estornado}", new StringContent(json, Encoding.UTF8, "application/json"));
+
+                    if (responseFt.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show($"O documento {documento} foi estornado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+
+                this.RefreshDocs();
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ocorreu um erro mo processo de estorno: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+            }
+
         }
 
         private async void anularPicture_Click(object sender, EventArgs e)
         {
             string documento = string.Empty;
             var client = new HttpClient();
-            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.BaseAddress = new Uri("https://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             try
             {
@@ -490,7 +510,7 @@ namespace AscFrontEnd
                     string json = System.Text.Json.JsonSerializer.Serialize(DocState.anulado);
 
                     // Envio dos dados para a API
-                    HttpResponseMessage responseVfr = await client.PutAsync($"https://localhost:7200/api/Compra/Vfr/Change/State/{id}/{DocState.anulado}", new StringContent(json, Encoding.UTF8, "application/json"));
+                    HttpResponseMessage responseVfr = await client.PutAsync($"api/Compra/Vfr/Change/State/{id}/{DocState.anulado}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                     if (responseVfr.IsSuccessStatusCode)
                     {
@@ -523,7 +543,7 @@ namespace AscFrontEnd
                     string json = System.Text.Json.JsonSerializer.Serialize(DocState.anulado);
 
                     // Envio dos dados para a API
-                    HttpResponseMessage responseFt = await client.PutAsync($"https://localhost:7200/api/Compra/Vft/Change/State/{id}/{DocState.anulado}", new StringContent(json, Encoding.UTF8, "application/json"));
+                    HttpResponseMessage responseFt = await client.PutAsync($"api/Compra/Vft/Change/State/{id}/{DocState.anulado}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                     if (responseFt.IsSuccessStatusCode)
                     {
@@ -555,7 +575,7 @@ namespace AscFrontEnd
                     string json = System.Text.Json.JsonSerializer.Serialize(DocState.anulado);
 
                     // Envio dos dados para a API
-                    HttpResponseMessage responseFp = await client.PutAsync($"https://localhost:7200/api/Compra/Pco/Change/State/{id}/{DocState.anulado}", new StringContent(json, Encoding.UTF8, "application/json"));
+                    HttpResponseMessage responseFp = await client.PutAsync($"api/Compra/Pco/Change/State/{id}/{DocState.anulado}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                     if (responseFp
                         .IsSuccessStatusCode)
@@ -588,7 +608,7 @@ namespace AscFrontEnd
                     string json = System.Text.Json.JsonSerializer.Serialize(DocState.anulado);
 
                     // Envio dos dados para a API
-                    HttpResponseMessage responseFp = await client.PutAsync($"https://localhost:7200/api/Compra/Cot/Change/State/{id}/{DocState.anulado}", new StringContent(json, Encoding.UTF8, "application/json"));
+                    HttpResponseMessage responseFp = await client.PutAsync($"api/Compra/Cot/Change/State/{id}/{DocState.anulado}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                     if (responseFp
                         .IsSuccessStatusCode)
@@ -621,7 +641,7 @@ namespace AscFrontEnd
                     string json = System.Text.Json.JsonSerializer.Serialize(DocState.anulado);
 
                     // Envio dos dados para a API
-                    HttpResponseMessage responseGt = await client.PutAsync($"https://localhost:7200/api/Compra/Vgt/Change/State/{id}/{DocState.anulado}", new StringContent(json, Encoding.UTF8, "application/json"));
+                    HttpResponseMessage responseGt = await client.PutAsync($"api/Compra/Vgt/Change/State/{id}/{DocState.anulado}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                     if (responseGt.IsSuccessStatusCode)
                     {
@@ -644,7 +664,8 @@ namespace AscFrontEnd
 
                         dataGridView1.DataSource = dt;
                     }
-                }   
+                }
+                this.RefreshDocs();
             }
             catch (Exception ex)
             {
@@ -656,7 +677,7 @@ namespace AscFrontEnd
         {
             try
             {
-                if (radioVfr.Checked)
+                if (radioVfr.Checked || radioVft.Checked || radioVgr.Checked)
                 {
                     estornarPicture.Enabled = true;
                 }
@@ -681,11 +702,12 @@ namespace AscFrontEnd
             if (radioVgt.Checked) { documento = "VGT"; }
             if (radioVnc.Checked) { documento = "VNC"; }
             if (radioEcf.Checked) { documento = "ECF"; }
-            if(radioAnulado.Checked) 
+            if (radioVgr.Checked) { documento = "VGR"; }
+            if (radioAnulado.Checked || radioGeral.Checked)
             {
                 var doc = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
                 var indexSpace = doc.IndexOf(" ");
-                documento = doc.Substring(0,indexSpace);
+                documento = doc.Substring(0, indexSpace);
             }
 
             DocumentosDetalhesForm ddf = new DocumentosDetalhesForm(documento, id, Entidade.fornecedor
@@ -695,33 +717,153 @@ namespace AscFrontEnd
 
         private void radioEcf_CheckedChanged(object sender, EventArgs e)
         {
-                DataTable dt = new DataTable();
-                dt.Columns.Add("id", typeof(int));
-                dt.Columns.Add("Cliente", typeof(string));
-                dt.Columns.Add("Documento", typeof(string));
-                dt.Columns.Add("Data", typeof(string));
+            DataTable dt = new DataTable();
+            dt.Columns.Add("id", typeof(int));
+            dt.Columns.Add("Cliente", typeof(string));
+            dt.Columns.Add("Documento", typeof(string));
+            dt.Columns.Add("Estado", typeof(string));
+            dt.Columns.Add("Data", typeof(string));
 
-                if (radioEcf.Checked)
+            if (radioEcf.Checked)
+            {
+                CleanDataGridView();
+
+                foreach (var item in StaticProperty.ecfs.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    foreach (var item in StaticProperty.ecfs)
+                    if (StaticProperty.artigos.Where(x => x.id == item.ecfArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
                     {
-                        if (StaticProperty.artigos.Where(x => x.id == item.ecfArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
-                        {
-                            fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
-                            dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+                        fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
 
-                            dataGridView1.DataSource = dt;
-                        }
+                        var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+
+                        dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
+
                     }
                 }
+                dataGridView1.DataSource = dt;
+            }
         }
+
+        public void SetCompras()
+        {
+            documentoCompras.Clear();
+            foreach (var item in StaticProperty.pcos.Where(x => x.empresaId == StaticProperty.empresaId))
+            {
+                documentoCompras.Add(new DocumentoCompra()
+                {
+                    id = item.id,
+                    fornecedorId = item.fornecedorId,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+            foreach (var item in StaticProperty.cots.Where(x => x.empresaId == StaticProperty.empresaId))
+            {
+                documentoCompras.Add(new DocumentoCompra()
+                {
+                    id = item.id,
+                    fornecedorId = item.fornecedorId,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+            foreach (var item in StaticProperty.vfts.Where(x => x.empresaId == StaticProperty.empresaId))
+            {
+                documentoCompras.Add(new DocumentoCompra()
+                {
+                    id = item.id,
+                    fornecedorId = item.fornecedorId,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+            foreach (var item in StaticProperty.vfrs.Where(x => x.empresaId == StaticProperty.empresaId))
+            {
+                documentoCompras.Add(new DocumentoCompra()
+                {
+                    id = item.id,
+                    fornecedorId = item.fornecedorId,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+
+            foreach (var item in StaticProperty.ecfs.Where(x => x.empresaId == StaticProperty.empresaId))
+            {
+                documentoCompras.Add(new DocumentoCompra()
+                {
+                    id = item.id,
+                    fornecedorId = item.fornecedorId,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+            foreach (var item in StaticProperty.vncs.Where(x => x.empresaId == StaticProperty.empresaId))
+            {
+                documentoCompras.Add(new DocumentoCompra()
+                {
+                    id = item.id,
+                    fornecedorId = item.fornecedorId,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+            foreach (var item in StaticProperty.vnds.Where(x => x.empresaId == StaticProperty.empresaId))
+            {
+                documentoCompras.Add(new DocumentoCompra()
+                {
+                    id = item.id,
+                    fornecedorId = item.fornecedorId,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+
+            foreach (var item in StaticProperty.vgts.Where(x => x.empresaId == StaticProperty.empresaId))
+            {
+                documentoCompras.Add(new DocumentoCompra()
+                {
+                    id = item.id,
+                    fornecedorId = item.fornecedorId,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+            foreach (var item in StaticProperty.vgrs.Where(x => x.empresaId == StaticProperty.empresaId))
+            {
+                documentoCompras.Add(new DocumentoCompra()
+                {
+                    id = item.id,
+                    fornecedorId = item.fornecedorId,
+                    documento = item.documento,
+                    data = item.data,
+                    status = item.status
+                });
+            }
+        }
+
+        public void CleanDataGridView()
+        {
+            dataGridView1.DataSource = null;
+            dataGridView1.Rows.Clear();
+        }
+
         private async void RefreshDocs()
         {
             var client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:7200/");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             try
             {
-                var responseVft = await client.GetAsync($"https://localhost:7200/api/Compra/VftByRelations");
+                var responseVft = await client.GetAsync($"api/Compra/VftByRelations");
 
                 if (responseVft.IsSuccessStatusCode)
                 {
@@ -729,7 +871,7 @@ namespace AscFrontEnd
                     StaticProperty.vfts = JsonConvert.DeserializeObject<List<VftDTO>>(contentVft);
                 }
 
-                var responseVfr = await client.GetAsync($"https://localhost:7200/api/Compra/VfrByRelations");
+                var responseVfr = await client.GetAsync($"api/Compra/VfrByRelations");
 
                 if (responseVfr.IsSuccessStatusCode)
                 {
@@ -737,7 +879,7 @@ namespace AscFrontEnd
                     StaticProperty.vfrs = JsonConvert.DeserializeObject<List<VfrDTO>>(contentVfr);
                 }
 
-                var responseVgt = await client.GetAsync($"https://localhost:7200/api/Compra/VgtByRelation");
+                var responseVgt = await client.GetAsync($"api/Compra/VgtByRelation");
 
                 if (responseVgt.IsSuccessStatusCode)
                 {
@@ -745,7 +887,7 @@ namespace AscFrontEnd
                     StaticProperty.vgts = JsonConvert.DeserializeObject<List<VgtDTO>>(contentVgt);
                 }
 
-                var responsePco = await client.GetAsync($"https://localhost:7200/api/Compra/PcoByRelation");
+                var responsePco = await client.GetAsync($"api/Compra/PcoByRelation");
 
                 if (responsePco.IsSuccessStatusCode)
                 {
@@ -753,7 +895,7 @@ namespace AscFrontEnd
                     StaticProperty.pcos = JsonConvert.DeserializeObject<List<PedidoCotacaoDTO>>(contentPco);
                 }
 
-                var responseCot = await client.GetAsync($"https://localhost:7200/api/Compra/CotByRelation");
+                var responseCot = await client.GetAsync($"api/Compra/CotByRelation");
 
                 if (responseCot.IsSuccessStatusCode)
                 {
@@ -761,7 +903,7 @@ namespace AscFrontEnd
                     StaticProperty.cots = JsonConvert.DeserializeObject<List<CotacaoDTO>>(contentCot);
                 }
 
-                var responseEcf = await client.GetAsync($"https://localhost:7200/api/Compra/EcfByRelations");
+                var responseEcf = await client.GetAsync($"api/Compra/EcfByRelations");
 
                 if (responseEcf.IsSuccessStatusCode)
                 {
@@ -769,7 +911,7 @@ namespace AscFrontEnd
                     StaticProperty.ecfs = JsonConvert.DeserializeObject<List<EncomendaFornecedorDTO>>(contentEcf);
                 }
 
-                var responseVnc = await client.GetAsync($"https://localhost:7200/api/Compra/VncByRelations");
+                var responseVnc = await client.GetAsync($"api/Compra/VncByRelations");
 
                 if (responseVnc.IsSuccessStatusCode)
                 {
@@ -777,20 +919,30 @@ namespace AscFrontEnd
                     StaticProperty.vncs = JsonConvert.DeserializeObject<List<VncDTO>>(contentVnc);
                 }
 
-                var responseVnd = await client.GetAsync($"https://localhost:7200/api/Compra/VndByRelation");
+                var responseVnd = await client.GetAsync($"api/Compra/VndByRelation");
 
                 if (responseVnd.IsSuccessStatusCode)
                 {
                     var contentVnd = await responseVnd.Content.ReadAsStringAsync();
                     StaticProperty.vnds = JsonConvert.DeserializeObject<List<VndDTO>>(contentVnd);
                 }
+
+                radioFp_CheckedChanged(this, EventArgs.Empty);
+                radioCot_CheckedChanged(this, EventArgs.Empty);
+                radioVft_CheckedChanged(this, EventArgs.Empty);
+                radioVfr_CheckedChanged(this, EventArgs.Empty);
+                radioVgt_CheckedChanged(this, EventArgs.Empty);
+                radioVnc_CheckedChanged(this, EventArgs.Empty);
+                radioAnulado_CheckedChanged(this, EventArgs.Empty);
+                radioEcf_CheckedChanged(this, EventArgs.Empty);
             }
             catch (Exception ex)
             { throw new Exception($"Erro na actualizacao dos dados: {ex.Message}"); }
         }
+
     }
 
-    public class DocumentoCompra 
+    public class DocumentoCompra
     {
         public int id { get; set; }
         public string documento { get; set; }

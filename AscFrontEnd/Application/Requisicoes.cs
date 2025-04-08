@@ -117,6 +117,31 @@ namespace AscFrontEnd.Application
             }
         }
 
+        public async Task<List<VgrDTO>> GetVgr()
+        {
+            try
+            {
+                var responseVgr = await _httpClient.GetAsync($"https://localhost:7200/api/Compra/VgrByRelation");
+
+                if (responseVgr.IsSuccessStatusCode)
+                {
+                    var contentVgr = await responseVgr.Content.ReadAsStringAsync();
+
+                    var vgrs = JsonConvert.DeserializeObject<List<VgrDTO>>(contentVgr);
+
+                    return vgrs;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocorreu um erro: {ex.Message}");
+            }
+        }
+
         public async Task<List<PedidoCotacaoDTO>> GetPco()
         {
             try
@@ -402,6 +427,54 @@ namespace AscFrontEnd.Application
                     var gts = JsonConvert.DeserializeObject<List<GtDTO>>(contentGt);
 
                     return gts;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocorreu um erro: {ex.Message}");
+            }
+        }
+
+        public async Task<List<GrDTO>> GetGr()
+        {
+            try
+            {
+                var responseGr = await _httpClient.GetAsync($"api/Venda/GrByRelations");
+
+                if (responseGr.IsSuccessStatusCode)
+                {
+                    var contentGr = await responseGr.Content.ReadAsStringAsync();
+                    var grs = JsonConvert.DeserializeObject<List<GrDTO>>(contentGr);
+
+                    return grs;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocorreu um erro: {ex.Message}");
+            }
+        }
+
+        public async Task<List<OrDTO>> GetOr()
+        {
+            try
+            {
+                var responseOr = await _httpClient.GetAsync($"api/Venda/OrByRelations");
+
+                if (responseOr.IsSuccessStatusCode)
+                {
+                    var contentOr = await responseOr.Content.ReadAsStringAsync();
+                    var ors = JsonConvert.DeserializeObject<List<OrDTO>>(contentOr);
+
+                    return ors;
                 }
                 else
                 {

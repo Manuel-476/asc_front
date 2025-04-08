@@ -37,17 +37,14 @@ namespace AscFrontEnd
         private void ArtigoListagem_Load(object sender, EventArgs e)
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("id", typeof(int));
+            dt.Columns.Add("Id", typeof(int));
             dt.Columns.Add("Codigo", typeof(string));
             dt.Columns.Add("descricao", typeof(string));
             dt.Columns.Add("P. Unitario", typeof(string));
             dt.Columns.Add("mov. Stock", typeof(string));
             dt.Columns.Add("mov. Lote", typeof(string));
 
-
             // Adicionando linhas ao DataTable
-
-
             if (_multi)
             {
                 editarPicture.Visible = false;
@@ -76,8 +73,6 @@ namespace AscFrontEnd
                 }
 
                 // Opcional: Garante que o DataGridView permita seleção múltipla
-                dataGridView1.MultiSelect = true;
-
                 dataGridView1.MultiSelect = true;
             }
             else 

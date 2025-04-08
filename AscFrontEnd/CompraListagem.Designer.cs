@@ -47,6 +47,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.radioCot = new System.Windows.Forms.RadioButton();
             this.radioEcf = new System.Windows.Forms.RadioButton();
+            this.radioVgr = new System.Windows.Forms.RadioButton();
+            this.radioGeral = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.anularPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.estornarPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -122,6 +124,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 175);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(801, 269);
             this.dataGridView1.TabIndex = 42;
@@ -132,7 +135,7 @@
             // 
             this.radioAnulado.AutoSize = true;
             this.radioAnulado.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.radioAnulado.Location = new System.Drawing.Point(799, 95);
+            this.radioAnulado.Location = new System.Drawing.Point(239, 126);
             this.radioAnulado.Name = "radioAnulado";
             this.radioAnulado.Size = new System.Drawing.Size(64, 17);
             this.radioAnulado.TabIndex = 41;
@@ -145,7 +148,7 @@
             // 
             this.radioVnc.AutoSize = true;
             this.radioVnc.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.radioVnc.Location = new System.Drawing.Point(581, 95);
+            this.radioVnc.Location = new System.Drawing.Point(12, 126);
             this.radioVnc.Name = "radioVnc";
             this.radioVnc.Size = new System.Drawing.Size(96, 17);
             this.radioVnc.TabIndex = 40;
@@ -158,7 +161,7 @@
             // 
             this.radioVgt.AutoSize = true;
             this.radioVgt.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.radioVgt.Location = new System.Drawing.Point(430, 95);
+            this.radioVgt.Location = new System.Drawing.Point(570, 95);
             this.radioVgt.Name = "radioVgt";
             this.radioVgt.Size = new System.Drawing.Size(128, 17);
             this.radioVgt.TabIndex = 39;
@@ -171,7 +174,7 @@
             // 
             this.radioVft.AutoSize = true;
             this.radioVft.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.radioVft.Location = new System.Drawing.Point(216, 95);
+            this.radioVft.Location = new System.Drawing.Point(321, 95);
             this.radioVft.Name = "radioVft";
             this.radioVft.Size = new System.Drawing.Size(67, 17);
             this.radioVft.TabIndex = 38;
@@ -184,7 +187,7 @@
             // 
             this.radioVfr.AutoSize = true;
             this.radioVfr.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.radioVfr.Location = new System.Drawing.Point(303, 95);
+            this.radioVfr.Location = new System.Drawing.Point(426, 95);
             this.radioVfr.Name = "radioVfr";
             this.radioVfr.Size = new System.Drawing.Size(104, 17);
             this.radioVfr.TabIndex = 37;
@@ -197,7 +200,7 @@
             // 
             this.radioPco.AutoSize = true;
             this.radioPco.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.radioPco.Location = new System.Drawing.Point(12, 95);
+            this.radioPco.Location = new System.Drawing.Point(122, 95);
             this.radioPco.Name = "radioPco";
             this.radioPco.Size = new System.Drawing.Size(101, 17);
             this.radioPco.TabIndex = 36;
@@ -254,7 +257,7 @@
             // 
             this.radioCot.AutoSize = true;
             this.radioCot.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.radioCot.Location = new System.Drawing.Point(131, 95);
+            this.radioCot.Location = new System.Drawing.Point(239, 95);
             this.radioCot.Name = "radioCot";
             this.radioCot.Size = new System.Drawing.Size(65, 17);
             this.radioCot.TabIndex = 49;
@@ -267,7 +270,7 @@
             // 
             this.radioEcf.AutoSize = true;
             this.radioEcf.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.radioEcf.Location = new System.Drawing.Point(699, 95);
+            this.radioEcf.Location = new System.Drawing.Point(122, 126);
             this.radioEcf.Name = "radioEcf";
             this.radioEcf.Size = new System.Drawing.Size(82, 17);
             this.radioEcf.TabIndex = 50;
@@ -276,11 +279,38 @@
             this.radioEcf.UseVisualStyleBackColor = true;
             this.radioEcf.CheckedChanged += new System.EventHandler(this.radioEcf_CheckedChanged);
             // 
+            // radioVgr
+            // 
+            this.radioVgr.AutoSize = true;
+            this.radioVgr.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.radioVgr.Location = new System.Drawing.Point(746, 95);
+            this.radioVgr.Name = "radioVgr";
+            this.radioVgr.Size = new System.Drawing.Size(121, 17);
+            this.radioVgr.TabIndex = 51;
+            this.radioVgr.TabStop = true;
+            this.radioVgr.Text = "V/Guia de Remessa";
+            this.radioVgr.UseVisualStyleBackColor = true;
+            this.radioVgr.CheckedChanged += new System.EventHandler(this.radioVgr_CheckedChanged);
+            // 
+            // radioGeral
+            // 
+            this.radioGeral.AutoSize = true;
+            this.radioGeral.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.radioGeral.Location = new System.Drawing.Point(12, 95);
+            this.radioGeral.Name = "radioGeral";
+            this.radioGeral.Size = new System.Drawing.Size(50, 17);
+            this.radioGeral.TabIndex = 52;
+            this.radioGeral.TabStop = true;
+            this.radioGeral.Text = "Geral";
+            this.radioGeral.UseVisualStyleBackColor = true;
+            // 
             // CompraListagem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(933, 450);
+            this.Controls.Add(this.radioGeral);
+            this.Controls.Add(this.radioVgr);
             this.Controls.Add(this.radioEcf);
             this.Controls.Add(this.radioCot);
             this.Controls.Add(this.label4);
@@ -337,5 +367,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RadioButton radioCot;
         private System.Windows.Forms.RadioButton radioEcf;
+        private System.Windows.Forms.RadioButton radioVgr;
+        private System.Windows.Forms.RadioButton radioGeral;
     }
 }

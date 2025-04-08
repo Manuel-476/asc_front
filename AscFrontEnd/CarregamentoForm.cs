@@ -29,6 +29,7 @@ using System.Windows.Forms;
 using AscFrontEnd.DTOs.Regiao;
 using AscFrontEnd.DTOs.Funcionario;
 using AscFrontEnd.DTOs.Configuration;
+using AscFrontEnd.DTOs.Compra;
 
 namespace AscFrontEnd
 {
@@ -92,7 +93,17 @@ namespace AscFrontEnd
                     var contentVgt = await responseVgt.Content.ReadAsStringAsync();
                     StaticProperty.vgts = JsonConvert.DeserializeObject<List<VgtDTO>>(contentVgt);
 
-                    processValue += 4;
+                    processValue += 2;
+                }
+
+                var responseVgr = await client.GetAsync($"api/Compra/VgrByRelations");
+
+                if (responseVgr.IsSuccessStatusCode)
+                {
+                    var contentVgr = await responseVgr.Content.ReadAsStringAsync();
+                    StaticProperty.vgrs = JsonConvert.DeserializeObject<List<VgrDTO>>(contentVgr);
+
+                    processValue += 2;
                 }
 
                 var responsePco = await client.GetAsync($"api/Compra/PcoByRelation");
@@ -200,7 +211,7 @@ namespace AscFrontEnd
                 {
                     var contentNd = await responseNd.Content.ReadAsStringAsync();
                     StaticProperty.nds = JsonConvert.DeserializeObject<List<NdDTO>>(contentNd);
-                    processValue += 7;
+                    processValue += 3;
                 }
 
                 var responseGt = await client.GetAsync($"api/Venda/GtByRelations");
@@ -210,7 +221,27 @@ namespace AscFrontEnd
                     var contentGt = await responseGt.Content.ReadAsStringAsync();
                     StaticProperty.gts = JsonConvert.DeserializeObject<List<GtDTO>>(contentGt);
 
-                    processValue += 3;
+                    processValue += 1;
+                }
+
+                var responseGr = await client.GetAsync($"api/Venda/GrByRelations");
+
+                if (responseGr.IsSuccessStatusCode)
+                {
+                    var contentGr = await responseGr.Content.ReadAsStringAsync();
+                    StaticProperty.grs = JsonConvert.DeserializeObject<List<GrDTO>>(contentGr);
+
+                    processValue += 2;
+                }
+
+                var responseOr = await client.GetAsync($"api/Venda/OrByRelations");
+
+                if (responseOr.IsSuccessStatusCode)
+                {
+                    var contentOr = await responseOr.Content.ReadAsStringAsync();
+                    StaticProperty.ors = JsonConvert.DeserializeObject<List<OrDTO>>(contentOr);
+
+                    processValue += 4;
                 }
 
                 // Cliente

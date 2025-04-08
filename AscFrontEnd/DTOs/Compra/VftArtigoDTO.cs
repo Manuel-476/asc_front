@@ -8,6 +8,6 @@ namespace AscFrontEnd.DTOs
         public float preco { get; set; }
         public float iva { get; set; }
         public float desconto { get; set; }
-        public int qtd { get; set; }
+        public float qtd { get; set; }
     }
 }

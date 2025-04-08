@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DocumentosDetalhesForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -49,6 +50,9 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.printVenda = new System.Drawing.Printing.PrintDocument();
+            this.printCompra = new System.Drawing.Printing.PrintDocument();
+            this.preVisualizacaoDialog = new System.Windows.Forms.PrintPreviewDialog();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -67,11 +71,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial Narrow", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(18, 24);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(125, 31);
+            this.label1.Size = new System.Drawing.Size(153, 31);
             this.label1.TabIndex = 0;
             this.label1.Text = "Documento";
             // 
@@ -269,6 +273,25 @@
             this.pictureBox1.Size = new System.Drawing.Size(38, 34);
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // printVenda
+            // 
+            this.printVenda.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printVenda_PrintPage);
+            // 
+            // printCompra
+            // 
+            this.printCompra.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printCompra_PrintPage);
+            // 
+            // preVisualizacaoDialog
+            // 
+            this.preVisualizacaoDialog.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.preVisualizacaoDialog.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.preVisualizacaoDialog.ClientSize = new System.Drawing.Size(400, 300);
+            this.preVisualizacaoDialog.Enabled = true;
+            this.preVisualizacaoDialog.Icon = ((System.Drawing.Icon)(resources.GetObject("preVisualizacaoDialog.Icon")));
+            this.preVisualizacaoDialog.Name = "preVisualizacaoDialog";
+            this.preVisualizacaoDialog.Visible = false;
             // 
             // DocumentosDetalhesForm
             // 
@@ -321,5 +344,8 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label precos;
         private System.Windows.Forms.Label label6;
+        private System.Drawing.Printing.PrintDocument printVenda;
+        private System.Drawing.Printing.PrintDocument printCompra;
+        private System.Windows.Forms.PrintPreviewDialog preVisualizacaoDialog;
     }
 }

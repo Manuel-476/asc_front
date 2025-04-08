@@ -25,50 +25,74 @@ namespace AscFrontEnd
             InitializeComponent();
          
         }
-        public ClienteListagem(bool multi)
+        public ClienteListagem(bool multi,List<int> clienteIds)
         {
             InitializeComponent();
 
             _multi = multi;
-            _clienteIds = new List<int>();
+            _clienteIds = clienteIds ?? new List<int>();
         }
 
         private void ClienteListagem_Load(object sender, EventArgs e)
         {
-                DataTable dt = new DataTable();
-                dt.Columns.Add("id", typeof(int));
-                dt.Columns.Add("Nome", typeof(string));
-                dt.Columns.Add("email", typeof(string));
-                dt.Columns.Add("nif", typeof(string));
-                dt.Columns.Add("pessoa", typeof(string));
-                dt.Columns.Add("localizacao", typeof(string));
+            DataTable dt = new DataTable();
+            dt.Columns.Add("id", typeof(int));
+            dt.Columns.Add("Nome", typeof(string));
+            dt.Columns.Add("email", typeof(string));
+            dt.Columns.Add("nif", typeof(string));
+            dt.Columns.Add("pessoa", typeof(string));
+            dt.Columns.Add("localizacao", typeof(string));
+
+            if (_multi)
+            {
+                tabelaCliente.MultiSelect = true;
+                checkDesconhecido.Visible = false;
+
+                // Adiciona linhas ao DataTable
+                foreach (var item in StaticProperty.clientes.Where(x => x.empresaid == StaticProperty.empresaId && x.id != 1 && x.status == DTOs.Enums.Enums.Status.activo))
+                {
+                    dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
+             
+                }
+                // Define o DataSource do DataGridView (fora do loop)
+                tabelaCliente.DataSource = dt;
+
+                // Seleciona automaticamente as linhas cujos IDs estão em _artigoIds
+                if (_clienteIds != null && _clienteIds.Any())
+                {
+                    foreach (DataGridViewRow row in tabelaCliente.Rows)
+                    {
+                        int id = Convert.ToInt32(row.Cells["id"].Value); // Pega o valor da coluna "id"
+                        if (_clienteIds.Contains(id))
+                        {
+                            row.Selected = true; // Seleciona a linha
+                        }
+                    }
+                }
+            }
+            else
+            {
+                tabelaCliente.MultiSelect = false;
 
                 // Adicionando linhas ao DataTable
                 foreach (var item in StaticProperty.clientes.Where(x => x.empresaid == StaticProperty.empresaId && x.id != 1 && x.status == DTOs.Enums.Enums.Status.activo))
                 {
-                    dt.Rows.Add(item.id, item.nome_fantasia, item.email,item.nif,item.pessoa,item.localizacao);
+                    dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
 
+                }
                     tabelaCliente.DataSource = dt;
-                }
 
-                if(StaticProperty.entityId == 1) 
+                if (StaticProperty.entityId == 1)
                 {
-                checkDesconhecido.Checked = true;
-                }
-                else 
-                {
-                   checkDesconhecido.Checked = false;
-                }
-
-                if (_multi) 
-                {
-                   tabelaCliente.MultiSelect = true;
-                  checkDesconhecido.Visible = false;
+                    checkDesconhecido.Checked = true;
                 }
                 else
                 {
-                  tabelaCliente.MultiSelect= false;
+                    checkDesconhecido.Checked = false;
                 }
+
+ 
+            }
         }
 
         private async void textBox1_TextChanged(object sender, EventArgs e)
