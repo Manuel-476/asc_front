@@ -88,7 +88,7 @@ namespace AscFrontEnd
 
         private void feitoBtn_Click(object sender, EventArgs e)
         {
-            StaticProperty.caixas = caixas;
+            StaticProperty.caixasEmpresa = caixas;
             this.Close();
         }
 

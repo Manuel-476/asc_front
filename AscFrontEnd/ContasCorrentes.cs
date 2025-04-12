@@ -41,7 +41,7 @@ namespace AscFrontEnd
 
         }
 
-        private async void groupBox1_Enter(object sender, EventArgs e)
+        private   void groupBox1_Enter(object sender, EventArgs e)
         {
 
         }
@@ -76,7 +76,7 @@ namespace AscFrontEnd
 
         }
 
-        private async void ContasCorrentes_Load(object sender, EventArgs e)
+        private void ContasCorrentes_Load(object sender, EventArgs e)
         {
             float result = 0;
             float valorAdiantamento = 0;
@@ -141,7 +141,6 @@ namespace AscFrontEnd
         {
             float divida = 0;
             float regulado = 0;
-            float adianta = 0;
             float valorAdiantamento = 0;
 
             try

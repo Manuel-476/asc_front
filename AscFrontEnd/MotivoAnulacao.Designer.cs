@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
@@ -36,6 +37,7 @@
             this.documentoOrigemTxt = new System.Windows.Forms.TextBox();
             this.caixaDocs = new System.Windows.Forms.Button();
             this.Anular = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,9 +48,9 @@
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
             this.label1.Location = new System.Drawing.Point(14, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(136, 34);
+            this.label1.Size = new System.Drawing.Size(125, 34);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Anulação";
+            this.label1.Text = "Estornar";
             // 
             // panel1
             // 
@@ -96,6 +98,7 @@
             this.documentoOrigemTxt.Name = "documentoOrigemTxt";
             this.documentoOrigemTxt.Size = new System.Drawing.Size(281, 20);
             this.documentoOrigemTxt.TabIndex = 5;
+            this.documentoOrigemTxt.TextChanged += new System.EventHandler(this.documentoOrigemTxt_TextChanged);
             // 
             // caixaDocs
             // 
@@ -109,13 +112,14 @@
             this.caixaDocs.TabIndex = 6;
             this.caixaDocs.Text = ":::";
             this.caixaDocs.UseVisualStyleBackColor = false;
+            this.caixaDocs.Click += new System.EventHandler(this.caixaDocs_Click);
             // 
             // Anular
             // 
             this.Anular.BackColor = System.Drawing.SystemColors.Highlight;
             this.Anular.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Anular.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Anular.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Anular.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Anular.ForeColor = System.Drawing.SystemColors.Control;
             this.Anular.Location = new System.Drawing.Point(376, 259);
             this.Anular.Name = "Anular";
@@ -124,6 +128,10 @@
             this.Anular.Text = "Anular";
             this.Anular.UseVisualStyleBackColor = false;
             this.Anular.Click += new System.EventHandler(this.Anular_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // MotivoAnulacao
             // 
@@ -144,6 +152,7 @@
             this.Name = "MotivoAnulacao";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MotivoAnulacao_FormClosing);
             this.Load += new System.EventHandler(this.MotivoAnulacao_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -162,5 +171,6 @@
         private System.Windows.Forms.TextBox documentoOrigemTxt;
         private System.Windows.Forms.Button caixaDocs;
         private System.Windows.Forms.Button Anular;
+        private System.Windows.Forms.Timer timer1;
     }
 }

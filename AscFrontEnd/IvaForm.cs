@@ -66,6 +66,8 @@ namespace AscFrontEnd
             }
             catch(Exception ex) 
             {
+                MessageBox.Show("Ocorreu um Erro", $"Alguma coisa correu mal: {ex.Message}", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+
             }
         }
 

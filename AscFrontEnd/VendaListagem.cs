@@ -128,7 +128,7 @@ namespace AscFrontEnd
                 else
                 {
                     // Adicionando linhas ao DataTable
-                    foreach (var item in StaticProperty.fts.Where(v => v.status != DocState.estornado && v.status != DocState.anulado && v.empresaId == StaticProperty.empresaId))
+                    foreach (var item in StaticProperty.fts.Where(v => v.status != DocState.anulado && v.empresaId == StaticProperty.empresaId))
                     {
                         if (StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First() != null)
                         {
@@ -164,7 +164,7 @@ namespace AscFrontEnd
                 else
                 {
                     // Adicionando linhas ao DataTable
-                    foreach (var item in StaticProperty.frs.Where(v => v.status != DocState.anulado && v.status != DocState.estornado && v.empresaId == StaticProperty.empresaId))
+                    foreach (var item in StaticProperty.frs.Where(v => v.status != DocState.anulado &&  v.empresaId == StaticProperty.empresaId))
                     {
                         if (StaticProperty.artigos.Where(x => x.id == item.frArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
                         {
@@ -457,9 +457,9 @@ namespace AscFrontEnd
                     json = System.Text.Json.JsonSerializer.Serialize(nc);
 
                     // Envio dos dados para a API
-                    HttpResponseMessage responseFt = await client.PutAsync($"api/Venda/Nc/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                    HttpResponseMessage responseNc = await client.PostAsync($"api/Venda/Nc/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
 
-                    if (responseFt.IsSuccessStatusCode)
+                    if (responseNc.IsSuccessStatusCode)
                     {
                         MessageBox.Show($"O documento {codigoDocumentoOrigem} foi estornado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -840,7 +840,6 @@ namespace AscFrontEnd
 
         }
 
-
         private void radioEcl_CheckedChanged(object sender, EventArgs e)
         {
             DataTable dt = new DataTable();
@@ -882,11 +881,9 @@ namespace AscFrontEnd
             {
                 float totalLiquido = 0f;
                 float totalIva = 0f;
-                float ivaValorTotal = 0f;
                 float total = 0f;
                 float incidencia = 0f;
-                float taxa = 0f;
-                float valorImposto = 0f;
+
                 List<float> listaIvas = new List<float>();
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
@@ -1008,8 +1005,8 @@ namespace AscFrontEnd
                 e.Graphics.DrawString($"{CalculosVendaCompra.TotalDescontoVenda(vendaArtigos)}", fontCabecalho, cor, new PointF(680, 595 + i), formatToLeft);
 
                 e.Graphics.DrawLine(canetaFina, 550, 583 + i, 740, 583 + i);
-                e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 600 + i), formatToLeft);
-                e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 600 + i), formatToLeft);
+                e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 620 + i), formatToLeft);
+                e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 620 + i), formatToLeft);
 
                 string conta = $"Conta nº";
                 string iban = $"IBAN ";
@@ -1158,7 +1155,7 @@ namespace AscFrontEnd
                 else
                 {
                     // Adicionando linhas ao DataTable
-                    foreach (var item in StaticProperty.grs.Where(v => v.status != DocState.estornado && v.status != DocState.anulado && v.empresaId == StaticProperty.empresaId))
+                    foreach (var item in StaticProperty.grs.Where(v => v.status != DocState.anulado && v.empresaId == StaticProperty.empresaId))
                     {
                         if (StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First() != null)
                         {
@@ -1195,7 +1192,7 @@ namespace AscFrontEnd
                 else
                 {
                     // Adicionando linhas ao DataTable
-                    foreach (var item in StaticProperty.ors.Where(v => v.status != DocState.estornado && v.status != DocState.anulado && v.empresaId == StaticProperty.empresaId))
+                    foreach (var item in StaticProperty.ors.Where(v => v.status != DocState.anulado && v.empresaId == StaticProperty.empresaId))
                     {
                         if (StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First() != null)
                         {

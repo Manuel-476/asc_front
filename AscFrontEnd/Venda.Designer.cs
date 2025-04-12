@@ -189,6 +189,8 @@
             this.Qtd.Size = new System.Drawing.Size(102, 20);
             this.Qtd.TabIndex = 12;
             this.Qtd.Text = "0";
+            this.Qtd.TextChanged += new System.EventHandler(this.Qtd_TextChanged);
+            this.Qtd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Qtd_KeyPress);
             // 
             // label4
             // 
@@ -335,6 +337,8 @@
             this.descontoTxt.Size = new System.Drawing.Size(102, 20);
             this.descontoTxt.TabIndex = 23;
             this.descontoTxt.Text = "0";
+            this.descontoTxt.TextChanged += new System.EventHandler(this.descontoTxt_TextChanged);
+            this.descontoTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.descontoTxt_KeyPress);
             // 
             // ivaTotal
             // 

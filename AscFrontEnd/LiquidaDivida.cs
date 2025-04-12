@@ -31,7 +31,6 @@ namespace AscFrontEnd
     {
         int _docId;
         Entidade _entidade;
-        string documento;
         string codigoDocumento;
         VftDTO vftResult;
         FtDTO ftResult;
@@ -61,7 +60,7 @@ namespace AscFrontEnd
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        private async void LiquidaDivida_Load(object sender, EventArgs e)
+        private  void LiquidaDivida_Load(object sender, EventArgs e)
         {
             dados = StaticProperty.artigos;
             
@@ -195,18 +194,13 @@ namespace AscFrontEnd
                 Imprimir.Print();
             }
 
-            await this.LoadRefresh();
+            this.LoadRefresh();
         }
 
         private void Imprimir_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             try
             {
-                float totalLiquido = 0f;
-                float totalIva = 0f;
-                float total = 0f;
-                float incidencia = 0f;
-                float taxa = 0f;
 
                 string clienteCabecalho;
                 string clienteOutros;
@@ -463,7 +457,7 @@ namespace AscFrontEnd
         }
 
         //===================================================================================
-        private async Task LoadRefresh()
+        private void LoadRefresh()
         {
             string codigo = string.Empty;
             float divida = 0, regulado = 0;

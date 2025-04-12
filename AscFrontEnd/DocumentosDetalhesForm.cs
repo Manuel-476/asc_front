@@ -978,7 +978,6 @@ namespace AscFrontEnd
             {
                 float totalLiquido = 0f;
                 float totalIva = 0f;
-                float ivaValorTotal = 0f;
                 float total = 0f;
                 float incidencia = 0f;
                 List<float> listaIvas = new List<float>();

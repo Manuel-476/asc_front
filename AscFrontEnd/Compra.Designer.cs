@@ -61,6 +61,8 @@
             this.descontoTotal = new System.Windows.Forms.Label();
             this.ivaTotal = new System.Windows.Forms.Label();
             this.descricaoLabel = new System.Windows.Forms.Label();
+            this.localEntregatxt = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaArtigos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaCompra)).BeginInit();
             this.panel1.SuspendLayout();
@@ -122,6 +124,9 @@
             this.Qtd.Size = new System.Drawing.Size(130, 20);
             this.Qtd.TabIndex = 30;
             this.Qtd.Text = "0";
+            this.Qtd.TextChanged += new System.EventHandler(this.Qtd_TextChanged);
+            this.Qtd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Qtd_KeyPress);
+            this.Qtd.Leave += new System.EventHandler(this.Qtd_Leave);
             // 
             // codigoDocumento
             // 
@@ -255,6 +260,9 @@
             this.precotxt.Size = new System.Drawing.Size(146, 20);
             this.precotxt.TabIndex = 36;
             this.precotxt.Text = "0";
+            this.precotxt.TextChanged += new System.EventHandler(this.precotxt_TextChanged);
+            this.precotxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.precotxt_KeyPress);
+            this.precotxt.Leave += new System.EventHandler(this.precotxt_Leave);
             // 
             // codigoDocumentotxt
             // 
@@ -339,6 +347,9 @@
             this.descontoTxt.Size = new System.Drawing.Size(130, 20);
             this.descontoTxt.TabIndex = 42;
             this.descontoTxt.Text = "0";
+            this.descontoTxt.TextChanged += new System.EventHandler(this.descontoTxt_TextChanged);
+            this.descontoTxt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.descontoTxt_KeyPress);
+            this.descontoTxt.Leave += new System.EventHandler(this.descontoTxt_Leave);
             // 
             // precoLiquido
             // 
@@ -394,11 +405,32 @@
             this.descricaoLabel.TabIndex = 47;
             this.descricaoLabel.Text = "descricao";
             // 
+            // localEntregatxt
+            // 
+            this.localEntregatxt.Location = new System.Drawing.Point(357, 432);
+            this.localEntregatxt.Name = "localEntregatxt";
+            this.localEntregatxt.Size = new System.Drawing.Size(248, 20);
+            this.localEntregatxt.TabIndex = 48;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.SystemColors.Control;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label7.Location = new System.Drawing.Point(239, 430);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(112, 20);
+            this.label7.TabIndex = 49;
+            this.label7.Text = "Local Entrega:";
+            // 
             // Compra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1081, 461);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.localEntregatxt);
             this.Controls.Add(this.descricaoLabel);
             this.Controls.Add(this.precoLiquido);
             this.Controls.Add(this.totalBruto);
@@ -424,9 +456,11 @@
             this.Controls.Add(this.documento);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Compra";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Compra";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Compra_FormClosing);
             this.Load += new System.EventHandler(this.Compra_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tabelaArtigos)).EndInit();
@@ -472,5 +506,7 @@
         private System.Windows.Forms.Label descontoTotal;
         private System.Windows.Forms.Label ivaTotal;
         private System.Windows.Forms.Label descricaoLabel;
+        private System.Windows.Forms.TextBox localEntregatxt;
+        private System.Windows.Forms.Label label7;
     }
 }

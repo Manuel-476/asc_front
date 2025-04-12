@@ -121,9 +121,9 @@ namespace AscFrontEnd
             int depositoId;
             int fPagamentoId;
 
-            if (StaticProperty.formasPagamento.Where(x => x.descricao == formaPagamento && x.empresaId == StaticProperty.empresaId).Any())
+            if (StaticProperty.formasPagamento.Where(x => x.descricao == formaPagamento && (x.empresaId == StaticProperty.empresaId || x.empresaId == 0)).Any())
             {
-                fPagamentoId = StaticProperty.formasPagamento.Where(x => x.descricao == formaPagamento && x.empresaId == StaticProperty.empresaId).First().id;
+                fPagamentoId = StaticProperty.formasPagamento.Where(x => x.descricao == formaPagamento && (x.empresaId == StaticProperty.empresaId || x.empresaId == 0)).First().id;
             }
             else 
             {
@@ -221,7 +221,13 @@ namespace AscFrontEnd
             {
                 foreach (var item in parcelas)
                 {
-                    string fPagamento = StaticProperty.formasPagamento.Where(x => x.id == item.formaPagamentoId && x.empresaId == StaticProperty.empresaId).First().descricao;
+                    if (!StaticProperty.formasPagamento.Where(x => x.id == item.formaPagamentoId && (x.empresaId == StaticProperty.empresaId || x.empresaId == 0)).Any())
+                    {
+                        MessageBox.Show("Forma de Pagamento  não encontrado", "Atenção", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                        return;
+                    }
+                        string fPagamento = StaticProperty.formasPagamento.Where(x => x.id == item.formaPagamentoId && (x.empresaId == StaticProperty.empresaId || x.empresaId == 0)).First().descricao;
+                    
 
                     if (item.bancoId != 0)
                     {

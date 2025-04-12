@@ -32,7 +32,7 @@ namespace AscFrontEnd
             _fornecedorIds = fornecedorIds ?? new List<int>();
         }
 
-        private async void FornecedorListagem_Load(object sender, EventArgs e)
+        private  void FornecedorListagem_Load(object sender, EventArgs e)
         {
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
@@ -138,7 +138,7 @@ namespace AscFrontEnd
             catch { return; }
         }
 
-        private async void pesqText_TextChanged(object sender, EventArgs e)
+        private void pesqText_TextChanged(object sender, EventArgs e)
         {
 
                 DataTable dt = new DataTable();

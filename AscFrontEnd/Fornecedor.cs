@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using AscFrontEnd.DTOs.StaticsDto;
 using System.Text.Json;
 using AscFrontEnd.DTOs.Deposito;
+using AscFrontEnd.Application.Validacao;
 
 
 namespace AscFrontEnd
@@ -76,6 +77,27 @@ namespace AscFrontEnd
 
         private async void salvarBtn_Click(object sender, EventArgs e)
         {
+            if (!ValidacaoForms.IsValidNif(nifText.Text.ToString()))
+            {
+                MessageBox.Show("O NIF introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+            if (!ValidacaoForms.IsValidEmail(emailText.Text.ToString()))
+            {
+                MessageBox.Show("O Email introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+            if (!ValidacaoForms.IsValidPhone(telefonetxt.Text.ToString()))
+            {
+                MessageBox.Show("O Telefone introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
             List<FornecedorPhoneDTO> phone = new List<FornecedorPhoneDTO>() { new FornecedorPhoneDTO() { telefone = telefonetxt.Text } };
             List<FornecedorFilialDTO> filias = new List<FornecedorFilialDTO> { new FornecedorFilialDTO() { email = emailText.Text,codigo=codigotxt
            .Text,localizacao=FiliallocalTxt.Text,nif=nifText.Text,fornFilialPhones=null,foto="string"} };

@@ -466,3 +466,4 @@ C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontE
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.ConfigIpServerForm.resources
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.NotificacoForm.resources
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.DashBoardForm.resources
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.DocumentoEstornoListarForm.resources

@@ -46,7 +46,7 @@ namespace AscFrontEnd
 
             bancos.Add(new BancoDTO
             {
-                id = id,
+                id = 0,
                 codigo = codigoText.Text,
                 descricao = descText.Text.ToString(),
                 conta = contaText.Text.ToString(),
@@ -108,7 +108,7 @@ namespace AscFrontEnd
 
         private void feitoBtn_Click(object sender, EventArgs e)
         {
-            StaticProperty.bancos = bancos;
+            StaticProperty.bancosEmpresa = bancos;
             this.Close();  
         }
     }

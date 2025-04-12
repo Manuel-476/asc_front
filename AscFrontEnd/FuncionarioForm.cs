@@ -1,4 +1,5 @@
-﻿using AscFrontEnd.DTOs;
+﻿using AscFrontEnd.Application.Validacao;
+using AscFrontEnd.DTOs;
 using AscFrontEnd.DTOs.Funcionario;
 using AscFrontEnd.DTOs.StaticsDto;
 using Newtonsoft.Json;
@@ -39,6 +40,34 @@ namespace AscFrontEnd
 
         private async void salvarBtn_Click(object sender, EventArgs e)
         {
+            if (!ValidacaoForms.IsValidNif(numIdent.Text.ToString()))
+            {
+                MessageBox.Show("O numero do B.I introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+            if (!ValidacaoForms.IsValidEmail(email.Text.ToString()))
+            {
+                MessageBox.Show("O Email introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+            if (!ValidacaoForms.IsValidPhone(telText.Text.ToString()))
+            {
+                MessageBox.Show("O telefone introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+            if (!ValidacaoForms.IsValidPhone(tel2Text.Text.ToString()))
+            {
+                MessageBox.Show("O telefone 2 introduzido nao e valido", "Impossivel Concluir a acao",  MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             HttpResponseMessage response = null;
@@ -97,7 +126,7 @@ namespace AscFrontEnd
             else 
             {
                 throw new Exception("Erro ao tentar salvar");
-                return;
+               
             }
         }
 

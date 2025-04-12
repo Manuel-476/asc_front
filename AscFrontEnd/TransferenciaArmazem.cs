@@ -19,7 +19,6 @@ namespace AscFrontEnd
 {
     public partial class TransferenciaArmazem : Form
     {
-        private int id;
         private int artigoId;
         private StockDTO _stock;
         private ArmazemDTO armazens;

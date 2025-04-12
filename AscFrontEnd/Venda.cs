@@ -24,6 +24,8 @@ using DocumentFormat.OpenXml.Drawing.Wordprocessing;
 using static AscFrontEnd.DTOs.Enums.Enums;
 using AscFrontEnd.Application;
 using AscFrontEnd.Files;
+using AscFrontEnd.Application.Validacao;
+using System.Globalization;
 
 
 namespace AscFrontEnd
@@ -74,7 +76,7 @@ namespace AscFrontEnd
             fpArtigos = new List<FaturaProformaArtigoDTO>();
             eclArtigos = new List<EclArtigoDTO>();
             gtArtigos = new List<GtArtigoDTO>();
-            grArtigos = new List<GrArtigoDTO> ();
+            grArtigos = new List<GrArtigoDTO>();
             ncArtigos = new List<NcArtigoDTO>();
             ndArtigos = new List<NdArtigoDTO>();
             orArtigos = new List<OrArtigoDTO>();
@@ -84,6 +86,12 @@ namespace AscFrontEnd
             idVenda = new List<int>();
             dtVenda = new DataTable();
             clienteResult = new ClienteDTO();
+
+            Qtd.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
+            Qtd.TextChanged += ValidacaoForms.TratarTextChanged;
+
+            descontoTxt.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
+            descontoTxt.TextChanged += ValidacaoForms.TratarTextChanged;
         }
 
         private  void Venda_Load(object sender, EventArgs e)
@@ -93,16 +101,16 @@ namespace AscFrontEnd
 
                 dtVenda.Columns.Add("id", typeof(int));
                 dtVenda.Columns.Add("Artigo", typeof(string));
-                dtVenda.Columns.Add("Preco", typeof(float));
-                dtVenda.Columns.Add("Qtd", typeof(int));
+                dtVenda.Columns.Add("Preco", typeof(string));
+                dtVenda.Columns.Add("Qtd", typeof(string));
                 dtVenda.Columns.Add("Iva", typeof(float));
-                dtVenda.Columns.Add("Desconto", typeof(float));
+                dtVenda.Columns.Add("Desconto", typeof(string));
 
             DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Artigo", typeof(string));
                 dt.Columns.Add("Descricao", typeof(string));
-                dt.Columns.Add("preco", typeof(float));
+                dt.Columns.Add("preco", typeof(string));
 
 
             // Adicionando linhas ao DataTable
@@ -110,7 +118,7 @@ namespace AscFrontEnd
             {
                 foreach (var item in StaticProperty.artigos.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario);
+                    dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario.ToString("F2"));
                 }
                 tabelaArtigos.DataSource = dt;
             }
@@ -126,14 +134,14 @@ namespace AscFrontEnd
             documento.Items.Add("ND");
             documento.Items.Add("OR");
 
+            Qtd.Text = "0";
+            descontoTxt.Text = "0";
+
             descricaoLabel.Text = string.Empty;
 
             eliminarBtn.Enabled = false;
 
-            totalBruto.Text = $"Total: {CalculosVendaCompra.TotalVenda(vendaArtigos).ToString("F2")}";
-            ivaTotal.Text = $"Iva: {CalculosVendaCompra.TotalIvaVenda(vendaArtigos).ToString("F2")}";
-            descontoTotal.Text = $"Desconto: {CalculosVendaCompra.TotalDescontoVenda(vendaArtigos).ToString("F2")}";
-            precoLiquido.Text = $"Preço: {vendaArtigos.Sum(x => x.preco * x.qtd).ToString("F2")}";
+            totalAgragado(vendaArtigos);
 
             timerRefresh.Start();
         }
@@ -419,7 +427,7 @@ namespace AscFrontEnd
                     });
                 }
 
-                formAnulacao = new MotivoAnulacao(OpcaoBinaria.Nao);
+                formAnulacao = new MotivoAnulacao(Entidade.cliente,OpcaoBinaria.Nao);
                 formAnulacao.ShowDialog();
                 if (formAnulacao.DialogResult == DialogResult.OK)
                 {
@@ -441,6 +449,11 @@ namespace AscFrontEnd
 
                     // Envio dos dados para a API
                     response = await client.PostAsync($"api/Venda/Nc/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                    StaticProperty.documentoOrigem = string.Empty;
+                }
+                else 
+                {
+                    return;
                 }
             }
 
@@ -600,10 +613,19 @@ namespace AscFrontEnd
                 Imprimir.Print();
             }
 
-            vendaArtigos.Clear();
-            dtVenda.Rows.Clear();
-
             MessageBox.Show("Venda Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+
+            vendaArtigos.Clear();
+            
+            totalAgragado(vendaArtigos);
+
+            WindowsConfig.LimparFormulario(this);
+
+            dtVenda = new DataTable();
+
+            Venda_Load(this,EventArgs.Empty);
+
+            this.Refresh();
         }
 
         private async void textBox1_TextChanged(object sender, EventArgs e)
@@ -622,13 +644,13 @@ namespace AscFrontEnd
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Artigo", typeof(string));
                 dt.Columns.Add("Descricao", typeof(string));
-                dt.Columns.Add("preco", typeof(float));
+                dt.Columns.Add("preco", typeof(string));
 
 
                 // Adicionando linhas ao DataTable
                 foreach (var item in dados.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario);
+                    dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario.ToString("F2"));
 
                     tabelaArtigos.DataSource = dt;
                 }
@@ -699,7 +721,7 @@ namespace AscFrontEnd
                     MessageBox.Show("Selecione um documento de Venda", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                if (int.Parse(Qtd.Text) <= 0)
+                if (float.Parse(Qtd.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) <= 0)
                 {
                     MessageBox.Show("A quantidade nao pode ser igual a 0", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
@@ -713,6 +735,7 @@ namespace AscFrontEnd
                 }
                 
                 int idVendaArtigo = tabelaVenda.Rows.Count;
+
                 List<VendaArtigo> refreshVendaArtigo = new List<VendaArtigo>();
                 int i = 1;
 
@@ -740,14 +763,17 @@ namespace AscFrontEnd
 
                 vendaArtigos = refreshVendaArtigo;
 
+                var qtd = !string.IsNullOrEmpty(Qtd.Text.ToString())? float.Parse(Qtd.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture):0f;
+                var desconto = !string.IsNullOrEmpty(descontoTxt.Text.ToString())?float.Parse(descontoTxt.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture):0f;
+
                 vendaArtigos.Add(new VendaArtigo()
                 {
                     id = idVendaArtigo,
                     codigo = codigo,
                     preco = precoArtigo,
-                    qtd = int.Parse(Qtd.Text),
+                    qtd = qtd,
                     iva = dados.Where(art => art.id == artigoId).First().iva,
-                    desconto = float.Parse(descontoTxt.Text.ToString()),
+                    desconto = desconto,
 
                 });
 
@@ -757,19 +783,19 @@ namespace AscFrontEnd
                     {
                         artigoId = artigoId,
                         preco = precoArtigo,
-                        qtd = int.Parse(Qtd.Text),
+                        qtd = qtd,
                         iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse(descontoTxt.Text.ToString())
+                        desconto = desconto
                     });
 
 
                     foreach (var fr in vendaArtigos)
                     {
 
-                        dtVenda.Rows.Add(fr.id, fr.codigo, fr.preco, fr.qtd, fr.iva,fr.desconto);
+                        dtVenda.Rows.Add(fr.id, fr.codigo, fr.preco.ToString("F2"), fr.qtd.ToString("F2"), fr.iva.ToString("F2"),fr.desconto.ToString("F2"));
 
-                        tabelaVenda.DataSource = dtVenda;
                     }
+                        tabelaVenda.DataSource = dtVenda;
                 }
 
                 if (documento.Text == "FT")
@@ -778,37 +804,38 @@ namespace AscFrontEnd
                     {
                         artigoId = artigoId,
                         preco = precoArtigo,
-                        qtd = int.Parse(Qtd.Text),
+                        qtd = qtd,
                         iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse(descontoTxt.Text.ToString())
+                        desconto = desconto
                     });
 
                     foreach (var ft in vendaArtigos)
                     {
 
-                        dtVenda.Rows.Add(ft.id, ft.codigo, ft.preco, ft.qtd, ft.iva,ft.desconto);
+                        dtVenda.Rows.Add(ft.id, ft.codigo, ft.preco.ToString("F2"), ft.qtd.ToString("F2"), ft.iva.ToString("F2"),ft.desconto.ToString("F2"));
 
-                        tabelaVenda.DataSource = dtVenda;
                     }
+                        tabelaVenda.DataSource = dtVenda;
                 }
 
-                if (documento.Text == "FP")
+                if (documento.Text == "PP")
                 {
                     fpArtigos.Add(new FaturaProformaArtigoDTO()
                     {
                         artigoId = artigoId,
                         preco = precoArtigo,
                         iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse(descontoTxt.Text.ToString())
+                        qtd = qtd,
+                        desconto = desconto
                     });
 
                     foreach (var fp in vendaArtigos)
                     {
 
-                        dtVenda.Rows.Add(fp.id, fp.codigo, fp.preco, fp.qtd, fp.iva);
+                        dtVenda.Rows.Add(fp.id, fp.codigo, fp.preco.ToString("F2"), fp.qtd.ToString("F2"), fp.iva.ToString("F2"), fp.desconto.ToString("F2"));
 
-                        tabelaVenda.DataSource = dtVenda;
                     }
+                        tabelaVenda.DataSource = dtVenda;
                 }
 
                 if (documento.Text == "ECL")
@@ -817,18 +844,18 @@ namespace AscFrontEnd
                     {
                         artigoId = artigoId,
                         preco = precoArtigo,
-                        qtd = int.Parse(Qtd.Text),
+                        qtd = qtd,
                         iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse(descontoTxt.Text.ToString())
+                        desconto = desconto
                     });
 
                     foreach (var ecl in vendaArtigos)
                     {
 
-                        dtVenda.Rows.Add(ecl.id, ecl.codigo, ecl.preco, ecl.qtd, ecl.iva,ecl.desconto);
+                        dtVenda.Rows.Add(ecl.id, ecl.codigo, ecl.preco.ToString("F2"), ecl.qtd.ToString("F2"), ecl.iva.ToString("F2"),ecl.desconto.ToString("F2"));
 
-                        tabelaVenda.DataSource = dtVenda;
                     }
+                        tabelaVenda.DataSource = dtVenda;
                 }
 
                 if (documento.Text == "GT")
@@ -837,18 +864,18 @@ namespace AscFrontEnd
                     {
                         artigoId = artigoId,
                         preco = precoArtigo,
-                        qtd = int.Parse(Qtd.Text),
+                        qtd = qtd,
                         iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse (descontoTxt.Text.ToString())
+                        desconto = desconto
                     });
 
                     foreach (var gt in vendaArtigos)
                     {
 
-                        dtVenda.Rows.Add(gt.id, gt.codigo, gt.preco, gt.qtd, gt.iva);
+                        dtVenda.Rows.Add(gt.id, gt.codigo, gt.preco.ToString("F2"), gt.qtd.ToString("F2"), gt.iva.ToString("F2"),gt.desconto.ToString("F2"));
 
-                        tabelaVenda.DataSource = dtVenda;
                     }
+                        tabelaVenda.DataSource = dtVenda;
                 }
 
                 if (documento.Text == "GR")
@@ -857,18 +884,18 @@ namespace AscFrontEnd
                     {
                         artigoId = artigoId,
                         preco = precoArtigo,
-                        qtd = int.Parse(Qtd.Text),
+                        qtd = qtd,
                         iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse(descontoTxt.Text.ToString())
+                        desconto = desconto
                     });
 
                     foreach (var gr in vendaArtigos)
                     {
 
-                        dtVenda.Rows.Add(gr.id, gr.codigo, gr.preco, gr.qtd, gr.iva);
+                        dtVenda.Rows.Add(gr.id, gr.codigo, gr.preco.ToString("F2"), gr.qtd.ToString("F2"), gr.iva.ToString("F2"), gr.desconto.ToString("F2"));
 
-                        tabelaVenda.DataSource = dtVenda;
                     }
+                        tabelaVenda.DataSource = dtVenda;
                 }
 
                 if (documento.Text == "NC")
@@ -877,18 +904,18 @@ namespace AscFrontEnd
                     {
                         artigoId = artigoId,
                         preco = precoArtigo,
-                        qtd = int.Parse(Qtd.Text),
+                        qtd = qtd,
                         iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse(descontoTxt.Text.ToString())
+                        desconto = desconto
                     });
 
                     foreach (var nc in vendaArtigos)
                     {
 
-                        dtVenda.Rows.Add(nc.id, nc.codigo, nc.preco, nc.qtd, nc.iva);
+                        dtVenda.Rows.Add(nc.id, nc.codigo, nc.preco.ToString("F2"), nc.qtd.ToString("F2"), nc.iva.ToString("F2"),nc.desconto.ToString("F2"));
 
-                        tabelaVenda.DataSource = dtVenda;
                     }
+                        tabelaVenda.DataSource = dtVenda;
                 }
 
                 if (documento.Text == "ND")
@@ -897,18 +924,18 @@ namespace AscFrontEnd
                     {
                         artigoId = artigoId,
                         preco = precoArtigo,
-                        qtd = int.Parse(Qtd.Text),
+                        qtd = qtd,
                         iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse(descontoTxt.Text.ToString())
+                        desconto = desconto
                     });
 
                     foreach (var nd in vendaArtigos)
                     {
 
-                        dtVenda.Rows.Add(nd.id, nd.codigo, nd.preco, nd.qtd, nd.iva,nd.desconto);
+                        dtVenda.Rows.Add(nd.id, nd.codigo, nd.preco.ToString("F2"), nd.qtd.ToString("F2"), nd.iva.ToString("F2"),nd.desconto.ToString("F2"));
 
-                        tabelaVenda.DataSource = dtVenda;
                     }
+                        tabelaVenda.DataSource = dtVenda;
                 }
 
                 if (documento.Text == "OR")
@@ -917,31 +944,28 @@ namespace AscFrontEnd
                     {
                         artigoId = artigoId,
                         preco = precoArtigo,
-                        qtd = int.Parse(Qtd.Text),
+                        qtd = qtd,
                         iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse(descontoTxt.Text.ToString())
+                        desconto = desconto
                     });
 
                     foreach (var or in vendaArtigos)
                     {
 
-                        dtVenda.Rows.Add(or.id, or.codigo, or.preco, or.qtd, or.iva);
+                        dtVenda.Rows.Add(or.id, or.codigo, or.preco.ToString("F2"), or.qtd.ToString("F2"), or.iva.ToString("F2"));
 
-                        tabelaVenda.DataSource = dtVenda;
                     }
+                        tabelaVenda.DataSource = dtVenda;
                 }
 
                 artigoId = 0;
 
-                totalBruto.Text = $"Total: {CalculosVendaCompra.TotalVenda(vendaArtigos).ToString("F2")}";
-                ivaTotal.Text = $"Iva: {CalculosVendaCompra.TotalIvaVenda(vendaArtigos).ToString("F2")}";
-                descontoTotal.Text = $"Desconto: {CalculosVendaCompra.TotalDescontoVenda(vendaArtigos).ToString("F2")}";
-                precoLiquido.Text = $"Preço: {vendaArtigos.Sum(x => x.preco * x.qtd).ToString("F2")}";
+                totalAgragado(vendaArtigos);
             }
             catch { return; }
         }
 
-        private async void excelBtn_Click(object sender, EventArgs e)
+        private  void excelBtn_Click(object sender, EventArgs e)
         {
             exportar exp = new exportar();
 
@@ -1037,11 +1061,9 @@ namespace AscFrontEnd
             {
                 float totalLiquido = 0f;
                 float totalIva = 0f;
-                float ivaValorTotal = 0f;
                 float total = 0f;
                 float incidencia = 0f;
-                float taxa = 0f;
-                float valorImposto = 0f;
+            
                 List<float> listaIvas = new List<float>();
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
@@ -1121,11 +1143,11 @@ namespace AscFrontEnd
 
                 e.Graphics.DrawString($"{clienteResult.nif}", fontNormal, cor, new Rectangle(50, 330, 200, 340));
                 e.Graphics.DrawString("0,00", fontNormal, cor, new Rectangle(200, 330, 350, 340));
-                e.Graphics.DrawString($"{DateTime.Now.Date.ToString("dd-mm-yyyy")}", fontNormal, cor, new Rectangle(350, 330, 450, 340));
+                e.Graphics.DrawString($"{DateTime.Now.Date.ToString("dd-MM-yyyy")}", fontNormal, cor, new Rectangle(350, 330, 450, 340));
 
                 if (documento.Text.Equals("FR"))
                 {
-                    e.Graphics.DrawString($"{DateTime.Now.Date}", fontNormal, cor, new Rectangle(500, 330, 650, 340));
+                    e.Graphics.DrawString($"{DateTime.Now.Date.ToString("dd-MM-yyyy")}", fontNormal, cor, new Rectangle(500, 330, 650, 340));
                 }
                 else
                 {
@@ -1174,8 +1196,8 @@ namespace AscFrontEnd
                 e.Graphics.DrawString($"{CalculosVendaCompra.TotalDescontoVenda(vendaArtigos).ToString("F2")}", fontCabecalho, cor, new PointF(680, 595 + i), formatToLeft);
 
                 e.Graphics.DrawLine(canetaFina, 550, 583 + i, 740, 583 + i);
-                e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 600 + i), formatToLeft);
-                e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 600 + i), formatToLeft);
+                e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 615 + i), formatToLeft);
+                e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 615 + i), formatToLeft);
 
                 string conta = $"Conta nº";
                 string iban = $"IBAN ";
@@ -1244,7 +1266,7 @@ namespace AscFrontEnd
                 }
 
 
-                if (documento.Text.Equals("FP") || documento.Text.Equals("GR"))
+                if (documento.Text.Equals("FP") || documento.Text.Equals("GR") || documento.Text.Equals("OR"))
                 {
                     e.Graphics.DrawString($"Este documento não serve como factura ", fontCabecalho, new SolidBrush(Color.Red), new PointF(280, 720 + i), formatToCenter);
                 }
@@ -1252,7 +1274,17 @@ namespace AscFrontEnd
                 {
                     e.Graphics.DrawString($"Os bens/serviços foram colocados á disposição do adquirente na data e local do documento", fontCabecalho, new SolidBrush(Color.Black), new PointF(280, 720 + i), formatToCenter);
                 }
-                else if (documento.Text.Equals("GT")) 
+
+                if (documento.Text.Equals("GT") || documento.Text.Equals("GR")) 
+                {
+                    e.Graphics.DrawString("Entreguei", fontCabecalho, cor, new PointF(100, 720 + i), formatToLeft);
+                    e.Graphics.DrawLine(caneta, 50, 780 + i, 200, 780 + i);
+
+                    e.Graphics.DrawString("Recebi", fontCabecalho, cor, new PointF(660, 720 + i), formatToLeft);
+                    e.Graphics.DrawLine(caneta, 600, 780 + i, 750, 780 + i);
+                }
+
+                if (documento.Text.Equals("GT") || documento.Text.Equals("ECL"))
                 {
                     e.Graphics.DrawString("Entreguei", fontCabecalho, cor, new PointF(100, 720 + i), formatToLeft);
                     e.Graphics.DrawLine(caneta, 50, 780 + i, 200, 780 + i);
@@ -1309,6 +1341,58 @@ namespace AscFrontEnd
         private void tabelaArtigos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void Qtd_TextChanged(object sender, EventArgs e)
+        {
+            /*TextBox textBox = (TextBox)sender;
+            string texto = textBox.Text.Replace(".", "").Replace(",", ".");
+            // Pode validar aqui se quiser, mas não altere o textBox.Text*/
+        }
+      
+        private void Qtd_Leave(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            string texto = textBox.Text.Replace(".", "").Replace(",", ".");
+
+            if (float.TryParse(texto, System.Globalization.NumberStyles.Any,
+                               System.Globalization.CultureInfo.InvariantCulture, out float valor))
+            {
+                string textoFormatado = valor.ToString("#,##0.##",
+                    System.Globalization.CultureInfo.CreateSpecificCulture("pt-BR"));
+                textBox.Text = textoFormatado;
+            }
+        }
+
+        private void Qtd_KeyPress(object sender, KeyPressEventArgs e)
+        {
+        }
+
+        private void descontoTxt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!ValidacaoForms.IsPositiveFloatDesconto(descontoTxt.ToString()))
+            {
+                return;
+            }
+        }
+
+
+        private void descontoTxt_Leave(object sender, EventArgs e)
+        {
+ 
+        }
+
+        private void descontoTxt_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void totalAgragado(List<VendaArtigo> vendaArtigos) 
+        {
+            totalBruto.Text = $"Total: {CalculosVendaCompra.TotalVenda(vendaArtigos).ToString("F2")}";
+            ivaTotal.Text = $"Iva: {CalculosVendaCompra.TotalIvaVenda(vendaArtigos).ToString("F2")}";
+            descontoTotal.Text = $"Desconto: {CalculosVendaCompra.TotalDescontoVenda(vendaArtigos).ToString("F2")}";
+            precoLiquido.Text = $"Preço: {vendaArtigos.Sum(x => x.preco * x.qtd).ToString("F2")}";
         }
     }
 

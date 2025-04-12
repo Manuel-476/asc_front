@@ -28,7 +28,7 @@ namespace AscFrontEnd
             fornecedores = new List<FornecedorDTO>();
         }
 
-        private async void FornecedorTable_Load(object sender, EventArgs e)
+        private void FornecedorTable_Load(object sender, EventArgs e)
         {
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));

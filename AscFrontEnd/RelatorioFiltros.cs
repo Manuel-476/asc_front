@@ -336,11 +336,7 @@ namespace AscFrontEnd
                 float desconto = 0f;
                 float totalLiquido = 0f;
                 float totalIva = 0f;
-                float ivaValorTotal = 0f;
                 float total = 0f;
-                float incidencia = 0f;
-                float taxa = 0f;
-                float valorImposto = 0f;
                 List<float> listaIvas = new List<float>();
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
@@ -376,9 +372,6 @@ namespace AscFrontEnd
 
                 Pen caneta = new Pen(Color.Black, 2); // Define a cor e a largura da linha
                 Pen canetaFina = new Pen(Color.Black, 1);
-                float linhaInicioX = 550; // Ponto X de início da linha
-                float linhaInicioY = 136; // Ajuste conforme necessário para a posição vertical da linha
-                float linhaFimX = 750; // Ponto X de fim da linha
 
 
                 // Verificar se e.Graphics é válido
@@ -501,11 +494,7 @@ namespace AscFrontEnd
                 float desconto = 0f;
                 float totalLiquido = 0f;
                 float totalIva = 0f;
-                float ivaValorTotal = 0f;
                 float total = 0f;
-                float incidencia = 0f;
-                float taxa = 0f;
-                float valorImposto = 0f;
                 List<float> listaIvas = new List<float>();
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
@@ -541,9 +530,6 @@ namespace AscFrontEnd
 
                 Pen caneta = new Pen(Color.Black, 2); // Define a cor e a largura da linha
                 Pen canetaFina = new Pen(Color.Black, 1);
-                float linhaInicioX = 550; // Ponto X de início da linha
-                float linhaInicioY = 136; // Ajuste conforme necessário para a posição vertical da linha
-                float linhaFimX = 750; // Ponto X de fim da linha
 
 
                 // Verificar se e.Graphics é válido
@@ -666,11 +652,8 @@ namespace AscFrontEnd
                 float desconto = 0f;
                 float totalLiquido = 0f;
                 float totalIva = 0f;
-                float ivaValorTotal = 0f;
                 float total = 0f;
-                float incidencia = 0f;
-                float taxa = 0f;
-                float valorImposto = 0f;
+
                 List<float> listaIvas = new List<float>();
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
@@ -706,9 +689,6 @@ namespace AscFrontEnd
 
                 Pen caneta = new Pen(Color.Black, 2); // Define a cor e a largura da linha
                 Pen canetaFina = new Pen(Color.Black, 1);
-                float linhaInicioX = 550; // Ponto X de início da linha
-                float linhaInicioY = 136; // Ajuste conforme necessário para a posição vertical da linha
-                float linhaFimX = 750; // Ponto X de fim da linha
 
 
                 // Verificar se e.Graphics é válido

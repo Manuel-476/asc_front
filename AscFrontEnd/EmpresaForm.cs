@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AscFrontEnd.DTOs.Empresa;
+using AscFrontEnd.Application.Validacao;
 
 namespace AscFrontEnd
 {
@@ -34,6 +35,27 @@ namespace AscFrontEnd
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            if (!ValidacaoForms.IsValidNif(nifText.Text.ToString())) 
+            {
+                MessageBox.Show("O nif introduzido nao e valido","Impossivel Concluir a acao",MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+                return;
+            }
+
+            if (!ValidacaoForms.IsValidEmail(emailText.Text.ToString()))
+            {
+                MessageBox.Show("O Email introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+            if (!ValidacaoForms.IsValidPhone(telText.Text.ToString()))
+            {
+                MessageBox.Show("O telefone introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             HttpResponseMessage response = null;
@@ -50,10 +72,10 @@ namespace AscFrontEnd
                            descricao = descText.Text,
                            email = emailText.Text,
                            endereco = enderecoText.Text,
-                           logotipo = logo,
+                           logotipo = string.IsNullOrEmpty(logo) ? string.Empty:logo,
                            nif = nifText.Text,
-                           bancos = StaticProperty.bancos,
-                           caixas = StaticProperty.caixas,
+                           bancos = StaticProperty.bancosEmpresa,
+                           caixas = StaticProperty.caixasEmpresa,
                            status = DTOs.Enums.Enums.Status.activo,
                            foto = string.Empty,
                            bairro = bairroTxt.Text,
@@ -61,6 +83,8 @@ namespace AscFrontEnd
                            website = siteTxt.Text,
                            telefone = telText.Text,
                        };
+
+
 
             // Conversão do objeto Film para JSON
             string json = System.Text.Json.JsonSerializer.Serialize(empresa);
@@ -70,10 +94,10 @@ namespace AscFrontEnd
 
             if (response.IsSuccessStatusCode)
             {
-                StaticProperty.bancos = null;
-                StaticProperty.caixas = null;
+                    StaticProperty.bancosEmpresa = null;
+                    StaticProperty.caixasEmpresa = null;
 
-                MessageBox.Show("Empresa Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+                    MessageBox.Show("Empresa Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
                 var result = await response.Content.ReadAsStringAsync();
 
