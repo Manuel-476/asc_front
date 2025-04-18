@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Math;
 using static AscFrontEnd.Compra;
 using static AscFrontEnd.Venda;
 
@@ -15,7 +16,7 @@ namespace AscFrontEnd.Application
         private static float totalDesconto {get; set;}
         private static float totalIva { get; set; } 
 
-        public static float TotalVenda(List<VendaArtigo> vendaArtigos) 
+        public static float TotalVenda(List<VendaArtigo> vendaArtigos, float descontoCliente) 
         {
             totalVenda = 0;
 
@@ -25,7 +26,7 @@ namespace AscFrontEnd.Application
 
                 var valorDoIva = precoSemIva * (item.iva / 100);
 
-                var valorDesconto = (precoSemIva + valorDoIva) * (item.desconto/100);
+                var valorDesconto = TotalDescontoVenda(vendaArtigos, descontoCliente);
 
                 totalVenda +=  (precoSemIva + valorDoIva) - valorDesconto;
             }
@@ -33,7 +34,7 @@ namespace AscFrontEnd.Application
             return totalVenda;
         }
 
-        public static float TotalDescontoVenda(List<VendaArtigo> vendaArtigos)
+        public static float TotalDescontoVenda(List<VendaArtigo> vendaArtigos, float descontoCliente)
         {
             totalDesconto = 0;
 
@@ -43,9 +44,29 @@ namespace AscFrontEnd.Application
 
                 var valorDoIva = precoSemIva * (item.iva / 100);
 
-                var valorDesconto = (precoSemIva + valorDoIva) * (item.desconto / 100);
+                var clienteDesconto = (precoSemIva + valorDoIva) * (descontoCliente / 100);
+
+                var valorDesconto = (precoSemIva + valorDoIva - clienteDesconto) * (item.desconto / 100);
 
                 totalDesconto += valorDesconto;
+            }
+
+            return totalDesconto;
+        }
+
+        public static float TotalDescontoCliente(List<VendaArtigo> vendaArtigos, float descontoCliente)
+        {
+            totalDesconto = 0;
+
+            foreach (var item in vendaArtigos)
+            {
+                var precoSemIva = item.preco * item.qtd;
+
+                var valorDoIva = precoSemIva * (item.iva / 100);
+
+                var clienteDesconto = (precoSemIva + valorDoIva) * (descontoCliente / 100);
+
+                totalDesconto += clienteDesconto;
             }
 
             return totalDesconto;
@@ -67,7 +88,7 @@ namespace AscFrontEnd.Application
             return totalIva;
         }
 
-        public static float TotalCompra(List<CompraArtigo> compraArtigos)
+        public static float TotalCompra(List<CompraArtigo> compraArtigos, float descontoFornecedor)
         {
             totalCompra = 0;
 
@@ -77,7 +98,7 @@ namespace AscFrontEnd.Application
 
                 var valorDoIva = precoSemIva * (item.iva / 100);
 
-                var valorDesconto = (precoSemIva + valorDoIva) * (item.desconto / 100);
+                var valorDesconto = TotalDescontoCompra(compraArtigos, descontoFornecedor);
 
                 totalCompra += (precoSemIva + valorDoIva) - valorDesconto;
             }
@@ -85,7 +106,7 @@ namespace AscFrontEnd.Application
             return totalCompra;
         }
 
-        public static float TotalDescontoCompra(List<CompraArtigo> compraArtigos)
+        public static float TotalDescontoCompra(List<CompraArtigo> compraArtigos, float descontoFornecedor)
         {
             totalDesconto = 0;
 
@@ -95,9 +116,30 @@ namespace AscFrontEnd.Application
 
                 var valorDoIva = precoSemIva * (item.iva / 100);
 
-                var valorDesconto = (precoSemIva + valorDoIva) * (item.desconto / 100);
+                var fornecedorDesconto = (precoSemIva + valorDoIva) * (descontoFornecedor / 100);
+
+                var valorDesconto = (precoSemIva + valorDoIva - fornecedorDesconto) * (item.desconto / 100);
 
                 totalDesconto += valorDesconto;
+            }
+
+            return totalDesconto;
+        }
+
+        public static float TotalDescontoFornecedor(List<CompraArtigo> compraArtigos, float descontoFornecedor)
+        {
+            totalDesconto = 0;
+
+            foreach (var item in compraArtigos)
+            {
+                var precoSemIva = item.preco * item.qtd;
+
+                var valorDoIva = precoSemIva * (item.iva / 100);
+
+                var fornecedorDesconto = (precoSemIva + valorDoIva) * (descontoFornecedor / 100);
+
+
+                totalDesconto += fornecedorDesconto;
             }
 
             return totalDesconto;

@@ -47,7 +47,10 @@ namespace AscFrontEnd
 
         MotivoAnulacao formAnulacao;
 
+        HttpClient client;
+
         string descricaoDocumento = string.Empty;
+        string localEntrega = string.Empty;
         public class CompraArtigo 
         {
             public int id {  get; set; }
@@ -60,6 +63,13 @@ namespace AscFrontEnd
         public Compra()
         {
             InitializeComponent();
+
+            client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            client.BaseAddress = new Uri("https://localhost:7200/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
             artigos = new List<VfrArtigoDTO>();
             vftArtigos = new List<VftArtigoDTO>();
             pcoArtigos = new List<PedidoCotacaoArtigoDTO>();
@@ -140,12 +150,8 @@ namespace AscFrontEnd
             var clientGet = new HttpClient();
             clientGet.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
 
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://localhost:7200/");
             clientGet.BaseAddress = new Uri("https://localhost:7200/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+    
 
             if (StaticProperty.series == null)
             {
@@ -289,10 +295,17 @@ namespace AscFrontEnd
                     status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
-                string json = System.Text.Json.JsonSerializer.Serialize(vgrs);
+                form = new FaturaDetalhes(totalPreco, vgrs);
+                if (form.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
 
-                // Envio dos dados para a API
-                response = await client.PostAsync($"api/Compra/Vgr/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                /*      string json = System.Text.Json.JsonSerializer.Serialize(vgrs);
+
+                      // Envio dos dados para a API
+                      response = await client.PostAsync($"api/Compra/Vgr/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                  */
             }
 
             if (documento.Text == "ECF")
@@ -311,6 +324,7 @@ namespace AscFrontEnd
                         desconto=compraArtigo.desconto,
                     });
                 }
+                localEntrega = string.IsNullOrEmpty(localEntregatxt.Text.ToString()) ? string.Empty : localEntregatxt.Text.ToString();
 
                 EncomendaFornecedorDTO ecfs = new EncomendaFornecedorDTO()
                 {
@@ -319,7 +333,7 @@ namespace AscFrontEnd
                     fornecedorId = StaticProperty.entityId,
                     ecfArtigo = ecfArtigos,
                     empresaId = StaticProperty.empresaId,
-                    local_entrega = string.IsNullOrEmpty(localEntregatxt.Text.ToString()) ? string.Empty : localEntregatxt.Text.ToString(),
+                    local_entrega = localEntrega,
                     status = DTOs.Enums.Enums.DocState.ativo,
                 };
 
@@ -493,87 +507,89 @@ namespace AscFrontEnd
 
 
             compraArtigos.Clear();
-            
 
-            if (documento.Text == "VFR") { return; }
-            if (response.IsSuccessStatusCode)
+
+            if (documento.Text != "VFR" || documento.Text != "VGR")
             {
-                MessageBox.Show("Compra Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
-
-
-                // Compra
-                var responseVft = await client.GetAsync($"api/Compra/VftByRelations");
-
-                if (responseVft.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
-                    var contentVft = await responseVft.Content.ReadAsStringAsync();
-                    StaticProperty.vfts = JsonConvert.DeserializeObject<List<VftDTO>>(contentVft);
+                    MessageBox.Show("Compra Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+
+
+                    // Compra
+                    var responseVft = await client.GetAsync($"api/Compra/VftByRelations");
+
+                    if (responseVft.IsSuccessStatusCode)
+                    {
+                        var contentVft = await responseVft.Content.ReadAsStringAsync();
+                        StaticProperty.vfts = JsonConvert.DeserializeObject<List<VftDTO>>(contentVft);
+                    }
+
+                    var responseVfr = await client.GetAsync($"api/Compra/VfrByRelations");
+
+                    if (responseVfr.IsSuccessStatusCode)
+                    {
+                        var contentVfr = await responseVfr.Content.ReadAsStringAsync();
+                        StaticProperty.vfrs = JsonConvert.DeserializeObject<List<VfrDTO>>(contentVfr);
+                    }
+
+                    var responseVgt = await client.GetAsync($"api/Compra/VgtByRelations");
+
+                    if (responseVgt.IsSuccessStatusCode)
+                    {
+                        var contentVgt = await responseVgt.Content.ReadAsStringAsync();
+                        StaticProperty.vgts = JsonConvert.DeserializeObject<List<VgtDTO>>(contentVgt);
+                    }
+
+                    var responsePco = await client.GetAsync($"api/Compra/PcoByRelations");
+
+                    if (responsePco.IsSuccessStatusCode)
+                    {
+                        var contentPco = await responsePco.Content.ReadAsStringAsync();
+                        StaticProperty.pcos = JsonConvert.DeserializeObject<List<PedidoCotacaoDTO>>(contentPco);
+                    }
+
+                    var responseCot = await client.GetAsync($"api/Compra/CotByRelations");
+
+                    if (responseCot.IsSuccessStatusCode)
+                    {
+                        var contentCot = await responseCot.Content.ReadAsStringAsync();
+                        StaticProperty.cots = JsonConvert.DeserializeObject<List<CotacaoDTO>>(contentCot);
+                    }
+
+                    var responseEcf = await client.GetAsync($"api/Compra/EcfByRelations");
+
+                    if (responseEcf.IsSuccessStatusCode)
+                    {
+                        var contentEcf = await responseEcf.Content.ReadAsStringAsync();
+                        StaticProperty.ecfs = JsonConvert.DeserializeObject<List<EncomendaFornecedorDTO>>(contentEcf);
+                    }
+
+                    var responseVnc = await client.GetAsync($"api/Compra/VncByRelations");
+
+                    if (responseVnc.IsSuccessStatusCode)
+                    {
+                        var contentVnc = await responseVnc.Content.ReadAsStringAsync();
+                        StaticProperty.vncs = JsonConvert.DeserializeObject<List<VncDTO>>(contentVnc);
+                    }
+
+                    var responseVnd = await client.GetAsync($"api/Compra/VndByRelations");
+
+                    if (responseVnd.IsSuccessStatusCode)
+                    {
+                        var contentVnd = await responseVnd.Content.ReadAsStringAsync();
+                        StaticProperty.vnds = JsonConvert.DeserializeObject<List<VndDTO>>(contentVnd);
+                    }
                 }
-
-                var responseVfr = await client.GetAsync($"api/Compra/VfrByRelations");
-
-                if (responseVfr.IsSuccessStatusCode)
+                else
                 {
-                    var contentVfr = await responseVfr.Content.ReadAsStringAsync();
-                    StaticProperty.vfrs = JsonConvert.DeserializeObject<List<VfrDTO>>(contentVfr);
+                    MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
                 }
-
-                var responseVgt = await client.GetAsync($"api/Compra/VgtByRelations");
-
-                if (responseVgt.IsSuccessStatusCode)
-                {
-                    var contentVgt = await responseVgt.Content.ReadAsStringAsync();
-                    StaticProperty.vgts = JsonConvert.DeserializeObject<List<VgtDTO>>(contentVgt);
-                }
-
-                var responsePco = await client.GetAsync($"api/Compra/PcoByRelations");
-
-                if (responsePco.IsSuccessStatusCode)
-                {
-                    var contentPco = await responsePco.Content.ReadAsStringAsync();
-                    StaticProperty.pcos = JsonConvert.DeserializeObject<List<PedidoCotacaoDTO>>(contentPco);
-                }
-
-                var responseCot = await client.GetAsync($"api/Compra/CotByRelations");
-
-                if (responseCot.IsSuccessStatusCode)
-                {
-                    var contentCot = await responseCot.Content.ReadAsStringAsync();
-                    StaticProperty.cots = JsonConvert.DeserializeObject<List<CotacaoDTO>>(contentCot);
-                }
-
-                var responseEcf = await client.GetAsync($"api/Compra/EcfByRelations");
-
-                if (responseEcf.IsSuccessStatusCode)
-                {
-                    var contentEcf = await responseEcf.Content.ReadAsStringAsync();
-                    StaticProperty.ecfs = JsonConvert.DeserializeObject<List<EncomendaFornecedorDTO>>(contentEcf);
-                }
-
-                var responseVnc = await client.GetAsync($"api/Compra/VncByRelations");
-
-                if (responseVnc.IsSuccessStatusCode)
-                {
-                    var contentVnc = await responseVnc.Content.ReadAsStringAsync();
-                    StaticProperty.vncs = JsonConvert.DeserializeObject<List<VncDTO>>(contentVnc);
-                }
-
-                var responseVnd = await client.GetAsync($"api/Compra/VndByRelations");
-
-                if (responseVnd.IsSuccessStatusCode)
-                {
-                    var contentVnd = await responseVnd.Content.ReadAsStringAsync();
-                    StaticProperty.vnds = JsonConvert.DeserializeObject<List<VndDTO>>(contentVnd);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
             }
 
             //Fazer Refresh
             totalAgragado(compraArtigos);
-
+            documento.Items.Clear();
             WindowsConfig.LimparFormulario(this);
 
             dtCompra = new DataTable();
@@ -906,7 +922,7 @@ namespace AscFrontEnd
 
             descricaoLabel.Text = descricaoDocumento;
 
-            if(documento.Text != "ECF")
+            if(documento.Text != "ECF" || documento.Text != "VGT")
             {
                 localEntregatxt.Enabled = false;
             }
@@ -1028,9 +1044,26 @@ namespace AscFrontEnd
             comprasBtn.ForeColor= Color.Black;   
         }
 
-        private void timerRefresh_Tick(object sender, EventArgs e)
+        private async void timerRefresh_Tick(object sender, EventArgs e)
         {
             fornecedortxt.Text = $"Fornecedor: {StaticProperty.nome}";
+
+            if (StaticProperty.entityId > 0) {
+                var responseGet = await client.GetAsync($"api/Fornecedor/{StaticProperty.entityId}");
+
+                if (responseGet.IsSuccessStatusCode)
+                {
+                    var content = await responseGet.Content.ReadAsStringAsync();
+
+                    fornecedorResult = JsonConvert.DeserializeObject<FornecedorDTO>(content);
+                }
+                else
+                {
+                    MessageBox.Show("Fornecedor nao encontrado","Alguma coisa correu mal",MessageBoxButtons.OK,MessageBoxIcon.Information);
+
+                    return;
+                }
+            }
         }
 
         private void Imprimir_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
@@ -1134,11 +1167,12 @@ namespace AscFrontEnd
                 }
 
                 e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
-                e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 350, 420));
-                e.Graphics.DrawString($"Qtd", fontNormalNegrito, cor, new Rectangle(350, 400, 450, 420));
-                e.Graphics.DrawString($"Preco", fontNormalNegrito, cor, new Rectangle(450, 400, 550, 420));
-                e.Graphics.DrawString("Iva %", fontNormalNegrito, cor, new Rectangle(550, 400, 650, 420));
-                e.Graphics.DrawString($"Valor", fontNormalNegrito, cor, new Rectangle(650, 400, 750, 420));
+                e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 300, 420));
+                e.Graphics.DrawString($"Qtd", fontNormalNegrito, cor, new Rectangle(300, 400, 400, 420));
+                e.Graphics.DrawString($"Preco", fontNormalNegrito, cor, new Rectangle(400, 400, 500, 420));
+                e.Graphics.DrawString("Iva %", fontNormalNegrito, cor, new Rectangle(500, 400, 600, 420));
+                e.Graphics.DrawString($"Valor", fontNormalNegrito, cor, new Rectangle(600, 400, 700, 420));
+                e.Graphics.DrawString($"Desconto", fontNormalNegrito, cor, new Rectangle(700, 400, 750, 420));
                 e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
                 int i = 15;
                 foreach (CompraArtigo va in compraArtigos)
@@ -1147,15 +1181,17 @@ namespace AscFrontEnd
                     total += va.preco * float.Parse(va.qtd.ToString());
 
                     e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
-                    e.Graphics.DrawString($"{StaticProperty.artigos.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 350, 425 + i));
-                    e.Graphics.DrawString($"{va.qtd}", fontNormal, cor, new Rectangle(350, 410 + i, 450, 425 + i));
-                    e.Graphics.DrawString($"{va.preco.ToString("F4")}", fontNormal, cor, new Rectangle(450, 410 + i, 550, 425 + i));
-                    e.Graphics.DrawString($"{(va.iva).ToString("F4")} %", fontNormal, cor, new Rectangle(550, 410 + i, 650, 425 + i));
-                    e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F4")}", fontNormal, cor, new Rectangle(650, 410 + i, 750, 425 + i));
+                    e.Graphics.DrawString($"{StaticProperty.artigos.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 300, 425 + i));
+                    e.Graphics.DrawString($"{va.qtd:F2}", fontNormal, cor, new Rectangle(300, 410 + i, 400, 425 + i));
+                    e.Graphics.DrawString($"{va.preco.ToString("F4")}", fontNormal, cor, new Rectangle(400, 410 + i, 500, 425 + i));
+                    e.Graphics.DrawString($"{(va.iva).ToString("F4")} %", fontNormal, cor, new Rectangle(500, 410 + i, 600, 425 + i));
+                    e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F4")}", fontNormal, cor, new Rectangle(600, 410 + i, 700, 425 + i));
+                    e.Graphics.DrawString($"{(((va.preco - (va.preco * (fornecedorResult.desconto/100))) * (va.desconto/100)) * va.qtd).ToString("F4")}", fontNormal, cor, new Rectangle(700, 410 + i, 750, 425 + i));
                     i = i + 15;
                 }
 
                 totalLiquido += total - (total * (totalIva / 100));
+                total = total - CalculosVendaCompra.TotalDescontoCompra(compraArtigos, fornecedorResult.desconto);
 
                 string mercadoria = $"Mercadoria/Serviço:";
                 string iva = $"Iva:{totalIva.ToString("F4")}";
@@ -1172,7 +1208,7 @@ namespace AscFrontEnd
                 e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 550 + i), formatToLeft);
                 e.Graphics.DrawString((total * (totalIva / 100)).ToString("F4"), fontCabecalho, cor, new PointF(680, 550 + i), formatToLeft);
                 e.Graphics.DrawString("Desconto", fontCabecalho, cor, new PointF(550, 575 + i), formatToLeft);
-                e.Graphics.DrawString($"{CalculosVendaCompra.TotalDescontoCompra(compraArtigos).ToString("F2")}", fontCabecalho, cor, new PointF(680, 575 + i), formatToLeft);
+                e.Graphics.DrawString($"{CalculosVendaCompra.TotalDescontoCompra(compraArtigos, fornecedorResult.desconto).ToString("F2")}", fontCabecalho, cor, new PointF(680, 575 + i), formatToLeft);
 
                 e.Graphics.DrawLine(canetaFina, 550, 565 + i, 740, 565 + i);
                 e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 595 + i), formatToLeft);
@@ -1189,7 +1225,21 @@ namespace AscFrontEnd
 
                 e.Graphics.DrawString($"Processado pelo programa válido nº{"41/AGT/2020"} Asc - Smart Entity", fontCabecalho, cor, new PointF(280, 700 + i), formatToCenter);
 
+                if (documento.Text.Equals("VGT") || documento.Text.Equals("VGR"))
+                {
+                    e.Graphics.DrawString("Entreguei", fontCabecalho, cor, new PointF(100, 720 + i), formatToLeft);
+                    e.Graphics.DrawLine(caneta, 50, 780 + i, 200, 780 + i);
 
+                    e.Graphics.DrawString("Recebi", fontCabecalho, cor, new PointF(660, 720 + i), formatToLeft);
+                    e.Graphics.DrawLine(caneta, 600, 780 + i, 750, 780 + i);
+                }
+
+                if (documento.Text.Equals("VGT") || documento.Text.Equals("ECF"))
+                {
+                    e.Graphics.DrawString("Local de Entrega:", fontCabecalhoNegrito, cor, new PointF(50, 820 + i), formatToLeft);
+
+                    e.Graphics.DrawString($"{localEntrega}", fontCabecalho, cor, new PointF(150, 820 + i), formatToLeft);
+                }
 
                 // Verificando se o arquivo existe
 
@@ -1267,10 +1317,11 @@ namespace AscFrontEnd
 
         public void totalAgragado(List<CompraArtigo> compraArtigos) 
         {
-            totalBruto.Text = $"Total: {CalculosVendaCompra.TotalCompra(compraArtigos).ToString("F2")}";
+            totalBruto.Text = $"Total: {CalculosVendaCompra.TotalCompra(compraArtigos, fornecedorResult.desconto).ToString("F2")}";
             ivaTotal.Text = $"Iva: {CalculosVendaCompra.TotalIvaCompra(compraArtigos).ToString("F2")}";
-            descontoTotal.Text = $"Desconto: {CalculosVendaCompra.TotalDescontoCompra(compraArtigos).ToString("F2")}";
+            descontoTotal.Text = $"Desconto: {CalculosVendaCompra.TotalDescontoCompra(compraArtigos, fornecedorResult.desconto).ToString("F2")}";
             precoLiquido.Text = $"Preço: {compraArtigos.Sum(x => x.preco * x.qtd).ToString("F2")}";
+            descontoFornecedorTxt.Text = $" Desc, Fornecedor: {CalculosVendaCompra.TotalDescontoCompra(compraArtigos,fornecedorResult.desconto):F2}";
         }
     }
 }

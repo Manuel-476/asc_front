@@ -152,9 +152,19 @@ namespace AscFrontEnd
                     var contentVnd = await responseVnd.Content.ReadAsStringAsync();
                     StaticProperty.vnds = JsonConvert.DeserializeObject<List<VndDTO>>(contentVnd);
 
-                    processValue += 4;
+                    processValue += 2;
                 }
 
+                var responseCompra = await client.GetAsync($"api/Relatorio/Compras/{StaticProperty.empresaId}");
+
+                if (responseCompra.IsSuccessStatusCode)
+                {
+                    var contentCompra = await responseCompra.Content.ReadAsStringAsync();
+
+                    StaticProperty.compra = JsonConvert.DeserializeObject<List<CompraDTO>>(contentCompra);
+
+                    processValue += 1;
+                }
                 // Venda
                 var responseFr = await client.GetAsync($"api/Venda/FrByRelations");
 
@@ -242,6 +252,17 @@ namespace AscFrontEnd
                     StaticProperty.ors = JsonConvert.DeserializeObject<List<OrDTO>>(contentOr);
 
                     processValue += 4;
+                }
+
+                var responseVenda = await client.GetAsync($"api/Relatorio/Vendas/{StaticProperty.empresaId}");
+
+                if (responseVenda.IsSuccessStatusCode)
+                {
+                    var contentVenda = await responseVenda.Content.ReadAsStringAsync();
+
+                    StaticProperty.venda = JsonConvert.DeserializeObject<List<VendaDTO>>(contentVenda);
+
+                    processValue += 1;
                 }
 
                 // Cliente

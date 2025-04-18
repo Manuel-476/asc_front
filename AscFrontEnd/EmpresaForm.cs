@@ -49,7 +49,7 @@ namespace AscFrontEnd
                 return;
             }
 
-            if (!ValidacaoForms.IsValidPhone(telText.Text.ToString()))
+            if (!string.IsNullOrEmpty(telText.Text.ToString()) && !ValidacaoForms.IsValidPhone(telText.Text.ToString()))
             {
                 MessageBox.Show("O telefone introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -81,7 +81,7 @@ namespace AscFrontEnd
                            bairro = bairroTxt.Text,
                            pronvicia = provinciaCombo.Text,
                            website = siteTxt.Text,
-                           telefone = telText.Text,
+                           telefone = !string.IsNullOrEmpty(telText.Text.ToString()) ? telText.Text: string.Empty,
                        };
 
 

@@ -20,6 +20,7 @@ namespace AscFrontEnd.DTOs.Fornecedor
         public int pais_id { get; set; }
         public int provincia_id { get; set; }
         public string localizacao { get; set; } = string.Empty;
+        public float desconto { get; set; }
         public int empresaid { get; set; }
         public Status status { get; set; }
         public string nif { get; set; }

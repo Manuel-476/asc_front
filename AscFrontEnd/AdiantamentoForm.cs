@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AscFrontEnd.DTOs.ContasCorrentes;
 using AscFrontEnd.Application;
+using AscFrontEnd.Application.Validacao;
+using System.Globalization;
 
 namespace AscFrontEnd
 {
@@ -27,6 +29,9 @@ namespace AscFrontEnd
         public AdiantamentoForm()
         {
             InitializeComponent();
+
+            valorTxt.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
+            valorTxt.TextChanged += ValidacaoForms.TratarTextChanged;
         }
 
         private void AdiantamentoForm_Load(object sender, EventArgs e)
@@ -103,7 +108,9 @@ namespace AscFrontEnd
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            
+            var valor = !string.IsNullOrEmpty(valorTxt.Text.ToString()) ? float.Parse(valorTxt.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) : 0f;
+
+
             if (radioFornecedor.Checked) 
             {
                 documento = "ADF";
@@ -113,7 +120,7 @@ namespace AscFrontEnd
                 adiantamentoFornecedor = new AdiantamentoFornDTO() { fornecedorId = StaticProperty.entityId,
                                                                      state = DTOs.Enums.Enums.DocState.ativo,
                                                                      documento = codigoDocumento,
-                                                                     valorAdiantado = float.Parse(valorTxt.Text)
+                                                                     valorAdiantado = valor
                 };
 
                 json = System.Text.Json.JsonSerializer.Serialize(adiantamentoFornecedor);
@@ -133,7 +140,7 @@ namespace AscFrontEnd
                     clienteId = StaticProperty.entityId,
                     state = DTOs.Enums.Enums.DocState.ativo,
                     documento = codigoDocumento.Replace("\"",""),
-                    valorAdiantado = float.Parse(valorTxt.Text)
+                    valorAdiantado = valor
                 };
 
                 json = System.Text.Json.JsonSerializer.Serialize(adiantamentoCliente);

@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static AscFrontEnd.DTOs.Enums.Enums;
 using AscFrontEnd.DTOs.Stock;
+using System.Globalization;
 
 namespace AscFrontEnd
 {
@@ -32,7 +33,7 @@ namespace AscFrontEnd
         private void IncrementarStock_Load(object sender, EventArgs e)
         {
             artigoLabel.Text = $"Artigo: {_artigo.codigo}";
-            qtdLabel.Text = $"Qtd Stock: {_qtd}";
+            qtdLabel.Text = $"Qtd Stock: {_qtd:F2}";
         }
 
         private async void salvarBtn_Click(object sender, EventArgs e)
@@ -48,8 +49,10 @@ namespace AscFrontEnd
                 // Conversão do objeto Film para JSON
                 string json = System.Text.Json.JsonSerializer.Serialize(_artigo.id);
 
+                var qtd = !string.IsNullOrEmpty(qtdText.Text.ToString()) ? float.Parse(qtdText.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) : 0f;
+
                 // Envio dos dados para a API
-                HttpResponseMessage response = await client.PutAsync($"https://localhost:7200/api/Armazem/Stock/Qtd/Artigo/Incremento/{_artigo.id}/{int.Parse(qtdText.Text.ToString())}/{1}/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage response = await client.PutAsync($"https://localhost:7200/api/Armazem/Stock/Qtd/Artigo/Incremento/{_artigo.id}/{qtd}/{StaticProperty.funcionarioId}/{StaticProperty.empresaId}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                 if (response.IsSuccessStatusCode)
                 {

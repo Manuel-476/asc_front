@@ -467,3 +467,6 @@ C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontE
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.NotificacoForm.resources
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.DashBoardForm.resources
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.DocumentoEstornoListarForm.resources
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.RelatorioBancoCaixaForm.resources
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.BancoListagemForm.resources
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.CaixaListagemForm.resources

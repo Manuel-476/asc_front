@@ -131,5 +131,10 @@ namespace AscFrontEnd
         {
             new RelatorioFiltros(DTOs.Enums.Enums.OpcaoBinaria.Sim, DTOs.Enums.Enums.Consulta.financeira).ShowDialog();
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            new RelatorioBancoCaixaForm().ShowDialog();
+        }
     }
 }

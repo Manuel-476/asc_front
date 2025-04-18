@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using static AscFrontEnd.DTOs.Enums.Enums;
 using AscFrontEnd.DTOs.ContasCorrentes;
 using AscFrontEnd.Application;
+using AscFrontEnd.Application.Validacao;
 
 namespace AscFrontEnd
 {
@@ -57,6 +58,9 @@ namespace AscFrontEnd
                 }
 
             }
+
+            valorDocumento.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
+            valorDocumento.TextChanged += ValidacaoForms.TratarTextChanged;
         }
 
         private void RegularAdiantamentoForm_Load(object sender, EventArgs e)

@@ -27,6 +27,20 @@ namespace AscFrontEnd
 
         private void addBtn_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(codigoText.Text.ToString()))
+            {
+                MessageBox.Show("O campo do codigo esta vazio", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(descText.Text.ToString()))
+            {
+                MessageBox.Show("O campo do descricao esta vazio", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
             int id = caixaTable.Rows.Count;
             dt.Rows.Clear();
             caixaTable.DataSource = dt;
@@ -88,6 +102,13 @@ namespace AscFrontEnd
 
         private void feitoBtn_Click(object sender, EventArgs e)
         {
+            if (!caixas.Any())
+            {
+                MessageBox.Show("Nao existe caixas na lista", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
             StaticProperty.caixasEmpresa = caixas;
             this.Close();
         }

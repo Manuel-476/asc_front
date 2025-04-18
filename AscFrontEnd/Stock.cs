@@ -1,4 +1,5 @@
-﻿using AscFrontEnd.DTOs.StaticsDto;
+﻿using AscFrontEnd.Application.Validacao;
+using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.DTOs.Stock;
 using Newtonsoft.Json;
 using System;
@@ -32,6 +33,7 @@ namespace AscFrontEnd
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

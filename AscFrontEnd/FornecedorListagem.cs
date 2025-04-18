@@ -48,7 +48,7 @@ namespace AscFrontEnd
                 checkDesconhecido.Visible = false;
 
                 // Adiciona linhas ao DataTable
-                foreach (var item in StaticProperty.fornecedores.Where(f => f.status == DTOs.Enums.Enums.Status.activo && f.id != 1 && f.empresaid == StaticProperty.empresaId))
+                foreach (var item in StaticProperty.fornecedores.Where(f => f.status == DTOs.Enums.Enums.Status.activo && f.empresaid == StaticProperty.empresaId))
                 {
                     dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
 

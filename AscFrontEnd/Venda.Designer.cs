@@ -61,6 +61,9 @@
             this.totalBruto = new System.Windows.Forms.Label();
             this.precoLiquido = new System.Windows.Forms.Label();
             this.descricaoLabel = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.localEntregatxt = new System.Windows.Forms.TextBox();
+            this.descontoCliente = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaArtigos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaVenda)).BeginInit();
             this.panel1.SuspendLayout();
@@ -345,7 +348,7 @@
             this.ivaTotal.AutoSize = true;
             this.ivaTotal.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ivaTotal.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.ivaTotal.Location = new System.Drawing.Point(474, 87);
+            this.ivaTotal.Location = new System.Drawing.Point(360, 86);
             this.ivaTotal.Name = "ivaTotal";
             this.ivaTotal.Size = new System.Drawing.Size(54, 19);
             this.ivaTotal.TabIndex = 24;
@@ -356,7 +359,7 @@
             this.descontoTotal.AutoSize = true;
             this.descontoTotal.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.descontoTotal.ForeColor = System.Drawing.Color.Red;
-            this.descontoTotal.Location = new System.Drawing.Point(666, 87);
+            this.descontoTotal.Location = new System.Drawing.Point(539, 86);
             this.descontoTotal.Name = "descontoTotal";
             this.descontoTotal.Size = new System.Drawing.Size(54, 19);
             this.descontoTotal.TabIndex = 25;
@@ -367,18 +370,19 @@
             this.totalBruto.AutoSize = true;
             this.totalBruto.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.totalBruto.ForeColor = System.Drawing.Color.Green;
-            this.totalBruto.Location = new System.Drawing.Point(870, 87);
+            this.totalBruto.Location = new System.Drawing.Point(908, 88);
             this.totalBruto.Name = "totalBruto";
             this.totalBruto.Size = new System.Drawing.Size(54, 19);
             this.totalBruto.TabIndex = 26;
             this.totalBruto.Text = "label7";
+            this.totalBruto.Click += new System.EventHandler(this.totalBruto_Click);
             // 
             // precoLiquido
             // 
             this.precoLiquido.AutoSize = true;
             this.precoLiquido.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.precoLiquido.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.precoLiquido.Location = new System.Drawing.Point(255, 87);
+            this.precoLiquido.Location = new System.Drawing.Point(175, 87);
             this.precoLiquido.Name = "precoLiquido";
             this.precoLiquido.Size = new System.Drawing.Size(54, 19);
             this.precoLiquido.TabIndex = 27;
@@ -394,11 +398,44 @@
             this.descricaoLabel.TabIndex = 28;
             this.descricaoLabel.Text = "descricao";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.SystemColors.Control;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label7.Location = new System.Drawing.Point(228, 425);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(112, 20);
+            this.label7.TabIndex = 51;
+            this.label7.Text = "Local Entrega:";
+            // 
+            // localEntregatxt
+            // 
+            this.localEntregatxt.Location = new System.Drawing.Point(346, 425);
+            this.localEntregatxt.Name = "localEntregatxt";
+            this.localEntregatxt.Size = new System.Drawing.Size(233, 20);
+            this.localEntregatxt.TabIndex = 50;
+            // 
+            // descontoCliente
+            // 
+            this.descontoCliente.AutoSize = true;
+            this.descontoCliente.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.descontoCliente.ForeColor = System.Drawing.Color.DarkRed;
+            this.descontoCliente.Location = new System.Drawing.Point(715, 87);
+            this.descontoCliente.Name = "descontoCliente";
+            this.descontoCliente.Size = new System.Drawing.Size(54, 19);
+            this.descontoCliente.TabIndex = 52;
+            this.descontoCliente.Text = "label7";
+            // 
             // Venda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1085, 461);
+            this.Controls.Add(this.descontoCliente);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.localEntregatxt);
             this.Controls.Add(this.descricaoLabel);
             this.Controls.Add(this.precoLiquido);
             this.Controls.Add(this.totalBruto);
@@ -422,7 +459,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.documento);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Venda";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Venda";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Venda_FormClosing);
@@ -470,5 +510,8 @@
         private System.Windows.Forms.Label totalBruto;
         private System.Windows.Forms.Label precoLiquido;
         private System.Windows.Forms.Label descricaoLabel;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox localEntregatxt;
+        private System.Windows.Forms.Label descontoCliente;
     }
 }

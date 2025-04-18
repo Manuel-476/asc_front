@@ -71,6 +71,7 @@ namespace AscFrontEnd.DTOs.StaticsDto
         public static List<EncomendaFornecedorDTO> ecfs { get; set; }
         public static List<PedidoCotacaoDTO> pcos { get; set; }
         public static List<CotacaoDTO> cots { get; set; }
+        public static List<CompraDTO> compra { get; set; }
 
         // Venda
         public static List<FtDTO> fts { get; set; }
@@ -82,6 +83,7 @@ namespace AscFrontEnd.DTOs.StaticsDto
         public static List<OrDTO> ors { get; set; }
         public static List<EncomendaClienteDTO> ecls { get; set; }
         public static List<FaturaProformaDTO> fps { get; set; }
+        public static List<VendaDTO> venda { get; set; }
 
         // Stocks
         public static List<ArmazemDTO> armazens { get; set; }

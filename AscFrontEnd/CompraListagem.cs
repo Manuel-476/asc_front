@@ -1079,7 +1079,9 @@ namespace AscFrontEnd
             {
                 float totalLiquido = 0f;
                 float totalIva = 0f;
-            
+                float descontoFornecedor = CalculosVendaCompra.TotalDescontoCompra(compraArtigos, fornecedorResult.desconto);
+
+
                 float total = 0f;
                 float incidencia = 0f;
                
@@ -1164,7 +1166,7 @@ namespace AscFrontEnd
                 e.Graphics.DrawLine(caneta, 50, 315, 750, 315);
 
                 e.Graphics.DrawString($"{fornecedorResult.nif}", fontNormal, cor, new Rectangle(50, 330, 200, 340));
-                e.Graphics.DrawString("0,00", fontNormal, cor, new Rectangle(200, 330, 350, 340));
+                e.Graphics.DrawString($"{descontoFornecedor:F2}", fontNormal, cor, new Rectangle(200, 330, 350, 340));
                 e.Graphics.DrawString($"{DateTime.Now.Date.ToString("dd-MM-yyyy")}", fontNormal, cor, new Rectangle(350, 330, 450, 340));
 
                 e.Graphics.DrawString($"{DateTime.Now.Date.ToString("dd-MM-yyyy")}", fontNormal, cor, new Rectangle(500, 330, 650, 340));
@@ -1212,7 +1214,7 @@ namespace AscFrontEnd
                 e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 565 + i), formatToLeft);
                 e.Graphics.DrawString((total * (totalIva / 100)).ToString("F2"), fontCabecalho, cor, new PointF(680, 565 + i), formatToLeft);
                 e.Graphics.DrawString("Desconto", fontCabecalho, cor, new PointF(550, 595 + i), formatToLeft);
-                e.Graphics.DrawString($"{CalculosVendaCompra.TotalDescontoCompra(compraArtigos)}", fontCabecalho, cor, new PointF(680, 595 + i), formatToLeft);
+                e.Graphics.DrawString($"{descontoFornecedor:F2}", fontCabecalho, cor, new PointF(680, 595 + i), formatToLeft);
 
                 e.Graphics.DrawLine(canetaFina, 550, 583 + i, 740, 583 + i);
                 e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 620 + i), formatToLeft);

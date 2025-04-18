@@ -239,9 +239,9 @@ namespace AscFrontEnd
 
             empresaToolStripMenuItem.Visible = false;
 
-            bancoToolStripMenuItem.Visible = false;
+          //  bancoToolStripMenuItem.Visible = false;
 
-            caixaToolStripMenuItem.Visible = false ;
+         //   caixaToolStripMenuItem.Visible = false ;
 
             depositoToolStripMenuItem.Visible = false;
 

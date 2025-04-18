@@ -34,11 +34,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.pictureBancoCaixa = new System.Windows.Forms.PictureBox();
             this.pictureFinanceiro = new System.Windows.Forms.PictureBox();
             this.pictureStock = new System.Windows.Forms.PictureBox();
             this.pictureCompra = new System.Windows.Forms.PictureBox();
             this.pictureVenda = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBancoCaixa)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureFinanceiro)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureStock)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureCompra)).BeginInit();
@@ -74,7 +77,7 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(-3, -4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(626, 69);
+            this.panel1.Size = new System.Drawing.Size(783, 69);
             this.panel1.TabIndex = 3;
             // 
             // label2
@@ -104,18 +107,41 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label4.Location = new System.Drawing.Point(500, 253);
+            this.label4.Location = new System.Drawing.Point(664, 253);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(75, 16);
             this.label4.TabIndex = 9;
             this.label4.Text = "Financeiro";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label5.Location = new System.Drawing.Point(483, 253);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(112, 16);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Bancos e Caixas";
+            // 
+            // pictureBancoCaixa
+            // 
+            this.pictureBancoCaixa.BackColor = System.Drawing.SystemColors.Highlight;
+            this.pictureBancoCaixa.BackgroundImage = global::AscFrontEnd.Properties.Resources.donate__1_;
+            this.pictureBancoCaixa.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBancoCaixa.Location = new System.Drawing.Point(481, 91);
+            this.pictureBancoCaixa.Name = "pictureBancoCaixa";
+            this.pictureBancoCaixa.Size = new System.Drawing.Size(117, 150);
+            this.pictureBancoCaixa.TabIndex = 10;
+            this.pictureBancoCaixa.TabStop = false;
+            this.pictureBancoCaixa.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // pictureFinanceiro
             // 
             this.pictureFinanceiro.BackColor = System.Drawing.SystemColors.Highlight;
             this.pictureFinanceiro.BackgroundImage = global::AscFrontEnd.Properties.Resources.report__1_;
             this.pictureFinanceiro.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureFinanceiro.Location = new System.Drawing.Point(478, 91);
+            this.pictureFinanceiro.Location = new System.Drawing.Point(642, 91);
             this.pictureFinanceiro.Name = "pictureFinanceiro";
             this.pictureFinanceiro.Size = new System.Drawing.Size(117, 150);
             this.pictureFinanceiro.TabIndex = 6;
@@ -170,7 +196,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(615, 286);
+            this.ClientSize = new System.Drawing.Size(780, 286);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.pictureBancoCaixa);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -189,6 +217,7 @@
             this.Load += new System.EventHandler(this.RelatorioForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBancoCaixa)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureFinanceiro)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureStock)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureCompra)).EndInit();
@@ -210,5 +239,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.PictureBox pictureBancoCaixa;
     }
 }

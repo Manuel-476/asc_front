@@ -176,15 +176,15 @@ namespace AscFrontEnd
                      }
                 }
 
-                if (StaticProperty.frs.Where(x => x.frArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() == null &&
-                   StaticProperty.fts.Where(x => x.ftArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() == null &&
-                   StaticProperty.fps.Where(x => x.fpArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() == null &&
-                   StaticProperty.ecls.Where(x => x.eclArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() != null &&
-                   StaticProperty.vfrs.Where(x => x.vfrArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() != null &&
-                   StaticProperty.vfts.Where(x => x.vftArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() != null &&
-                   StaticProperty.ecfs.Where(x => x.ecfArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() != null &&
-                   StaticProperty.cots.Where(x => x.cArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() != null &&
-                   StaticProperty.pcos.Where(x => x.pcArtigo.Where(f => f.artigoId == id).First().artigoId == id).First() != null)
+                if (StaticProperty.frs.Where(x => x.frArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() == null &&
+                   StaticProperty.fts.Where(x => x.ftArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() == null &&
+                   StaticProperty.fps.Where(x => x.fpArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() == null &&
+                   StaticProperty.ecls.Where(x => x.eclArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() != null &&
+                   StaticProperty.vfrs.Where(x => x.vfrArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() != null &&
+                   StaticProperty.vfts.Where(x => x.vftArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() != null &&
+                   StaticProperty.ecfs.Where(x => x.ecfArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() != null &&
+                   StaticProperty.cots.Where(x => x.cArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() != null &&
+                   StaticProperty.pcos.Where(x => x.pcArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() != null)
                 {
                     editarPicture.Enabled = true;
                 }

@@ -91,14 +91,14 @@ namespace AscFrontEnd
                 return;
             }
 
-            if (!ValidacaoForms.IsValidPhone(telefonetxt.Text.ToString()))
+            if (!string.IsNullOrEmpty(telefonetxt.Text.ToString()) && !ValidacaoForms.IsValidPhone(telefonetxt.Text.ToString()))
             {
                 MessageBox.Show("O Telefone introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 return;
             }
 
-            List<FornecedorPhoneDTO> phone = new List<FornecedorPhoneDTO>() { new FornecedorPhoneDTO() { telefone = telefonetxt.Text } };
+            List<FornecedorPhoneDTO> phone = new List<FornecedorPhoneDTO>() { new FornecedorPhoneDTO() { telefone = !string.IsNullOrEmpty(telefonetxt.Text.ToString()) ?  telefonetxt.Text:string.Empty } };
             List<FornecedorFilialDTO> filias = new List<FornecedorFilialDTO> { new FornecedorFilialDTO() { email = emailText.Text,codigo=codigotxt
            .Text,localizacao=FiliallocalTxt.Text,nif=nifText.Text,fornFilialPhones=null,foto="string"} };
             var fornecedor = new FornecedorDTO()

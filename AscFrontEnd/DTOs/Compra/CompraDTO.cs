@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static AscFrontEnd.DTOs.Enums.Enums;
 
 namespace AscFrontEnd.DTOs.Compra
 {
@@ -16,6 +17,7 @@ namespace AscFrontEnd.DTOs.Compra
         public int artigoId { get; set; }
         public int fornecedorId { get; set; }
         public int empresaId { get; set; }
+        public DocState state { get; set; }
         public DateTime data { get; set; }
         public DateTime created_at { get; set; }
 
@@ -29,6 +31,6 @@ namespace AscFrontEnd.DTOs.Compra
         public float preco { get; set; }
         public float desconto { get; set; }
         public float iva { get; set; }
-        public int qtd { get; set; }
+        public float qtd { get; set; }
     }
 }

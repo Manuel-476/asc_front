@@ -103,6 +103,7 @@
             // 
             // formaPagamentoTable
             // 
+            this.formaPagamentoTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.formaPagamentoTable.BackgroundColor = System.Drawing.Color.White;
             this.formaPagamentoTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.formaPagamentoTable.Location = new System.Drawing.Point(12, 200);
@@ -117,7 +118,7 @@
             this.Salvar.BackColor = System.Drawing.SystemColors.Highlight;
             this.Salvar.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Salvar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Salvar.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Salvar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Salvar.ForeColor = System.Drawing.Color.White;
             this.Salvar.Location = new System.Drawing.Point(548, 293);
             this.Salvar.Name = "Salvar";
@@ -140,11 +141,11 @@
             // radioCaixa
             // 
             this.radioCaixa.AutoSize = true;
-            this.radioCaixa.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioCaixa.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioCaixa.ForeColor = System.Drawing.SystemColors.Highlight;
             this.radioCaixa.Location = new System.Drawing.Point(580, 35);
             this.radioCaixa.Name = "radioCaixa";
-            this.radioCaixa.Size = new System.Drawing.Size(51, 20);
+            this.radioCaixa.Size = new System.Drawing.Size(56, 19);
             this.radioCaixa.TabIndex = 9;
             this.radioCaixa.TabStop = true;
             this.radioCaixa.Text = "Caixa";
@@ -154,11 +155,11 @@
             // radioBanco
             // 
             this.radioBanco.AutoSize = true;
-            this.radioBanco.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioBanco.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioBanco.ForeColor = System.Drawing.SystemColors.Highlight;
             this.radioBanco.Location = new System.Drawing.Point(646, 37);
             this.radioBanco.Name = "radioBanco";
-            this.radioBanco.Size = new System.Drawing.Size(52, 20);
+            this.radioBanco.Size = new System.Drawing.Size(60, 19);
             this.radioBanco.TabIndex = 10;
             this.radioBanco.TabStop = true;
             this.radioBanco.Text = "Banco";

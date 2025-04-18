@@ -14,6 +14,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static AscFrontEnd.DTOs.Enums.Enums;
+using AscFrontEnd.Application.Validacao;
+using System.Globalization;
 
 namespace AscFrontEnd
 {
@@ -27,12 +29,16 @@ namespace AscFrontEnd
             InitializeComponent();
             _stock = stock;
             armazens = new ArmazemDTO();
+
+
+            qtdText.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
+            qtdText.TextChanged += ValidacaoForms.TratarTextChanged;
         }
 
         private void TransferenciaArmazem_Load(object sender, EventArgs e)
         {
             artigoLabel.Text = $"Artigo: {_stock.artigo}";
-            qtdLabel.Text = $"Qtd Stock: {_stock.qtd}";
+            qtdLabel.Text = $"Qtd Stock: {_stock.qtd:F2}";
 
             armazens = StaticProperty.armazens.Where(ar => ar.storeLocations.Where(sl => sl.locationArtigos.Where(la => la.artigoId == _stock.id).First().artigoId == _stock.id).First().id != 0).First();
 
@@ -56,7 +62,7 @@ namespace AscFrontEnd
         private async void button1_Click(object sender, EventArgs e)
         {
             int locationStoreId,locationId,armazemDestineId, locationStoreDestineId,locationDestineId;
-            int qtd = int.Parse(qtdText.Text);
+            float qtd = !string.IsNullOrEmpty(qtdText.Text.ToString()) ? float.Parse(qtdText.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) : 0f;
             int idLoc = armazens.storeLocations.Where(sl => sl.locationArtigos.Where(la => la.artigoId == _stock.id).First().artigoId == _stock.id).First().id;
 
             var client = new HttpClient();

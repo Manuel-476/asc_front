@@ -63,6 +63,7 @@
             this.descricaoLabel = new System.Windows.Forms.Label();
             this.localEntregatxt = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.descontoFornecedorTxt = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaArtigos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaCompra)).BeginInit();
             this.panel1.SuspendLayout();
@@ -356,7 +357,7 @@
             this.precoLiquido.AutoSize = true;
             this.precoLiquido.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.precoLiquido.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.precoLiquido.Location = new System.Drawing.Point(228, 96);
+            this.precoLiquido.Location = new System.Drawing.Point(199, 96);
             this.precoLiquido.Name = "precoLiquido";
             this.precoLiquido.Size = new System.Drawing.Size(54, 19);
             this.precoLiquido.TabIndex = 46;
@@ -367,7 +368,7 @@
             this.totalBruto.AutoSize = true;
             this.totalBruto.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.totalBruto.ForeColor = System.Drawing.Color.Green;
-            this.totalBruto.Location = new System.Drawing.Point(843, 96);
+            this.totalBruto.Location = new System.Drawing.Point(906, 96);
             this.totalBruto.Name = "totalBruto";
             this.totalBruto.Size = new System.Drawing.Size(54, 19);
             this.totalBruto.TabIndex = 45;
@@ -378,7 +379,7 @@
             this.descontoTotal.AutoSize = true;
             this.descontoTotal.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.descontoTotal.ForeColor = System.Drawing.Color.Red;
-            this.descontoTotal.Location = new System.Drawing.Point(639, 96);
+            this.descontoTotal.Location = new System.Drawing.Point(551, 96);
             this.descontoTotal.Name = "descontoTotal";
             this.descontoTotal.Size = new System.Drawing.Size(54, 19);
             this.descontoTotal.TabIndex = 44;
@@ -389,7 +390,7 @@
             this.ivaTotal.AutoSize = true;
             this.ivaTotal.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ivaTotal.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.ivaTotal.Location = new System.Drawing.Point(447, 96);
+            this.ivaTotal.Location = new System.Drawing.Point(383, 96);
             this.ivaTotal.Name = "ivaTotal";
             this.ivaTotal.Size = new System.Drawing.Size(54, 19);
             this.ivaTotal.TabIndex = 43;
@@ -424,11 +425,23 @@
             this.label7.TabIndex = 49;
             this.label7.Text = "Local Entrega:";
             // 
+            // descontoFornecedorTxt
+            // 
+            this.descontoFornecedorTxt.AutoSize = true;
+            this.descontoFornecedorTxt.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.descontoFornecedorTxt.ForeColor = System.Drawing.Color.Green;
+            this.descontoFornecedorTxt.Location = new System.Drawing.Point(717, 97);
+            this.descontoFornecedorTxt.Name = "descontoFornecedorTxt";
+            this.descontoFornecedorTxt.Size = new System.Drawing.Size(54, 19);
+            this.descontoFornecedorTxt.TabIndex = 50;
+            this.descontoFornecedorTxt.Text = "label7";
+            // 
             // Compra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1081, 461);
+            this.Controls.Add(this.descontoFornecedorTxt);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.localEntregatxt);
             this.Controls.Add(this.descricaoLabel);
@@ -508,5 +521,6 @@
         private System.Windows.Forms.Label descricaoLabel;
         private System.Windows.Forms.TextBox localEntregatxt;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label descontoFornecedorTxt;
     }
 }

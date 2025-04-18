@@ -54,14 +54,14 @@ namespace AscFrontEnd
                 return;
             }
 
-            if (!ValidacaoForms.IsValidPhone(telText.Text.ToString()))
+            if (!string.IsNullOrEmpty(telText.Text.ToString()) && !ValidacaoForms.IsValidPhone(telText.Text.ToString()))
             {
                 MessageBox.Show("O telefone introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 return;
             }
 
-            if (!ValidacaoForms.IsValidPhone(tel2Text.Text.ToString()))
+            if (!string.IsNullOrEmpty(tel2Text.Text.ToString()) && !ValidacaoForms.IsValidPhone(tel2Text.Text.ToString()))
             {
                 MessageBox.Show("O telefone 2 introduzido nao e valido", "Impossivel Concluir a acao",  MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -73,7 +73,7 @@ namespace AscFrontEnd
             HttpResponseMessage response = null;
 
             List<FuncionarioPhoneDTO> phones = new List<FuncionarioPhoneDTO>();
-            phones.Add(new FuncionarioPhoneDTO() { telefone=telText.Text.ToString() });
+            phones.Add(new FuncionarioPhoneDTO() { telefone= !string.IsNullOrEmpty(telText.Text.ToString())?telText.Text.ToString():string.Empty });
 
             if (!string.IsNullOrWhiteSpace(tel2Text.Text.ToString()))
             {

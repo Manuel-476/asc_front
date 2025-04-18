@@ -1002,7 +1002,7 @@ namespace AscFrontEnd
                 e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 565 + i), formatToLeft);
                 e.Graphics.DrawString((total * (totalIva / 100)).ToString("F2"), fontCabecalho, cor, new PointF(680, 565 + i), formatToLeft);
                 e.Graphics.DrawString("Desconto", fontCabecalho, cor, new PointF(550, 595 + i), formatToLeft);
-                e.Graphics.DrawString($"{CalculosVendaCompra.TotalDescontoVenda(vendaArtigos)}", fontCabecalho, cor, new PointF(680, 595 + i), formatToLeft);
+                e.Graphics.DrawString($"{CalculosVendaCompra.TotalDescontoVenda(vendaArtigos, clienteResult.desconto)}", fontCabecalho, cor, new PointF(680, 595 + i), formatToLeft);
 
                 e.Graphics.DrawLine(canetaFina, 550, 583 + i, 740, 583 + i);
                 e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 620 + i), formatToLeft);

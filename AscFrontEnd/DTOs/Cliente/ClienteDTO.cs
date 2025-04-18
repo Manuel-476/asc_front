@@ -25,6 +25,7 @@ namespace AscFrontEnd.DTOs.Cliente
         public string foto { get; set; }
         public string email { get; set; }
         public string nif { get; set; }
+        public float desconto { get; set; }
         public ICollection<ClienteFilialDTO> clienteFiliais { get; set; }
         public ICollection<ClientePhoneDTO> phones { get; set; }
        // public ICollection<FtDTO>? ft { get; set; }

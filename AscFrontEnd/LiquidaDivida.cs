@@ -24,6 +24,8 @@ using EAscFrontEnd;
 using AscFrontEnd.DTOs.Cliente;
 using AscFrontEnd.DTOs.Fornecedor;
 using AscFrontEnd.Application;
+using AscFrontEnd.Application.Validacao;
+using System.Globalization;
 
 namespace AscFrontEnd
 {
@@ -58,6 +60,9 @@ namespace AscFrontEnd
             client.BaseAddress = new Uri("https://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            valorTxt.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
+            valorTxt.TextChanged += ValidacaoForms.TratarTextChanged;
         }
 
         private  void LiquidaDivida_Load(object sender, EventArgs e)
@@ -135,6 +140,8 @@ namespace AscFrontEnd
 
             codigoDocumento = await Documento.GetCodigoDocumentoAsync(this.codigo);
 
+            var valor = !string.IsNullOrEmpty(valorTxt.Text.ToString()) ? float.Parse(valorTxt.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) : 0f;
+           
             if (_entidade == Entidade.fornecedor)
             {
 
@@ -142,12 +149,12 @@ namespace AscFrontEnd
                 {
                     documento = codigoDocumento,
                     created = DateTime.UtcNow.Date,
-                    quantia = float.Parse(valorTxt.Text),
-                    vftId = _docId
+                    quantia = valor,
+                    vftId = _docId,
                 };
 
                 // Envio dos dados para a API
-                form = new FaturaDetalhes(float.Parse(valorTxt.Text), np);
+                form = new FaturaDetalhes(valor, np);
                 if (form.ShowDialog() != DialogResult.OK)
                 {
                     return;
@@ -163,15 +170,14 @@ namespace AscFrontEnd
             }
             if (_entidade == Entidade.cliente)
             {
-
                 var re = new ReciboDTO()
                 {
                     documento = codigoDocumento,
                     created = DateTime.UtcNow.Date,
-                    quantia = float.Parse(valorTxt.Text),
+                    quantia = valor,
                     ftId = _docId
                 };
-                form = new FaturaDetalhes(float.Parse(valorTxt.Text), re);
+                form = new FaturaDetalhes(valor, re);
                 if (form.ShowDialog() != DialogResult.OK)
                 {
                     return;

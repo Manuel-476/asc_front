@@ -40,6 +40,34 @@ namespace AscFrontEnd
 
         private void addBtn_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(codigoText.Text.ToString())) 
+            {
+                MessageBox.Show("O campo do codigo esta vazio", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(descText.Text.ToString()))
+            {
+                MessageBox.Show("O campo do descricao esta vazio", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(contaText.Text.ToString()))
+            {
+                MessageBox.Show("O campo do conta esta vazio", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(ibanText.Text.ToString()))
+            {
+                MessageBox.Show("O campo do IBAN esta vazio", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
             int id = bancoTable.Rows.Count;
             dt.Rows.Clear();
             bancoTable.DataSource = dt;
@@ -108,6 +136,13 @@ namespace AscFrontEnd
 
         private void feitoBtn_Click(object sender, EventArgs e)
         {
+            if (!bancos.Any()) 
+            {
+                MessageBox.Show("Nao existe bancos na lista", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
             StaticProperty.bancosEmpresa = bancos;
             this.Close();  
         }

@@ -199,6 +199,12 @@
     <Compile Include="BancoCadastroForm.Designer.cs">
       <DependentUpon>BancoCadastroForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="BancoListagemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BancoListagemForm.Designer.cs">
+      <DependentUpon>BancoListagemForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="BancoForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -216,6 +222,12 @@
     </Compile>
     <Compile Include="CaixaForm.Designer.cs">
       <DependentUpon>CaixaForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CaixaListagemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CaixaListagemForm.Designer.cs">
+      <DependentUpon>CaixaListagemForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CarregamentoForm.cs">
       <SubType>Form</SubType>
@@ -510,6 +522,12 @@
     <Compile Include="RegularAdiantamentoForm.Designer.cs">
       <DependentUpon>RegularAdiantamentoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RelatorioBancoCaixaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RelatorioBancoCaixaForm.Designer.cs">
+      <DependentUpon>RelatorioBancoCaixaForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="RelatorioFiltros.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -650,6 +668,9 @@
     <EmbeddedResource Include="BancoCadastroForm.resx">
       <DependentUpon>BancoCadastroForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BancoListagemForm.resx">
+      <DependentUpon>BancoListagemForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BancoForm.resx">
       <DependentUpon>BancoForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -658,6 +679,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CaixaForm.resx">
       <DependentUpon>CaixaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CaixaListagemForm.resx">
+      <DependentUpon>CaixaListagemForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CarregamentoForm.resx">
       <DependentUpon>CarregamentoForm.cs</DependentUpon>
@@ -760,6 +784,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RegularAdiantamentoForm.resx">
       <DependentUpon>RegularAdiantamentoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RelatorioBancoCaixaForm.resx">
+      <DependentUpon>RelatorioBancoCaixaForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RelatorioFiltros.resx">
       <DependentUpon>RelatorioFiltros.cs</DependentUpon>
@@ -892,6 +919,9 @@
     <Content Include="Files\tax.png" />
     <Content Include="Files\transfer.png" />
     <Content Include="Files\warehouse.png" />
+    <None Include="Resources\donate %282%29.png" />
+    <None Include="Resources\donate %281%29.png" />
+    <None Include="Resources\donate.png" />
     <None Include="Resources\paper.png" />
     <None Include="Resources\alert %281%29.png" />
     <None Include="Resources\alert.png" />

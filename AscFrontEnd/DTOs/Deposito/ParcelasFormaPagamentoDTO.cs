@@ -15,5 +15,7 @@ namespace AscFrontEnd.DTOs.Deposito
         public float valor { get; set; }
         public int? bancoId { get; set; }
         public int? caixaId { get; set; }
+        public int empresaId { get; set; }
+        public DateTime data{ get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AscFrontEnd.Application;
+using AscFrontEnd.Application.Validacao;
 using AscFrontEnd.DTOs.Artigo;
 using AscFrontEnd.DTOs.Deposito;
 using AscFrontEnd.DTOs.StaticsDto;
@@ -24,6 +26,9 @@ namespace AscFrontEnd
         public IvaForm()
         {
             InitializeComponent();
+
+            valorIvaTxt.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
+            valorIvaTxt.TextChanged += ValidacaoForms.TratarTextChanged;
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -40,7 +45,7 @@ namespace AscFrontEnd
                 {
                     var iva = new IvaDTO()
                     {
-                        valorIva = float.Parse(valorIvaTxt.Text.ToString()),
+                        valorIva = !string.IsNullOrEmpty(valorIvaTxt.Text.ToString()) ? float.Parse(valorIvaTxt.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) : 0f,
                         state = DTOs.Enums.Enums.Status.activo,
                         empresaId = StaticProperty.empresaId,
                         created_at = DateTime.Now,

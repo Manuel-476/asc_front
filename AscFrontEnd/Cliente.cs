@@ -48,14 +48,14 @@ namespace AscFrontEnd
                 return;
             }
 
-            if (!ValidacaoForms.IsValidPhone(telefonetxt.Text.ToString()))
+            if (!string.IsNullOrEmpty(telefonetxt.Text.ToString()) && !ValidacaoForms.IsValidPhone(telefonetxt.Text.ToString()))
             {
                 MessageBox.Show("O Telefone introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 return;
             }
 
-            List<ClientePhoneDTO> phone = new List<ClientePhoneDTO>() { new ClientePhoneDTO() { telefone = telefonetxt.Text } };
+            List<ClientePhoneDTO> phone = new List<ClientePhoneDTO>() { new ClientePhoneDTO() { telefone = !string.IsNullOrEmpty(telefonetxt.Text.ToString()) ? telefonetxt.Text : string.Empty } };
             List<ClienteFilialDTO> filias = new List<ClienteFilialDTO> { new ClienteFilialDTO() { email = emailText.Text,codigo=codigotxt
            .Text,localizacao=FiliallocalTxt.Text,nif=nifText.Text,filialPhones=null,foto="string"} };
 

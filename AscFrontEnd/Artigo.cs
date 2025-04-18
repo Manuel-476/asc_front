@@ -13,6 +13,8 @@ using System.Windows.Forms;
 using System.Text.Json;
 using static AscFrontEnd.DTOs.Enums.Enums;
 using AscFrontEnd.DTOs.StaticsDto;
+using AscFrontEnd.Application.Validacao;
+using System.Globalization;
 
 
 namespace AscFrontEnd
@@ -25,6 +27,10 @@ namespace AscFrontEnd
         public Artigo()
         {
             InitializeComponent();
+
+
+            precotxt.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
+            precotxt.TextChanged += ValidacaoForms.TratarTextChanged;
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -53,7 +59,7 @@ namespace AscFrontEnd
               localizacaoArtigoId = localId,
               codigo_barra = codBarra.Text,
               num_serie = numSerie.Text,
-              preco_unitario = float.Parse(precotxt.Text),
+              preco_unitario = !string.IsNullOrEmpty(precotxt.Text.ToString()) ? float.Parse(precotxt.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) : 0f,
               unidadeCompra = comboUnCompra.Text,
               unidadeVenda = comboUnVenda.Text,
               regimeIva = regimeIva,
@@ -181,6 +187,7 @@ namespace AscFrontEnd
              
             regimeIvaCombo.Items.Add("Isento");
             regimeIvaCombo.Items.Add("Geral");
+
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)

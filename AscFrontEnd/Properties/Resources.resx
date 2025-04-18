@@ -136,6 +136,9 @@
   <data name="icons8-credit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-credit.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="donate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\donate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="icons8-add-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-add-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -145,14 +148,14 @@
   <data name="istockphoto-1316081189-1024x1024" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\istockphoto-1316081189-1024x1024.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="parcel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Files\img\parcel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="alert" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\alert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-enterprise-96T1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-enterprise-96T.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icons8-stock-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Files\icons8-stock-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-folder-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-folder-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -169,11 +172,11 @@
   <data name="package" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\package.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="paper" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\paper.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="icons8-chain-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-chain-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icons8-debt-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Files\icons8-debt-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="warehouse" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\warehouse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -190,8 +193,8 @@
   <data name="icons8-excel-80" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-excel-80.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-enterprise-96T2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Files\icons8-enterprise-96T.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-cash-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Files\icons8-cash-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-client-80" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-client-80.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -226,8 +229,11 @@
   <data name="alert (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\alert (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-cash-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Files\icons8-cash-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="donate (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\donate (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="report (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\report (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="report (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\report (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -286,8 +292,11 @@
   <data name="icons8-pdf-60" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-pdf-60.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="parcel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Files\img\parcel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-enterprise-96T2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Files\icons8-enterprise-96T.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icons8-stock-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Files\icons8-stock-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-remove-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-remove-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -301,8 +310,8 @@
   <data name="candlestick" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\candlestick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="report (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\report (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-debt-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Files\icons8-debt-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-truck-80" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-truck-80.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -316,7 +325,7 @@
   <data name="icons8-add-user-male-40" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\icons8-add-user-male-40.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="paper" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\paper.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="donate (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\donate (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

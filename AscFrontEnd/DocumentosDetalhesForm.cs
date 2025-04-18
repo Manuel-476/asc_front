@@ -980,6 +980,7 @@ namespace AscFrontEnd
                 float totalIva = 0f;
                 float total = 0f;
                 float incidencia = 0f;
+                float descontoCliente = CalculosVendaCompra.TotalDescontoCliente(vendaArtigos, clienteResult.desconto);
                 List<float> listaIvas = new List<float>();
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
@@ -1063,7 +1064,7 @@ namespace AscFrontEnd
                 e.Graphics.DrawLine(caneta, 50, 315, 750, 315);
 
                 e.Graphics.DrawString($"{clienteResult.nif}", fontNormal, cor, new Rectangle(50, 330, 200, 340));
-                e.Graphics.DrawString("0,00", fontNormal, cor, new Rectangle(200, 330, 350, 340));
+                e.Graphics.DrawString($"{descontoCliente}", fontNormal, cor, new Rectangle(200, 330, 350, 340));
                 e.Graphics.DrawString($"{DateTime.Now.Date.ToString("dd-mm-yyyy")}", fontNormal, cor, new Rectangle(350, 330, 450, 340));
 
                 if (_documento.Equals("FR"))
@@ -1098,6 +1099,7 @@ namespace AscFrontEnd
                 }
 
                 totalLiquido += total - (total * (totalIva / 100));
+                total = total - (CalculosVendaCompra.TotalDescontoVenda(vendaArtigos, clienteResult.desconto));
 
                 string mercadoria = $"Mercadoria/Serviço:";
                 string iva = $"Iva:{totalIva.ToString("F2")}";
@@ -1114,7 +1116,7 @@ namespace AscFrontEnd
                 e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 565 + i), formatToLeft);
                 e.Graphics.DrawString((total * (totalIva / 100)).ToString("F2"), fontCabecalho, cor, new PointF(680, 565 + i), formatToLeft);
                 e.Graphics.DrawString("Desconto", fontCabecalho, cor, new PointF(550, 595 + i), formatToLeft);
-                e.Graphics.DrawString($"{CalculosVendaCompra.TotalDescontoVenda(vendaArtigos).ToString("F2")}", fontCabecalho, cor, new PointF(680, 595 + i), formatToLeft);
+                e.Graphics.DrawString($"{CalculosVendaCompra.TotalDescontoVenda(vendaArtigos, clienteResult.desconto)}", fontCabecalho, cor, new PointF(680, 595 + i), formatToLeft);
 
                 e.Graphics.DrawLine(canetaFina, 550, 583 + i, 740, 583 + i);
                 e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 600 + i), formatToLeft);
@@ -1227,6 +1229,8 @@ namespace AscFrontEnd
                 float totalLiquido = 0f;
                 float totalIva = 0f;
                 float total = 0f;
+                float descontoFornecedor = CalculosVendaCompra.TotalDescontoFornecedor(compraArtigos, fornecedorResult.desconto);
+
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
                 string imagePathEmpresa = Path.Combine(projectPath, "Files", "Smart_Entity.png");
@@ -1310,7 +1314,7 @@ namespace AscFrontEnd
 
 
                 e.Graphics.DrawString($"{StaticProperty.empresa.nif}", fontNormal, cor, new Rectangle(50, 330, 200, 340));
-                e.Graphics.DrawString("0,00", fontNormal, cor, new Rectangle(200, 330, 350, 340));
+                e.Graphics.DrawString($"{descontoFornecedor}", fontNormal, cor, new Rectangle(200, 330, 350, 340));
                 e.Graphics.DrawString($"{DateTime.Now.Date.ToString("dd-MM-yyyy")}", fontNormal, cor, new Rectangle(350, 330, 450, 340));
 
                 if (_documento.Equals("VFR"))
@@ -1346,6 +1350,7 @@ namespace AscFrontEnd
                 }
 
                 totalLiquido += total - (total * (totalIva / 100));
+                total = total - CalculosVendaCompra.TotalDescontoCompra(compraArtigos, fornecedorResult.desconto);
 
                 string mercadoria = $"Mercadoria/Serviço:";
                 string iva = $"Iva:{totalIva.ToString("F4")}";
@@ -1362,7 +1367,7 @@ namespace AscFrontEnd
                 e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 550 + i), formatToLeft);
                 e.Graphics.DrawString((total * (totalIva / 100)).ToString("F4"), fontCabecalho, cor, new PointF(680, 550 + i), formatToLeft);
                 e.Graphics.DrawString("Desconto", fontCabecalho, cor, new PointF(550, 575 + i), formatToLeft);
-                e.Graphics.DrawString($"{CalculosVendaCompra.TotalDescontoCompra(compraArtigos).ToString("F2")}", fontCabecalho, cor, new PointF(680, 575 + i), formatToLeft);
+                e.Graphics.DrawString($"{CalculosVendaCompra.TotalDescontoCompra(compraArtigos, fornecedorResult.desconto).ToString("F2")}", fontCabecalho, cor, new PointF(680, 575 + i), formatToLeft);
 
                 e.Graphics.DrawLine(canetaFina, 550, 565 + i, 740, 565 + i);
                 e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 595 + i), formatToLeft);
