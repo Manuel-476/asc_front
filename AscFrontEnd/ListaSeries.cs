@@ -71,7 +71,7 @@ namespace AscFrontEnd
             try 
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                client.BaseAddress = new Uri("https://sua-api.com/");
+                client.BaseAddress = new Uri("https://localhost:7200/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -79,11 +79,11 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(id);
 
                 // Envio dos dados para a API
-                HttpResponseMessage responseSerie = await client.PutAsync($"https://localhost:7200/api/Serie/Change/State/{id}", new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage responseSerie = await client.PutAsync($"api/Serie/Change/State/{id}/{StaticProperty.empresaId}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                 if (responseSerie.IsSuccessStatusCode)
                 {
-                    var resposta = await client.GetAsync("https://localhost:7200/api/Serie");
+                    var resposta = await client.GetAsync("api/Serie");
                     var contentSerie = await resposta.Content.ReadAsStringAsync();
 
                    StaticProperty.series = JsonConvert.DeserializeObject<List<SerieDTO>>(contentSerie);

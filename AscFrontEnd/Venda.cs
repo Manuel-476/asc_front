@@ -242,7 +242,7 @@ namespace AscFrontEnd
                     shortHash = string.Empty,
                     empresaId = StaticProperty.empresaId,
                     data = DateTime.Parse(dataDocumento.Value.ToString("yyyy-MM-dd")),
-                    created_at = DateTime.Now.Date,
+                    created_at = DateTime.Now,
                 };
 
                 form = new FaturaDetalhes(totalPreco,frs);
@@ -265,7 +265,7 @@ namespace AscFrontEnd
                     ftArtigo = ftArtigos,
                     status = DTOs.Enums.Enums.DocState.ativo,
                     empresaId = StaticProperty.empresaId,
-                    created_at = DateTime.Now.Date,
+                    created_at = DateTime.Now,
                 };
                 //Actualizar lista de artigos
                 ftArtigos.Clear();
@@ -313,7 +313,7 @@ namespace AscFrontEnd
                     fpArtigo = fpArtigos,
                     empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
-                    created_at = DateTime.Now.Date,
+                    created_at = DateTime.Now,
                 };
 
                 // Conversão do objeto Film para JSON
@@ -347,7 +347,7 @@ namespace AscFrontEnd
                     gtArtigo = gtArtigos,
                     empresaId = StaticProperty.empresaId,
                     status =  DTOs.Enums.Enums.DocState.ativo,
-                    created_at = DateTime.Now.Date,
+                    created_at = DateTime.Now,
                 };
 
                 string json = System.Text.Json.JsonSerializer.Serialize(gts);
@@ -366,7 +366,7 @@ namespace AscFrontEnd
                     grArtigo = grArtigos,
                     status = DTOs.Enums.Enums.DocState.ativo,
                     empresaId = StaticProperty.empresaId,
-                    created_at = DateTime.Now.Date,
+                    created_at = DateTime.Now,
                 };
                 //Actualizar lista de artigos
                 grArtigos.Clear();
@@ -421,7 +421,7 @@ namespace AscFrontEnd
                     local_entrega = localEntrega,
                     empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
-                    created = DateTime.Now.Date,
+                    created = DateTime.Now,
                 };
 
                 // Conversão do objeto Film para JSON
@@ -461,7 +461,7 @@ namespace AscFrontEnd
                       ncArtigo = ncArtigos,
                        empresaId = StaticProperty.empresaId,
                        status = DTOs.Enums.Enums.DocState.ativo,
-                      created_at = DateTime.Now.Date,
+                      created_at = DateTime.Now,
                    };
 
                     // Conversão do objeto Film para JSON
@@ -499,7 +499,7 @@ namespace AscFrontEnd
                     ndArtigo = ndArtigos,
                     empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
-                    created_at = DateTime.Now.Date, 
+                    created_at = DateTime.Now, 
                 };
 
                 // Conversão do objeto Film para JSON
@@ -527,7 +527,7 @@ namespace AscFrontEnd
                     orArtigos = orArtigos,
                     status = DTOs.Enums.Enums.DocState.ativo,
                     empresaId = StaticProperty.empresaId,
-                    created_at = DateTime.Now.Date,
+                    created_at = DateTime.Now,
                 };
                 //Actualizar lista de artigos
                 orArtigos.Clear();
@@ -733,7 +733,7 @@ namespace AscFrontEnd
             {
                 if (StaticProperty.entityId <=0) 
                 {
-                    if (MessageBox.Show("Precisas Selecionar o cliente, caso o contrario o cliente passará como desconhecido", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.OK)
+                    if (MessageBox.Show("Precisas Selecionar o cliente, caso o contrario o cliente passará como desconhecido", "Atenção", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                     {
                         StaticProperty.entityId = 1;
                     }
