@@ -1223,7 +1223,7 @@ namespace AscFrontEnd
                 e.Graphics.DrawString(iban, fontCabecalho, cor, new PointF(50, 560 + i), formatToLeft);
                 e.Graphics.DrawString("0040.0000.0305.4378,1012.4", fontCabecalho, cor, new PointF(95, 560 + i), formatToLeft);*/
 
-                e.Graphics.DrawString($"Processado pelo programa válido nº{"41/AGT/2020"} Asc - Smart Entity", fontCabecalho, cor, new PointF(280, 700 + i), formatToCenter);
+                e.Graphics.DrawString($"Processado por programa\rválido nº 31.1/AGT20 Asc - Smart Entity", fontCabecalho, cor, new PointF(280, 700 + i), formatToCenter);
 
                 if (documento.Text.Equals("VGT") || documento.Text.Equals("VGR"))
                 {

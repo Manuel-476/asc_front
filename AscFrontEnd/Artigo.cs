@@ -24,6 +24,7 @@ namespace AscFrontEnd
         OpcaoBinaria regimeIva = OpcaoBinaria.Sim;
         string codigoIva = string.Empty;
         int localId;
+        int armazemId = 0;
         public Artigo()
         {
             InitializeComponent();
@@ -44,8 +45,16 @@ namespace AscFrontEnd
                         armazemId = StaticProperty.armazens.Where(arm => arm.codigo == armazemCombo.Text.ToString()).First().id;
                     }
                 }
-   
-                var artigo = new ArtigoDTO()
+
+                if (string.Equals(regimeIvaCombo.SelectedItem.ToString(), "Geral", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (string.IsNullOrEmpty(ivaCombo.Text))
+                    {
+                        MessageBox.Show("Quando o regime é geral o Iva precisa ser definido obrigatoriamente ", "Sem Localização disponível", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+
+            ArtigoDTO artigo = new ArtigoDTO()
             {
               codigo = codigotxt.Text,
               armazemId = armazemId,
@@ -205,17 +214,25 @@ namespace AscFrontEnd
 
         private void armazemCombo_SelectedValueChanged(object sender, EventArgs e)
         {
-            int armazemId = StaticProperty.armazens.Where(arm => arm.codigo == armazemCombo.Text && arm.empresaId == 1).First().id;
+            string result = string.Empty;
+
+            armazemId = StaticProperty.armazens.Where(arm => arm.codigo == armazemCombo.SelectedItem && arm.empresaId == 1).First().id;
+
             foreach (var item in StaticProperty.locationStores.Where(fam => fam.armazemId == armazemId).ToList())
             {
-                if (!StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id && x.qtd == 0).Any() && StaticProperty.locationArtigos.Any()) 
+                if (!StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id && x.qtd == 0).Any() && StaticProperty.locationArtigos.Any() && StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id).Any()) 
                 {
-                    MessageBox.Show("Este armazem não tem localização disponível, todas localizações já armazenam artigos", "Sem Localização disponível", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    result = "Este armazem não tem localização disponível todas localizações já armazenam artigos";
                 }
-                else if (StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id && x.qtd == 0).Any() || !StaticProperty.locationArtigos.Any())
+                else if (StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id && x.qtd == 0).Any() || !StaticProperty.locationArtigos.Any()  || !StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id).Any())
                 {
                     localCombo.Items.Add(item.codigo);
+                    result = string.Empty;
                 }
+            }
+            if (!string.IsNullOrEmpty(result))
+            {
+                MessageBox.Show(result, "Sem Localização disponível", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -275,7 +292,7 @@ namespace AscFrontEnd
 
         private void localCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.localId = StaticProperty.locationStores.Where(arm => arm.codigo == localCombo.Text.ToString()).First().id;
+            this.localId = StaticProperty.locationStores.Where(arm => arm.codigo == localCombo.Text.ToString() && arm.armazemId == armazemId).First().id;
 
             if (StaticProperty.locationArtigos.Where(x=>x.locationStoreId == this.localId).Any()) 
             {
@@ -289,6 +306,11 @@ namespace AscFrontEnd
         }
 
         private void armazemCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void familiaCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

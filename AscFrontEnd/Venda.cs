@@ -27,6 +27,7 @@ using AscFrontEnd.Files;
 using AscFrontEnd.Application.Validacao;
 using System.Globalization;
 using AscFrontEnd.DTOs.Fornecedor;
+using AscFrontEnd.DTOs;
 
 
 namespace AscFrontEnd
@@ -44,6 +45,16 @@ namespace AscFrontEnd
         List<OrArtigoDTO> orArtigos;
         List<ArtigoDTO> dados;
         ClienteDTO clienteResult;
+
+        OrDTO or;
+        FrDTO fr;
+        FtDTO ft;
+        FaturaProformaDTO fp;
+        EncomendaClienteDTO ecl;
+        GrDTO gr;
+        GtDTO gt;
+        NcDTO nc;
+        NdDTO nd;
 
 
         string descricaoDocumento = string.Empty;
@@ -245,14 +256,16 @@ namespace AscFrontEnd
                     created_at = DateTime.Now,
                 };
 
-                form = new FaturaDetalhes(totalPreco,frs);
-                if (form.ShowDialog() != DialogResult.OK) 
+                using (FaturaDetalhes forms = new FaturaDetalhes(totalPreco, frs))
                 {
-                    return;
+                    if (forms.ShowDialog() != DialogResult.OK)
+                    {
+                        return; // Sai se não clicar em OK
+                    }
                 }
-                
-                
-              
+
+
+
             }
 
             if (documento.Text == "FT")
@@ -567,7 +580,41 @@ namespace AscFrontEnd
                         return;
                     }
 
-                 
+                    if(documento.Text == "FT")
+                    {
+                        ft = JsonConvert.DeserializeObject<FtDTO>(result);
+                        StaticProperty.hash = ft.shortHash;
+                    }
+                    else if (documento.Text == "PP")
+                    {
+                        fp = JsonConvert.DeserializeObject<FaturaProformaDTO>(result);
+                        StaticProperty.hash = fp.shortHash;
+                    }
+                    else if (documento.Text == "ECL")
+                    {
+                        ecl = JsonConvert.DeserializeObject<EncomendaClienteDTO>(result);
+                        StaticProperty.hash = ecl.shortHash;
+                    }
+                    else if (documento.Text == "GT")
+                    {
+                        gt = JsonConvert.DeserializeObject<GtDTO>(result);
+                        StaticProperty.hash = gt.shortHash;
+                    }
+                    else if (documento.Text == "OR")
+                    {
+                        or = JsonConvert.DeserializeObject<OrDTO>(result);
+                        StaticProperty.hash = or.shortHash;
+                    }
+                    else if (documento.Text == "NC")
+                    {
+                        nc = JsonConvert.DeserializeObject<NcDTO>(result);
+                        StaticProperty.hash = nc.shortHash;
+                    }
+                    else if (documento.Text == "ND")
+                    {
+                        nd = JsonConvert.DeserializeObject<NdDTO>(result);
+                        StaticProperty.hash = nd.shortHash;
+                    }
 
                     // Venda
                     var responseFr = await client.GetAsync($"api/Venda/FrByRelations");
@@ -1221,42 +1268,43 @@ namespace AscFrontEnd
 
                     e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
                     e.Graphics.DrawString($"{dados.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 300, 425 + i));
-                    e.Graphics.DrawString($"{va.qtd:F2}", fontNormal, cor, new Rectangle(300, 410 + i, 400, 425 + i));
+                    e.Graphics.DrawString($"{va.qtd:F4}", fontNormal, cor, new Rectangle(300, 410 + i, 400, 425 + i));
                     e.Graphics.DrawString($"{va.preco.ToString("F2")}", fontNormal, cor, new Rectangle(400, 410 + i, 500, 425 + i));
-                    e.Graphics.DrawString($"{(dados.Where(art => art.codigo == va.codigo).First().regimeIva == OpcaoBinaria.Sim? va.iva:0).ToString("F2")} %", fontNormal, cor, new Rectangle(500, 410 + i, 600, 425 + i));
-                    e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(600, 410 + i, 700, 425 + i));
+                    e.Graphics.DrawString($"{(dados.Where(art => art.codigo == va.codigo).First().regimeIva == OpcaoBinaria.Sim? va.iva:0).ToString("F4")} %", fontNormal, cor, new Rectangle(500, 410 + i, 600, 425 + i));
+                    e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F4")}", fontNormal, cor, new Rectangle(600, 410 + i, 700, 425 + i));
                     e.Graphics.DrawString($"{(((va.preco - (va.preco * (clienteResult.desconto / 100))) * (va.desconto / 100)) * va.qtd).ToString("F4")}", fontNormal, cor, new Rectangle(700, 410 + i, 750, 425 + i));
                     i = i + 15;
                 }
 
-                totalLiquido += total - (total * (totalIva / 100));
+                totalLiquido = CalculosVendaCompra.TotalVenda(vendaArtigos, clienteResult.desconto);
 
                 string mercadoria = $"Mercadoria/Serviço:";
                 string iva = $"Iva";
                 string totalIvaValor = $"Total Iva:";
                 string totalFinal = $"TOTAL";
-                total = total - CalculosVendaCompra.TotalDescontoVenda(vendaArtigos, descontoCliente);
+                var desconto = CalculosVendaCompra.TotalDescontoVenda(vendaArtigos, clienteResult.desconto) + CalculosVendaCompra.TotalDescontoCliente(vendaArtigos, clienteResult.desconto);
+
 
                 e.Graphics.DrawRectangle(caneta, new Rectangle(540, 530 + i, 210, 70 + i));
 
                 e.Graphics.DrawString(mercadoria, fontCabecalho, cor, new PointF(550, 545 + i), formatToLeft);
-                e.Graphics.DrawString(totalLiquido.ToString("F2"), fontCabecalho, cor, new PointF(680, 545 + i), formatToLeft);
+                e.Graphics.DrawString(totalLiquido.ToString("F4"), fontCabecalho, cor, new PointF(680, 545 + i), formatToLeft);
                 e.Graphics.DrawString(iva, fontCabecalho, cor, new PointF(550, 555 + i), formatToLeft);
-                e.Graphics.DrawString(totalIva.ToString("F2"), fontCabecalho, cor, new PointF(680, 555 + i), formatToLeft);
+                e.Graphics.DrawString(totalIva.ToString("F4"), fontCabecalho, cor, new PointF(680, 555 + i), formatToLeft);
                 e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 565 + i), formatToLeft);
-                e.Graphics.DrawString((total * (totalIva / 100)).ToString("F2"), fontCabecalho, cor, new PointF(680, 565 + i), formatToLeft);
+                e.Graphics.DrawString((total * (totalIva / 100)).ToString("F4"), fontCabecalho, cor, new PointF(680, 565 + i), formatToLeft);
                 e.Graphics.DrawString("Desconto", fontCabecalho, cor, new PointF(550, 595 + i), formatToLeft);
-                e.Graphics.DrawString($"{CalculosVendaCompra.TotalDescontoVenda(vendaArtigos, clienteResult.desconto):F2}", fontCabecalho, cor, new PointF(680, 595 + i), formatToLeft);
+                e.Graphics.DrawString($"{desconto:F4}", fontCabecalho, cor, new PointF(680, 595 + i), formatToLeft);
 
                 e.Graphics.DrawLine(canetaFina, 550, 583 + i, 740, 583 + i);
                 e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 615 + i), formatToLeft);
-                e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 615 + i), formatToLeft);
+                e.Graphics.DrawString(total.ToString("F4"), fontNormalNegrito, cor, new PointF(680, 615 + i), formatToLeft);
 
                 string conta = $"Conta nº";
                 string iban = $"IBAN ";
                 string banco = $"Banco Angolano de Investimento";
 
-                e.Graphics.DrawString($"Precessado pelo programa válido nº{"41/AGT/2020"} Asc - Smart Entity", fontCabecalho, cor, new PointF(250, 515 + i), formatToCenter);
+                e.Graphics.DrawString($"{StaticProperty.hash} - Processado por programa\r válido nº 31.1/AGT20 Asc - Smart Entity", fontCabecalho, cor, new PointF(250, 515 + i), formatToCenter);
                 e.Graphics.DrawString($"Resumo Imposto", fontCabecalho, cor, new PointF(50, 515 + i), formatToCenter);
 
                 e.Graphics.DrawLine(caneta, 50, 530 + i, 530, 530 + i);

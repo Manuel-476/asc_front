@@ -572,6 +572,8 @@ namespace AscFrontEnd
                      var entidade = StaticProperty.fts.Where(x => x.id == _documentoId).Any()?
                                     StaticProperty.fts.Where(x => x.id == _documentoId).First() : new FtDTO();
 
+                    StaticProperty.hash = entidade.shortHash;
+
                     anulado = entidade.status == DocState.anulado ? true : false;
 
                     foreach (var item in entidade.ftArtigo) 
@@ -588,6 +590,8 @@ namespace AscFrontEnd
 
                     var entidade = StaticProperty.frs.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.frs.Where(x => x.id == _documentoId).First() : new FrDTO();
+
+                    StaticProperty.hash = entidade.shortHash;
 
                     anulado = entidade.status == DocState.anulado ? true : false;
 
@@ -611,6 +615,8 @@ namespace AscFrontEnd
                     var entidade = StaticProperty.ecls.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.ecls.Where(x => x.id == _documentoId).First(): new EncomendaClienteDTO();
 
+                    StaticProperty.hash = entidade.shortHash;
+
                     anulado = entidade.status == DocState.anulado ? true : false;
 
                     foreach (var item in entidade.eclArtigo)
@@ -633,6 +639,7 @@ namespace AscFrontEnd
                     var entidade = StaticProperty.fps.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.fps.Where(x => x.id == _documentoId).First() : new FaturaProformaDTO();
 
+                    StaticProperty.hash = entidade.shortHash;
 
                     anulado = entidade.status == DocState.anulado ? true : false;
 
@@ -656,6 +663,7 @@ namespace AscFrontEnd
                     var entidade = StaticProperty.gts.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.gts.Where(x => x.id == _documentoId).First() : new GtDTO();
 
+                    StaticProperty.hash = entidade.shortHash;
 
                     anulado = entidade.status == DocState.anulado ? true : false;
 
@@ -679,6 +687,7 @@ namespace AscFrontEnd
                     var entidade = StaticProperty.grs.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.grs.Where(x => x.id == _documentoId).First() : new GrDTO();
 
+                    StaticProperty.hash = entidade.shortHash;
 
                     foreach (var item in entidade.grArtigo)
                     {
@@ -699,6 +708,8 @@ namespace AscFrontEnd
                 {
                     var entidade = StaticProperty.ncs.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.ncs.Where(x => x.id == _documentoId).First(): new NcDTO();
+
+                    StaticProperty.hash = entidade.shortHash;
 
                     anulado = entidade.status == DocState.anulado ? true : false;
 
@@ -722,6 +733,8 @@ namespace AscFrontEnd
                     var entidade = StaticProperty.ors.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.ors.Where(x => x.id == _documentoId).First() : new OrDTO();
 
+                    StaticProperty.hash = entidade.shortHash;
+
                     anulado = entidade.status == DocState.anulado ? true : false;
 
                     foreach (var item in entidade.orArtigos)
@@ -743,6 +756,8 @@ namespace AscFrontEnd
                 {
                     var entidade = StaticProperty.nds.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.nds.Where(x => x.id == _documentoId).First() : new NdDTO();
+
+                    StaticProperty.hash = entidade.shortHash;
 
                     anulado = entidade.status == DocState.anulado ? true : false;
 
@@ -1091,10 +1106,10 @@ namespace AscFrontEnd
 
                     e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
                     e.Graphics.DrawString($"{StaticProperty.artigos.Where(art => art.codigo == va.codigo && art.empresaId == StaticProperty.empresaId).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 350, 425 + i));
-                    e.Graphics.DrawString($"{va.qtd}", fontNormal, cor, new Rectangle(350, 410 + i, 450, 425 + i));
-                    e.Graphics.DrawString($"{va.preco.ToString("F2")}", fontNormal, cor, new Rectangle(450, 410 + i, 550, 425 + i));
-                    e.Graphics.DrawString($"{(StaticProperty.artigos.Where(art => art.codigo == va.codigo && art.empresaId == StaticProperty.empresaId).First().regimeIva == OpcaoBinaria.Sim ? va.iva : 0).ToString("F2")} %", fontNormal, cor, new Rectangle(550, 410 + i, 650, 425 + i));
-                    e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(650, 410 + i, 750, 425 + i));
+                    e.Graphics.DrawString($"{va.qtd:F4}", fontNormal, cor, new Rectangle(350, 410 + i, 450, 425 + i));
+                    e.Graphics.DrawString($"{va.preco.ToString("F4")}", fontNormal, cor, new Rectangle(450, 410 + i, 550, 425 + i));
+                    e.Graphics.DrawString($"{(StaticProperty.artigos.Where(art => art.codigo == va.codigo && art.empresaId == StaticProperty.empresaId).First().regimeIva == OpcaoBinaria.Sim ? va.iva : 0).ToString("F4")} %", fontNormal, cor, new Rectangle(550, 410 + i, 650, 425 + i));
+                    e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F4")}", fontNormal, cor, new Rectangle(650, 410 + i, 750, 425 + i));
                     i = i + 15;
                 }
 
@@ -1110,23 +1125,23 @@ namespace AscFrontEnd
                 e.Graphics.DrawRectangle(caneta, new Rectangle(540, 530 + i, 210, 70 + i));
 
                 e.Graphics.DrawString(mercadoria, fontCabecalho, cor, new PointF(550, 545 + i), formatToLeft);
-                e.Graphics.DrawString(totalLiquido.ToString("F2"), fontCabecalho, cor, new PointF(680, 545 + i), formatToLeft);
+                e.Graphics.DrawString(totalLiquido.ToString("F4"), fontCabecalho, cor, new PointF(680, 545 + i), formatToLeft);
                 e.Graphics.DrawString(iva, fontCabecalho, cor, new PointF(550, 555 + i), formatToLeft);
-                e.Graphics.DrawString(totalIva.ToString("F2"), fontCabecalho, cor, new PointF(680, 555 + i), formatToLeft);
+                e.Graphics.DrawString(totalIva.ToString("F4"), fontCabecalho, cor, new PointF(680, 555 + i), formatToLeft);
                 e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 565 + i), formatToLeft);
-                e.Graphics.DrawString((total * (totalIva / 100)).ToString("F2"), fontCabecalho, cor, new PointF(680, 565 + i), formatToLeft);
+                e.Graphics.DrawString((total * (totalIva / 100)).ToString("F4"), fontCabecalho, cor, new PointF(680, 565 + i), formatToLeft);
                 e.Graphics.DrawString("Desconto", fontCabecalho, cor, new PointF(550, 595 + i), formatToLeft);
                 e.Graphics.DrawString($"{CalculosVendaCompra.TotalDescontoVenda(vendaArtigos, clienteResult.desconto)}", fontCabecalho, cor, new PointF(680, 595 + i), formatToLeft);
 
                 e.Graphics.DrawLine(canetaFina, 550, 583 + i, 740, 583 + i);
                 e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 600 + i), formatToLeft);
-                e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 600 + i), formatToLeft);
+                e.Graphics.DrawString(total.ToString("F4"), fontNormalNegrito, cor, new PointF(680, 600 + i), formatToLeft);
 
                 string conta = $"Conta nº";
                 string iban = $"IBAN ";
                 string banco = $"Banco Angolano de Investimento";
 
-                e.Graphics.DrawString($"Precessado pelo programa válido nº{"41/AGT/2020"} Asc - Smart Entity", fontCabecalho, cor, new PointF(250, 515 + i), formatToCenter);
+                e.Graphics.DrawString($"{StaticProperty.hash} - Processado por programa válido nº 31.1/AGT20 Asc - Smart Entity", fontCabecalho, cor, new PointF(250, 515 + i), formatToCenter);
                 e.Graphics.DrawString($"Resumo Imposto", fontCabecalho, cor, new PointF(50, 515 + i), formatToCenter);
 
                 e.Graphics.DrawLine(caneta, 50, 530 + i, 530, 530 + i);
@@ -1382,7 +1397,7 @@ namespace AscFrontEnd
                    e.Graphics.DrawString(iban, fontCabecalho, cor, new PointF(50, 560 + i), formatToLeft);
                    e.Graphics.DrawString("0040.0000.0305.4378,1012.4", fontCabecalho, cor, new PointF(95, 560 + i), formatToLeft);*/
 
-                e.Graphics.DrawString($"Processado pelo programa válido nº{"41/AGT/2020"} Asc - Smart Entity", fontCabecalho, cor, new PointF(280, 700 + i), formatToCenter);
+                e.Graphics.DrawString($"Processado por programa\rválido nº 31.1/AGT20 Asc - Smart Entity", fontCabecalho, cor, new PointF(280, 700 + i), formatToCenter);
 
 
 

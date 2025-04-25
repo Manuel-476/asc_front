@@ -107,6 +107,7 @@ namespace AscFrontEnd.DTOs.StaticsDto
         // Funcionario
         public static List<FuncionarioDTO> funcionarios { get; set; }
         public static UserDTO user { get; set; }
+        public static string hash { get; set; }
 
 
         // Depositos

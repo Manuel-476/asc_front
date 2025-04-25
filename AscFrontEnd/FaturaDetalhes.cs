@@ -1,4 +1,5 @@
-﻿using AscFrontEnd.Application.Validacao;
+﻿using AscFrontEnd.Application;
+using AscFrontEnd.Application.Validacao;
 using AscFrontEnd.DTOs;
 using AscFrontEnd.DTOs.Compra;
 using AscFrontEnd.DTOs.ContasCorrentes;
@@ -6,6 +7,7 @@ using AscFrontEnd.DTOs.Deposito;
 using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.DTOs.Venda;
 using EAscFrontEnd;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -403,14 +405,37 @@ namespace AscFrontEnd
 
                 var responseDeposito = await _client.PostAsync("api/Deposito/Parcelas/FormaPagamento", new StringContent(jsonDeposito, Encoding.UTF8, "application/json"));
 
+                if (_fr != null)
+                {
+                    var fr = JsonConvert.DeserializeObject<FrDTO>(result);
+                    StaticProperty.hash = fr.shortHash;
+                }
+                else if (_gr != null)
+                {
+                    var gr = JsonConvert.DeserializeObject<GrDTO>(result);
+                    StaticProperty.hash = gr.shortHash;
+                }
+
+
+
                 if (!responseDeposito.IsSuccessStatusCode) 
                 {
                     MessageBox.Show("Ocorreu um erro ao salvar os dados no deposito", "Ocorreu um erro", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
 
                     return;
                 }
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
             
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
     }
+    
 }

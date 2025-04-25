@@ -34,11 +34,14 @@ namespace AscFrontEnd
 
         private async void salvarBtn_Click(object sender, EventArgs e)
         {
-            if (!ValidacaoForms.IsValidNif(nifText.Text.ToString()))
+            if (!string.IsNullOrEmpty(nifText.Text))
             {
-                MessageBox.Show("O NIF introduzido nao e valido", "Impossivel Concluir a acao",  MessageBoxButtons.OK,MessageBoxIcon.Information);
+                if (!ValidacaoForms.IsValidNif(nifText.Text.ToString()))
+                {
+                    MessageBox.Show("O NIF introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                return;
+                    return;
+                }
             }
 
             if (!ValidacaoForms.IsValidEmail(emailText.Text.ToString()))
@@ -67,7 +70,8 @@ namespace AscFrontEnd
                 email = emailText.Text,
                 espaco_fiscal = espacoFiscalCombo.Text,
                 pessoa = pessoaCombo.Text,
-                nif = nifText.Text,
+                nif = !string.IsNullOrEmpty(nifText.Text)?nifText.Text:string.Empty,
+                desconto = 0f,
                 phones = phone,
                 foto = "string",
                 clienteFiliais = filias,

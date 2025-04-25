@@ -279,6 +279,7 @@
             this.familiaCombo.Name = "familiaCombo";
             this.familiaCombo.Size = new System.Drawing.Size(221, 21);
             this.familiaCombo.TabIndex = 19;
+            this.familiaCombo.SelectedIndexChanged += new System.EventHandler(this.familiaCombo_SelectedIndexChanged);
             // 
             // listagem
             // 
