@@ -139,9 +139,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(880, 430);
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(880, 427);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(71, 22);
+            this.button1.Size = new System.Drawing.Size(90, 29);
             this.button1.TabIndex = 28;
             this.button1.Text = "Agregar";
             this.button1.UseVisualStyleBackColor = true;
@@ -290,6 +291,7 @@
             // eliminarBtn
             // 
             this.eliminarBtn.BackColor = System.Drawing.Color.Red;
+            this.eliminarBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.eliminarBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.eliminarBtn.Location = new System.Drawing.Point(976, 427);
             this.eliminarBtn.Name = "eliminarBtn";
@@ -379,7 +381,7 @@
             this.descontoTotal.AutoSize = true;
             this.descontoTotal.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.descontoTotal.ForeColor = System.Drawing.Color.Red;
-            this.descontoTotal.Location = new System.Drawing.Point(551, 96);
+            this.descontoTotal.Location = new System.Drawing.Point(542, 97);
             this.descontoTotal.Name = "descontoTotal";
             this.descontoTotal.Size = new System.Drawing.Size(54, 19);
             this.descontoTotal.TabIndex = 44;
@@ -429,7 +431,7 @@
             // 
             this.descontoFornecedorTxt.AutoSize = true;
             this.descontoFornecedorTxt.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.descontoFornecedorTxt.ForeColor = System.Drawing.Color.Green;
+            this.descontoFornecedorTxt.ForeColor = System.Drawing.Color.DarkRed;
             this.descontoFornecedorTxt.Location = new System.Drawing.Point(717, 97);
             this.descontoFornecedorTxt.Name = "descontoFornecedorTxt";
             this.descontoFornecedorTxt.Size = new System.Drawing.Size(54, 19);

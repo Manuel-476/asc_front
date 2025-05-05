@@ -16,6 +16,7 @@ using System.IO;
 using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.DTOs.Deposito;
 using AscFrontEnd.Application.Validacao;
+using System.Globalization;
 
 
 
@@ -30,6 +31,9 @@ namespace AscFrontEnd
             InitializeComponent();
             filiais = new List<ClienteFilialDTO>();
             dtFilial = new DataTable();
+
+            descontoTxt.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
+            descontoTxt.TextChanged += ValidacaoForms.TratarTextChanged;
         }
 
         private async void salvarBtn_Click(object sender, EventArgs e)
@@ -58,6 +62,9 @@ namespace AscFrontEnd
                 return;
             }
 
+            var desconto = !string.IsNullOrEmpty(descontoTxt.Text.ToString()) ? float.Parse(descontoTxt.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) : 0f;
+
+
             List<ClientePhoneDTO> phone = new List<ClientePhoneDTO>() { new ClientePhoneDTO() { telefone = !string.IsNullOrEmpty(telefonetxt.Text.ToString()) ? telefonetxt.Text : string.Empty } };
             List<ClienteFilialDTO> filias = new List<ClienteFilialDTO> { new ClienteFilialDTO() { email = emailText.Text,codigo=codigotxt
            .Text,localizacao=FiliallocalTxt.Text,nif=nifText.Text,filialPhones=null,foto="string"} };
@@ -71,10 +78,10 @@ namespace AscFrontEnd
                 espaco_fiscal = espacoFiscalCombo.Text,
                 pessoa = pessoaCombo.Text,
                 nif = !string.IsNullOrEmpty(nifText.Text)?nifText.Text:string.Empty,
-                desconto = 0f,
-                phones = phone,
+                desconto = desconto,
+                phones = phone.Any() && phone != null? phone:null,
                 foto = "string",
-                clienteFiliais = filias,
+                clienteFiliais = filias.Any() && filias != null? filiais : null,
                 empresaid = StaticProperty.empresaId
             };
 
@@ -199,6 +206,7 @@ namespace AscFrontEnd
             dtFilial.Columns.Add("Localizacao", typeof(string));
 
             tabelaFilial.DataSource = dtFilial;
+            descontoTxt.Text = "0.00";
         }
 
         private void addFilialBtn_Click(object sender, EventArgs e)

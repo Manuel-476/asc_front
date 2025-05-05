@@ -21,11 +21,13 @@ namespace AscFrontEnd
     {
         UserDTO _user;
         List<string> _notifications;
+        Requisicoes _requisicao;
         public MenuPrincipal(UserDTO user)
         {
             InitializeComponent();
             _user = user;
             _notifications = new List<string>();
+            _requisicao = new Requisicoes();
         }
 
 
@@ -200,7 +202,10 @@ namespace AscFrontEnd
                     //
                 }
 
+              
             }
+            timer1.Start();
+
             var qtdMinim = StaticProperty.stockMinims.Where(x => x.empresaId == StaticProperty.empresaId).FirstOrDefault() == null
                           ? 0: StaticProperty.stockMinims.Where(x => x.empresaId == StaticProperty.empresaId).FirstOrDefault().qtdMinim;
             
@@ -272,7 +277,7 @@ namespace AscFrontEnd
         public async Task NotificationStockAsync(float qtdMinim)
         {
             List<StockDTO> stocks = await new Requisicoes().GetStockArtigo();
-
+            _notifications.Clear();
             foreach (var s in stocks)
             {
 
@@ -343,6 +348,13 @@ namespace AscFrontEnd
         private void stockLabel_MouseLeave(object sender, EventArgs e)
         {
             stockLabel.Font = new Font(stockLabel.Font, FontStyle.Bold | FontStyle.Italic);
+        }
+
+        private async void timer1_Tick(object sender, EventArgs e)
+        {
+           await _requisicao.SystemRefresh();
+
+            MenuPrincipal_Load(this, EventArgs.Empty);
         }
     }
 }

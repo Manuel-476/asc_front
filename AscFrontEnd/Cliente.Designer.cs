@@ -62,6 +62,8 @@
             this.addFilialBtn = new System.Windows.Forms.Button();
             this.tabelaFilial = new System.Windows.Forms.DataGridView();
             this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.descontoTxt = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaFilial)).BeginInit();
@@ -97,7 +99,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label7.Location = new System.Drawing.Point(512, 275);
+            this.label7.Location = new System.Drawing.Point(512, 257);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(71, 20);
             this.label7.TabIndex = 53;
@@ -105,7 +107,7 @@
             // 
             // telefonetxt
             // 
-            this.telefonetxt.Location = new System.Drawing.Point(516, 298);
+            this.telefonetxt.Location = new System.Drawing.Point(516, 280);
             this.telefonetxt.Name = "telefonetxt";
             this.telefonetxt.Size = new System.Drawing.Size(209, 20);
             this.telefonetxt.TabIndex = 52;
@@ -115,7 +117,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label6.Location = new System.Drawing.Point(280, 275);
+            this.label6.Location = new System.Drawing.Point(280, 257);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(35, 20);
             this.label6.TabIndex = 51;
@@ -123,7 +125,7 @@
             // 
             // nifText
             // 
-            this.nifText.Location = new System.Drawing.Point(284, 298);
+            this.nifText.Location = new System.Drawing.Point(284, 280);
             this.nifText.Name = "nifText";
             this.nifText.Size = new System.Drawing.Size(209, 20);
             this.nifText.TabIndex = 50;
@@ -133,7 +135,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label5.Location = new System.Drawing.Point(25, 275);
+            this.label5.Location = new System.Drawing.Point(25, 257);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(48, 20);
             this.label5.TabIndex = 49;
@@ -141,7 +143,7 @@
             // 
             // emailText
             // 
-            this.emailText.Location = new System.Drawing.Point(29, 298);
+            this.emailText.Location = new System.Drawing.Point(29, 280);
             this.emailText.Name = "emailText";
             this.emailText.Size = new System.Drawing.Size(236, 20);
             this.emailText.TabIndex = 48;
@@ -151,7 +153,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label4.Location = new System.Drawing.Point(563, 366);
+            this.label4.Location = new System.Drawing.Point(563, 379);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(93, 20);
             this.label4.TabIndex = 47;
@@ -162,7 +164,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label3.Location = new System.Drawing.Point(385, 366);
+            this.label3.Location = new System.Drawing.Point(385, 379);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(71, 20);
             this.label3.TabIndex = 46;
@@ -173,7 +175,7 @@
             this.email.AutoSize = true;
             this.email.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.email.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.email.Location = new System.Drawing.Point(199, 366);
+            this.email.Location = new System.Drawing.Point(199, 379);
             this.email.Name = "email";
             this.email.Size = new System.Drawing.Size(48, 20);
             this.email.TabIndex = 45;
@@ -184,7 +186,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label2.Location = new System.Drawing.Point(29, 366);
+            this.label2.Location = new System.Drawing.Point(29, 379);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 20);
             this.label2.TabIndex = 44;
@@ -247,29 +249,29 @@
             // 
             // FiliallocalTxt
             // 
-            this.FiliallocalTxt.Location = new System.Drawing.Point(567, 389);
+            this.FiliallocalTxt.Location = new System.Drawing.Point(567, 402);
             this.FiliallocalTxt.Name = "FiliallocalTxt";
             this.FiliallocalTxt.Size = new System.Drawing.Size(157, 20);
             this.FiliallocalTxt.TabIndex = 38;
             // 
             // filialTel
             // 
-            this.filialTel.Location = new System.Drawing.Point(395, 389);
+            this.filialTel.Location = new System.Drawing.Point(395, 402);
             this.filialTel.Name = "filialTel";
             this.filialTel.Size = new System.Drawing.Size(145, 20);
             this.filialTel.TabIndex = 37;
             // 
             // Emailfilialtxt
             // 
-            this.Emailfilialtxt.Location = new System.Drawing.Point(202, 389);
+            this.Emailfilialtxt.Location = new System.Drawing.Point(202, 402);
             this.Emailfilialtxt.Name = "Emailfilialtxt";
             this.Emailfilialtxt.Size = new System.Drawing.Size(173, 20);
             this.Emailfilialtxt.TabIndex = 36;
             // 
             // codigotxt
             // 
-            this.codigotxt.BackColor = System.Drawing.Color.LightGoldenrodYellow;
-            this.codigotxt.Location = new System.Drawing.Point(29, 389);
+            this.codigotxt.BackColor = System.Drawing.Color.White;
+            this.codigotxt.Location = new System.Drawing.Point(29, 402);
             this.codigotxt.Name = "codigotxt";
             this.codigotxt.Size = new System.Drawing.Size(158, 20);
             this.codigotxt.TabIndex = 35;
@@ -383,7 +385,7 @@
             // addFilialBtn
             // 
             this.addFilialBtn.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.addFilialBtn.Location = new System.Drawing.Point(29, 415);
+            this.addFilialBtn.Location = new System.Drawing.Point(29, 428);
             this.addFilialBtn.Name = "addFilialBtn";
             this.addFilialBtn.Size = new System.Drawing.Size(108, 32);
             this.addFilialBtn.TabIndex = 62;
@@ -405,17 +407,37 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(29, 334);
+            this.label10.Location = new System.Drawing.Point(29, 352);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(75, 25);
             this.label10.TabIndex = 63;
             this.label10.Text = "Filiais";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label11.Location = new System.Drawing.Point(25, 306);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(78, 20);
+            this.label11.TabIndex = 65;
+            this.label11.Text = "Desconto";
+            // 
+            // descontoTxt
+            // 
+            this.descontoTxt.Location = new System.Drawing.Point(29, 329);
+            this.descontoTxt.Name = "descontoTxt";
+            this.descontoTxt.Size = new System.Drawing.Size(236, 20);
+            this.descontoTxt.TabIndex = 64;
             // 
             // Cliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 657);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.descontoTxt);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.addFilialBtn);
             this.Controls.Add(this.tabelaFilial);
@@ -450,8 +472,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Cliente";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Cliente";
             this.Load += new System.EventHandler(this.Cliente_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -498,5 +520,7 @@
         private System.Windows.Forms.Button addFilialBtn;
         private System.Windows.Forms.DataGridView tabelaFilial;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox descontoTxt;
     }
 }

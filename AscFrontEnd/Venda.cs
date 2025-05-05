@@ -625,6 +625,30 @@ namespace AscFrontEnd
                         StaticProperty.frs = JsonConvert.DeserializeObject<List<FrDTO>>(contentFr);
                     }
 
+                    var responseGr = await client.GetAsync($"api/Venda/GrByRelations");
+
+                    if (responseGr.IsSuccessStatusCode)
+                    {
+                        var contentGr = await responseGr.Content.ReadAsStringAsync();
+                        StaticProperty.grs = JsonConvert.DeserializeObject<List<GrDTO>>(contentGr);
+                    }
+
+                    var responseGt = await client.GetAsync($"api/Venda/GtByRelations");
+
+                    if (responseGt.IsSuccessStatusCode)
+                    {
+                        var contentGt = await responseGt.Content.ReadAsStringAsync();
+                        StaticProperty.gts = JsonConvert.DeserializeObject<List<GtDTO>>(contentGt);
+                    }
+
+                    var responseOr = await client.GetAsync($"api/Venda/OrByRelations");
+
+                    if (responseOr.IsSuccessStatusCode)
+                    {
+                        var contentOr = await responseOr.Content.ReadAsStringAsync();
+                        StaticProperty.ors = JsonConvert.DeserializeObject<List<OrDTO>>(contentOr);
+                    }
+
                     var responseFt = await client.GetAsync($"api/Venda/FtByRelations");
 
                     if (responseFt.IsSuccessStatusCode)
@@ -684,7 +708,7 @@ namespace AscFrontEnd
 
             vendaArtigos.Clear();
 
-            documento.Items.Clear();
+            
             
             totalAgragado(vendaArtigos);
 
@@ -692,9 +716,11 @@ namespace AscFrontEnd
 
             dtVenda = new DataTable();
 
+            documento.Items.Clear();
+
             Venda_Load(this,EventArgs.Empty);
 
-            this.Refresh();
+           // this.Refresh();
         }
 
         private async void textBox1_TextChanged(object sender, EventArgs e)
@@ -763,7 +789,7 @@ namespace AscFrontEnd
 
             descricaoLabel.Text = descricaoDocumento;
 
-            if (documento.Text != "ECL" || documento.Text != "GT")
+            if (documento.Text != "ECL" && documento.Text != "GT")
             {
                 localEntregatxt.Enabled = false;
             }
@@ -1130,8 +1156,6 @@ namespace AscFrontEnd
 
         private async void timerRefresh_Tick(object sender, EventArgs e)
         {
-            clientetxt.Text = $"Cliente: {StaticProperty.nome}";
-
             if (StaticProperty.entityId > 0)
             {
                 var responseGet = await client.GetAsync($"api/Cliente/{StaticProperty.entityId}");
@@ -1141,10 +1165,12 @@ namespace AscFrontEnd
                     var content = await responseGet.Content.ReadAsStringAsync();
 
                     clienteResult = JsonConvert.DeserializeObject<ClienteDTO>(content);
+
+                    clientetxt.Text = $"Cliente: {clienteResult.nome_fantasia}";
                 }
                 else
                 {
-                    MessageBox.Show("Fornecedor nao encontrado", "Alguma coisa correu mal", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Cliente nao encontrado", "Alguma coisa correu mal", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     return;
                 }
@@ -1474,7 +1500,6 @@ namespace AscFrontEnd
                 return;
             }
         }
-
 
         private void descontoTxt_Leave(object sender, EventArgs e)
         {

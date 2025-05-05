@@ -94,19 +94,23 @@ namespace AscFrontEnd
 
         private async void transformar_Click(object sender, EventArgs e)
         {
-            var cliente = clientes.Where(cl => cl.id == id).First();
+            var cliente = StaticProperty.clientes.Where(cl => cl.id == id).First();
 
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.BaseAddress = new Uri("https://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+            if(cliente.nif == "999999999") 
+            {
+                cliente.nif = string.Empty;
+            }
             // Conversão do objeto Film para JSON
             string json = JsonSerializer.Serialize(cliente);
 
             // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Cliente/Transformacao/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage response = await client.PostAsync($"api/Cliente/Transformacao/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show($"O cliente {cliente.nome_fantasia} foi transformando em fornecedor", "Feito Com Sucesso", MessageBoxButtons.OK);

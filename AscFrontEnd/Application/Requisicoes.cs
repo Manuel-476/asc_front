@@ -826,7 +826,7 @@ namespace AscFrontEnd.Application
             }
         }
 
-        public async Task<List<RegAdiantamentoFornDTO>> GetRegAdCliente()
+        public async Task<List<RegAdiantamentoFornDTO>> GetRegAdFornecedor()
         {
             try
             {
@@ -1314,6 +1314,110 @@ namespace AscFrontEnd.Application
             {
                 return new List<CompraDTO>();
             }
+        }
+
+
+        public async Task SystemRefresh() 
+        {
+             StaticProperty.vfts = await GetVft();
+
+             StaticProperty.vfrs = await GetVfr();
+
+             StaticProperty.vgts = await GetVgt();
+
+            StaticProperty.vgrs = await GetVgr();
+
+            StaticProperty.pcos = await GetPco();
+
+            StaticProperty.cots = await GetCot();
+
+            StaticProperty.ecfs = await GetEcf();
+
+            StaticProperty.vncs = await GetVnc();
+
+            StaticProperty.vnds = await GetVnd();
+
+            StaticProperty.frs = await GetFr();
+
+            StaticProperty.fts = await GetFt();
+
+            StaticProperty.ecls = await GetEcl();
+
+            StaticProperty.fps = await GetFp();
+
+            StaticProperty.ncs = await GetNc();
+
+            StaticProperty.nds = await GetNd();
+
+            StaticProperty.gts = await GetGt();
+
+            StaticProperty.grs = await GetGr();
+
+            StaticProperty.clientes = await GetClientes();
+
+            StaticProperty.fornecedores = await GetFornecedores();
+
+            StaticProperty.artigos = await GetArtigos();
+
+            StaticProperty.motivosIsencao = await GetMotivos();
+
+            StaticProperty.armazens = await GetArmazens();
+
+            StaticProperty.locationStores = await GetLocalizacoes();
+
+            StaticProperty.locationArtigos = await GetLocalizacaoArtigo();
+
+            StaticProperty.historico = await GetArmazemHistorico();
+
+            StaticProperty.nps = await GetNotaPagamento();
+
+            StaticProperty.recibos = await GetRecibo();
+
+            StaticProperty.contaCorrenteFornecedor = await GetContaCorrenteForn();
+
+            StaticProperty.contaCorrenteCliente = await GetContaCorrenteCliente();
+
+            StaticProperty.adiantamentoForns = await GetAdFornecedor();
+
+            StaticProperty.adiantamentoClientes = await GetAdCliente();
+
+            StaticProperty.regAdiantamentoForns = await GetRegAdFornecedor();
+
+            StaticProperty.regAdiantamentoClientes = await GetRegAdiantamantoCliente();
+
+            StaticProperty.series = await GetSerie();
+
+            StaticProperty.actividades = await GetActividade();
+
+            StaticProperty.bancos = await GetBanco();
+
+            StaticProperty.caixas = await GetCaixa();
+
+            StaticProperty.formasPagamento = await GetFormaPagamento();
+
+            StaticProperty.funcionarios = await GetFuncionarios();
+
+            StaticProperty.familias = await GetFamilias();
+
+            StaticProperty.subFamilias = await GetSubFamilias();
+
+            StaticProperty.marcas = await GetMarcas();
+
+            StaticProperty.modelos = await GetModelo();
+
+            StaticProperty.empresa = await GetEmpresas();
+
+            StaticProperty.ivas = await GetIvas();
+
+            StaticProperty.unidades = await GetUnidades();
+
+            StaticProperty.provincias = await GetProvincias();
+
+            StaticProperty.stockMinims = await GetStockMinim();
+
+            StaticProperty.venda = await GetVendas();
+
+            StaticProperty.compra = await GetCompras();
         }
     }
 }

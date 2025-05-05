@@ -14,6 +14,7 @@ using AscFrontEnd.DTOs.StaticsDto;
 using System.Text.Json;
 using AscFrontEnd.DTOs.Deposito;
 using AscFrontEnd.Application.Validacao;
+using System.Globalization;
 
 
 namespace AscFrontEnd
@@ -77,11 +78,14 @@ namespace AscFrontEnd
 
         private async void salvarBtn_Click(object sender, EventArgs e)
         {
-            if (!ValidacaoForms.IsValidNif(nifText.Text.ToString()))
+            if (!string.IsNullOrEmpty(nifText.Text.ToString()))
             {
-                MessageBox.Show("O NIF introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (!ValidacaoForms.IsValidNif(nifText.Text.ToString()))
+                {
+                    MessageBox.Show("O NIF introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                return;
+                    return;
+                }
             }
 
             if (!ValidacaoForms.IsValidEmail(emailText.Text.ToString()))
@@ -99,8 +103,10 @@ namespace AscFrontEnd
             }
 
             List<FornecedorPhoneDTO> phone = new List<FornecedorPhoneDTO>() { new FornecedorPhoneDTO() { telefone = !string.IsNullOrEmpty(telefonetxt.Text.ToString()) ?  telefonetxt.Text:string.Empty } };
-            List<FornecedorFilialDTO> filias = new List<FornecedorFilialDTO> { new FornecedorFilialDTO() { email = emailText.Text,codigo=codigotxt
-           .Text,localizacao=FiliallocalTxt.Text,nif=nifText.Text,fornFilialPhones=null,foto="string"} };
+            List<FornecedorFilialDTO> filias = new List<FornecedorFilialDTO> { new FornecedorFilialDTO() { email = emailText.Text,codigo=codigotxt.Text,localizacao=FiliallocalTxt.Text,nif=nifText.Text,fornFilialPhones=null,foto="string"} };
+
+            var desconto = !string.IsNullOrEmpty(descontoTxt.Text.ToString()) ? float.Parse(descontoTxt.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) : 0f;
+
             var fornecedor = new FornecedorDTO()
             {
                 nome_fantasia = nomeFantasiatxt.Text,
@@ -110,9 +116,10 @@ namespace AscFrontEnd
                 espaco_fiscal = espacoFiscalCombo.Text,
                 pessoa = pessoaCombo.Text,
                 nif = nifText.Text,
-                phones = phone,
+                desconto = desconto,
+                phones = phone.Any() && phone != null? phone:null,
                 foto = "string",
-                fornecedorFiliais = filias,
+                fornecedorFiliais = filias.Any() && filias != null?filiais:null,
                 empresaid = StaticProperty.empresaId
             };
 

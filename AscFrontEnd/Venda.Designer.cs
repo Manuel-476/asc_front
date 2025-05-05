@@ -168,9 +168,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(900, 423);
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(883, 420);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(71, 22);
+            this.button1.Size = new System.Drawing.Size(88, 29);
             this.button1.TabIndex = 10;
             this.button1.Text = "Agregar";
             this.button1.UseVisualStyleBackColor = true;
@@ -246,6 +247,7 @@
             // eliminarBtn
             // 
             this.eliminarBtn.BackColor = System.Drawing.Color.Red;
+            this.eliminarBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.eliminarBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.eliminarBtn.Location = new System.Drawing.Point(977, 420);
             this.eliminarBtn.Name = "eliminarBtn";

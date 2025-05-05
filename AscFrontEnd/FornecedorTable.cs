@@ -67,26 +67,30 @@ namespace AscFrontEnd
 
         private async void transformar_Click(object sender, EventArgs e)
         {
-            var fornecedor = fornecedores.Where(f => f.id == id).First();
+            var fornecedor = StaticProperty.fornecedores.Where(f => f.id == id).First();
 
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.BaseAddress = new Uri("https://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+            if (fornecedor.nif == "999999999")
+            {
+                fornecedor.nif = string.Empty;
+            }
             // Conversão do objeto Film para JSON
             string json = JsonSerializer.Serialize(fornecedor);
 
             // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Fornecedor/Transformacao/{1}", new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage response = await client.PostAsync($"api/Fornecedor/Transformacao/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show($"O fornecedor {fornecedor.nome_fantasia} foi transformando em fornecedor", "Feito Com Sucesso", MessageBoxButtons.OK);
             }
             else
             {
-                MessageBox.Show("Ocorreu um erro ao tentar Transformar cliente em fornecedor", "Erro", MessageBoxButtons.RetryCancel);
+                MessageBox.Show("Ocorreu um erro ao tentar Transformar cliente em cliente", "Erro", MessageBoxButtons.RetryCancel);
             }
         }
 
@@ -204,11 +208,11 @@ namespace AscFrontEnd
 
         private bool hasBuyFornecedor(int fornecedorId) 
         {
-            if(StaticProperty.vfrs.Where(x => x.fornecedorId == fornecedorId).First() == null &&
-               StaticProperty.vfts.Where(x => x.fornecedorId == fornecedorId).First() == null &&
-               StaticProperty.ecfs.Where(x => x.fornecedorId == fornecedorId).First() == null &&
-               StaticProperty.cots.Where(x => x.fornecedorId == fornecedorId).First() == null &&
-               StaticProperty.pcos.Where(x => x.fornecedorId == fornecedorId).First() == null )
+            if(!StaticProperty.vfrs.Where(x => x.fornecedorId == fornecedorId).Any() &&
+               !StaticProperty.vfts.Where(x => x.fornecedorId == fornecedorId).Any() &&
+               !StaticProperty.ecfs.Where(x => x.fornecedorId == fornecedorId).Any() &&
+               !StaticProperty.cots.Where(x => x.fornecedorId == fornecedorId).Any() &&
+               !StaticProperty.pcos.Where(x => x.fornecedorId == fornecedorId).Any() )
             { return true; }
             else { return false; }
 

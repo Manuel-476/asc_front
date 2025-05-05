@@ -541,6 +541,14 @@ namespace AscFrontEnd
                         StaticProperty.vgts = JsonConvert.DeserializeObject<List<VgtDTO>>(contentVgt);
                     }
 
+                    var responseVgr = await client.GetAsync($"api/Compra/VgrByRelations");
+
+                    if (responseVgr.IsSuccessStatusCode)
+                    {
+                        var contentVgr = await responseVgr.Content.ReadAsStringAsync();
+                        StaticProperty.vgrs = JsonConvert.DeserializeObject<List<VgrDTO>>(contentVgr);
+                    }
+
                     var responsePco = await client.GetAsync($"api/Compra/PcoByRelations");
 
                     if (responsePco.IsSuccessStatusCode)
@@ -589,11 +597,11 @@ namespace AscFrontEnd
 
             //Fazer Refresh
             totalAgragado(compraArtigos);
-            documento.Items.Clear();
+          
             WindowsConfig.LimparFormulario(this);
 
             dtCompra = new DataTable();
-
+            documento.Items.Clear();
             Compra_Load(this,EventArgs.Empty);
 
             this.Refresh();
@@ -922,7 +930,7 @@ namespace AscFrontEnd
 
             descricaoLabel.Text = descricaoDocumento;
 
-            if(documento.Text != "ECF" || documento.Text != "VGT")
+            if(documento.Text != "ECF" && documento.Text != "VGT")
             {
                 localEntregatxt.Enabled = false;
             }
@@ -1046,7 +1054,7 @@ namespace AscFrontEnd
 
         private async void timerRefresh_Tick(object sender, EventArgs e)
         {
-            fornecedortxt.Text = $"Fornecedor: {StaticProperty.nome}";
+            
 
             if (StaticProperty.entityId > 0) {
                 var responseGet = await client.GetAsync($"api/Fornecedor/{StaticProperty.entityId}");
@@ -1056,6 +1064,8 @@ namespace AscFrontEnd
                     var content = await responseGet.Content.ReadAsStringAsync();
 
                     fornecedorResult = JsonConvert.DeserializeObject<FornecedorDTO>(content);
+
+                    fornecedortxt.Text = $"Fornecedor: {fornecedorResult.nome_fantasia}";
                 }
                 else
                 {

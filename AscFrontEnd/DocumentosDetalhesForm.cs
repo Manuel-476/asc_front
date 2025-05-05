@@ -39,7 +39,8 @@ namespace AscFrontEnd
         List<VendaArtigo> vendaArtigos;
         List<CompraArtigo> compraArtigos;
 
-        string descricaoDocumento = string.Empty;
+        private string codigoDoc = string.Empty;
+        private string descricaoDocumento = string.Empty;
 
         public DocumentosDetalhesForm(string documento,int documentoId,Entidade entidade)
         {
@@ -573,6 +574,7 @@ namespace AscFrontEnd
                                     StaticProperty.fts.Where(x => x.id == _documentoId).First() : new FtDTO();
 
                     StaticProperty.hash = entidade.shortHash;
+                    codigoDoc = entidade.documento;
 
                     anulado = entidade.status == DocState.anulado ? true : false;
 
@@ -592,7 +594,7 @@ namespace AscFrontEnd
                                    StaticProperty.frs.Where(x => x.id == _documentoId).First() : new FrDTO();
 
                     StaticProperty.hash = entidade.shortHash;
-
+                    codigoDoc = entidade.documento;
                     anulado = entidade.status == DocState.anulado ? true : false;
 
                     foreach (var item in entidade.frArtigo)
@@ -617,6 +619,7 @@ namespace AscFrontEnd
 
                     StaticProperty.hash = entidade.shortHash;
 
+                    codigoDoc = entidade.documento;
                     anulado = entidade.status == DocState.anulado ? true : false;
 
                     foreach (var item in entidade.eclArtigo)
@@ -641,6 +644,7 @@ namespace AscFrontEnd
 
                     StaticProperty.hash = entidade.shortHash;
 
+                    codigoDoc = entidade.documento;
                     anulado = entidade.status == DocState.anulado ? true : false;
 
                     foreach (var item in entidade.fpArtigo)
@@ -665,6 +669,7 @@ namespace AscFrontEnd
 
                     StaticProperty.hash = entidade.shortHash;
 
+                    codigoDoc = entidade.documento;
                     anulado = entidade.status == DocState.anulado ? true : false;
 
                     foreach (var item in entidade.gtArtigo)
@@ -687,6 +692,7 @@ namespace AscFrontEnd
                     var entidade = StaticProperty.grs.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.grs.Where(x => x.id == _documentoId).First() : new GrDTO();
 
+                    codigoDoc = entidade.documento;
                     StaticProperty.hash = entidade.shortHash;
 
                     foreach (var item in entidade.grArtigo)
@@ -709,6 +715,7 @@ namespace AscFrontEnd
                     var entidade = StaticProperty.ncs.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.ncs.Where(x => x.id == _documentoId).First(): new NcDTO();
 
+                    codigoDoc = entidade.documento;
                     StaticProperty.hash = entidade.shortHash;
 
                     anulado = entidade.status == DocState.anulado ? true : false;
@@ -735,6 +742,7 @@ namespace AscFrontEnd
 
                     StaticProperty.hash = entidade.shortHash;
 
+                    codigoDoc = entidade.documento;
                     anulado = entidade.status == DocState.anulado ? true : false;
 
                     foreach (var item in entidade.orArtigos)
@@ -757,6 +765,7 @@ namespace AscFrontEnd
                     var entidade = StaticProperty.nds.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.nds.Where(x => x.id == _documentoId).First() : new NdDTO();
 
+                    codigoDoc = entidade.documento;
                     StaticProperty.hash = entidade.shortHash;
 
                     anulado = entidade.status == DocState.anulado ? true : false;
@@ -805,6 +814,7 @@ namespace AscFrontEnd
                     var entidade = StaticProperty.vfts.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.vfts.Where(x => x.id == _documentoId).First() : new VftDTO();
 
+                    codigoDoc = entidade.documento;
                     anulado = entidade.status == DocState.anulado ? true : false;
 
                     foreach (var item in entidade.vftArtigo)
@@ -826,7 +836,7 @@ namespace AscFrontEnd
                 {
                     var entidade = StaticProperty.vfrs.Where(x => x.id == _documentoId).Any() ?
                             StaticProperty.vfrs.Where(x => x.id == _documentoId).First() : new VfrDTO();
-
+                    codigoDoc = entidade.documento;
                     anulado = entidade.status == DocState.anulado ? true : false;
 
                     foreach (var item in entidade.vfrArtigo)
@@ -842,14 +852,14 @@ namespace AscFrontEnd
 
                     }
 
-
                     fornecedorResult = StaticProperty.fornecedores.Where(x => x.id == entidade.fornecedorId).Any() ? StaticProperty.fornecedores.Where(x => x.id == entidade.fornecedorId).First() : new FornecedorDTO();
                 }
                 else if (_documento.Equals("ECF"))
                 {
                     var entidade = StaticProperty.ecfs.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.ecfs.Where(x => x.id == _documentoId).First() : new EncomendaFornecedorDTO();
-
+                    
+                    codigoDoc = entidade.documento;
                     anulado = entidade.status == DocState.anulado ? true : false;
 
                     foreach (var item in entidade.ecfArtigo)
@@ -872,6 +882,7 @@ namespace AscFrontEnd
                     var entidade = StaticProperty.pcos.Where(x => x.id == _documentoId).Any() ?
                              StaticProperty.pcos.Where(x => x.id == _documentoId).First() : new PedidoCotacaoDTO();
 
+                    codigoDoc = entidade.documento;
                     anulado = entidade.status == DocState.anulado ? true : false;
 
                     foreach (var item in entidade.pcArtigo)
@@ -894,6 +905,7 @@ namespace AscFrontEnd
                     var entidade = StaticProperty.vgts.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.vgts.Where(x => x.id == _documentoId).First(): new VgtDTO();
 
+                    codigoDoc = entidade.documento;
                     anulado = entidade.status == DocState.anulado ? true : false;
 
                     foreach (var item in entidade.vgtArtigo)
@@ -915,6 +927,8 @@ namespace AscFrontEnd
                 {
                     var entidade = StaticProperty.vgrs.Where(x => x.id == _documentoId).Any() ?
                                 StaticProperty.vgrs.Where(x => x.id == _documentoId).First() : new VgrDTO();
+
+                    codigoDoc = entidade.documento;
                     anulado = entidade.status == DocState.anulado ? true : false;
 
                     foreach (var item in entidade.vgrArtigo)
@@ -937,6 +951,7 @@ namespace AscFrontEnd
                     var entidade = StaticProperty.vncs.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.vncs.Where(x => x.id == _documentoId).First() : new VncDTO();
 
+                    codigoDoc = entidade.documento;
                     anulado = entidade.status == DocState.anulado ? true : false;
 
                     foreach (var item in entidade.vncArtigo)
@@ -958,6 +973,8 @@ namespace AscFrontEnd
                 {
                     var entidade = StaticProperty.vnds.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.vnds.Where(x => x.id == _documentoId).First() : new VndDTO();
+
+                    codigoDoc = entidade.documento;
                     anulado = entidade.status == DocState.anulado ? true : false;
 
                     foreach (var item in entidade.vndArtigo)
@@ -1070,7 +1087,7 @@ namespace AscFrontEnd
                 }
 
 
-                e.Graphics.DrawString($"{descricaoDocumento}  {codigoDocumento.Text}", fontNormalNegrito, cor, new PointF(50, 280), formatToLeft);
+                e.Graphics.DrawString($"{descricaoDocumento}  {codigoDoc}", fontNormalNegrito, cor, new PointF(50, 280), formatToLeft);
                 e.Graphics.DrawLine(canetaFina, 50, 295, 250, 295);
                 e.Graphics.DrawString("Contribuente", fontNormalNegrito, cor, new Rectangle(50, 300, 200, 310));
                 e.Graphics.DrawString("Desc. Cli", fontNormalNegrito, cor, new Rectangle(200, 300, 350, 310));
@@ -1319,7 +1336,7 @@ namespace AscFrontEnd
                     e.Graphics.DrawString("Documento Anulado", fontNormalNegrito, cor, new PointF(550, 215), formatToLeft);
                 }
 
-                e.Graphics.DrawString($"{descricaoDocumento}  {codigoDocumento}", fontNormalNegrito, cor, new PointF(50, 280), formatToLeft);
+                e.Graphics.DrawString($"{descricaoDocumento}  {codigoDoc}", fontNormalNegrito, cor, new PointF(50, 280), formatToLeft);
                 e.Graphics.DrawLine(canetaFina, 50, 295, 250, 295);
                 e.Graphics.DrawString("Contribuente", fontNormalNegrito, cor, new Rectangle(50, 300, 200, 310));
                 e.Graphics.DrawString("Desc. Cli", fontNormalNegrito, cor, new Rectangle(200, 300, 350, 310));

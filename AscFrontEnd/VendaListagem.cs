@@ -92,7 +92,7 @@ namespace AscFrontEnd
             this.SetVendas();
             this.ActivarBotaoAprovar();
             // Adicionando linhas ao DataTable
-            foreach (var item in documentoVendas)
+            foreach (var item in documentoVendas.OrderByDescending(f => f.data))
             {
                 clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
 
@@ -259,7 +259,12 @@ namespace AscFrontEnd
         {
             try
             {
-                if (radioFr.Checked || radioFt.Checked || radioGr.Checked)
+                var doc = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
+                var indexSpace = doc.IndexOf(" ");
+                documento = doc.Substring(0, indexSpace);
+                codigoDocumento = doc;
+
+                if (documento.Equals("FR") || documento.Equals("FT") || documento.Equals("GR"))
                 {
                     estornarPicture.Enabled = true;
                 }
@@ -277,11 +282,13 @@ namespace AscFrontEnd
                     anularPicture.Enabled = true; 
                 }
 
+
+
                 ActivarBotaoAprovar();
 
                 id = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
 
-                if (radioOrcamento.Checked) 
+                if (documento.Equals("OR")) 
                 {
                     if (StaticProperty.ors.Where(x => x.id == id).Any()) 
                     {
@@ -307,10 +314,15 @@ namespace AscFrontEnd
             {
                 var formAnulacao = new MotivoAnulacao(OpcaoBinaria.Sim);
 
+                if (MessageBox.Show($"Documento: {codigoDocumento}\nTem certeza que pretende estornar este documento?", "Atenção", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) != DialogResult.OK)
+                {
+                    return;
+                }
+
                 if (formAnulacao.ShowDialog() == DialogResult.OK)
                 {
 
-                    if (radioFr.Checked)
+                    if (documento.Equals("FR"))
                     {
                         var fr = StaticProperty.frs.Where(cl => cl.id == id).First();
                         codigoDocumentoOrigem = fr.documento;
@@ -347,7 +359,7 @@ namespace AscFrontEnd
                             MessageBox.Show($"O documento {codigoDocumentoOrigem} foi estornado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
-                    else if (radioFt.Checked)
+                    else if (documento.Equals("FT"))
                     {
                         var ft = StaticProperty.fts.Where(cl => cl.id == id).First();
 
@@ -378,7 +390,7 @@ namespace AscFrontEnd
                         }
 
                     }
-                    else if (radioGr.Checked)
+                    else if (documento.Equals("GR"))
                     {
                         var gr = StaticProperty.grs.Where(cl => cl.id == id).First();
 
@@ -410,7 +422,7 @@ namespace AscFrontEnd
 
                     }
 
-                    else if (radioOrcamento.Checked)
+                    else if (documento.Equals("OR"))
                     {
                         var or = StaticProperty.ors.Where(cl => cl.id == id).First();
 
@@ -525,14 +537,19 @@ namespace AscFrontEnd
 
         private async void anularPicture_Click(object sender, EventArgs e)
         {
-            string documento = string.Empty;
+            string documentoDoc = string.Empty;
+
+            if (MessageBox.Show($"Documento: {codigoDocumento}\nTem certeza que pretende anular este documento?", "Atenção", MessageBoxButtons.OKCancel,MessageBoxIcon.Warning) != DialogResult.OK) 
+            {
+                return;
+            }
 
             try
             {
-                if (radioFr.Checked)
+                if (documento.Equals("FR"))
                 {
 
-                    documento = StaticProperty.frs.Where(cl => cl.id == id).First().documento;
+                    documentoDoc = StaticProperty.frs.Where(cl => cl.id == id).First().documento;
 
                     // Conversão do objeto Film para JSON
                     json = System.Text.Json.JsonSerializer.Serialize(DocState.anulado);
@@ -542,13 +559,13 @@ namespace AscFrontEnd
 
                     if (responseFr.IsSuccessStatusCode)
                     {
-                        MessageBox.Show($"O documento {documento} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"O documento {documentoDoc} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
                 }
-                else if (radioFt.Checked)
+                else if (documento.Equals("FT"))
                 {
-                    documento = StaticProperty.fts.Where(cl => cl.id == id).First().documento;
+                    documentoDoc = StaticProperty.fts.Where(cl => cl.id == id).First().documento;
 
                     // Conversão do objeto Film para JSON
                     json = System.Text.Json.JsonSerializer.Serialize(DocState.anulado);
@@ -558,13 +575,13 @@ namespace AscFrontEnd
 
                     if (responseFt.IsSuccessStatusCode)
                     {
-                        MessageBox.Show($"O documento {documento} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"O documento {documentoDoc} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
                 }
-                else if (radioFp.Checked)
+                else if (documento.Equals("PP"))
                 {
-                    documento = StaticProperty.fps.Where(cl => cl.id == id).First().documento;
+                    documentoDoc = StaticProperty.fps.Where(cl => cl.id == id).First().documento;
 
                     // Conversão do objeto Film para JSON
                     string json = System.Text.Json.JsonSerializer.Serialize(DocState.anulado);
@@ -575,14 +592,14 @@ namespace AscFrontEnd
                     if (responseFp
                         .IsSuccessStatusCode)
                     {
-                        MessageBox.Show($"O documento {documento} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"O documento {documentoDoc} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     }
 
                 }
-                else if (radioGt.Checked)
+                else if (documento.Equals("GT"))
                 {
-                    documento = StaticProperty.gts.Where(cl => cl.id == id).First().documento;
+                    documentoDoc = StaticProperty.gts.Where(cl => cl.id == id).First().documento;
 
                     // Conversão do objeto Film para JSON
                     string json = System.Text.Json.JsonSerializer.Serialize(DocState.anulado);
@@ -592,14 +609,14 @@ namespace AscFrontEnd
 
                     if (responseGt.IsSuccessStatusCode)
                     {
-                        MessageBox.Show($"O documento {documento} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"O documento {documentoDoc} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     }
                 }
 
-                else if (radioGr.Checked)
+                else if (documento.Equals("GR"))
                 {
-                    documento = StaticProperty.grs.Where(cl => cl.id == id).First().documento;
+                    documentoDoc = StaticProperty.grs.Where(cl => cl.id == id).First().documento;
 
                     // Conversão do objeto Film para JSON
                     string json = System.Text.Json.JsonSerializer.Serialize(DocState.anulado);
@@ -609,14 +626,14 @@ namespace AscFrontEnd
 
                     if (responseGt.IsSuccessStatusCode)
                     {
-                        MessageBox.Show($"O documento {documento} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"O documento {documentoDoc} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     }
                 }
 
-                else if (radioOrcamento.Checked)
+                else if (documento.Equals("OR"))
                 {
-                    documento = StaticProperty.ors.Where(cl => cl.id == id).First().documento;
+                    documentoDoc = StaticProperty.ors.Where(cl => cl.id == id).First().documento;
 
                     // Conversão do objeto Film para JSON
                     string json = System.Text.Json.JsonSerializer.Serialize(DocState.anulado);
@@ -626,7 +643,7 @@ namespace AscFrontEnd
 
                     if (responseOr.IsSuccessStatusCode)
                     {
-                        MessageBox.Show($"O documento {documento} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"O documento {documentoDoc} foi anulado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     }
                 }
@@ -776,8 +793,6 @@ namespace AscFrontEnd
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-
-
             id = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
             if (radioFp.Checked) { documento = "FP"; }
             if (radioFr.Checked) { documento = "FR"; }
@@ -802,8 +817,6 @@ namespace AscFrontEnd
         {
             if (radioAnulado.Checked)
             {
-
-
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Fornecedor", typeof(string));
@@ -850,9 +863,7 @@ namespace AscFrontEnd
             dt.Columns.Add("Data", typeof(string));
 
             if (radioEcl.Checked)
-            {
-
-
+            
                 if (StaticProperty.ecls.Any() && StaticProperty.ecls != null)
                 {
                     this.CleanDataGridView();
@@ -873,7 +884,7 @@ namespace AscFrontEnd
                     dataGridView1.DataSource = dt;
                 }
             }
-        }
+        
 
         private void ImprimirPagina_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
@@ -1097,8 +1108,6 @@ namespace AscFrontEnd
             {
                 this.SetVendas();
 
-      
-
                 DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Fornecedor", typeof(string));
@@ -1114,7 +1123,7 @@ namespace AscFrontEnd
                 else
                 {
                     // Adicionando linhas ao DataTable
-                    foreach (var item in documentoVendas.Where(f => f.status == DocState.anulado).OrderByDescending(x => x.data))
+                    foreach (var item in documentoVendas.OrderByDescending(x => x.data))
                     {
                         if (StaticProperty.clientes.Where(f => f.id == item.clienteId).First() != null)
                         {
@@ -1211,7 +1220,6 @@ namespace AscFrontEnd
 
         private async Task RefreshDocs()
         {
-
             try
             {
                 var responseFr = await client.GetAsync($"api/Venda/FrByRelations");
@@ -1287,17 +1295,19 @@ namespace AscFrontEnd
                 }
 
                 this.SetVendas();
-                radioGeral_CheckedChanged(this, EventArgs.Empty);
+
+                
                 radioFt_CheckedChanged(this, EventArgs.Empty);
                 radioFr_CheckedChanged(this, EventArgs.Empty);
                 radioGt_CheckedChanged(this, EventArgs.Empty);
-                radioGt_CheckedChanged(this, EventArgs.Empty);
+               // radioGt_CheckedChanged(this, EventArgs.Empty);
                 radioNv_CheckedChanged(this, EventArgs.Empty);
                 radioFp_CheckedChanged(this, EventArgs.Empty);
                 radioEcl_CheckedChanged(this, EventArgs.Empty);
                 radioAnulado_CheckedChanged(this, EventArgs.Empty);
                 radioOrcamento_CheckedChanged(this, EventArgs.Empty);
                 radioGr_CheckedChanged(this, EventArgs.Empty);
+                radioGeral_CheckedChanged(this, EventArgs.Empty);
 
 
             }
@@ -1310,6 +1320,7 @@ namespace AscFrontEnd
         public void SetVendas()
         {
             documentoVendas.Clear();
+
             foreach (var item in StaticProperty.fps.Where(x => x.empresaId == StaticProperty.empresaId))
             {
                 documentoVendas.Add(new DocumentoVenda()
@@ -1446,9 +1457,7 @@ namespace AscFrontEnd
 
                     if (responseOr.IsSuccessStatusCode)
                     {
-                        MessageBox.Show($"O documento {documento} foi aprovao com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                       
+                        MessageBox.Show($"O documento {documento} foi aprovao com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);              
                     }
 
                     await this.RefreshDocs();
