@@ -12,6 +12,7 @@ namespace AscFrontEnd
         public string documento { get; set; }
         public int clienteId { get; set; }
         public string local_entrega { get; set; }
+        public DateTime dataEntrega { get; set; }
         public DocState status { get; set; }
         public string fullHash { get; set; }
         public string shortHash { get; set; }

@@ -25,7 +25,8 @@ namespace AscFrontEnd.DTOs.Enums
         {
             ativo = 0,
             anulado,
-            estornado
+            estornado,
+            resolvido
         }
         public enum Status
         {

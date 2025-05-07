@@ -432,6 +432,7 @@ namespace AscFrontEnd
                     clienteId = StaticProperty.entityId,
                     eclArtigo = eclArtigos,
                     local_entrega = localEntrega,
+                    dataEntrega = DateTime.Parse(dataEntrega.Text),
                     empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
                     created = DateTime.Now,
@@ -795,6 +796,11 @@ namespace AscFrontEnd
             }
             else
             {
+                if(documento.Text == "ECL") 
+                {
+                    localEntregatxt.Enabled = true;
+                }
+
                 localEntregatxt.Enabled = true;
             }
         }
@@ -1521,6 +1527,11 @@ namespace AscFrontEnd
         }
 
         private void totalBruto_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabelaVenda_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

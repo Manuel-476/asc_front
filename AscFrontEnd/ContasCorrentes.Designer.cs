@@ -29,13 +29,11 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.adiantaBtn = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.aprovaBtn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.radioFornecedor = new System.Windows.Forms.RadioButton();
-            this.radioCliente = new System.Windows.Forms.RadioButton();
-            this.correnteTable = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.adiantamentoResult = new System.Windows.Forms.Label();
             this.liqResult = new System.Windows.Forms.Label();
@@ -46,16 +44,21 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.adiantaBtn = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.contaPagarTab = new System.Windows.Forms.TabPage();
+            this.correnteTable = new System.Windows.Forms.DataGridView();
+            this.contaReceberTab = new System.Windows.Forms.TabPage();
+            this.correnteTableCl = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.correnteTable)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.contaPagarTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.correnteTable)).BeginInit();
+            this.contaReceberTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.correnteTableCl)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -70,6 +73,19 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(812, 89);
             this.panel1.TabIndex = 0;
+            // 
+            // adiantaBtn
+            // 
+            this.adiantaBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.adiantaBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.adiantaBtn.ForeColor = System.Drawing.Color.White;
+            this.adiantaBtn.Location = new System.Drawing.Point(392, 53);
+            this.adiantaBtn.Name = "adiantaBtn";
+            this.adiantaBtn.Size = new System.Drawing.Size(129, 33);
+            this.adiantaBtn.TabIndex = 27;
+            this.adiantaBtn.Text = "Adiantamento";
+            this.adiantaBtn.UseVisualStyleBackColor = false;
+            this.adiantaBtn.Click += new System.EventHandler(this.adiantaBtn_Click);
             // 
             // button1
             // 
@@ -119,47 +135,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(55, 83);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            // 
-            // radioFornecedor
-            // 
-            this.radioFornecedor.AutoSize = true;
-            this.radioFornecedor.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.radioFornecedor.Location = new System.Drawing.Point(12, 93);
-            this.radioFornecedor.Name = "radioFornecedor";
-            this.radioFornecedor.Size = new System.Drawing.Size(79, 17);
-            this.radioFornecedor.TabIndex = 1;
-            this.radioFornecedor.TabStop = true;
-            this.radioFornecedor.Text = "Fornecedor";
-            this.radioFornecedor.UseVisualStyleBackColor = true;
-            this.radioFornecedor.CheckedChanged += new System.EventHandler(this.radioFornecedor_CheckedChanged);
-            // 
-            // radioCliente
-            // 
-            this.radioCliente.AutoSize = true;
-            this.radioCliente.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.radioCliente.Location = new System.Drawing.Point(97, 93);
-            this.radioCliente.Name = "radioCliente";
-            this.radioCliente.Size = new System.Drawing.Size(57, 17);
-            this.radioCliente.TabIndex = 2;
-            this.radioCliente.TabStop = true;
-            this.radioCliente.Text = "Cliente";
-            this.radioCliente.UseVisualStyleBackColor = true;
-            this.radioCliente.CheckedChanged += new System.EventHandler(this.radioCliente_CheckedChanged);
-            // 
-            // correnteTable
-            // 
-            this.correnteTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.correnteTable.BackgroundColor = System.Drawing.Color.White;
-            this.correnteTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.correnteTable.Location = new System.Drawing.Point(12, 132);
-            this.correnteTable.Name = "correnteTable";
-            this.correnteTable.ReadOnly = true;
-            this.correnteTable.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.correnteTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.correnteTable.Size = new System.Drawing.Size(562, 306);
-            this.correnteTable.TabIndex = 3;
-            this.correnteTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.correnteTable_CellClick);
-            this.correnteTable.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.correnteTable_CellDoubleClick);
             // 
             // groupBox1
             // 
@@ -271,31 +246,6 @@
             this.label5.Text = "Liquidar Dívida";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.SystemColors.Control;
-            this.label6.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label6.Location = new System.Drawing.Point(665, 389);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(112, 13);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "Regular Adiantamento";
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.BackColor = System.Drawing.SystemColors.Highlight;
-            this.pictureBox3.BackgroundImage = global::AscFrontEnd.Properties.Resources.icons8_credit_60;
-            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox3.Location = new System.Drawing.Point(597, 361);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(62, 66);
-            this.pictureBox3.TabIndex = 7;
-            this.pictureBox3.TabStop = false;
-            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
-            this.pictureBox3.MouseEnter += new System.EventHandler(this.pictureBox3_MouseEnter);
-            this.pictureBox3.MouseLeave += new System.EventHandler(this.pictureBox3_MouseLeave);
-            // 
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.SystemColors.Highlight;
@@ -310,32 +260,73 @@
             this.pictureBox2.MouseEnter += new System.EventHandler(this.pictureBox2_MouseEnter);
             this.pictureBox2.MouseLeave += new System.EventHandler(this.pictureBox2_MouseLeave);
             // 
-            // adiantaBtn
+            // tabControl1
             // 
-            this.adiantaBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.adiantaBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.adiantaBtn.ForeColor = System.Drawing.Color.White;
-            this.adiantaBtn.Location = new System.Drawing.Point(392, 53);
-            this.adiantaBtn.Name = "adiantaBtn";
-            this.adiantaBtn.Size = new System.Drawing.Size(129, 33);
-            this.adiantaBtn.TabIndex = 27;
-            this.adiantaBtn.Text = "Adiantamento";
-            this.adiantaBtn.UseVisualStyleBackColor = false;
-            this.adiantaBtn.Click += new System.EventHandler(this.adiantaBtn_Click);
+            this.tabControl1.Controls.Add(this.contaPagarTab);
+            this.tabControl1.Controls.Add(this.contaReceberTab);
+            this.tabControl1.Location = new System.Drawing.Point(12, 93);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(560, 345);
+            this.tabControl1.TabIndex = 7;
+            // 
+            // contaPagarTab
+            // 
+            this.contaPagarTab.BackColor = System.Drawing.Color.DarkGray;
+            this.contaPagarTab.Controls.Add(this.correnteTable);
+            this.contaPagarTab.Location = new System.Drawing.Point(4, 22);
+            this.contaPagarTab.Name = "contaPagarTab";
+            this.contaPagarTab.Padding = new System.Windows.Forms.Padding(3);
+            this.contaPagarTab.Size = new System.Drawing.Size(552, 319);
+            this.contaPagarTab.TabIndex = 0;
+            this.contaPagarTab.Text = "Conta a Pagar";
+            // 
+            // correnteTable
+            // 
+            this.correnteTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.correnteTable.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.correnteTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.correnteTable.Location = new System.Drawing.Point(19, 17);
+            this.correnteTable.Name = "correnteTable";
+            this.correnteTable.ReadOnly = true;
+            this.correnteTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.correnteTable.Size = new System.Drawing.Size(514, 284);
+            this.correnteTable.TabIndex = 0;
+            // 
+            // contaReceberTab
+            // 
+            this.contaReceberTab.BackColor = System.Drawing.Color.DarkGray;
+            this.contaReceberTab.Controls.Add(this.correnteTableCl);
+            this.contaReceberTab.Location = new System.Drawing.Point(4, 22);
+            this.contaReceberTab.Name = "contaReceberTab";
+            this.contaReceberTab.Padding = new System.Windows.Forms.Padding(3);
+            this.contaReceberTab.Size = new System.Drawing.Size(552, 319);
+            this.contaReceberTab.TabIndex = 1;
+            this.contaReceberTab.Text = "Conta a Receber";
+            // 
+            // correnteTableCl
+            // 
+            this.correnteTableCl.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.correnteTableCl.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.correnteTableCl.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.correnteTableCl.Location = new System.Drawing.Point(18, 17);
+            this.correnteTableCl.Name = "correnteTableCl";
+            this.correnteTableCl.ReadOnly = true;
+            this.correnteTableCl.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.correnteTableCl.Size = new System.Drawing.Size(514, 284);
+            this.correnteTableCl.TabIndex = 1;
+            this.correnteTableCl.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.correnteTableCl_CellClick);
+            this.correnteTableCl.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.correnteTableCl_CellDoubleClick);
             // 
             // ContasCorrentes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.pictureBox3);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.correnteTable);
-            this.Controls.Add(this.radioCliente);
-            this.Controls.Add(this.radioFornecedor);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -348,11 +339,14 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.correnteTable)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.contaPagarTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.correnteTable)).EndInit();
+            this.contaReceberTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.correnteTableCl)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -363,17 +357,12 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.RadioButton radioFornecedor;
-        private System.Windows.Forms.RadioButton radioCliente;
-        private System.Windows.Forms.DataGridView correnteTable;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label dividaResult;
         private System.Windows.Forms.Label entidadeResult;
@@ -382,5 +371,10 @@
         private System.Windows.Forms.Button aprovaBtn;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button adiantaBtn;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage contaPagarTab;
+        private System.Windows.Forms.TabPage contaReceberTab;
+        private System.Windows.Forms.DataGridView correnteTable;
+        private System.Windows.Forms.DataGridView correnteTableCl;
     }
 }

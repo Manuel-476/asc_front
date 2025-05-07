@@ -64,6 +64,10 @@
             this.localEntregatxt = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.descontoFornecedorTxt = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.dataEntrega = new System.Windows.Forms.DateTimePicker();
+            this.label9 = new System.Windows.Forms.Label();
+            this.dataDocumento = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaArtigos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaCompra)).BeginInit();
             this.panel1.SuspendLayout();
@@ -86,7 +90,7 @@
             this.comprasBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.comprasBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comprasBtn.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.comprasBtn.Location = new System.Drawing.Point(890, 59);
+            this.comprasBtn.Location = new System.Drawing.Point(893, 59);
             this.comprasBtn.Name = "comprasBtn";
             this.comprasBtn.Size = new System.Drawing.Size(190, 33);
             this.comprasBtn.TabIndex = 34;
@@ -140,7 +144,7 @@
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(880, 427);
+            this.button1.Location = new System.Drawing.Point(903, 427);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(90, 29);
             this.button1.TabIndex = 28;
@@ -181,7 +185,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label3.Location = new System.Drawing.Point(399, 123);
+            this.label3.Location = new System.Drawing.Point(330, 123);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(82, 20);
             this.label3.TabIndex = 23;
@@ -189,9 +193,9 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(403, 149);
+            this.textBox1.Location = new System.Drawing.Point(326, 146);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(205, 20);
+            this.textBox1.Size = new System.Drawing.Size(145, 20);
             this.textBox1.TabIndex = 22;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
@@ -239,7 +243,7 @@
             this.documento.FormattingEnabled = true;
             this.documento.Location = new System.Drawing.Point(12, 145);
             this.documento.Name = "documento";
-            this.documento.Size = new System.Drawing.Size(214, 21);
+            this.documento.Size = new System.Drawing.Size(172, 21);
             this.documento.TabIndex = 18;
             this.documento.ValueMember = "FR";
             this.documento.SelectedIndexChanged += new System.EventHandler(this.documento_SelectedIndexChanged);
@@ -270,7 +274,7 @@
             // 
             this.codigoDocumentotxt.AutoSize = true;
             this.codigoDocumentotxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.codigoDocumentotxt.Location = new System.Drawing.Point(243, 146);
+            this.codigoDocumentotxt.Location = new System.Drawing.Point(197, 146);
             this.codigoDocumentotxt.Name = "codigoDocumentotxt";
             this.codigoDocumentotxt.Size = new System.Drawing.Size(0, 20);
             this.codigoDocumentotxt.TabIndex = 38;
@@ -284,7 +288,7 @@
             this.tabelaCompra.Name = "tabelaCompra";
             this.tabelaCompra.ReadOnly = true;
             this.tabelaCompra.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tabelaCompra.Size = new System.Drawing.Size(417, 251);
+            this.tabelaCompra.Size = new System.Drawing.Size(444, 251);
             this.tabelaCompra.TabIndex = 39;
             this.tabelaCompra.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabelaCompra_CellClick);
             // 
@@ -293,7 +297,7 @@
             this.eliminarBtn.BackColor = System.Drawing.Color.Red;
             this.eliminarBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.eliminarBtn.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.eliminarBtn.Location = new System.Drawing.Point(976, 427);
+            this.eliminarBtn.Location = new System.Drawing.Point(1001, 427);
             this.eliminarBtn.Name = "eliminarBtn";
             this.eliminarBtn.Size = new System.Drawing.Size(85, 29);
             this.eliminarBtn.TabIndex = 40;
@@ -311,7 +315,7 @@
             this.panel1.Controls.Add(this.comprasBtn);
             this.panel1.Location = new System.Drawing.Point(1, -2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1080, 95);
+            this.panel1.Size = new System.Drawing.Size(1097, 95);
             this.panel1.TabIndex = 41;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -347,7 +351,7 @@
             // 
             this.descontoTxt.Location = new System.Drawing.Point(931, 145);
             this.descontoTxt.Name = "descontoTxt";
-            this.descontoTxt.Size = new System.Drawing.Size(130, 20);
+            this.descontoTxt.Size = new System.Drawing.Size(155, 20);
             this.descontoTxt.TabIndex = 42;
             this.descontoTxt.Text = "0";
             this.descontoTxt.TextChanged += new System.EventHandler(this.descontoTxt_TextChanged);
@@ -359,7 +363,7 @@
             this.precoLiquido.AutoSize = true;
             this.precoLiquido.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.precoLiquido.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.precoLiquido.Location = new System.Drawing.Point(199, 96);
+            this.precoLiquido.Location = new System.Drawing.Point(205, 96);
             this.precoLiquido.Name = "precoLiquido";
             this.precoLiquido.Size = new System.Drawing.Size(54, 19);
             this.precoLiquido.TabIndex = 46;
@@ -438,11 +442,52 @@
             this.descontoFornecedorTxt.TabIndex = 50;
             this.descontoFornecedorTxt.Text = "label7";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.SystemColors.Control;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label8.Location = new System.Drawing.Point(638, 430);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(109, 20);
+            this.label8.TabIndex = 52;
+            this.label8.Text = "Data Entrega:";
+            // 
+            // dataEntrega
+            // 
+            this.dataEntrega.Location = new System.Drawing.Point(747, 432);
+            this.dataEntrega.Name = "dataEntrega";
+            this.dataEntrega.Size = new System.Drawing.Size(141, 20);
+            this.dataEntrega.TabIndex = 53;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label9.Location = new System.Drawing.Point(476, 119);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(48, 20);
+            this.label9.TabIndex = 55;
+            this.label9.Text = "Data:";
+            // 
+            // dataDocumento
+            // 
+            this.dataDocumento.Location = new System.Drawing.Point(477, 144);
+            this.dataDocumento.Name = "dataDocumento";
+            this.dataDocumento.Size = new System.Drawing.Size(128, 20);
+            this.dataDocumento.TabIndex = 56;
+            // 
             // Compra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1081, 461);
+            this.ClientSize = new System.Drawing.Size(1098, 461);
+            this.Controls.Add(this.dataDocumento);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.dataEntrega);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.descontoFornecedorTxt);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.localEntregatxt);
@@ -524,5 +569,9 @@
         private System.Windows.Forms.TextBox localEntregatxt;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label descontoFornecedorTxt;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.DateTimePicker dataEntrega;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.DateTimePicker dataDocumento;
     }
 }

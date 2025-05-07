@@ -95,7 +95,7 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.cots.Where(f => f.status != DocState.anulado && f.empresaId == StaticProperty.empresaId))
+                foreach (var item in StaticProperty.cots.Where(f => f.status != DocState.anulado && f.empresaId == StaticProperty.empresaId).ToList())
                 {
                     fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
 
@@ -133,11 +133,11 @@ namespace AscFrontEnd
                 var estado = string.Empty;
                 if (item.status == DocState.anulado) { estado = "Anulado"; }
                 else if (item.status == DocState.estornado) { estado = "Estornado"; }
-                else { estado = "activo"; }
+                else { estado = item.documento.Contains("ECF ") ? "Pendente" : "activo"; }
 
                 dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
-
             }
+
             dataGridView1.DataSource = dt;
         }
 

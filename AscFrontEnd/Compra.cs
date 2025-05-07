@@ -25,6 +25,7 @@ using static AscFrontEnd.DTOs.Enums.Enums;
 using static AscFrontEnd.Venda;
 using AscFrontEnd.Application.Validacao;
 using System.Globalization;
+using System.Xml;
 
 namespace AscFrontEnd
 {
@@ -144,7 +145,7 @@ namespace AscFrontEnd
 
         private async void salvarBtn_Click(object sender, EventArgs e)
         {
-              FaturaDetalhes form;
+           FaturaDetalhes form;
 
             HttpResponseMessage response = null;
             var clientGet = new HttpClient();
@@ -329,9 +330,10 @@ namespace AscFrontEnd
                 EncomendaFornecedorDTO ecfs = new EncomendaFornecedorDTO()
                 {
                     documento = codigoDocumentotxt.Text,
-                    data = DateTime.Now,
+                    data = DateTime.Parse(dataDocumento.Text),
                     fornecedorId = StaticProperty.entityId,
                     ecfArtigo = ecfArtigos,
+                    dataEntrega = DateTime.Parse(dataEntrega.Text),
                     empresaId = StaticProperty.empresaId,
                     local_entrega = localEntrega,
                     status = DTOs.Enums.Enums.DocState.ativo,
@@ -651,6 +653,12 @@ namespace AscFrontEnd
                     return;
                 }
 
+                if (float.Parse(precotxt.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) <= 0)
+                {
+                    MessageBox.Show("O preço nao pode ser igual a 0", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 codigo = StaticProperty.artigos.Where(art => art.id == artigoId).First().codigo;
 
                 if (compraArtigos.Where(x => x.codigo == codigo).Any())
@@ -936,6 +944,11 @@ namespace AscFrontEnd
             }
             else 
             {
+                if (documento.Text == "ECF")
+                {
+                    localEntregatxt.Enabled = true;
+                }
+
                 localEntregatxt.Enabled = true;
             }
 

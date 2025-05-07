@@ -1,5 +1,7 @@
-﻿using AscFrontEnd.DTOs.StaticsDto;
+﻿using AscFrontEnd.Application;
+using AscFrontEnd.DTOs.StaticsDto;
 using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,11 +33,14 @@ namespace AscFrontEnd
         private void ListasContasCorrentes_Load(object sender, EventArgs e)
         {
             entidadeTable = new DataTable();
+
             entidadeTable.Columns.Add("Numero", typeof(int));
             entidadeTable.Columns.Add("Documento", typeof(string));
             entidadeTable.Columns.Add("Valor", typeof(float));
 
             radioDivida.Checked = true;
+
+            entidadeTable.Rows.Clear();
 
             if (_entidade == Entidade.cliente)
             {
@@ -44,19 +49,19 @@ namespace AscFrontEnd
                     return;
                }
 
-                var ftResult = StaticProperty.fts.Where(ft => ft.clienteId == _entidadeId && ft.pago == OpcaoBinaria.Nao);
+                var ftResult = StaticProperty.fts.Where(ft => ft.clienteId == _entidadeId && ft.pago == OpcaoBinaria.Nao).ToList();
 
                 entidadeText.Text = StaticProperty.clientes.Where(c => c.id == _entidadeId).First().nome_fantasia;
-            
+               
                 // Adicionando linhas ao DataTable
-                foreach (var ft in ftResult)
+                foreach (var ft in ftResult.ToList())
                 {
                     float result = ft.ftArtigo.Sum(fa => (fa.preco * fa.qtd));
 
                     entidadeTable.Rows.Add(ft.id, ft.documento, result);
-
-                    correnteTable.DataSource = entidadeTable;
+                  
                 }
+                
             }
             else if (_entidade == Entidade.fornecedor) 
             {
@@ -76,9 +81,9 @@ namespace AscFrontEnd
 
                    entidadeTable.Rows.Add(vft.id,vft.documento , result);
 
-                   correnteTable.DataSource = entidadeTable;
                 }
             }
+            correnteTable.DataSource = entidadeTable;
         }
 
         private void correnteTable_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -90,9 +95,13 @@ namespace AscFrontEnd
                     // Obtém o valor da célula clicada
                     string id = correnteTable.Rows[e.RowIndex].Cells[0].Value.ToString();
 
-                    this.id = int.Parse(id);
+                    string codigoDocumento = correnteTable.Rows[e.RowIndex].Cells[1].Value.ToString();
 
-                    DocumentosDetalhesForm documentos = new DocumentosDetalhesForm("VFT",this.id,Entidade.fornecedor);
+                    var doc = Documento.GetCodigoDocumento(codigoDocumento);
+
+                    this.id = int.Parse(id);
+                    
+                    DocumentosDetalhesForm documentos = new DocumentosDetalhesForm(doc,this.id,_entidade);
                     documentos.ShowDialog();
                     /*  if (radioCliente.Checked)
                       {

@@ -54,6 +54,7 @@
             this.empresaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.relatoriosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configuracoesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.atualizarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -63,10 +64,12 @@
             this.totalVendaLabel = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.orderFornLabel = new System.Windows.Forms.Label();
+            this.orderClLabel = new System.Windows.Forms.Label();
             this.stockLabel = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -98,11 +101,13 @@
             this.empresaToolStripMenuItem,
             this.relatoriosToolStripMenuItem,
             this.configuracoesToolStripMenuItem,
+            this.atualizarToolStripMenuItem,
             this.sairToolStripMenuItem});
+            this.menuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menuStrip1.Size = new System.Drawing.Size(1217, 27);
+            this.menuStrip1.Size = new System.Drawing.Size(1328, 27);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -315,6 +320,14 @@
             this.configuracoesToolStripMenuItem.Text = "Configurações";
             this.configuracoesToolStripMenuItem.Click += new System.EventHandler(this.configuracoesToolStripMenuItem_Click);
             // 
+            // atualizarToolStripMenuItem
+            // 
+            this.atualizarToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.atualizarToolStripMenuItem.Name = "atualizarToolStripMenuItem";
+            this.atualizarToolStripMenuItem.Size = new System.Drawing.Size(74, 23);
+            this.atualizarToolStripMenuItem.Text = "Atualizar";
+            this.atualizarToolStripMenuItem.Click += new System.EventHandler(this.atualizarToolStripMenuItem_Click);
+            // 
             // sairToolStripMenuItem
             // 
             this.sairToolStripMenuItem.ForeColor = System.Drawing.Color.White;
@@ -333,7 +346,7 @@
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Location = new System.Drawing.Point(0, 318);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1217, 132);
+            this.panel1.Size = new System.Drawing.Size(1328, 132);
             this.panel1.TabIndex = 29;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -347,7 +360,7 @@
             this.groupBox3.ForeColor = System.Drawing.SystemColors.Control;
             this.groupBox3.Location = new System.Drawing.Point(931, 16);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(274, 104);
+            this.groupBox3.Size = new System.Drawing.Size(385, 104);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Custos e Perdas";
@@ -415,6 +428,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.orderFornLabel);
+            this.groupBox1.Controls.Add(this.orderClLabel);
             this.groupBox1.Controls.Add(this.stockLabel);
             this.groupBox1.Controls.Add(this.pictureBox2);
             this.groupBox1.Font = new System.Drawing.Font("Arial", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -426,11 +441,37 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Noficacoes";
             // 
+            // orderFornLabel
+            // 
+            this.orderFornLabel.AutoSize = true;
+            this.orderFornLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.orderFornLabel.Location = new System.Drawing.Point(103, 71);
+            this.orderFornLabel.Name = "orderFornLabel";
+            this.orderFornLabel.Size = new System.Drawing.Size(108, 16);
+            this.orderFornLabel.TabIndex = 3;
+            this.orderFornLabel.Text = "Sem Notificação";
+            this.orderFornLabel.Click += new System.EventHandler(this.orderFornLabel_Click);
+            this.orderFornLabel.MouseLeave += new System.EventHandler(this.orderFornLabel_MouseLeave);
+            this.orderFornLabel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.orderFornLabel_MouseMove);
+            // 
+            // orderClLabel
+            // 
+            this.orderClLabel.AutoSize = true;
+            this.orderClLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.orderClLabel.Location = new System.Drawing.Point(103, 44);
+            this.orderClLabel.Name = "orderClLabel";
+            this.orderClLabel.Size = new System.Drawing.Size(108, 16);
+            this.orderClLabel.TabIndex = 2;
+            this.orderClLabel.Text = "Sem Notificação";
+            this.orderClLabel.Click += new System.EventHandler(this.orderClLabel_Click);
+            this.orderClLabel.MouseLeave += new System.EventHandler(this.orderClLabel_MouseLeave);
+            this.orderClLabel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.orderClLabel_MouseMove);
+            // 
             // stockLabel
             // 
             this.stockLabel.AutoSize = true;
             this.stockLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.stockLabel.Location = new System.Drawing.Point(103, 21);
+            this.stockLabel.Location = new System.Drawing.Point(103, 18);
             this.stockLabel.Name = "stockLabel";
             this.stockLabel.Size = new System.Drawing.Size(108, 16);
             this.stockLabel.TabIndex = 1;
@@ -450,6 +491,11 @@
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 150000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -459,21 +505,17 @@
             this.pictureBox1.Image = global::AscFrontEnd.Properties.Resources.asc;
             this.pictureBox1.Location = new System.Drawing.Point(0, 30);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1217, 282);
+            this.pictureBox1.Size = new System.Drawing.Size(1328, 282);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
-            // 
-            // timer1
-            // 
-            this.timer1.Interval = 3000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // MenuPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(24)))), ((int)(((byte)(229)))));
-            this.ClientSize = new System.Drawing.Size(1217, 450);
+            this.ClientSize = new System.Drawing.Size(1328, 450);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
@@ -482,6 +524,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MenuPrincipal";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MenuPrincipal_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MenuPrincipal_FormClosed);
             this.Load += new System.EventHandler(this.MenuPrincipal_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -541,5 +585,8 @@
         private System.Windows.Forms.Label totalVendaLabel;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ToolStripMenuItem atualizarToolStripMenuItem;
+        private System.Windows.Forms.Label orderFornLabel;
+        private System.Windows.Forms.Label orderClLabel;
     }
 }

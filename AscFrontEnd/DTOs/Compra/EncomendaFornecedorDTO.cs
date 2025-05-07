@@ -12,6 +12,7 @@ namespace AscFrontEnd.DTOs
         public string documento { get; set; }
         public int fornecedorId { get; set; }
         public string local_entrega { get; set; }
+        public DateTime dataEntrega { get; set; }
         public DocState status { get; set; }
         public DateTime data { get; set; }
         public DateTime created { get; set; } = DateTime.Now;

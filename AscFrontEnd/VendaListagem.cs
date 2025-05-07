@@ -99,7 +99,8 @@ namespace AscFrontEnd
                 var estado = string.Empty;
                 if (item.status == DocState.anulado) { estado = "Anulado"; }
                 else if (item.status == DocState.estornado) { estado = "Estornado"; }
-                else { estado = "activo"; }
+                else if(item.status == DocState.resolvido){ estado = "activo"; }
+                else { estado = item.documento.Contains("ECL ")?"Pendente": "activo"; }
 
                 dt.Rows.Add(item.id, clienteNome, item.documento, estado, item.data);
             }

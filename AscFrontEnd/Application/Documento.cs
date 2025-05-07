@@ -42,6 +42,27 @@ namespace AscFrontEnd.Application
             }
         }
 
-        
+        public static int GetNumeroDocumento(string documento)
+        {
+            int numDoc = int.Parse(documento.Substring(documento.IndexOf("/") + 1));
+
+            return numDoc;
+        }
+
+        public static string GetSerieDocumento(string documento)
+        {
+            string serie = documento.Substring(documento.IndexOf(" ") + 1, (documento.IndexOf("/") - (documento.IndexOf(" ") + 1)));
+
+            return serie;
+        }
+
+        public static string GetCodigoDocumento(string documento)
+        {
+            string codigo = documento.Substring(0, (documento.IndexOf(" ")));
+
+            return codigo;
+        }
+
+
     }
 }

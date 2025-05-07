@@ -1,4 +1,5 @@
 ﻿using AscFrontEnd.Application;
+using AscFrontEnd.DTOs;
 using AscFrontEnd.DTOs.Funcionario;
 using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.DTOs.Stock;
@@ -21,13 +22,23 @@ namespace AscFrontEnd
     {
         UserDTO _user;
         List<string> _notifications;
+        List<string> _notificationsOrder;
+        List<string> _notificationsOrderForn;
+
         Requisicoes _requisicao;
+        List<EncomendaClienteDTO> _encomendaPendentes;
+        List<EncomendaFornecedorDTO> _encomendaPendentesForn;
         public MenuPrincipal(UserDTO user)
         {
             InitializeComponent();
             _user = user;
             _notifications = new List<string>();
+            _notificationsOrder = new List<string>();
+            _notificationsOrderForn = new List<string>();
             _requisicao = new Requisicoes();
+
+            _encomendaPendentes = new List<EncomendaClienteDTO>();
+            _encomendaPendentesForn = new List<EncomendaFornecedorDTO>();
         }
 
 
@@ -211,6 +222,17 @@ namespace AscFrontEnd
             
             await this.NotificationStockAsync(qtdMinim);
 
+            await NotificationOrderAsync();
+
+            await NotificationOrderFornAsync();
+
+            if(_notifications.Count<=0 && _notificationsOrder.Count <= 0 && _notificationsOrderForn.Count <= 0) 
+            {
+                stockLabel.Text = "Sem Notificação";
+                orderClLabel.Text = "";
+                orderFornLabel.Text = "";
+            }
+
             totalVendaLabel.Text = $"Total Vendas:\n{DashBoard.VendaTotal().ToString("F2")}";
             totalCompraLabel.Text = $"Total Compras:\n{DashBoard.CompraTotal().ToString("F2")}";
 
@@ -288,8 +310,79 @@ namespace AscFrontEnd
             }
             if (_notifications.Count > 0)
             {
-                stockLabel.Text = $"{_notifications.Count} artigo(s)\nterminando no Stock";
+                stockLabel.Text = $"{_notifications.Count} artigo(s) terminando";
             }
+            else 
+            {
+                stockLabel.Text = "";
+            }
+        }
+
+        public async Task NotificationOrderAsync()
+        {
+            List<EncomendaClienteDTO> ecls = StaticProperty.ecls.Where(x => x.empresaId == StaticProperty.empresaId && x.status == DocState.ativo).ToList();
+
+            _notificationsOrder.Clear();
+            _encomendaPendentes.Clear();
+
+            foreach (var ecl in ecls)
+            {
+                double i = 3;
+                while (i >= 0)
+                {
+
+                    if (DateTime.Now.AddDays(i).Date == ecl.dataEntrega.Date)
+                    {
+                        _notificationsOrder.Add($"Faltam {i} dia(s) para fazer a entrega da encomenda do documento {ecl.documento}");
+                        _encomendaPendentes.Add(ecl);
+                    }
+
+                    i--;
+                }
+            }
+            if (_notificationsOrder.Count > 0)
+            {
+                orderClLabel.Text = $"{_notificationsOrder.Count} encomenda(s) por entregar";
+            }
+            else 
+            {
+                orderClLabel.Text = "";
+            }
+
+            NotificacaoOrderForm._encomendas = _encomendaPendentes.ToList();
+        }
+
+        public async Task NotificationOrderFornAsync()
+        {
+            List<EncomendaFornecedorDTO> ecfs = StaticProperty.ecfs.Where(x => x.empresaId == StaticProperty.empresaId && x.status == DocState.ativo).ToList();
+
+            _notificationsOrderForn.Clear();
+            _encomendaPendentesForn.Clear();
+
+            foreach (var ecf in ecfs)
+            {
+                double i = 3;
+                while (i >= 0)
+                {
+
+                    if (DateTime.Now.AddDays(i).Date == ecf.dataEntrega.Date)
+                    {
+                        _notificationsOrderForn.Add($"Faltam {i} dia(s) para receber a encomenda do documento {ecf.documento}");
+                        _encomendaPendentesForn.Add(ecf);
+                    }
+
+                    i--;
+                }
+            }
+            if (_notificationsOrderForn.Count > 0)
+            {
+                orderFornLabel.Text = $"{_notificationsOrderForn.Count} encomenda(s) por receber";
+            }
+            else 
+            {
+                orderFornLabel.Text = $"";
+            }
+            NotificacaoOrderForm._encomendasForn = _encomendaPendentesForn.ToList();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -352,9 +445,76 @@ namespace AscFrontEnd
 
         private async void timer1_Tick(object sender, EventArgs e)
         {
-           await _requisicao.SystemRefresh();
+            RefreshSystem();
+        }
+
+        private async void atualizarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RefreshSystem();
+        }
+
+        private async void orderClLabel_Click(object sender, EventArgs e)
+        {
+            var form = new NotificacaoOrderForm(Entidade.cliente,_user);
+
+            form.ShowDialog();
+        }
+        
+
+        private async void orderFornLabel_Click(object sender, EventArgs e)
+        {
+            var form =  new NotificacaoOrderForm(Entidade.fornecedor,_user);
+
+            form.ShowDialog();
+        }
+
+        private void orderClLabel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_notificationsOrder.Count > 0)
+            {
+                orderClLabel.Font = new Font(stockLabel.Font, stockLabel.Font.Style | FontStyle.Underline);
+            }
+        }
+
+        private void orderFornLabel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_notificationsOrderForn.Count > 0)
+            {
+                orderFornLabel.Font = new Font(stockLabel.Font, stockLabel.Font.Style | FontStyle.Underline);
+            }
+        }
+
+        private void orderClLabel_MouseLeave(object sender, EventArgs e)
+        {
+            orderClLabel.Font = new Font(stockLabel.Font, FontStyle.Bold | FontStyle.Italic);
+        }
+
+        private void orderFornLabel_MouseLeave(object sender, EventArgs e)
+        {
+            orderFornLabel.Font = new Font(stockLabel.Font, FontStyle.Bold | FontStyle.Italic);
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public async void RefreshSystem() 
+        {
+            await _requisicao.SystemRefresh();
 
             MenuPrincipal_Load(this, EventArgs.Empty);
+        }
+
+        private void MenuPrincipal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            timer1.Stop();
+            timer1.Dispose();
+        }
+
+        private void MenuPrincipal_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
         }
     }
 }

@@ -499,6 +499,12 @@
     <Compile Include="MotivoAnulacao.Designer.cs">
       <DependentUpon>MotivoAnulacao.cs</DependentUpon>
     </Compile>
+    <Compile Include="NotificacaoOrderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NotificacaoOrderForm.Designer.cs">
+      <DependentUpon>NotificacaoOrderForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="NotificacoForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -775,6 +781,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MotivoAnulacao.resx">
       <DependentUpon>MotivoAnulacao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotificacaoOrderForm.resx">
+      <DependentUpon>NotificacaoOrderForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NotificacoForm.resx">
       <DependentUpon>NotificacoForm.cs</DependentUpon>
