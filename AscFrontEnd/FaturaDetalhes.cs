@@ -30,13 +30,17 @@ namespace AscFrontEnd
         int id;
         FrDTO _fr;
         GrDTO _gr;
+
         VfrDTO _vfr;
         VgrDTO _vgr;
+
         NpDTO _np;
         ReciboDTO _re;
 
+
         int _documentoId;
         string _documento;
+
         DateTime _data;
 
         List<ParcelasFormaPagamentoDTO> parcelas;
@@ -123,7 +127,7 @@ namespace AscFrontEnd
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
 
             _documentoId = np.id;
-            _documento = np.documento;
+            _documento= np.documento;
 
             valorTxt.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
             valorTxt.TextChanged += ValidacaoForms.TratarTextChanged;

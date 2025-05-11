@@ -104,7 +104,7 @@
             // 
             // formaPagamentoTable
             // 
-            this.formaPagamentoTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.formaPagamentoTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.formaPagamentoTable.BackgroundColor = System.Drawing.Color.White;
             this.formaPagamentoTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.formaPagamentoTable.Location = new System.Drawing.Point(12, 200);

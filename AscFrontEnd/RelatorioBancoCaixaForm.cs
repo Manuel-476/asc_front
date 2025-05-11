@@ -402,8 +402,8 @@ namespace AscFrontEnd
                         if (StaticProperty.fts.Where(x => x.documento == $"{venda.documento} {venda.serie}/{venda.numeroDocumento}").Any())
                         {
                             docFinanceiro = StaticProperty.fts.Where(x => x.documento == $"{venda.documento} {venda.serie}/{venda.numeroDocumento}").Any() ?
-                                            StaticProperty.recibos.Where(x => x.ftId == StaticProperty.fts.Where(f => f.documento == $"{venda.documento} {venda.serie}/{venda.numeroDocumento}").First().id).Any() ?
-                                            StaticProperty.recibos.Where(x => x.ftId == StaticProperty.fts.Where(f => f.documento == $"{venda.documento} {venda.serie}/{venda.numeroDocumento}").First().id).First().documento : "-" : "-";
+                                            StaticProperty.recibos.Where(x => x.ftRecibos.First().ftId == StaticProperty.fts.Where(f => f.documento == $"{venda.documento} {venda.serie}/{venda.numeroDocumento}").First().id).Any() ?
+                                            StaticProperty.recibos.Where(x => x.ftRecibos.First().ftId == StaticProperty.fts.Where(f => f.documento == $"{venda.documento} {venda.serie}/{venda.numeroDocumento}").First().id).First().documento : "-" : "-";
 
                             e.Graphics.DrawString($"{p.documento}", fontNormal, cor, new Rectangle(50, 290 + i, 150, 305 + i));
                             e.Graphics.DrawString($"{cliente}", fontNormal, cor, new Rectangle(150, 290 + i, 250, 305 + i));
@@ -576,8 +576,8 @@ namespace AscFrontEnd
                         if (StaticProperty.vfts.Where(x => x.documento == $"{compra.documento} {compra.serie}/{compra.numeroDocumento}").Any())
                         {
                             docFinanceiro = StaticProperty.vfts.Where(x => x.documento == $"{compra.documento} {compra.serie}/{compra.numeroDocumento}").Any() ?
-                                            StaticProperty.nps.Where(x => x.vftId == StaticProperty.vfts.Where(f => f.documento == $"{compra.documento} {compra.serie}/{compra.numeroDocumento}").First().id).Any() ?
-                                            StaticProperty.nps.Where(x => x.vftId == StaticProperty.vfts.Where(f => f.documento == $"{compra.documento} {compra.serie}/{compra.numeroDocumento}").First().id).First().documento : "-" : "-";
+                                            StaticProperty.nps.Where(x => x.vftNps.First().vftId == StaticProperty.vfts.Where(f => f.documento == $"{compra.documento} {compra.serie}/{compra.numeroDocumento}").First().id).Any() ?
+                                            StaticProperty.nps.Where(x => x.vftNps.First().vftId == StaticProperty.vfts.Where(f => f.documento == $"{compra.documento} {compra.serie}/{compra.numeroDocumento}").First().id).First().documento : "-" : "-";
 
                             e.Graphics.DrawString($"{p.documento}", fontNormal, cor, new Rectangle(50, 290 + i, 150, 305 + i));
                             e.Graphics.DrawString($"{cliente}", fontNormal, cor, new Rectangle(150, 290 + i, 250, 305 + i));

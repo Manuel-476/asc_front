@@ -18,6 +18,7 @@ namespace AscFrontEnd.DTOs.ContasCorrentes
         public int fornecedorId { get; set; }
         public DateTime created_at { get; set; }
         public FornecedorDTO Fornecedor { get; set; }
-        ICollection<RegAdiantamentoFornDTO> regAdiantamentos { get; set; }
+        public ICollection<AdiantaVfrDTO> adiantaVfrs { get; set; }
     }
+
 }

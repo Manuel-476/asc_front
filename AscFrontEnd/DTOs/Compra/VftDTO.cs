@@ -11,7 +11,6 @@ namespace ERP_Buyer.Application.DTOs.Documentos
     public class VftDTO
     {
         public int id { get; set; }
-
         public string documento { get; set; }
         public int fornecedorId { get; set; }
         public DocState status { get; set; }
@@ -20,7 +19,7 @@ namespace ERP_Buyer.Application.DTOs.Documentos
         public DateTime data { get; set; }
         public int empresaId { get; set; }
         public List<VftArtigoDTO> vftArtigo { get; set; }
-        public ICollection<NpDTO> nps { get; set; }
+        public ICollection<VftNpDTO> vftNps { get; set; }
         public FornecedorDTO fornecedor { get; set; }
     }
 }

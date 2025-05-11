@@ -39,10 +39,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.documentoLabel = new System.Windows.Forms.Label();
             this.preVisualizacaoDialog = new System.Windows.Forms.PrintPreviewDialog();
             this.Imprimir = new System.Drawing.Printing.PrintDocument();
             this.tabelaFaturas = new System.Windows.Forms.DataGridView();
+            this.listDocumentos = new System.Windows.Forms.ListBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -84,7 +84,7 @@
             // 
             this.entidadeLabel.AutoSize = true;
             this.entidadeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.entidadeLabel.Location = new System.Drawing.Point(37, 91);
+            this.entidadeLabel.Location = new System.Drawing.Point(11, 91);
             this.entidadeLabel.Name = "entidadeLabel";
             this.entidadeLabel.Size = new System.Drawing.Size(142, 24);
             this.entidadeLabel.TabIndex = 2;
@@ -114,17 +114,19 @@
             // 
             // valorTxt
             // 
-            this.valorTxt.Location = new System.Drawing.Point(37, 152);
+            this.valorTxt.Location = new System.Drawing.Point(12, 152);
             this.valorTxt.Name = "valorTxt";
-            this.valorTxt.Size = new System.Drawing.Size(290, 20);
+            this.valorTxt.Size = new System.Drawing.Size(315, 20);
             this.valorTxt.TabIndex = 5;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(37, 133);
+            this.label3.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label3.Location = new System.Drawing.Point(15, 133);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(34, 13);
+            this.label3.Size = new System.Drawing.Size(44, 17);
             this.label3.TabIndex = 6;
             this.label3.Text = "Valor:";
             // 
@@ -133,9 +135,9 @@
             this.button1.BackColor = System.Drawing.SystemColors.Highlight;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(37, 213);
+            this.button1.Location = new System.Drawing.Point(450, 345);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(163, 23);
+            this.button1.Size = new System.Drawing.Size(163, 29);
             this.button1.TabIndex = 7;
             this.button1.Text = "Salvar";
             this.button1.UseVisualStyleBackColor = false;
@@ -147,19 +149,10 @@
             this.groupBox1.Controls.Add(this.dividaLabel);
             this.groupBox1.Location = new System.Drawing.Point(450, 91);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(155, 87);
+            this.groupBox1.Size = new System.Drawing.Size(174, 87);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Condicao";
-            // 
-            // documentoLabel
-            // 
-            this.documentoLabel.AutoSize = true;
-            this.documentoLabel.Location = new System.Drawing.Point(447, 196);
-            this.documentoLabel.Name = "documentoLabel";
-            this.documentoLabel.Size = new System.Drawing.Size(60, 13);
-            this.documentoLabel.TabIndex = 9;
-            this.documentoLabel.Text = "documento";
             // 
             // preVisualizacaoDialog
             // 
@@ -182,21 +175,29 @@
             this.tabelaFaturas.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.tabelaFaturas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.tabelaFaturas.GridColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.tabelaFaturas.Location = new System.Drawing.Point(40, 261);
+            this.tabelaFaturas.Location = new System.Drawing.Point(12, 184);
             this.tabelaFaturas.Name = "tabelaFaturas";
             this.tabelaFaturas.ReadOnly = true;
             this.tabelaFaturas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tabelaFaturas.Size = new System.Drawing.Size(568, 113);
+            this.tabelaFaturas.Size = new System.Drawing.Size(415, 190);
             this.tabelaFaturas.TabIndex = 10;
             this.tabelaFaturas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabelaFaturas_CellClick);
+            // 
+            // listDocumentos
+            // 
+            this.listDocumentos.FormattingEnabled = true;
+            this.listDocumentos.Location = new System.Drawing.Point(450, 184);
+            this.listDocumentos.Name = "listDocumentos";
+            this.listDocumentos.Size = new System.Drawing.Size(174, 121);
+            this.listDocumentos.TabIndex = 11;
             // 
             // LiquidaDivida
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(636, 386);
+            this.Controls.Add(this.listDocumentos);
             this.Controls.Add(this.tabelaFaturas);
-            this.Controls.Add(this.documentoLabel);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label3);
@@ -209,7 +210,6 @@
             this.Name = "LiquidaDivida";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "LiquidaDivida";
             this.Load += new System.EventHandler(this.LiquidaDivida_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -234,9 +234,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label documentoLabel;
         private System.Windows.Forms.PrintPreviewDialog preVisualizacaoDialog;
         private System.Drawing.Printing.PrintDocument Imprimir;
         private System.Windows.Forms.DataGridView tabelaFaturas;
+        private System.Windows.Forms.ListBox listDocumentos;
     }
 }

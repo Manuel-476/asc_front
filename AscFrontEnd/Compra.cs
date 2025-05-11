@@ -176,7 +176,7 @@ namespace AscFrontEnd
                 {
                     artigos.Add(new VfrArtigoDTO()
                     {
-                        artigoId = artigoId,
+                        artigoId = compraArtigo.id,
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
                         iva = compraArtigo.iva,
@@ -213,7 +213,7 @@ namespace AscFrontEnd
                 {
                     vftArtigos.Add(new VftArtigoDTO()
                     {
-                        artigoId = artigoId,
+                        artigoId = compraArtigo.id,
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
                         iva = compraArtigo.iva,
@@ -246,7 +246,7 @@ namespace AscFrontEnd
                 {
                     vgtArtigos.Add(new VgtArtigoDTO()
                     {
-                        artigoId = artigoId,
+                        artigoId = compraArtigo.id,
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
                         iva = compraArtigo.iva,
@@ -278,7 +278,7 @@ namespace AscFrontEnd
                 {
                     vgrArtigos.Add(new VgrArtigoDTO()
                     {
-                        artigoId = artigoId,
+                        artigoId = compraArtigo.id,
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
                         iva = compraArtigo.iva,
@@ -318,7 +318,7 @@ namespace AscFrontEnd
                 {
                     ecfArtigos.Add(new EcfArtigoDTO()
                     {
-                        artigoId = artigoId,
+                        artigoId = compraArtigo.id,
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
                         iva = compraArtigo.iva,
@@ -357,7 +357,7 @@ namespace AscFrontEnd
                     {
                         vncArtigos.Add(new VncArtigoDTO()
                         {
-                            artigoId = artigoId,
+                            artigoId = compraArtigo.id,
                             preco = compraArtigo.preco,
                             qtd = compraArtigo.qtd,
                             iva = compraArtigo.iva,
@@ -406,7 +406,7 @@ namespace AscFrontEnd
                 {
                     vndArtigos.Add(new VndArtigoDTO()
                     {
-                        artigoId = artigoId,
+                        artigoId = compraArtigo.id,
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
                         iva = compraArtigo.iva,
@@ -430,7 +430,7 @@ namespace AscFrontEnd
                 {
                     pcoArtigos.Add(new PedidoCotacaoArtigoDTO()
                     {
-                        artigoId = artigoId,
+                        artigoId = compraArtigo.id,
                         preco = compraArtigo.preco,
                         iva = compraArtigo.iva,
                         qtd = compraArtigo.qtd,
@@ -464,7 +464,7 @@ namespace AscFrontEnd
                 {
                     cotArtigos.Add(new CotacaoArtigoDTO()
                     {
-                        artigoId = artigoId,
+                        artigoId = compraArtigo.id,
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
                         iva = compraArtigo.iva,
@@ -679,7 +679,7 @@ namespace AscFrontEnd
                 {
                     var cArtigo = new CompraArtigo
                     {
-                        id = i,
+                        id = ca.id,
                         codigo = ca.codigo,
                         preco = ca.preco,
                         qtd = ca.qtd,
@@ -700,7 +700,7 @@ namespace AscFrontEnd
 
                 compraArtigos.Add(new CompraArtigo()
                 {
-                    id = idCompraArtigo,
+                    id = artigoId,
                     codigo = codigo,
                     preco = float.Parse(preco, CultureInfo.InvariantCulture),
                     qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
@@ -711,7 +711,7 @@ namespace AscFrontEnd
 
                 if (documento.Text == "VFR")
                 {
-                    artigos.Add(new VfrArtigoDTO()
+                   /* artigos.Add(new VfrArtigoDTO()
                     {
                         artigoId = artigoId,
                         preco = float.Parse(preco, CultureInfo.InvariantCulture),
@@ -719,7 +719,7 @@ namespace AscFrontEnd
                         iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
                         desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
                     });
-
+                   */
                     foreach (var vfr in compraArtigos)
                     {
 
@@ -731,7 +731,7 @@ namespace AscFrontEnd
 
                 if (documento.Text == "VFT")
                 {
-                    vftArtigos.Add(new VftArtigoDTO()
+                   /* vftArtigos.Add(new VftArtigoDTO()
                     {
                         artigoId = artigoId,
                         preco = float.Parse(preco, CultureInfo.InvariantCulture),
@@ -740,7 +740,7 @@ namespace AscFrontEnd
                         desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
 
                     });
-
+                   */
                     foreach (var vft in compraArtigos)
                     {
                         idCompraArtigo = tabelaCompra.Rows.Count;
@@ -752,7 +752,7 @@ namespace AscFrontEnd
 
                 if (documento.Text == "ECF")
                 {
-                    ecfArtigos.Add(new EcfArtigoDTO()
+                   /* ecfArtigos.Add(new EcfArtigoDTO()
                     {
                         artigoId = artigoId,
                         preco = float.Parse(preco, CultureInfo.InvariantCulture),
@@ -760,7 +760,7 @@ namespace AscFrontEnd
                         iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
                         desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
                     });
-
+                   */
 
                     foreach (var ecf in compraArtigos)
                     {
@@ -773,14 +773,14 @@ namespace AscFrontEnd
 
                 if (documento.Text == "PCO")
                 {
-                    pcoArtigos.Add(new PedidoCotacaoArtigoDTO()
+                   /* pcoArtigos.Add(new PedidoCotacaoArtigoDTO()
                     {
                         artigoId = artigoId,
                         preco = float.Parse(preco, CultureInfo.InvariantCulture),
                         qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
                         iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
                         desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
-                    });
+                    });*/
 
 
                     foreach (var pco in compraArtigos)
@@ -794,7 +794,7 @@ namespace AscFrontEnd
 
                 if (documento.Text == "COT")
                 {
-                    cotArtigos.Add(new CotacaoArtigoDTO()
+                  /*  cotArtigos.Add(new CotacaoArtigoDTO()
                     {
 
                         artigoId = artigoId,
@@ -802,7 +802,7 @@ namespace AscFrontEnd
                         qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
                         iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
                         desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
-                    });
+                    });*/
 
 
                     foreach (var cot in compraArtigos)
@@ -816,14 +816,14 @@ namespace AscFrontEnd
 
                 if (documento.Text == "VND")
                 {
-                    vndArtigos.Add(new VndArtigoDTO()
+                   /* vndArtigos.Add(new VndArtigoDTO()
                     {
                         artigoId = artigoId,
                         preco = float.Parse(preco, CultureInfo.InvariantCulture),
                         qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
                         iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
                         desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
-                    });
+                    });*/
 
                     foreach (var vnd in compraArtigos)
                     {
@@ -835,14 +835,14 @@ namespace AscFrontEnd
 
                 if (documento.Text == "VNC")
                 {
-                    vncArtigos.Add(new VncArtigoDTO()
+                   /* vncArtigos.Add(new VncArtigoDTO()
                     {
                         artigoId = artigoId,
                         preco = float.Parse(preco, CultureInfo.InvariantCulture),
                         qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
                         iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
                         desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
-                    });
+                    });*/
 
                     foreach (var vnc in compraArtigos)
                     {
@@ -856,14 +856,14 @@ namespace AscFrontEnd
                 }
                 if (documento.Text == "VGT")
                 {
-                    vncArtigos.Add(new VncArtigoDTO()
+                   /* vncArtigos.Add(new VncArtigoDTO()
                     {
                         artigoId = artigoId,
                         preco = float.Parse(preco, CultureInfo.InvariantCulture),
                         qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
                         iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
                         desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
-                    });
+                    });*/
 
                     foreach (var vgt in compraArtigos)
                     {
@@ -872,12 +872,9 @@ namespace AscFrontEnd
                         tabelaCompra.DataSource = dtCompra;
                     }
                 }
-                artigoId = 0;
-
-
                 totalAgragado(compraArtigos);
 
-
+                artigoId = 0;
             }
             catch { return; }
         }
@@ -963,19 +960,12 @@ namespace AscFrontEnd
                 if (row != null && row.Index >= 0) // Verifica se a linha está válida
                 {
                     int id = int.Parse(row.Cells[0].Value?.ToString()); // Substitua 0 pelo índice da coluna desejada
-                                                                        // Ou faça algo mais útil com o valor
-                    idCompra.Add(id);
+
+                    var result = compraArtigos.Where(c => c.id == id).First();
+
+                    compraArtigos.Remove(result);
                 }
-            }
-
-            foreach (int id in idCompra)
-            {
-                var result = compraArtigos.Where(c => c.id == id).First();
-
-                int index = compraArtigos.IndexOf(result);
-
-                compraArtigos.RemoveAt(index);
-            }
+            }       
 
             dtCompra.Rows.Clear();
             tabelaCompra.DataSource = dtCompra;
@@ -1283,13 +1273,15 @@ namespace AscFrontEnd
             }
         }
 
-        private void Compra_FormClosing(object sender, FormClosingEventArgs e)
+        private async void Compra_FormClosing(object sender, FormClosingEventArgs e)
         {
             timerRefresh.Stop();
             timerRefresh.Dispose();
 
             StaticProperty.nome = string.Empty;
             StaticProperty.entityId = 0;
+
+            await new Requisicoes().SystemRefresh();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

@@ -28,10 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.adiantaBtn = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.aprovaBtn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -50,6 +49,8 @@
             this.correnteTable = new System.Windows.Forms.DataGridView();
             this.contaReceberTab = new System.Windows.Forms.TabPage();
             this.correnteTableCl = new System.Windows.Forms.DataGridView();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -64,9 +65,8 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panel1.Controls.Add(this.adiantaBtn);
             this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.aprovaBtn);
+            this.panel1.Controls.Add(this.adiantaBtn);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Location = new System.Drawing.Point(-2, -2);
@@ -79,41 +79,13 @@
             this.adiantaBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.adiantaBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.adiantaBtn.ForeColor = System.Drawing.Color.White;
-            this.adiantaBtn.Location = new System.Drawing.Point(392, 53);
+            this.adiantaBtn.Location = new System.Drawing.Point(533, 53);
             this.adiantaBtn.Name = "adiantaBtn";
             this.adiantaBtn.Size = new System.Drawing.Size(129, 33);
             this.adiantaBtn.TabIndex = 27;
             this.adiantaBtn.Text = "Adiantamento";
             this.adiantaBtn.UseVisualStyleBackColor = false;
             this.adiantaBtn.Click += new System.EventHandler(this.adiantaBtn_Click);
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(527, 53);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(129, 33);
-            this.button1.TabIndex = 26;
-            this.button1.Text = "Documentos";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // aprovaBtn
-            // 
-            this.aprovaBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.aprovaBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.aprovaBtn.ForeColor = System.Drawing.Color.White;
-            this.aprovaBtn.Location = new System.Drawing.Point(662, 53);
-            this.aprovaBtn.Name = "aprovaBtn";
-            this.aprovaBtn.Size = new System.Drawing.Size(137, 33);
-            this.aprovaBtn.TabIndex = 25;
-            this.aprovaBtn.Text = "Aprovações";
-            this.aprovaBtn.UseVisualStyleBackColor = false;
-            this.aprovaBtn.Click += new System.EventHandler(this.aprovaBtn_Click);
-            this.aprovaBtn.MouseLeave += new System.EventHandler(this.aprovaBtn_MouseLeave);
-            this.aprovaBtn.MouseMove += new System.Windows.Forms.MouseEventHandler(this.aprovaBtn_MouseMove);
             // 
             // label2
             // 
@@ -292,6 +264,9 @@
             this.correnteTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.correnteTable.Size = new System.Drawing.Size(514, 284);
             this.correnteTable.TabIndex = 0;
+            this.correnteTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.correnteTable_CellClick_1);
+            this.correnteTable.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.correnteTable_CellContentDoubleClick);
+            this.correnteTable.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.correnteTable_CellDoubleClick_1);
             // 
             // contaReceberTab
             // 
@@ -318,6 +293,24 @@
             this.correnteTableCl.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.correnteTableCl_CellClick);
             this.correnteTableCl.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.correnteTableCl_CellDoubleClick);
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(668, 53);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(129, 33);
+            this.button1.TabIndex = 28;
+            this.button1.Text = "Atualizar";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // ContasCorrentes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -335,6 +328,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ContasCorrentes";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ContasCorrentes_FormClosing);
             this.Load += new System.EventHandler(this.ContasCorrentes_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -368,13 +362,13 @@
         private System.Windows.Forms.Label entidadeResult;
         private System.Windows.Forms.Label adiantamentoResult;
         private System.Windows.Forms.Label liqResult;
-        private System.Windows.Forms.Button aprovaBtn;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button adiantaBtn;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage contaPagarTab;
         private System.Windows.Forms.TabPage contaReceberTab;
         private System.Windows.Forms.DataGridView correnteTable;
         private System.Windows.Forms.DataGridView correnteTableCl;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button button1;
     }
 }

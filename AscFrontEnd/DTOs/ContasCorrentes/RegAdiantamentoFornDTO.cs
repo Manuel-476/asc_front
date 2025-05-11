@@ -10,13 +10,18 @@ namespace AscFrontEnd.DTOs.ContasCorrentes
     public class RegAdiantamentoFornDTO
     {
         public int id { get; set; }
-        public int adiantamentoId { get; set; }
         public string documento { get; set; }
-        public int vfrId { get; set; }
         public DocState status { get; set; }
         public int empresaId { get; set; }
         public DateTime created_at { get; set; }
-        public VfrDTO Vfr { get; set; }
-        public AdiantamentoFornDTO adiantamento { get; set; }
+        public ICollection<AdiantaVfrDTO> adiantaVfrs { get; set; }
+    }
+
+    public class AdiantaVfrDTO
+    {
+        public int Id { get; set; }
+        public int vfrId { get; set; }
+        public int adiantamentoFornId { get; set; }
+        public int regAdiantamentoFornecedorid { get; set; }
     }
 }

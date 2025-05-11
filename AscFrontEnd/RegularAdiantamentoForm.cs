@@ -80,11 +80,11 @@ namespace AscFrontEnd
 
                 if (_entidade == Entidade.cliente)
                 {
-                    documentoAdiantamento.Text = StaticProperty.adiantamentoClientes.Where(ad => ad.id == adiantamentoId).First().documento;
+                   // documentoAdiantamento.Text = StaticProperty.adiantamentoClientes.Where(ad => ad.id == adiantamentoId).First().documento;
                 }
                 else if (_entidade == Entidade.fornecedor)
                 {
-                    documentoAdiantamento.Text = StaticProperty.adiantamentoForns.Where(ad => ad.id == adiantamentoId).First().documento;
+                   // documentoAdiantamento.Text = StaticProperty.adiantamentoForns.Where(ad => ad.id == adiantamentoId).First().documento;
                 }
             }
             catch { return; }
@@ -98,13 +98,13 @@ namespace AscFrontEnd
 
                 if (_entidade == Entidade.cliente)
                 {
-                    documentoPagamento.Text = StaticProperty.frs.Where(ad => ad.id == adiantamentoId).First().documento;
+                    //documentoPagamento.Text = StaticProperty.frs.Where(ad => ad.id == documentoId).First().documento;
                     valorDocumento.Text = StaticProperty.frs.Where(x => x.id == documentoId).Sum(x => x.frArtigo.Sum(f => f.preco * f.qtd)).ToString("F2");
 
                 }
                 else if (_entidade == Entidade.fornecedor)
                 {
-                    documentoPagamento.Text = StaticProperty.vfrs.Where(ad => ad.id == adiantamentoId).First().documento;
+                  //  documentoPagamento.Text = StaticProperty.vfrs.Where(ad => ad.id == documentoId).First().documento;
                     valorDocumento.Text = StaticProperty.vfrs.Where(x => x.id == documentoId).Sum(x => x.vfrArtigo.Sum(f => f.preco * f.qtd)).ToString("F2");
                 }
             }
@@ -316,16 +316,16 @@ namespace AscFrontEnd
 
                     dt.Rows.Add(item.id, item.documento, item.valorAdiantado);
 
-                    adiantamentoTable.DataSource = dt;
+                   
                 }
-
-                foreach (var item in StaticProperty.frs.Where(cl => cl.clienteId == _entidadeId))
+               
+                foreach (var item in StaticProperty.frs.Where(cl => cl.clienteId == _entidadeId).ToList())
                 {
                     dtDocs.Rows.Add(item.id, item.documento, item.frArtigo.Sum(x => x.preco * x.qtd));
-
-                    docRegularTable.DataSource = dtDocs;
+        
                 }
-
+                adiantamentoTable.DataSource = dt;
+                docRegularTable.DataSource = dtDocs;
             }
             else if (_entidade == Entidade.fornecedor)
             {
@@ -351,6 +351,11 @@ namespace AscFrontEnd
                     docRegularTable.DataSource = dtDocs;
                 }
             }
+        }
+
+        private void documentoAdiantamento_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1460,13 +1460,15 @@ namespace AscFrontEnd
             vendaListagem.ShowDialog();
         }
 
-        private void Venda_FormClosing(object sender, FormClosingEventArgs e)
+        private async void Venda_FormClosing(object sender, FormClosingEventArgs e)
         {
             timerRefresh.Stop();
             timerRefresh.Dispose();
 
             StaticProperty.nome = string.Empty;
             StaticProperty.entityId = 0;
+
+            await new Requisicoes().SystemRefresh();
         }
 
         private void tabelaArtigos_CellContentClick(object sender, DataGridViewCellEventArgs e)

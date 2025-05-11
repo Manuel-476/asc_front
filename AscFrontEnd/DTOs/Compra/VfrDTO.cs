@@ -1,5 +1,6 @@
 ﻿
 
+using AscFrontEnd.DTOs.ContasCorrentes;
 using AscFrontEnd.DTOs.Fornecedor;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,6 @@ namespace AscFrontEnd.DTOs
         public int empresaId { get; set; }
         public List<VfrArtigoDTO> vfrArtigo { get; set; }
         public FornecedorDTO fornecedor { get; set; }
+        public ICollection<AdiantaVfrDTO> adiantaVfrs { get; set; }
     }
 }

@@ -30,8 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.botaoFornecedor = new System.Windows.Forms.Button();
-            this.botaoCliente = new System.Windows.Forms.Button();
+            this.botaoEntidade = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.radioCliente = new System.Windows.Forms.RadioButton();
@@ -41,15 +40,17 @@
             this.valorTxt = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.adiantamentosTable = new System.Windows.Forms.DataGridView();
+            this.btnRegular = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.adiantamentosTable)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panel1.Controls.Add(this.botaoFornecedor);
-            this.panel1.Controls.Add(this.botaoCliente);
+            this.panel1.Controls.Add(this.botaoEntidade);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Location = new System.Drawing.Point(1, 1);
@@ -57,37 +58,21 @@
             this.panel1.Size = new System.Drawing.Size(687, 86);
             this.panel1.TabIndex = 4;
             // 
-            // botaoFornecedor
+            // botaoEntidade
             // 
-            this.botaoFornecedor.BackColor = System.Drawing.Color.Transparent;
-            this.botaoFornecedor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.botaoFornecedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.botaoFornecedor.ForeColor = System.Drawing.Color.White;
-            this.botaoFornecedor.Location = new System.Drawing.Point(397, 46);
-            this.botaoFornecedor.Name = "botaoFornecedor";
-            this.botaoFornecedor.Size = new System.Drawing.Size(135, 34);
-            this.botaoFornecedor.TabIndex = 60;
-            this.botaoFornecedor.Text = "Fornecedores";
-            this.botaoFornecedor.UseVisualStyleBackColor = false;
-            this.botaoFornecedor.Click += new System.EventHandler(this.botaoFornecedor_Click);
-            this.botaoFornecedor.MouseLeave += new System.EventHandler(this.botaoFornecedor_MouseLeave);
-            this.botaoFornecedor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.botaoFornecedor_MouseMove);
-            // 
-            // botaoCliente
-            // 
-            this.botaoCliente.BackColor = System.Drawing.Color.Transparent;
-            this.botaoCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.botaoCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.botaoCliente.ForeColor = System.Drawing.Color.White;
-            this.botaoCliente.Location = new System.Drawing.Point(538, 46);
-            this.botaoCliente.Name = "botaoCliente";
-            this.botaoCliente.Size = new System.Drawing.Size(140, 34);
-            this.botaoCliente.TabIndex = 59;
-            this.botaoCliente.Text = "Clientes";
-            this.botaoCliente.UseVisualStyleBackColor = false;
-            this.botaoCliente.Click += new System.EventHandler(this.botaoCliente_Click);
-            this.botaoCliente.MouseLeave += new System.EventHandler(this.botaoCliente_MouseLeave);
-            this.botaoCliente.MouseMove += new System.Windows.Forms.MouseEventHandler(this.botaoCliente_MouseMove);
+            this.botaoEntidade.BackColor = System.Drawing.Color.Transparent;
+            this.botaoEntidade.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.botaoEntidade.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.botaoEntidade.ForeColor = System.Drawing.Color.White;
+            this.botaoEntidade.Location = new System.Drawing.Point(543, 46);
+            this.botaoEntidade.Name = "botaoEntidade";
+            this.botaoEntidade.Size = new System.Drawing.Size(135, 34);
+            this.botaoEntidade.TabIndex = 60;
+            this.botaoEntidade.Text = "Entidades";
+            this.botaoEntidade.UseVisualStyleBackColor = false;
+            this.botaoEntidade.Click += new System.EventHandler(this.botaoFornecedor_Click);
+            this.botaoEntidade.MouseLeave += new System.EventHandler(this.botaoFornecedor_MouseLeave);
+            this.botaoEntidade.MouseMove += new System.Windows.Forms.MouseEventHandler(this.botaoFornecedor_MouseMove);
             // 
             // pictureBox1
             // 
@@ -149,11 +134,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label1.Location = new System.Drawing.Point(9, 161);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 16);
+            this.label1.Size = new System.Drawing.Size(35, 15);
             this.label1.TabIndex = 8;
             this.label1.Text = "Valor";
             // 
@@ -170,7 +155,7 @@
             this.button3.BackColor = System.Drawing.SystemColors.Highlight;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(12, 236);
+            this.button3.Location = new System.Drawing.Point(12, 251);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(151, 31);
             this.button3.TabIndex = 10;
@@ -180,13 +165,41 @@
             // 
             // timer1
             // 
+            this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // adiantamentosTable
+            // 
+            this.adiantamentosTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.adiantamentosTable.BackgroundColor = System.Drawing.Color.White;
+            this.adiantamentosTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.adiantamentosTable.Location = new System.Drawing.Point(365, 132);
+            this.adiantamentosTable.Name = "adiantamentosTable";
+            this.adiantamentosTable.ReadOnly = true;
+            this.adiantamentosTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.adiantamentosTable.Size = new System.Drawing.Size(309, 113);
+            this.adiantamentosTable.TabIndex = 11;
+            // 
+            // btnRegular
+            // 
+            this.btnRegular.BackColor = System.Drawing.Color.ForestGreen;
+            this.btnRegular.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRegular.ForeColor = System.Drawing.Color.White;
+            this.btnRegular.Location = new System.Drawing.Point(523, 251);
+            this.btnRegular.Name = "btnRegular";
+            this.btnRegular.Size = new System.Drawing.Size(151, 31);
+            this.btnRegular.TabIndex = 12;
+            this.btnRegular.Text = "Regular";
+            this.btnRegular.UseVisualStyleBackColor = false;
+            this.btnRegular.Click += new System.EventHandler(this.btnRegular_Click);
             // 
             // AdiantamentoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(686, 288);
+            this.Controls.Add(this.btnRegular);
+            this.Controls.Add(this.adiantamentosTable);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.valorTxt);
             this.Controls.Add(this.label1);
@@ -199,10 +212,12 @@
             this.MinimizeBox = false;
             this.Name = "AdiantamentoForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AdiantamentoForm_FormClosing);
             this.Load += new System.EventHandler(this.AdiantamentoForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.adiantamentosTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -215,12 +230,13 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RadioButton radioCliente;
         private System.Windows.Forms.RadioButton radioFornecedor;
-        private System.Windows.Forms.Button botaoFornecedor;
-        private System.Windows.Forms.Button botaoCliente;
+        private System.Windows.Forms.Button botaoEntidade;
         private System.Windows.Forms.Label nomeEntidade;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox valorTxt;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.DataGridView adiantamentosTable;
+        private System.Windows.Forms.Button btnRegular;
     }
 }

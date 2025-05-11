@@ -18,6 +18,6 @@ namespace AscFrontEnd.DTOs.ContasCorrentes
         public int clienteId { get; set; }
         public DateTime created_at { get; set; }
         public ClienteDTO cliente { get; set; }
-        ICollection<AdiantamentoClienteDTO> regAdiantamentos { get; set; }
+        public ICollection<AdiantaFrDTO> adiantaFrs { get; set; }
     }
 }

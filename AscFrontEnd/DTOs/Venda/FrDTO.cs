@@ -1,5 +1,6 @@
 ﻿
 
+using AscFrontEnd.DTOs.ContasCorrentes;
 using AscFrontEnd.DTOs.Deposito;
 using System;
 using System.Collections.Generic;
@@ -24,5 +25,6 @@ namespace AscFrontEnd.DTOs.Venda
         public List<ParcelasFormaPagamentoDTO> parcelas { get; set; }
         public List<BancoDTO> bancos { get; set; }
         public List<CaixaDTO> caixas { get; set; }
+        public ICollection<AdiantaFrDTO> adiantaFrs { get; set; }
     }
 }

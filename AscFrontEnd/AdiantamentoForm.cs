@@ -16,6 +16,7 @@ using AscFrontEnd.DTOs.ContasCorrentes;
 using AscFrontEnd.Application;
 using AscFrontEnd.Application.Validacao;
 using System.Globalization;
+using static AscFrontEnd.DTOs.Enums.Enums;
 
 namespace AscFrontEnd
 {
@@ -24,7 +25,7 @@ namespace AscFrontEnd
         string nomeEntidadeStr = string.Empty;
         AdiantamentoFornDTO adiantamentoFornecedor;
         AdiantamentoClienteDTO adiantamentoCliente;
-        
+        DataTable adiantamentoDataTable;
 
         public AdiantamentoForm()
         {
@@ -43,56 +44,52 @@ namespace AscFrontEnd
 
         private void radioCliente_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioCliente.Checked) 
-            {
-                botaoFornecedor.Enabled = false;
-                botaoCliente.Enabled = true;
-            }
+
         }
 
         private void botaoFornecedor_MouseMove(object sender, MouseEventArgs e)
         {
-            botaoFornecedor.BackColor = Color.White;
-            botaoFornecedor.ForeColor = Color.FromArgb(64,64,64);
+            botaoEntidade.BackColor = Color.White;
+            botaoEntidade.ForeColor = Color.FromArgb(64,64,64);
         }
 
         private void botaoFornecedor_MouseLeave(object sender, EventArgs e)
         {
-            botaoFornecedor.BackColor = Color.Transparent;
-            botaoFornecedor.ForeColor = Color.White;
+            botaoEntidade.BackColor = Color.Transparent;
+            botaoEntidade.ForeColor = Color.White;
         }
 
         private void botaoCliente_MouseMove(object sender, MouseEventArgs e)
         {
-            botaoCliente.BackColor = Color.White;
-            botaoCliente.ForeColor = Color.FromArgb(64, 64, 64);
         }
 
         private void botaoCliente_MouseLeave(object sender, EventArgs e)
         {
-            botaoCliente.BackColor = Color.Transparent;
-            botaoCliente.ForeColor = Color.White;
+
         }
 
         private void botaoFornecedor_Click(object sender, EventArgs e)
         {
-            FornecedorListagem form = new FornecedorListagem();
-            form.ShowDialog();
+            if (radioFornecedor.Checked)
+            {
+                FornecedorListagem form = new FornecedorListagem();
+                form.ShowDialog();
+            }
+            else if (radioCliente.Checked) 
+            {
+                ClienteListagem form = new ClienteListagem();
+                form.ShowDialog();
+            }
         }
 
         private void botaoCliente_Click(object sender, EventArgs e)
         {
-            ClienteListagem form = new ClienteListagem();
-            form.ShowDialog();
+
         }
 
         private void radioFornecedor_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioFornecedor.Checked)
-            {
-                botaoFornecedor.Enabled = true;
-                botaoCliente.Enabled = false;
-            }
+
         }
 
         private async void button3_Click(object sender, EventArgs e)
@@ -182,19 +179,59 @@ namespace AscFrontEnd
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            adiantamentoDataTable = new DataTable();
+
+            adiantamentoDataTable.Columns.Add("Id",typeof(int));
+            adiantamentoDataTable.Columns.Add("Documento", typeof(string));
+            adiantamentoDataTable.Columns.Add("Valor", typeof(string));
+            adiantamentoDataTable.Columns.Add("Data", typeof(DateTime));
+
             if (StaticProperty.entityId > 0) 
             { 
               if (radioFornecedor.Checked) 
               {
-                
-                nomeEntidade.Text = StaticProperty.fornecedores.Where(x => x.id == StaticProperty.entityId).First().nome_fantasia;
-              }
+                    nomeEntidade.Text = StaticProperty.fornecedores.Where(x => x.id == StaticProperty.entityId).First().nome_fantasia;
+
+                    foreach (var item in StaticProperty.adiantamentoForns.Where(x => x.fornecedorId == StaticProperty.entityId)) 
+                    {
+                        adiantamentoDataTable.Rows.Add(new object[] {item.id,item.documento,item.valorAdiantado,item.created_at});
+                    }
+                }
               else if (radioCliente.Checked)
               {
                 nomeEntidade.Text = StaticProperty.clientes.Where(x => x.id == StaticProperty.entityId).First().nome_fantasia;
-              }
+
+                    foreach (var item in StaticProperty.adiantamentoClientes.Where(x => x.clienteId == StaticProperty.entityId))
+                    {
+                        adiantamentoDataTable.Rows.Add(new object[] { item.id, item.documento, item.valorAdiantado, item.created_at });
+                    }
+                }
+
+                adiantamentosTable.DataSource = adiantamentoDataTable;
             }
 
+        }
+
+        private void btnRegular_Click(object sender, EventArgs e)
+        {
+            
+
+            if (radioCliente.Checked) 
+            {
+                new RegularAdiantamentoForm(Entidade.cliente,StaticProperty.entityId).ShowDialog();
+            }
+            else if (radioFornecedor.Checked) 
+            {
+                new RegularAdiantamentoForm(Entidade.fornecedor,StaticProperty.entityId).ShowDialog();
+            }
+
+        }
+
+        private async void AdiantamentoForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            StaticProperty.entityId = 0;
+
+            await new Requisicoes().SystemRefresh();
         }
     }
 }
