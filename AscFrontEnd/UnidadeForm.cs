@@ -61,6 +61,8 @@ namespace AscFrontEnd
                 {
                     MessageBox.Show("Ocorreu um Erro", "Erro ao Salvar Forma de Pagamento", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
                 }
+
+                WindowsConfig.LimparFormulario(this);
             }
         }
     }

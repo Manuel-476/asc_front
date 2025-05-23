@@ -32,7 +32,7 @@ namespace AscFrontEnd.Application
                     var content = await response.Content.ReadAsStringAsync();
                     string dados = content;
 
-                    codigoDocumento = dados;
+                    codigoDocumento = dados.ToString().Replace("\"","");
                 }
                 return codigoDocumento;
             }

@@ -16,18 +16,21 @@ using System.Windows.Forms;
 using static AscFrontEnd.DTOs.Enums.Enums;
 using AscFrontEnd.DTOs.Stock;
 using System.Globalization;
+using AscFrontEnd.Application;
 
 namespace AscFrontEnd
 {
     public partial class IncrementarStock : Form
     {
         ArtigoDTO _artigo;
+        Requisicoes _requisicoes; 
         int _qtd;
         public IncrementarStock(ArtigoDTO artigo, int qtd)
         {
             InitializeComponent();
             _artigo = artigo;
             _qtd = qtd;
+            _requisicoes = new Requisicoes();
         }
 
         private void IncrementarStock_Load(object sender, EventArgs e)
@@ -56,24 +59,18 @@ namespace AscFrontEnd
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var responseLocationStore = await client.GetAsync($"https://localhost:7200/api/Armazem/LocationStore");
+                    await _requisicoes.GetLocalizacoes();
 
-                    var contentLocationStore = await responseLocationStore.Content.ReadAsStringAsync();
-                    StaticProperty.locationStores = JsonConvert.DeserializeObject<List<LocationStoreDTO>>(contentLocationStore);
-
-
-                    var responseLocationArtigo = await client.GetAsync($"https://localhost:7200/api/Armazem/LocationArtigo");
-
-                    var contentLocationArtigo = await responseLocationArtigo.Content.ReadAsStringAsync();
-                    StaticProperty.locationArtigos = JsonConvert.DeserializeObject<List<LocationArtigoDTO>>(contentLocationArtigo);
-                    
+                    await _requisicoes.GetLocalizacaoArtigo();
 
                     MessageBox.Show($"Quantidade acrescentada com sucesso",
                                      "Feito com sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 // Actualizar tabela
+                WindowsConfig.LimparFormulario(this);
 
+                IncrementarStock_Load(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {

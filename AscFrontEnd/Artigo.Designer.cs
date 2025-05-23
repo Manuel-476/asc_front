@@ -39,7 +39,7 @@
             this.codBarra = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.numSerie = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.movStockCheck = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.armazemCombo = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -69,6 +69,7 @@
             this.descricaoIvaTxt = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.ivaCombo = new System.Windows.Forms.ComboBox();
+            this.btnActualizar = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -172,16 +173,16 @@
             this.numSerie.Size = new System.Drawing.Size(242, 20);
             this.numSerie.TabIndex = 9;
             // 
-            // checkBox1
+            // movStockCheck
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(524, 215);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(81, 17);
-            this.checkBox1.TabIndex = 11;
-            this.checkBox1.Text = "Mov. Stock";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.movStockCheck.AutoSize = true;
+            this.movStockCheck.Location = new System.Drawing.Point(524, 215);
+            this.movStockCheck.Name = "movStockCheck";
+            this.movStockCheck.Size = new System.Drawing.Size(81, 17);
+            this.movStockCheck.TabIndex = 11;
+            this.movStockCheck.Text = "Mov. Stock";
+            this.movStockCheck.UseVisualStyleBackColor = true;
+            this.movStockCheck.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // checkBox2
             // 
@@ -287,7 +288,7 @@
             this.listagem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.listagem.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listagem.ForeColor = System.Drawing.Color.White;
-            this.listagem.Location = new System.Drawing.Point(431, 69);
+            this.listagem.Location = new System.Drawing.Point(246, 69);
             this.listagem.Name = "listagem";
             this.listagem.Size = new System.Drawing.Size(178, 40);
             this.listagem.TabIndex = 23;
@@ -300,6 +301,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.Controls.Add(this.btnActualizar);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Controls.Add(this.label8);
@@ -315,7 +317,7 @@
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(615, 69);
+            this.button3.Location = new System.Drawing.Point(430, 69);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(178, 40);
             this.button3.TabIndex = 24;
@@ -473,6 +475,20 @@
             this.ivaCombo.Size = new System.Drawing.Size(146, 21);
             this.ivaCombo.TabIndex = 42;
             // 
+            // btnActualizar
+            // 
+            this.btnActualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnActualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnActualizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnActualizar.ForeColor = System.Drawing.Color.White;
+            this.btnActualizar.Location = new System.Drawing.Point(614, 69);
+            this.btnActualizar.Name = "btnActualizar";
+            this.btnActualizar.Size = new System.Drawing.Size(178, 40);
+            this.btnActualizar.TabIndex = 25;
+            this.btnActualizar.Text = "Actualizar";
+            this.btnActualizar.UseVisualStyleBackColor = false;
+            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
+            // 
             // Artigo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -503,7 +519,7 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.armazemCombo);
             this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.movStockCheck);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.numSerie);
             this.Controls.Add(this.label4);
@@ -543,7 +559,7 @@
         private System.Windows.Forms.TextBox codBarra;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox numSerie;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox movStockCheck;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.ComboBox armazemCombo;
         private System.Windows.Forms.Label label6;
@@ -573,5 +589,6 @@
         private System.Windows.Forms.Label descricaoIvaTxt;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ComboBox ivaCombo;
+        private System.Windows.Forms.Button btnActualizar;
     }
 }

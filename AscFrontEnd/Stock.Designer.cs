@@ -115,6 +115,7 @@
             this.tabelaInventario.BackgroundColor = System.Drawing.Color.White;
             this.tabelaInventario.Location = new System.Drawing.Point(13, 130);
             this.tabelaInventario.Name = "tabelaInventario";
+            this.tabelaInventario.ReadOnly = true;
             this.tabelaInventario.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tabelaInventario.Size = new System.Drawing.Size(890, 293);
             this.tabelaInventario.TabIndex = 4;

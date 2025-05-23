@@ -31,6 +31,7 @@ namespace AscFrontEnd
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             resultUser = new UserDTO();
+            StaticProperty.user = new UserDTO();
             InitializeComponent();
         }
 
@@ -81,6 +82,8 @@ namespace AscFrontEnd
                         this.Hide();
                         StaticProperty.token = userResult.token;
                         StaticProperty.userId = userResult.user.id;
+                        StaticProperty.user.user_name = userResult.user.user_name;
+                        StaticProperty.user.nivel_acesso = userResult.user.nivel_acesso;
 
                         if (userResult.user.state == DTOs.Enums.Enums.OpcaoBinaria.Nao)
                         {
@@ -157,6 +160,8 @@ namespace AscFrontEnd
                             this.Hide();
                             StaticProperty.token = userResult.token;
                             StaticProperty.userId = userResult.user.id;
+                            StaticProperty.user.user_name = userResult.user.user_name;
+                            StaticProperty.user.nivel_acesso = userResult.user.nivel_acesso;
 
                             if (userResult.user.state == DTOs.Enums.Enums.OpcaoBinaria.Nao)
                             {

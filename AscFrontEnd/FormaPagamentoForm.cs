@@ -1,4 +1,5 @@
-﻿using AscFrontEnd.DTOs.Deposito;
+﻿using AscFrontEnd.Application;
+using AscFrontEnd.DTOs.Deposito;
 using AscFrontEnd.DTOs.StaticsDto;
 using Newtonsoft.Json;
 using System;
@@ -18,10 +19,11 @@ namespace AscFrontEnd
     public partial class FormaPagamentoForm : Form
     {
         HttpClient httpClient;
+        Requisicoes _requisicoes;
         public FormaPagamentoForm()
         {
             InitializeComponent();
-           
+            _requisicoes = new Requisicoes();
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -58,21 +60,14 @@ namespace AscFrontEnd
                 {
                     MessageBox.Show("Salvo Com Sucesso", "Nova Forma de pagamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    var responseFormaPagamento = await httpClient.GetAsync($"https://localhost:7200/api/Deposito/FormaPagamento");
-
-                    if (responseFormaPagamento.IsSuccessStatusCode)
-                    {
-                        var contentFormaPagamento = await responseFormaPagamento.Content.ReadAsStringAsync();
-                        StaticProperty.formasPagamento =  JsonConvert.DeserializeObject<List<FormaPagamentoDTO>>(contentFormaPagamento);
-
-                        
-                    }
+                    await _requisicoes.GetFormaPagamento();
                 }
                 else
                 {
                     MessageBox.Show("Ocorreu um Erro", "Erro ao Salvar Forma de Pagamento", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
                 }
 
+                WindowsConfig.LimparFormulario(this);
             }
             catch (Exception ex)
             {

@@ -12,6 +12,7 @@ using System.Text;
 using System.Windows.Forms;
 using AscFrontEnd.DTOs.Enums;
 using static AscFrontEnd.DTOs.Enums.Enums;
+using AscFrontEnd.Application;
 
 namespace AscFrontEnd
 {
@@ -23,7 +24,7 @@ namespace AscFrontEnd
         public Armazem()
         {
             InitializeComponent();
-            dt = new DataTable();
+            
             localizacao = new List<LocationStoreDTO>();
             idLocal = new List<int>();
         }
@@ -45,6 +46,8 @@ namespace AscFrontEnd
 
         private void Armazem_Load(object sender, EventArgs e)
         {
+
+            dt = new DataTable();
             pictureBox4.Enabled = false;
             dt.Columns.Add("Id", typeof(int));
             dt.Columns.Add("Codigo", typeof(string));
@@ -114,6 +117,13 @@ namespace AscFrontEnd
                 MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
             }
 
+            WindowsConfig.LimparFormulario(this);
+
+            dt = null;
+
+            localizacaoTable.DataSource = null;
+
+            Armazem_Load(this, EventArgs.Empty);
         }
 
         private void localizacaoTable_CellContentClick(object sender, DataGridViewCellEventArgs e)

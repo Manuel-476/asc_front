@@ -159,7 +159,7 @@ namespace AscFrontEnd
                     }
                     if (string.Compare(permission.descricao, "Gerenciar clientes e contatos.", true) == 0)
                     {
-                        clienteToolStripMenuItem1.Visible = true;
+                      
 
                         clienteToolStripMenuItem.Visible = true;
                     }
@@ -169,7 +169,7 @@ namespace AscFrontEnd
                     }
                     if (string.Compare(permission.descricao, "Gerenciar fornecedores e contratos.", true) == 0)
                     {
-                        fornecedorToolStripMenuItem1.Visible = true;
+        
 
                         fornecedorToolStripMenuItem.Visible = true;
                     }
@@ -240,13 +240,9 @@ namespace AscFrontEnd
 
         public bool ApagarTodosTools() 
         {
-            vendaToolStripMenuItem.Visible = false;
-
-            fornecedorToolStripMenuItem1.Visible = false;
+            vendaToolStripMenuItem.Visible = false;       
 
             fornecedorToolStripMenuItem.Visible = false;
-
-            clienteToolStripMenuItem1.Visible = false;
 
             clienteToolStripMenuItem.Visible = false;
 

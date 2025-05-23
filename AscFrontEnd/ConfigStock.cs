@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AscFrontEnd.Application;
 using AscFrontEnd.DTOs.Configuration;
 using AscFrontEnd.DTOs.StaticsDto;
 using DocumentFormat.OpenXml.Bibliography;
@@ -54,7 +55,7 @@ namespace AscFrontEnd
                 {
                     MessageBox.Show("Definido Com Sucesso", "Feito Com sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    return;
+                    
                 }
                 else
                 {
@@ -62,6 +63,11 @@ namespace AscFrontEnd
 
                     return;
                 }
+
+                WindowsConfig.LimparFormulario(this);
+
+                ConfigStock_Load(this, EventArgs.Empty);
+
             }
             catch (Exception ex) 
             {
@@ -71,7 +77,7 @@ namespace AscFrontEnd
 
         private void label2_Click(object sender, EventArgs e)
         {
-
+           
         }
     }
 }

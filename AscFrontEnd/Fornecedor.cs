@@ -15,6 +15,7 @@ using System.Text.Json;
 using AscFrontEnd.DTOs.Deposito;
 using AscFrontEnd.Application.Validacao;
 using System.Globalization;
+using AscFrontEnd.Application;
 
 
 namespace AscFrontEnd
@@ -23,11 +24,13 @@ namespace AscFrontEnd
     {
         List<FornecedorFilialDTO> filiais;
         DataTable dtFilial;
+        Requisicoes _requisicoes;
         public Form1()
         {
             InitializeComponent();
             filiais = new List<FornecedorFilialDTO> ();
-            dtFilial = new DataTable ();
+           
+            _requisicoes = new Requisicoes ();
         }
 
         private async void cadastrarBtn_Click(object sender, EventArgs e)
@@ -141,30 +144,17 @@ namespace AscFrontEnd
                 // Actualizar dados nas propriedades estaticas
 
                 // Fornecedor
-                var responseFornecedor = await client.GetAsync($"https://localhost:7200/api/Fornecedor/FornecedoresByRelation");
-
-                if (responseFornecedor.IsSuccessStatusCode)
-                {
-                    var contentFornecedor = await responseFornecedor.Content.ReadAsStringAsync();
-                    StaticProperty.fornecedores = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FornecedorDTO>>(contentFornecedor);
-                }
-
+                await _requisicoes.GetFornecedores();
                 // Depositos
-                var responseBanco = await client.GetAsync($"https://localhost:7200/api/Deposito/Banco");
+                await _requisicoes.GetBanco();
 
-                if (responseBanco.IsSuccessStatusCode)
-                {
-                    var contentBanco = await responseBanco.Content.ReadAsStringAsync();
-                    StaticProperty.bancos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<BancoDTO>>(contentBanco);
-                }
+                await _requisicoes.GetCaixa();
 
-                var responseCaixa = await client.GetAsync($"https://localhost:7200/api/Deposito/Caixa");
+                WindowsConfig.LimparFormulario(this);
 
-                if (responseCaixa.IsSuccessStatusCode)
-                {
-                    var contentCaixa = await responseBanco.Content.ReadAsStringAsync();
-                    StaticProperty.caixas = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CaixaDTO>>(contentCaixa);
-                }
+                tabelaFilial.DataSource = null;
+
+                Form1_Load(this, EventArgs.Empty);
             }
             else
             {
@@ -215,6 +205,7 @@ namespace AscFrontEnd
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            dtFilial = new DataTable();
             pessoaCombo.Items.Add("Singular");
             pessoaCombo.Items.Add("Colectiva");
 
@@ -255,6 +246,7 @@ namespace AscFrontEnd
                   
                    id++;
                 }
+
             tabelaFilial.DataSource = dtFilial;
         }
     }

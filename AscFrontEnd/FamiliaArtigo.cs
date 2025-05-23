@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AscFrontEnd.DTOs.StaticsDto;
 using Newtonsoft.Json;
+using AscFrontEnd.Application;
 
 namespace AscFrontEnd
 {
@@ -64,6 +65,8 @@ namespace AscFrontEnd
             {
                 MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
             }
+
+            WindowsConfig.LimparFormulario(this);
         }
 
         private void FamiliaArtigo_Load(object sender, EventArgs e)

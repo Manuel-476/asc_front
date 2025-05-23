@@ -67,6 +67,8 @@ namespace AscFrontEnd
                     {
                         MessageBox.Show("Ocorreu um Erro", "Erro ao Salvar valor do iva", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
                     }
+
+                    WindowsConfig.LimparFormulario(this);
                 }
             }
             catch(Exception ex) 

@@ -17,6 +17,7 @@ using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.DTOs.Deposito;
 using AscFrontEnd.Application.Validacao;
 using System.Globalization;
+using AscFrontEnd.Application;
 
 
 
@@ -30,7 +31,6 @@ namespace AscFrontEnd
         {
             InitializeComponent();
             filiais = new List<ClienteFilialDTO>();
-            dtFilial = new DataTable();
 
             descontoTxt.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
             descontoTxt.TextChanged += ValidacaoForms.TratarTextChanged;
@@ -54,7 +54,6 @@ namespace AscFrontEnd
 
                 return;
             }
-
             if (!string.IsNullOrEmpty(telefonetxt.Text.ToString()) && !ValidacaoForms.IsValidPhone(telefonetxt.Text.ToString()))
             {
                 MessageBox.Show("O Telefone introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -63,7 +62,6 @@ namespace AscFrontEnd
             }
 
             var desconto = !string.IsNullOrEmpty(descontoTxt.Text.ToString()) ? float.Parse(descontoTxt.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) : 0f;
-
 
             List<ClientePhoneDTO> phone = new List<ClientePhoneDTO>() { new ClientePhoneDTO() { telefone = !string.IsNullOrEmpty(telefonetxt.Text.ToString()) ? telefonetxt.Text : string.Empty } };
             List<ClienteFilialDTO> filias = new List<ClienteFilialDTO> { new ClienteFilialDTO() { email = emailText.Text,codigo=codigotxt
@@ -131,6 +129,11 @@ namespace AscFrontEnd
             {
                 MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
             }
+            dtFilial = null;
+            tabelaFilial.DataSource = null;
+            WindowsConfig.LimparFormulario(this);
+
+            Cliente_Load(this, EventArgs.Empty);
         }
 
         private void fecharBtn_Click(object sender, EventArgs e)
@@ -193,6 +196,8 @@ namespace AscFrontEnd
 
         private void Cliente_Load(object sender, EventArgs e)
         {
+            dtFilial = new DataTable();
+
             pessoaCombo.Items.Add("Singular");
             pessoaCombo.Items.Add("Colectiva");
 

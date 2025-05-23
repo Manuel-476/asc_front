@@ -13,14 +13,18 @@ using System.Windows.Forms;
 using AscFrontEnd.DTOs.Fornecedor;
 using Newtonsoft.Json;
 using AscFrontEnd.DTOs.StaticsDto;
+using AscFrontEnd.Application;
 
 namespace AscFrontEnd.Files
 {
     public partial class SerieForm : Form
     {
+        Requisicoes _requisicoes;
         public SerieForm()
         {
             InitializeComponent();
+
+            _requisicoes = new Requisicoes();
         }
 
         private async void CrairSerieBtn_Click(object sender, EventArgs e)
@@ -49,18 +53,14 @@ namespace AscFrontEnd.Files
                 MessageBox.Show("Serie Salva", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Serie
-                var responseSerie = await client.GetAsync($"https://localhost:7200/api/Serie");
-
-                if (responseSerie.IsSuccessStatusCode)
-                {
-                    var contentSerie = await responseSerie.Content.ReadAsStringAsync();
-                    StaticProperty.series = JsonConvert.DeserializeObject<List<SerieDTO>>(contentSerie);
-                }
+                await _requisicoes.GetSerie();
             }
             else 
             {
                 MessageBox.Show("Erro ao salvar a serie", "Erro inesperado", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
             }
+            WindowsConfig.LimparFormulario(this);
+
         }
 
         private void SerieForm_Load(object sender, EventArgs e)

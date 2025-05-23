@@ -64,6 +64,7 @@
             this.tabelaFornecedor.BackgroundColor = System.Drawing.Color.White;
             this.tabelaFornecedor.Location = new System.Drawing.Point(12, 135);
             this.tabelaFornecedor.Name = "tabelaFornecedor";
+            this.tabelaFornecedor.ReadOnly = true;
             this.tabelaFornecedor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tabelaFornecedor.Size = new System.Drawing.Size(758, 274);
             this.tabelaFornecedor.TabIndex = 3;

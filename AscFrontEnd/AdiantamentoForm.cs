@@ -22,15 +22,16 @@ namespace AscFrontEnd
 {
     public partial class AdiantamentoForm : Form
     {
-        string nomeEntidadeStr = string.Empty;
-        AdiantamentoFornDTO adiantamentoFornecedor;
-        AdiantamentoClienteDTO adiantamentoCliente;
-        DataTable adiantamentoDataTable;
+        string _nomeEntidadeStr = string.Empty;
+        AdiantamentoFornDTO _adiantamentoFornecedor;
+        AdiantamentoClienteDTO _adiantamentoCliente;
+        DataTable _adiantamentoDataTable;
+        Requisicoes _requisicoes;
 
         public AdiantamentoForm()
         {
             InitializeComponent();
-
+            _requisicoes = new Requisicoes();
             valorTxt.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
             valorTxt.TextChanged += ValidacaoForms.TratarTextChanged;
         }
@@ -105,22 +106,31 @@ namespace AscFrontEnd
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+            if(StaticProperty.entityId <= 0) 
+            {
+                MessageBox.Show("Selecione alguma entidade","Atenção",MessageBoxButtons.OK,MessageBoxIcon.Information);
+
+                return;
+            }
+
+            if (!OutrasValidacoes.SerieExist()) 
+            {
+                return;
+            }
             var valor = !string.IsNullOrEmpty(valorTxt.Text.ToString()) ? float.Parse(valorTxt.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) : 0f;
-
-
             if (radioFornecedor.Checked) 
             {
                 documento = "ADF";
 
                 codigoDocumento = await Documento.GetCodigoDocumentoAsync(documento);
 
-                adiantamentoFornecedor = new AdiantamentoFornDTO() { fornecedorId = StaticProperty.entityId,
+                _adiantamentoFornecedor = new AdiantamentoFornDTO() { fornecedorId = StaticProperty.entityId,
                                                                      state = DTOs.Enums.Enums.DocState.ativo,
                                                                      documento = codigoDocumento,
                                                                      valorAdiantado = valor
                 };
 
-                json = System.Text.Json.JsonSerializer.Serialize(adiantamentoFornecedor);
+                json = System.Text.Json.JsonSerializer.Serialize(_adiantamentoFornecedor);
 
                 response = await client.PostAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Fornecedor", new StringContent(json, Encoding.UTF8, "application/json"));
 
@@ -132,7 +142,7 @@ namespace AscFrontEnd
 
                 codigoDocumento = await Documento.GetCodigoDocumentoAsync(documento);
 
-                adiantamentoCliente = new AdiantamentoClienteDTO()
+                _adiantamentoCliente = new AdiantamentoClienteDTO()
                 {
                     clienteId = StaticProperty.entityId,
                     state = DTOs.Enums.Enums.DocState.ativo,
@@ -140,7 +150,7 @@ namespace AscFrontEnd
                     valorAdiantado = valor
                 };
 
-                json = System.Text.Json.JsonSerializer.Serialize(adiantamentoCliente);
+                json = System.Text.Json.JsonSerializer.Serialize(_adiantamentoCliente);
 
                 response = await client.PostAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Cliente", new StringContent(json, Encoding.UTF8, "application/json"));
             }
@@ -150,26 +160,22 @@ namespace AscFrontEnd
             {
                 MessageBox.Show("Adiantamento Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
-                var responseAdForn = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Fornecedor");
-
-                if (responseAdForn.IsSuccessStatusCode)
-                {
-                    var contentAdForn = await responseAdForn.Content.ReadAsStringAsync();
-                    StaticProperty.adiantamentoForns = JsonConvert.DeserializeObject<List<AdiantamentoFornDTO>>(contentAdForn);
-                }
-
-                var responseAdCliente = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Fornecedor");
-
-                if (responseAdCliente.IsSuccessStatusCode)
-                {
-                    var contentAdCliente = await responseAdForn.Content.ReadAsStringAsync();
-                    StaticProperty.adiantamentoClientes = JsonConvert.DeserializeObject<List<AdiantamentoClienteDTO>>(contentAdCliente);
-                }
+                await _requisicoes.GetAdFornecedor();
+                await _requisicoes.GetAdCliente();
             }
             else 
             {
                 MessageBox.Show("Nao foi possivel fazer o adiantamento", "Ocorreu um erro", MessageBoxButtons.RetryCancel,MessageBoxIcon.Error);
             }
+
+            await _requisicoes.GetAdFornecedor();
+            await _requisicoes.GetAdCliente();
+
+            WindowsConfig.LimparFormulario(this);
+
+            adiantamentosTable.DataSource = null;
+
+            AdiantamentoForm_Load(this, EventArgs.Empty);
         }
 
         private void valorTxt_TextChanged(object sender, EventArgs e)
@@ -179,12 +185,12 @@ namespace AscFrontEnd
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            adiantamentoDataTable = new DataTable();
+            _adiantamentoDataTable = new DataTable();
 
-            adiantamentoDataTable.Columns.Add("Id",typeof(int));
-            adiantamentoDataTable.Columns.Add("Documento", typeof(string));
-            adiantamentoDataTable.Columns.Add("Valor", typeof(string));
-            adiantamentoDataTable.Columns.Add("Data", typeof(DateTime));
+            _adiantamentoDataTable.Columns.Add("Id",typeof(int));
+            _adiantamentoDataTable.Columns.Add("Documento", typeof(string));
+            _adiantamentoDataTable.Columns.Add("Valor", typeof(string));
+            _adiantamentoDataTable.Columns.Add("Data", typeof(DateTime));
 
             if (StaticProperty.entityId > 0) 
             { 
@@ -192,29 +198,28 @@ namespace AscFrontEnd
               {
                     nomeEntidade.Text = StaticProperty.fornecedores.Where(x => x.id == StaticProperty.entityId).First().nome_fantasia;
 
-                    foreach (var item in StaticProperty.adiantamentoForns.Where(x => x.fornecedorId == StaticProperty.entityId)) 
+                    foreach (var item in StaticProperty.adiantamentoForns.Where(x => x.fornecedorId == StaticProperty.entityId && x.resolvido == OpcaoBinaria.Nao)) 
                     {
-                        adiantamentoDataTable.Rows.Add(new object[] {item.id,item.documento,item.valorAdiantado,item.created_at});
+                        _adiantamentoDataTable.Rows.Add(new object[] {item.id,item.documento,item.valorAdiantado.ToString("F2"),item.created_at});
                     }
-                }
+              }
               else if (radioCliente.Checked)
               {
-                nomeEntidade.Text = StaticProperty.clientes.Where(x => x.id == StaticProperty.entityId).First().nome_fantasia;
+                    nomeEntidade.Text = StaticProperty.clientes.Where(x => x.id == StaticProperty.entityId).First().nome_fantasia;
 
-                    foreach (var item in StaticProperty.adiantamentoClientes.Where(x => x.clienteId == StaticProperty.entityId))
+                    foreach (var item in StaticProperty.adiantamentoClientes.Where(x => x.clienteId == StaticProperty.entityId && x.resolvido == OpcaoBinaria.Nao))
                     {
-                        adiantamentoDataTable.Rows.Add(new object[] { item.id, item.documento, item.valorAdiantado, item.created_at });
+                        _adiantamentoDataTable.Rows.Add(new object[] { item.id, item.documento, item.valorAdiantado.ToString("F2"), item.created_at });
                     }
                 }
 
-                adiantamentosTable.DataSource = adiantamentoDataTable;
+                adiantamentosTable.DataSource = _adiantamentoDataTable;
             }
 
         }
 
         private void btnRegular_Click(object sender, EventArgs e)
-        {
-            
+        {  
 
             if (radioCliente.Checked) 
             {

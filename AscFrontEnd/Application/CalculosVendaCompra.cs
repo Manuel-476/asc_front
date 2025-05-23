@@ -28,7 +28,7 @@ namespace AscFrontEnd.Application
 
                 var valorDesconto = TotalDescontoVenda(vendaArtigos, descontoCliente);
 
-                totalVenda +=  (precoSemIva + valorDoIva) - valorDesconto;
+                totalVenda +=  (precoSemIva - valorDoIva) - valorDesconto;
             }
 
             return totalVenda;
@@ -44,9 +44,9 @@ namespace AscFrontEnd.Application
 
                 var valorDoIva = precoSemIva * (item.iva / 100);
 
-                var clienteDesconto = (precoSemIva + valorDoIva) * (descontoCliente / 100);
+                var clienteDesconto = (precoSemIva) * (descontoCliente / 100);
 
-                var valorDesconto = (precoSemIva + valorDoIva - clienteDesconto) * (item.desconto / 100);
+                var valorDesconto = (precoSemIva - valorDoIva - clienteDesconto) * (item.desconto / 100);
 
                 totalDesconto += valorDesconto;
             }
@@ -64,7 +64,7 @@ namespace AscFrontEnd.Application
 
                 var valorDoIva = precoSemIva * (item.iva / 100);
 
-                var clienteDesconto = (precoSemIva + valorDoIva) * (descontoCliente / 100);
+                var clienteDesconto = (precoSemIva) * (descontoCliente / 100);
 
                 totalDesconto += clienteDesconto;
             }

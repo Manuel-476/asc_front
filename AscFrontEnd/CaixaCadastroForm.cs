@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AscFrontEnd.Application;
 
 namespace AscFrontEnd
 {
@@ -25,7 +26,7 @@ namespace AscFrontEnd
         {
             InitializeComponent();
             caixas = new List<CaixaDTO>();
-            dt = new DataTable();
+        
             idCaixa = new List<int>();
         }
 
@@ -81,9 +82,17 @@ namespace AscFrontEnd
                 }
                 else { MessageBox.Show("Erro ao salvar Caixa", "Ocorreu um erro", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error); }
             }
+
+            WindowsConfig.LimparFormulario(this);
+
+            caixaTable.DataSource = null;
+
+            CaixaCadastroForm_Load(this, EventArgs.Empty);
         }
         private void CaixaCadastroForm_Load(object sender, EventArgs e)
         {
+            dt = new DataTable();
+
             eliminarPicture.Enabled = false;
             dt.Columns.Add("Id", typeof(int));
             dt.Columns.Add("Codigo", typeof(string));

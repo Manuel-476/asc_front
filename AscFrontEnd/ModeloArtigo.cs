@@ -11,14 +11,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AscFrontEnd.DTOs.StaticsDto;
 using Newtonsoft.Json;
+using AscFrontEnd.Application;
 
 namespace AscFrontEnd
 {
     public partial class ModeloArtigo : Form
     {
+        Requisicoes _requisicoes;
         public ModeloArtigo()
         {
             InitializeComponent();
+
+            _requisicoes = new Requisicoes();
         }
 
         private async void balvarBtn_Click(object sender, EventArgs e)
@@ -52,19 +56,14 @@ namespace AscFrontEnd
 
                 //Atualizar a propriedade estatica
                 // Modelo
-                var responseModelo = await client.GetAsync($"https://localhost:7200/api/Artigo/Modelo");
-
-                if (responseModelo.IsSuccessStatusCode)
-                {
-                    var contentModelo = await responseModelo.Content.ReadAsStringAsync();
-
-                    StaticProperty.modelos = JsonConvert.DeserializeObject<List<ModeloDTO>>(contentModelo);
-                }
+                await _requisicoes.GetModelo();
             }
             else
             {
                 MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
             }
+
+            WindowsConfig.LimparFormulario(this);
         }
 
         private void ModeloArtigo_Load(object sender, EventArgs e)

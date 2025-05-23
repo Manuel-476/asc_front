@@ -42,6 +42,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.adiantarLabel = new System.Windows.Forms.Label();
+            this.regularLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.adiantamentoTable)).BeginInit();
@@ -109,6 +111,7 @@
             this.adiantamentoTable.Location = new System.Drawing.Point(13, 160);
             this.adiantamentoTable.Name = "adiantamentoTable";
             this.adiantamentoTable.ReadOnly = true;
+            this.adiantamentoTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.adiantamentoTable.Size = new System.Drawing.Size(365, 242);
             this.adiantamentoTable.TabIndex = 12;
             this.adiantamentoTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.adiantamentoTable_CellClick);
@@ -144,6 +147,7 @@
             this.docRegularTable.Size = new System.Drawing.Size(375, 242);
             this.docRegularTable.TabIndex = 15;
             this.docRegularTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.docRegularTable_CellClick);
+            this.docRegularTable.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.docRegularTable_CellContentClick);
             // 
             // botaoSalvar
             // 
@@ -195,11 +199,33 @@
             this.label3.TabIndex = 17;
             this.label3.Text = "Pesquisar:";
             // 
+            // adiantarLabel
+            // 
+            this.adiantarLabel.AutoSize = true;
+            this.adiantarLabel.ForeColor = System.Drawing.Color.Black;
+            this.adiantarLabel.Location = new System.Drawing.Point(412, 110);
+            this.adiantarLabel.Name = "adiantarLabel";
+            this.adiantarLabel.Size = new System.Drawing.Size(73, 13);
+            this.adiantarLabel.TabIndex = 5;
+            this.adiantarLabel.Text = "Adiantar: 0.00";
+            // 
+            // regularLabel
+            // 
+            this.regularLabel.AutoSize = true;
+            this.regularLabel.ForeColor = System.Drawing.Color.Black;
+            this.regularLabel.Location = new System.Drawing.Point(605, 107);
+            this.regularLabel.Name = "regularLabel";
+            this.regularLabel.Size = new System.Drawing.Size(71, 13);
+            this.regularLabel.TabIndex = 4;
+            this.regularLabel.Text = "Regular: 0,00";
+            // 
             // RegularAdiantamentoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 452);
+            this.Controls.Add(this.adiantarLabel);
+            this.Controls.Add(this.regularLabel);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.valorDocumento);
             this.Controls.Add(this.botaoSalvar);
@@ -236,11 +262,13 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView docRegularTable;
         private System.Windows.Forms.Button botaoSalvar;
-        private System.Windows.Forms.Label adiantado;
-        private System.Windows.Forms.Label liquidado;
         private System.Windows.Forms.TextBox valorDocumento;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label adiantado;
+        private System.Windows.Forms.Label liquidado;
+        private System.Windows.Forms.Label adiantarLabel;
+        private System.Windows.Forms.Label regularLabel;
     }
 }

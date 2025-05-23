@@ -84,11 +84,11 @@
             // radioVenda
             // 
             this.radioVenda.AutoSize = true;
-            this.radioVenda.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioVenda.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioVenda.ForeColor = System.Drawing.SystemColors.Highlight;
             this.radioVenda.Location = new System.Drawing.Point(12, 95);
             this.radioVenda.Name = "radioVenda";
-            this.radioVenda.Size = new System.Drawing.Size(56, 20);
+            this.radioVenda.Size = new System.Drawing.Size(65, 20);
             this.radioVenda.TabIndex = 16;
             this.radioVenda.TabStop = true;
             this.radioVenda.Text = "Venda";
@@ -98,11 +98,11 @@
             // radioCompra
             // 
             this.radioCompra.AutoSize = true;
-            this.radioCompra.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioCompra.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioCompra.ForeColor = System.Drawing.SystemColors.Highlight;
             this.radioCompra.Location = new System.Drawing.Point(85, 95);
             this.radioCompra.Name = "radioCompra";
-            this.radioCompra.Size = new System.Drawing.Size(63, 20);
+            this.radioCompra.Size = new System.Drawing.Size(73, 20);
             this.radioCompra.TabIndex = 17;
             this.radioCompra.TabStop = true;
             this.radioCompra.Text = "Compra";
@@ -112,11 +112,11 @@
             // radioCliente
             // 
             this.radioCliente.AutoSize = true;
-            this.radioCliente.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioCliente.ForeColor = System.Drawing.SystemColors.Highlight;
             this.radioCliente.Location = new System.Drawing.Point(180, 95);
             this.radioCliente.Name = "radioCliente";
-            this.radioCliente.Size = new System.Drawing.Size(57, 20);
+            this.radioCliente.Size = new System.Drawing.Size(66, 20);
             this.radioCliente.TabIndex = 18;
             this.radioCliente.TabStop = true;
             this.radioCliente.Text = "Cliente";
@@ -126,11 +126,11 @@
             // radioFornecedor
             // 
             this.radioFornecedor.AutoSize = true;
-            this.radioFornecedor.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioFornecedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioFornecedor.ForeColor = System.Drawing.SystemColors.Highlight;
             this.radioFornecedor.Location = new System.Drawing.Point(268, 95);
             this.radioFornecedor.Name = "radioFornecedor";
-            this.radioFornecedor.Size = new System.Drawing.Size(81, 20);
+            this.radioFornecedor.Size = new System.Drawing.Size(95, 20);
             this.radioFornecedor.TabIndex = 19;
             this.radioFornecedor.TabStop = true;
             this.radioFornecedor.Text = "Fornecedor";
@@ -140,11 +140,11 @@
             // radioArmazem
             // 
             this.radioArmazem.AutoSize = true;
-            this.radioArmazem.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioArmazem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioArmazem.ForeColor = System.Drawing.SystemColors.Highlight;
             this.radioArmazem.Location = new System.Drawing.Point(381, 95);
             this.radioArmazem.Name = "radioArmazem";
-            this.radioArmazem.Size = new System.Drawing.Size(69, 20);
+            this.radioArmazem.Size = new System.Drawing.Size(82, 20);
             this.radioArmazem.TabIndex = 20;
             this.radioArmazem.TabStop = true;
             this.radioArmazem.Text = "Armazem";
@@ -154,11 +154,11 @@
             // radioArtigo
             // 
             this.radioArtigo.AutoSize = true;
-            this.radioArtigo.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioArtigo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioArtigo.ForeColor = System.Drawing.SystemColors.Highlight;
             this.radioArtigo.Location = new System.Drawing.Point(486, 95);
             this.radioArtigo.Name = "radioArtigo";
-            this.radioArtigo.Size = new System.Drawing.Size(52, 20);
+            this.radioArtigo.Size = new System.Drawing.Size(60, 20);
             this.radioArtigo.TabIndex = 21;
             this.radioArtigo.TabStop = true;
             this.radioArtigo.Text = "Artigo";
@@ -168,11 +168,11 @@
             // radioFuncionario
             // 
             this.radioFuncionario.AutoSize = true;
-            this.radioFuncionario.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioFuncionario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioFuncionario.ForeColor = System.Drawing.SystemColors.Highlight;
             this.radioFuncionario.Location = new System.Drawing.Point(595, 95);
             this.radioFuncionario.Name = "radioFuncionario";
-            this.radioFuncionario.Size = new System.Drawing.Size(81, 20);
+            this.radioFuncionario.Size = new System.Drawing.Size(95, 20);
             this.radioFuncionario.TabIndex = 22;
             this.radioFuncionario.TabStop = true;
             this.radioFuncionario.Text = "Funcionario";
@@ -182,11 +182,11 @@
             // radiobanco
             // 
             this.radiobanco.AutoSize = true;
-            this.radiobanco.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radiobanco.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radiobanco.ForeColor = System.Drawing.SystemColors.Highlight;
             this.radiobanco.Location = new System.Drawing.Point(718, 95);
             this.radiobanco.Name = "radiobanco";
-            this.radiobanco.Size = new System.Drawing.Size(55, 20);
+            this.radiobanco.Size = new System.Drawing.Size(64, 20);
             this.radiobanco.TabIndex = 23;
             this.radiobanco.TabStop = true;
             this.radiobanco.Text = "Banco";
@@ -195,11 +195,11 @@
             // radioCaixa
             // 
             this.radioCaixa.AutoSize = true;
-            this.radioCaixa.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioCaixa.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioCaixa.ForeColor = System.Drawing.SystemColors.Highlight;
             this.radioCaixa.Location = new System.Drawing.Point(827, 95);
             this.radioCaixa.Name = "radioCaixa";
-            this.radioCaixa.Size = new System.Drawing.Size(53, 20);
+            this.radioCaixa.Size = new System.Drawing.Size(59, 20);
             this.radioCaixa.TabIndex = 24;
             this.radioCaixa.TabStop = true;
             this.radioCaixa.Text = "Caixa";
@@ -208,11 +208,11 @@
             // radioCc
             // 
             this.radioCc.AutoSize = true;
-            this.radioCc.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioCc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioCc.ForeColor = System.Drawing.SystemColors.Highlight;
             this.radioCc.Location = new System.Drawing.Point(12, 131);
             this.radioCc.Name = "radioCc";
-            this.radioCc.Size = new System.Drawing.Size(143, 20);
+            this.radioCc.Size = new System.Drawing.Size(172, 20);
             this.radioCc.TabIndex = 25;
             this.radioCc.TabStop = true;
             this.radioCc.Text = "Contas Correntes Cliente";
@@ -222,11 +222,11 @@
             // radioCcF
             // 
             this.radioCcF.AutoSize = true;
-            this.radioCcF.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioCcF.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioCcF.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.radioCcF.Location = new System.Drawing.Point(165, 131);
+            this.radioCcF.Location = new System.Drawing.Point(190, 131);
             this.radioCcF.Name = "radioCcF";
-            this.radioCcF.Size = new System.Drawing.Size(167, 20);
+            this.radioCcF.Size = new System.Drawing.Size(201, 20);
             this.radioCcF.TabIndex = 26;
             this.radioCcF.TabStop = true;
             this.radioCcF.Text = "Contas Correntes Fornecedor";
@@ -241,6 +241,7 @@
             this.historicoTable.GridColor = System.Drawing.SystemColors.ControlLightLight;
             this.historicoTable.Location = new System.Drawing.Point(13, 203);
             this.historicoTable.Name = "historicoTable";
+            this.historicoTable.ReadOnly = true;
             this.historicoTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.historicoTable.Size = new System.Drawing.Size(952, 305);
             this.historicoTable.TabIndex = 27;
@@ -248,11 +249,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.WindowText;
             this.label1.Location = new System.Drawing.Point(13, 172);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 16);
+            this.label1.Size = new System.Drawing.Size(71, 16);
             this.label1.TabIndex = 28;
             this.label1.Text = "Pesquisar:";
             // 

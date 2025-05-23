@@ -16,6 +16,7 @@ using System.Windows.Forms;
 using static AscFrontEnd.DTOs.Enums.Enums;
 using AscFrontEnd.Application.Validacao;
 using System.Globalization;
+using AscFrontEnd.Application;
 
 namespace AscFrontEnd
 {
@@ -24,12 +25,13 @@ namespace AscFrontEnd
         private int artigoId;
         private StockDTO _stock;
         private ArmazemDTO armazens;
+        private Requisicoes _requisicoes;
         public TransferenciaArmazem(StockDTO stock)
         {
             InitializeComponent();
             _stock = stock;
             armazens = new ArmazemDTO();
-
+            _requisicoes = new Requisicoes();
 
             qtdText.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
             qtdText.TextChanged += ValidacaoForms.TratarTextChanged;
@@ -87,16 +89,16 @@ namespace AscFrontEnd
 
                 if (responseTransf.IsSuccessStatusCode)
                 {
-                    var resposta = await client.GetAsync("https://localhost:7200/api/Armazem/LocationArtigo");
-                    var contentTransf = await resposta.Content.ReadAsStringAsync();
-
-                    StaticProperty.locationArtigos = JsonConvert.DeserializeObject<List<LocationArtigoDTO>>(contentTransf);
+                    await _requisicoes.GetLocalizacaoArtigo();
 
                     var result = await responseTransf.Content.ReadAsStringAsync();
 
                     MessageBox.Show(result,result, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
+                WindowsConfig.LimparFormulario(this);
+
+                TransferenciaArmazem_Load(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {

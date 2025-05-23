@@ -149,6 +149,7 @@
     <Compile Include="Application\DashBoard.cs" />
     <Compile Include="Application\Documento.cs" />
     <Compile Include="Application\Requisicoes.cs" />
+    <Compile Include="Application\Validacao\OutrasValidacoes.cs" />
     <Compile Include="Application\Validacao\ValidacaoForms.cs" />
     <Compile Include="Application\WindowsConfig.cs" />
     <Compile Include="AprovaPagamento.cs">

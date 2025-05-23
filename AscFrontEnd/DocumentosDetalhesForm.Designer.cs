@@ -41,14 +41,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.precos = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.ivas = new System.Windows.Forms.Label();
-            this.qtds = new System.Windows.Forms.Label();
-            this.artigos = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
+            this.dataTable = new System.Windows.Forms.DataGridView();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.printVenda = new System.Drawing.Printing.PrintDocument();
             this.printCompra = new System.Drawing.Printing.PrintDocument();
@@ -56,6 +49,7 @@
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -175,14 +169,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.precos);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.ivas);
-            this.groupBox2.Controls.Add(this.qtds);
-            this.groupBox2.Controls.Add(this.artigos);
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.label10);
+            this.groupBox2.Controls.Add(this.dataTable);
             this.groupBox2.Location = new System.Drawing.Point(278, 116);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(208, 141);
@@ -191,77 +178,17 @@
             this.groupBox2.Text = "Artigos";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
-            // precos
+            // dataTable
             // 
-            this.precos.AutoSize = true;
-            this.precos.Location = new System.Drawing.Point(152, 50);
-            this.precos.Name = "precos";
-            this.precos.Size = new System.Drawing.Size(0, 13);
-            this.precos.TabIndex = 7;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label6.Location = new System.Drawing.Point(152, 28);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(38, 13);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "Preço:";
-            // 
-            // ivas
-            // 
-            this.ivas.AutoSize = true;
-            this.ivas.Location = new System.Drawing.Point(111, 50);
-            this.ivas.Name = "ivas";
-            this.ivas.Size = new System.Drawing.Size(0, 13);
-            this.ivas.TabIndex = 5;
-            // 
-            // qtds
-            // 
-            this.qtds.AutoSize = true;
-            this.qtds.Location = new System.Drawing.Point(67, 50);
-            this.qtds.Name = "qtds";
-            this.qtds.Size = new System.Drawing.Size(0, 13);
-            this.qtds.TabIndex = 4;
-            // 
-            // artigos
-            // 
-            this.artigos.AutoSize = true;
-            this.artigos.Location = new System.Drawing.Point(7, 50);
-            this.artigos.Name = "artigos";
-            this.artigos.Size = new System.Drawing.Size(0, 13);
-            this.artigos.TabIndex = 3;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label8.Location = new System.Drawing.Point(111, 28);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(25, 13);
-            this.label8.TabIndex = 2;
-            this.label8.Text = "Iva:";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label9.Location = new System.Drawing.Point(67, 28);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(27, 13);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "Qtd:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label10.Location = new System.Drawing.Point(6, 28);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(39, 13);
-            this.label10.TabIndex = 0;
-            this.label10.Text = "Artigos";
+            this.dataTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataTable.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dataTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataTable.Location = new System.Drawing.Point(7, 22);
+            this.dataTable.Name = "dataTable";
+            this.dataTable.ReadOnly = true;
+            this.dataTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataTable.Size = new System.Drawing.Size(195, 105);
+            this.dataTable.TabIndex = 0;
             // 
             // pictureBox1
             // 
@@ -315,7 +242,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTable)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -333,19 +260,12 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label numDocumento;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label ivas;
-        private System.Windows.Forms.Label qtds;
-        private System.Windows.Forms.Label artigos;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label dataDocumento;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label precos;
-        private System.Windows.Forms.Label label6;
         private System.Drawing.Printing.PrintDocument printVenda;
         private System.Drawing.Printing.PrintDocument printCompra;
         private System.Windows.Forms.PrintPreviewDialog preVisualizacaoDialog;
+        private System.Windows.Forms.DataGridView dataTable;
     }
 }

@@ -40,10 +40,7 @@
             this.listaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.armazemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cadastroToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.listaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contaCorrenteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fornecedorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.clienteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.criacaoSerieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.funcionarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.depositoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -189,8 +186,7 @@
             // armazemToolStripMenuItem
             // 
             this.armazemToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cadastroToolStripMenuItem1,
-            this.listaToolStripMenuItem1});
+            this.cadastroToolStripMenuItem1});
             this.armazemToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
             this.armazemToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_store_48;
             this.armazemToolStripMenuItem.Name = "armazemToolStripMenuItem";
@@ -204,39 +200,14 @@
             this.cadastroToolStripMenuItem1.Text = "Cadastro";
             this.cadastroToolStripMenuItem1.Click += new System.EventHandler(this.cadastroToolStripMenuItem1_Click);
             // 
-            // listaToolStripMenuItem1
-            // 
-            this.listaToolStripMenuItem1.Name = "listaToolStripMenuItem1";
-            this.listaToolStripMenuItem1.Size = new System.Drawing.Size(134, 24);
-            this.listaToolStripMenuItem1.Text = "Lista";
-            // 
             // contaCorrenteToolStripMenuItem
             // 
-            this.contaCorrenteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fornecedorToolStripMenuItem1,
-            this.clienteToolStripMenuItem1});
             this.contaCorrenteToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
             this.contaCorrenteToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_debt_48;
             this.contaCorrenteToolStripMenuItem.Name = "contaCorrenteToolStripMenuItem";
             this.contaCorrenteToolStripMenuItem.Size = new System.Drawing.Size(132, 23);
             this.contaCorrenteToolStripMenuItem.Text = "Conta Corrente";
             this.contaCorrenteToolStripMenuItem.Click += new System.EventHandler(this.contaCorrenteToolStripMenuItem_Click);
-            // 
-            // fornecedorToolStripMenuItem1
-            // 
-            this.fornecedorToolStripMenuItem1.Image = global::AscFrontEnd.Properties.Resources.icons8_supplier_80;
-            this.fornecedorToolStripMenuItem1.Name = "fornecedorToolStripMenuItem1";
-            this.fornecedorToolStripMenuItem1.Size = new System.Drawing.Size(149, 24);
-            this.fornecedorToolStripMenuItem1.Text = "Fornecedor";
-            this.fornecedorToolStripMenuItem1.Click += new System.EventHandler(this.fornecedorToolStripMenuItem1_Click);
-            // 
-            // clienteToolStripMenuItem1
-            // 
-            this.clienteToolStripMenuItem1.Image = global::AscFrontEnd.Properties.Resources.icons8_client_80;
-            this.clienteToolStripMenuItem1.Name = "clienteToolStripMenuItem1";
-            this.clienteToolStripMenuItem1.Size = new System.Drawing.Size(149, 24);
-            this.clienteToolStripMenuItem1.Text = "Cliente";
-            this.clienteToolStripMenuItem1.Click += new System.EventHandler(this.clienteToolStripMenuItem1_Click);
             // 
             // criacaoSerieToolStripMenuItem
             // 
@@ -557,10 +528,7 @@
         private System.Windows.Forms.ToolStripMenuItem listaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem armazemToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cadastroToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem listaToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem contaCorrenteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fornecedorToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem clienteToolStripMenuItem1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripMenuItem vendaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem criacaoSerieToolStripMenuItem;

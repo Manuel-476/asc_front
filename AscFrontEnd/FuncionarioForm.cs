@@ -1,4 +1,5 @@
-﻿using AscFrontEnd.Application.Validacao;
+﻿using AscFrontEnd.Application;
+using AscFrontEnd.Application.Validacao;
 using AscFrontEnd.DTOs;
 using AscFrontEnd.DTOs.Funcionario;
 using AscFrontEnd.DTOs.StaticsDto;
@@ -114,14 +115,9 @@ namespace AscFrontEnd
                 MessageBox.Show("Funcionario Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
                 // Funcionario
-                var responseFuncionario = await client.GetAsync($"https://localhost:7200/api/Funcionario/WithRelations");
+                WindowsConfig.LimparFormulario(this);
 
-                if (responseFuncionario.IsSuccessStatusCode)
-                {
-                    var contentFuncionario = await responseFuncionario.Content.ReadAsStringAsync();
-
-                    StaticProperty.funcionarios = JsonConvert.DeserializeObject<List<FuncionarioDTO>>(contentFuncionario);
-                }
+                FuncionarioForm_Load(this, EventArgs.Empty);
             }
             else 
             {

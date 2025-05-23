@@ -15,6 +15,7 @@ using static AscFrontEnd.DTOs.Enums.Enums;
 using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.Application.Validacao;
 using System.Globalization;
+using AscFrontEnd.Application;
 
 
 namespace AscFrontEnd
@@ -38,19 +39,36 @@ namespace AscFrontEnd
         {
             try {
                 int armazemId = 0;
-                if (checkBox1.Checked)
+                if (movStockCheck.Checked)
                 {
                     if (StaticProperty.armazens.Where(arm => arm.codigo == armazemCombo.Text.ToString()).Any())
                     {
                         armazemId = StaticProperty.armazens.Where(arm => arm.codigo == armazemCombo.Text.ToString()).First().id;
                     }
-                }
 
+                    if (string.IsNullOrEmpty(localCombo.SelectedItem.ToString()))
+                    {
+                        MessageBox.Show("A localizaçao do artigo no armazem precisa ser selecionada", "Sem Localização disponível", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                }
+                if (string.IsNullOrEmpty(comboUnVenda.Text.ToString()) || string.IsNullOrEmpty(comboUnCompra.Text.ToString()))
+                {
+                    MessageBox.Show("Alguma unidade faltou ser selecionada", "Verifica as unidade do artigo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                if (string.IsNullOrEmpty(regimeIvaCombo.Text.ToString()))
+                {
+                    MessageBox.Show("Nenhum regime do iva foi selecionado", "Selecione um regime", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
                 if (string.Equals(regimeIvaCombo.SelectedItem.ToString(), "Geral", StringComparison.OrdinalIgnoreCase))
                 {
                     if (string.IsNullOrEmpty(ivaCombo.Text))
                     {
-                        MessageBox.Show("Quando o regime é geral o Iva precisa ser definido obrigatoriamente ", "Sem Localização disponível", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Quando o regime é geral o Iva precisa ser definido obrigatoriamente ", "Defina o valor do Iva", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
                     }
                 }
 
@@ -63,8 +81,8 @@ namespace AscFrontEnd
               subFamiliaId =  StaticProperty.subFamilias.Where(x => x.codigo == subFamiliaCombo.Text.ToString()).Any() ? StaticProperty.subFamilias.Where(x => x.codigo == subFamiliaCombo.Text.ToString()).First().id : 0,
               marcaId = StaticProperty.marcas.Where(x => x.codigo == marcaCombo.Text.ToString()).Any() ? StaticProperty.marcas.Where(x => x.codigo == marcaCombo.Text.ToString()).First().id : 0,
               modeloId = StaticProperty.modelos.Where(x => x.codigo == modeloCombo.Text.ToString()).Any() ? StaticProperty.modelos.Where(x => x.codigo == modeloCombo.Text.ToString()).First().id : 0,
-              mov_stock = checkBox1.Checked?OpcaoBinaria.Sim:OpcaoBinaria.Nao,
-              mov_lote = checkBox1.Checked?OpcaoBinaria.Sim:OpcaoBinaria.Nao,
+              mov_stock = movStockCheck.Checked?OpcaoBinaria.Sim:OpcaoBinaria.Nao,
+              mov_lote = movStockCheck.Checked?OpcaoBinaria.Sim:OpcaoBinaria.Nao,
               localizacaoArtigoId = localId,
               codigo_barra = codBarra.Text,
               num_serie = numSerie.Text,
@@ -111,6 +129,10 @@ namespace AscFrontEnd
             {
                 MessageBox.Show($"Ocorreu um erro ao tentar Salvar {ex.Message}", "Erro", MessageBoxButtons.RetryCancel);
             }
+
+            WindowsConfig.LimparFormulario(this);
+
+            await Actualizar();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -192,6 +214,8 @@ namespace AscFrontEnd
             }
 
             mencaoCombo.Enabled = false;
+            ivaCombo.Enabled = false;
+
             descricaoIvaTxt.Text = "";
              
             regimeIvaCombo.Items.Add("Isento");
@@ -201,7 +225,7 @@ namespace AscFrontEnd
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox1.Checked) 
+            if (movStockCheck.Checked) 
             {
                 if(StaticProperty.armazens == null) 
                 {
@@ -214,6 +238,11 @@ namespace AscFrontEnd
 
         private void armazemCombo_SelectedValueChanged(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(armazemCombo.Text.ToString())) 
+            {
+                return;
+            }
+
             string result = string.Empty;
 
             armazemId = StaticProperty.armazens.Where(arm => arm.codigo == armazemCombo.SelectedItem && arm.empresaId == 1).First().id;
@@ -238,6 +267,10 @@ namespace AscFrontEnd
 
         private void regimeIvaCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(regimeIvaCombo.Text.ToString())) 
+            {
+                return;
+            }
             if (string.Equals(regimeIvaCombo.SelectedItem.ToString(), "Geral", StringComparison.OrdinalIgnoreCase)) 
             {
                 regimeIva = OpcaoBinaria.Sim;
@@ -262,7 +295,7 @@ namespace AscFrontEnd
 
         private void mencaoCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(mencaoCombo.SelectedItem.ToString()))
+            if (string.IsNullOrEmpty(mencaoCombo.Text.ToString()))
             {
                 return;
             }
@@ -292,6 +325,11 @@ namespace AscFrontEnd
 
         private void localCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(localCombo.Text.ToString())) 
+            {
+                return;
+            }
+
             this.localId = StaticProperty.locationStores.Where(arm => arm.codigo == localCombo.Text.ToString() && arm.armazemId == armazemId).First().id;
 
             if (StaticProperty.locationArtigos.Where(x=>x.locationStoreId == this.localId).Any()) 
@@ -313,6 +351,29 @@ namespace AscFrontEnd
         private void familiaCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private async void btnActualizar_Click(object sender, EventArgs e)
+        {
+            await Actualizar();
+        }
+
+        public async Task Actualizar()
+        {
+            await new Requisicoes().SystemRefresh();
+
+            armazemCombo.Items.Clear();
+            localCombo.Items.Clear();
+            familiaCombo.Items.Clear();
+            subFamiliaCombo.Items.Clear();
+            modeloCombo.Items.Clear();
+            marcaCombo.Items.Clear();
+            ivaCombo.Items.Clear();
+            comboUnVenda.Items.Clear();
+            comboUnCompra.Items.Clear();
+            regimeIvaCombo.Items.Clear();
+
+            Artigo_Load(this, EventArgs.Empty);
         }
     }
 }

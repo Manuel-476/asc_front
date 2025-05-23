@@ -20,8 +20,8 @@ namespace AscFrontEnd.DTOs.ContasCorrentes
     public class AdiantaVfrDTO
     {
         public int Id { get; set; }
-        public int vfrId { get; set; }
-        public int adiantamentoFornId { get; set; }
+        public List<int> vfrId { get; set; }
+        public List<int> adiantamentoFornId { get; set; }
         public int regAdiantamentoFornecedorid { get; set; }
     }
 }

@@ -36,6 +36,7 @@ namespace AscFrontEnd
 
         NpDTO _np;
         ReciboDTO _re;
+        float _valorParcialRemocao = 0;
 
 
         int _documentoId;
@@ -252,6 +253,9 @@ namespace AscFrontEnd
            
             
             this.FillTable(parcelas);
+
+            _totalPreco = _totalPreco - valorPago;
+            valorTxt.Text = _totalPreco.ToString("F2");
         }
 
         private void radioCaixa_CheckedChanged(object sender, EventArgs e)
@@ -286,12 +290,17 @@ namespace AscFrontEnd
         {
             removerPicture.Enabled = true;
             id = e.RowIndex;
+            _valorParcialRemocao = float.Parse(formaPagamentoTable.Rows[e.RowIndex].Cells[1].Value.ToString());
         }
 
         private void removerPicture_Click(object sender, EventArgs e)
         {
             parcelas.RemoveAt(id);
             this.FillTable(parcelas);
+
+            _totalPreco = _totalPreco + _valorParcialRemocao;
+
+            valorTxt.Text = _totalPreco.ToString("F2");
 
         }
 

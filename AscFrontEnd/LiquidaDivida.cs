@@ -212,6 +212,8 @@ namespace AscFrontEnd
 
             this.LoadRefresh();
 
+            WindowsConfig.LimparFormulario(this);
+
             faturas =new DataTable();
 
             LiquidaDivida_Load(this, EventArgs.Empty);

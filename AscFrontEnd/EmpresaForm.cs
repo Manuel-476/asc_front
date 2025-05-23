@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AscFrontEnd.DTOs.Empresa;
 using AscFrontEnd.Application.Validacao;
+using AscFrontEnd.Application;
 
 namespace AscFrontEnd
 {
@@ -111,6 +112,10 @@ namespace AscFrontEnd
             {
                 throw new Exception($"Erro ao salvar: {ex.Message}");
             }
+
+            WindowsConfig.LimparFormulario(this);
+
+            EmpresaForm_Load(this, EventArgs.Empty);
         }
 
         private void pictureBox3_Click(object sender, EventArgs e)

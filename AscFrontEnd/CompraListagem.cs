@@ -36,6 +36,7 @@ namespace AscFrontEnd
         string documento;
         string codigoDocumentoOrigem = string.Empty;
         string codigoDocumento = string.Empty;
+        string localEntrega = string.Empty;
      
 
         List<DocumentoCompra> documentoCompras;
@@ -570,7 +571,7 @@ namespace AscFrontEnd
                                 {
                                     codigo = StaticProperty.artigos.Where(x => x.id == item.artigoId).Any() ?
                                              StaticProperty.artigos.Where(x => x.id == item.artigoId).First().codigo : string.Empty,
-                                    iva = item.iva,
+                                    iva = 0,
                                     preco = item.preco,
                                     qtd = item.qtd
                                 });
@@ -599,7 +600,7 @@ namespace AscFrontEnd
                     vnc.status = DocState.ativo;
                     vnc.documentoOrigem = codigoDocumentoOrigem;
                     vnc.vncArtigo = vncArtigos;
-                    vnc.created = DateTime.Now.Date;
+                    vnc.created = DateTime.Now;
 
                     var json = System.Text.Json.JsonSerializer.Serialize(vnc);
 
@@ -821,14 +822,32 @@ namespace AscFrontEnd
         {
             try
             {
+                /*
+                 *               
+
+          
+
+                if (documento.Equals("FR") || documento.Equals("FT") || documento.Equals("GR"))
+                {
+
+                }
+                 */
                 var doc = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
-                var indexSpace = doc.IndexOf(" ");
-                documento = doc.Substring(0, indexSpace);
+                var estado = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
+
+                documento = Documento.GetCodigoDocumento(doc);
                 codigoDocumento = doc;
 
                 if (documento.Equals("VFR") || documento.Equals("VFT") || documento.Equals("VGR"))
                 {
-                    estornarPicture.Enabled = true;
+                    if (estado != "Estornado")
+                    {
+                        estornarPicture.Enabled = true;
+                    }
+                    else
+                    {
+                        estornarPicture.Enabled = false;
+                    }
                 }
                 else
                 {
@@ -1131,15 +1150,14 @@ namespace AscFrontEnd
                 var tel = fornecedorResult.phones.Any() ? fornecedorResult.phones.First().telefone : "000000000";
 
                 string empresaNome = $"{fornecedorResult.nome_fantasia.ToUpper()}\n";
-                string empresaCabecalho = $"{fornecedorResult.localizacao}\n" +
-                                          $"Contribuente: {fornecedorResult.nif}\n" +
+                string empresaCabecalho = $"Endereço: {fornecedorResult.localizacao}\n" +
+                                          $"Nif: {fornecedorResult.nif}\n" +
                                           $"Email: {fornecedorResult.email ?? ""}\n" +
                                           $"Tel: {tel}";
 
-                string clienteCabecalho = $"{StaticProperty.empresa.nome_fantasia}\n".ToUpper();
-                string clienteOutros = $"Cliente Nº {StaticProperty.empresa.id}\n" +
-                                       $"Endereco: {StaticProperty.empresa.endereco}\n" +
-                                       $"Contribuente: {StaticProperty.empresa.nif}\n" +
+                string clienteCabecalho = $"Exmo (s) Senhor (a)\n".ToUpper();
+                string clienteOutros = $"{StaticProperty.empresa.nome_fantasia}\nEndereço: {StaticProperty.empresa.endereco}\n" +
+                                       $"Nif: {StaticProperty.empresa.nif}\n" +
                                        $"Email: {StaticProperty.empresa.email}\n" +
                                        $"Tel:{StaticProperty.empresa.telefone} ";
 
@@ -1186,13 +1204,13 @@ namespace AscFrontEnd
                 e.Graphics.DrawString($"{DateTime.Now.Date.ToString("dd-MM-yyyy")}", fontNormal, cor, new Rectangle(350, 330, 450, 340));
 
                 e.Graphics.DrawString($"{DateTime.Now.Date.ToString("dd-MM-yyyy")}", fontNormal, cor, new Rectangle(500, 330, 650, 340));
-
                 e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
-                e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 350, 420));
-                e.Graphics.DrawString($"Qtd", fontNormalNegrito, cor, new Rectangle(350, 400, 450, 420));
-                e.Graphics.DrawString($"Preco", fontNormalNegrito, cor, new Rectangle(450, 400, 550, 420));
-                e.Graphics.DrawString("Iva %", fontNormalNegrito, cor, new Rectangle(550, 400, 650, 420));
-                e.Graphics.DrawString($"Valor", fontNormalNegrito, cor, new Rectangle(650, 400, 750, 420));
+                e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 300, 420));
+                e.Graphics.DrawString($"Qtd", fontNormalNegrito, cor, new Rectangle(300, 400, 400, 420));
+                e.Graphics.DrawString($"Preco", fontNormalNegrito, cor, new Rectangle(400, 400, 500, 420));
+                e.Graphics.DrawString("Iva %", fontNormalNegrito, cor, new Rectangle(500, 400, 600, 420));
+                e.Graphics.DrawString($"Desconto", fontNormalNegrito, cor, new Rectangle(600, 400, 700, 420));
+                e.Graphics.DrawString($"Valor", fontNormalNegrito, cor, new Rectangle(700, 400, 750, 420));
                 e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
                 int i = 15;
                 foreach (CompraArtigo va in compraArtigos)
@@ -1200,106 +1218,145 @@ namespace AscFrontEnd
                     totalIva += va.iva;
                     total += va.preco * float.Parse(va.qtd.ToString());
 
-                    var descricao = StaticProperty.artigos.Where(art => art.codigo == va.codigo).Any() ? StaticProperty.artigos.Where(art => art.codigo == va.codigo).First().descricao : string.Empty;
-                    var regimeIva = StaticProperty.artigos.Where(art => art.codigo == va.codigo).Any() ?
-                                    (StaticProperty.artigos.Where(art => art.codigo == va.codigo).First().regimeIva == OpcaoBinaria.Sim ? va.iva : 0) : 0;
-
                     e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
-                    e.Graphics.DrawString($"{descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 350, 425 + i));
-                    e.Graphics.DrawString($"{va.qtd}", fontNormal, cor, new Rectangle(350, 410 + i, 450, 425 + i));
-                    e.Graphics.DrawString($"{va.preco.ToString("F2")}", fontNormal, cor, new Rectangle(450, 410 + i, 550, 425 + i));
-                    e.Graphics.DrawString($"{regimeIva.ToString("F2")} %", fontNormal, cor, new Rectangle(550, 410 + i, 650, 425 + i));
-                    e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(650, 410 + i, 750, 425 + i));
+                    e.Graphics.DrawString($"{StaticProperty.artigos.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 300, 425 + i));
+                    e.Graphics.DrawString($"{va.qtd:F2}", fontNormal, cor, new Rectangle(300, 410 + i, 400, 425 + i));
+                    e.Graphics.DrawString($"{va.preco.ToString("F2")}", fontNormal, cor, new Rectangle(400, 410 + i, 500, 425 + i));
+                    e.Graphics.DrawString($"{(va.iva).ToString("F2")} %", fontNormal, cor, new Rectangle(500, 410 + i, 600, 425 + i));
+                    e.Graphics.DrawString($"{(((va.preco - (va.preco * (fornecedorResult.desconto / 100))) * (va.desconto / 100)) * va.qtd).ToString("F2")}", fontNormal, cor, new Rectangle(600, 410 + i, 700, 425 + i));
+                    e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(700, 410 + i, 750, 425 + i));
                     i = i + 15;
                 }
+                totalLiquido += CalculosVendaCompra.TotalCompra(compraArtigos, fornecedorResult.desconto); ;
+                total = total - CalculosVendaCompra.TotalDescontoCompra(compraArtigos, fornecedorResult.desconto);
 
-                totalLiquido += total - (total * (totalIva / 100));
+                string mercadoria = $"Total Ilíquido";
+                string totalIvaValor = $"Total Imposto:";
+                string totalFinal = $"Total á pagar";
+                var desconto = CalculosVendaCompra.TotalDescontoCompra(compraArtigos, fornecedorResult.desconto) + CalculosVendaCompra.TotalDescontoFornecedor(compraArtigos, fornecedorResult.desconto);
 
-                string mercadoria = $"Mercadoria/Serviço:";
-                string iva = $"Iva:{totalIva.ToString("F2")}";
-                string totalIvaValor = $"Total Iva:";
-                string totalFinal = $"TOTAL";
+                e.Graphics.DrawString($"{StaticProperty.hash} - Processado por programa\r válido nº 31.1/AGT20 Asc - Smart Entity", fontCabecalho, cor, new PointF(250, 515 + i), formatToCenter);
 
-
-                e.Graphics.DrawRectangle(caneta, new Rectangle(540, 530 + i, 210, 70 + i));
-
-                e.Graphics.DrawString(mercadoria, fontCabecalho, cor, new PointF(550, 545 + i), formatToLeft);
-                e.Graphics.DrawString(totalLiquido.ToString("F2"), fontCabecalho, cor, new PointF(680, 545 + i), formatToLeft);
-                e.Graphics.DrawString(iva, fontCabecalho, cor, new PointF(550, 555 + i), formatToLeft);
-                e.Graphics.DrawString(totalIva.ToString("F2"), fontCabecalho, cor, new PointF(680, 555 + i), formatToLeft);
-                e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 565 + i), formatToLeft);
-                e.Graphics.DrawString((total * (totalIva / 100)).ToString("F2"), fontCabecalho, cor, new PointF(680, 565 + i), formatToLeft);
-                e.Graphics.DrawString("Desconto", fontCabecalho, cor, new PointF(550, 595 + i), formatToLeft);
-                e.Graphics.DrawString($"{descontoFornecedor:F2}", fontCabecalho, cor, new PointF(680, 595 + i), formatToLeft);
-
-                e.Graphics.DrawLine(canetaFina, 550, 583 + i, 740, 583 + i);
-                e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 620 + i), formatToLeft);
-                e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 620 + i), formatToLeft);
-
-                string conta = $"Conta nº";
-                string iban = $"IBAN ";
-                string banco = $"Banco Angolano de Investimento";
-
-                e.Graphics.DrawString($"Precessado pelo programa válido nº{"41/AGT/2020"} Asc - Smart Entity", fontCabecalho, cor, new PointF(250, 515 + i), formatToCenter);
-                e.Graphics.DrawString($"Resumo Imposto", fontCabecalho, cor, new PointF(50, 515 + i), formatToCenter);
-
-                e.Graphics.DrawLine(caneta, 50, 530 + i, 530, 530 + i);
-                e.Graphics.DrawString("Descrição", new Font("Arial", 10, GraphicsUnit.Pixel), cor, new PointF(50, 540 + i), formatToLeft);
-                e.Graphics.DrawString("Taxa %", fontCabecalhoNegrito, cor, new PointF(130, 540 + i), formatToLeft);
-                e.Graphics.DrawString("Incidência", fontCabecalho, cor, new PointF(200, 540 + i), formatToLeft);
-                e.Graphics.DrawString($"Valor imposto", fontCabecalho, cor, new PointF(300, 540 + i), formatToLeft);
-                e.Graphics.DrawString("Motivo Isenção", fontCabecalho, cor, new PointF(400, 540 + i), formatToLeft);
-
-
-                // Pegar os dados dos artigo com iva aplicado
-                foreach (var item in compraArtigos)
+                if (documento != "VGR" && documento != "VGT")
                 {
-                    if (StaticProperty.artigos.Where(x => x.codigo == item.codigo).First().regimeIva == OpcaoBinaria.Sim)
-                    {
-                        if (!listaIvas.Contains(item.iva))
-                        {
-                            listaIvas.Add(item.iva);
-                        }
-                    }
-                }
-                e.Graphics.DrawLine(caneta, 50, 555 + i, 530, 555 + i);
-                if (listaIvas.Any())
-                {
-                    foreach (float ivas in listaIvas)
-                    {
-                        e.Graphics.DrawString("Iva", fontCabecalhoNegrito, cor, new PointF(50, 560 + i), formatToLeft);
-                        e.Graphics.DrawString(ivas.ToString("F2"), new Font("Arial", 10, FontStyle.Underline, GraphicsUnit.Pixel), cor, new PointF(130, 560 + i), formatToLeft);
-                        e.Graphics.DrawString(compraArtigos.Where(x => x.iva == ivas).Sum(x => x.preco * x.qtd).ToString("F4"), fontCabecalho, cor, new PointF(200, 560 + i), formatToLeft);
-                        e.Graphics.DrawString(compraArtigos.Where(x => x.iva == ivas).Sum(x => ((x.preco * x.qtd) * (x.iva / 100))).ToString("F4"), fontCabecalho, cor, new PointF(300, 560 + i), formatToLeft);
-                        e.Graphics.DrawString("", fontCabecalho, cor, new PointF(430, 560 + i), formatToLeft);
-                        i = i + 10;
-                    }
-                }
-                // Artigos com iva isento
-                foreach (var motivo in StaticProperty.motivosIsencao)
-                {
+                    e.Graphics.DrawRectangle(caneta, new Rectangle(540, 530 + i, 210, 70 + i));
+
+                    e.Graphics.DrawString(mercadoria, fontCabecalho, cor, new PointF(550, 545 + i), formatToLeft);
+                    e.Graphics.DrawString(totalLiquido.ToString("F2"), fontCabecalho, cor, new PointF(680, 545 + i), formatToLeft);
+                    e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 555 + i), formatToLeft);
+                    e.Graphics.DrawString((total * (totalIva / 100)).ToString("F2"), fontCabecalho, cor, new PointF(680, 555 + i), formatToLeft);
+                    e.Graphics.DrawString("Desconto", fontCabecalho, cor, new PointF(550, 565 + i), formatToLeft);
+                    e.Graphics.DrawString($"{desconto:F2}", fontCabecalho, cor, new PointF(680, 565 + i), formatToLeft);
+
+                    e.Graphics.DrawLine(canetaFina, 550, 580 + i, 740, 580 + i);
+                    e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 605 + i), formatToLeft);
+                    e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 605 + i), formatToLeft);
+
+                    string conta = $"Conta nº";
+                    string iban = $"IBAN ";
+                    string banco = $"Banco Angolano de Investimento";
+
+
+                    e.Graphics.DrawString($"Resumo Imposto", fontCabecalho, cor, new PointF(50, 515 + i), formatToCenter);
+
+                    e.Graphics.DrawLine(caneta, 50, 530 + i, 530, 530 + i);
+                    e.Graphics.DrawString("Descrição", new Font("Arial", 10, GraphicsUnit.Pixel), cor, new PointF(50, 540 + i), formatToLeft);
+                    e.Graphics.DrawString("Taxa %", fontCabecalhoNegrito, cor, new PointF(130, 540 + i), formatToLeft);
+                    e.Graphics.DrawString("Incidência", fontCabecalho, cor, new PointF(200, 540 + i), formatToLeft);
+                    e.Graphics.DrawString($"Valor imposto", fontCabecalho, cor, new PointF(300, 540 + i), formatToLeft);
+                    e.Graphics.DrawString("Motivo Isenção", fontCabecalho, cor, new PointF(400, 540 + i), formatToLeft);
+
+
+                    // Pegar os dados dos artigo com iva aplicado
                     foreach (var item in compraArtigos)
                     {
-                        if (StaticProperty.artigos.Where(x => x.codigo == item.codigo && x.codigoIva == motivo.codigo).Any())
+                        if (StaticProperty.artigos.Where(x => x.codigo == item.codigo).First().regimeIva == OpcaoBinaria.Sim)
                         {
-                            if (StaticProperty.artigos.Where(x => x.codigo == item.codigo && x.codigoIva == motivo.codigo).First().regimeIva == OpcaoBinaria.Nao)
+                            if (!listaIvas.Contains(item.iva))
                             {
-                                incidencia += item.preco * item.qtd;
+                                listaIvas.Add(item.iva);
                             }
                         }
                     }
-                    if (incidencia > 0)
+                    e.Graphics.DrawLine(caneta, 50, 555 + i, 530, 555 + i);
+                    if (listaIvas.Any())
                     {
-
-                        e.Graphics.DrawString("Isento", fontCabecalhoNegrito, cor, new PointF(50, 560 + i), formatToLeft);
-                        e.Graphics.DrawString("0,00", new Font("Arial", 10, FontStyle.Underline, GraphicsUnit.Pixel), cor, new PointF(130, 560 + i), formatToLeft);
-                        e.Graphics.DrawString(incidencia.ToString("F4"), fontCabecalho, cor, new PointF(200, 560 + i), formatToLeft);
-                        e.Graphics.DrawString("0,00", fontCabecalho, cor, new PointF(300, 560 + i), formatToLeft);
-                        e.Graphics.DrawString($"{motivo.mencao}", fontCabecalho, cor, new PointF(400, 560 + i), formatToLeft);
-                        i = i + 10;
-                        incidencia = 0;
+                        foreach (float ivas in listaIvas)
+                        {
+                            e.Graphics.DrawString("Iva", fontCabecalhoNegrito, cor, new PointF(50, 560 + i), formatToLeft);
+                            e.Graphics.DrawString(ivas.ToString("F2"), new Font("Arial", 10, FontStyle.Underline, GraphicsUnit.Pixel), cor, new PointF(130, 560 + i), formatToLeft);
+                            e.Graphics.DrawString(compraArtigos.Where(x => x.iva == ivas).Sum(x => x.preco * x.qtd).ToString("F2"), fontCabecalho, cor, new PointF(200, 560 + i), formatToLeft);
+                            e.Graphics.DrawString(compraArtigos.Where(x => x.iva == ivas).Sum(x => ((x.preco * x.qtd) * (x.iva / 100))).ToString("F2"), fontCabecalho, cor, new PointF(300, 560 + i), formatToLeft);
+                            e.Graphics.DrawString("", fontCabecalho, cor, new PointF(430, 560 + i), formatToLeft);
+                            i = i + 10;
+                        }
                     }
+                    // Artigos com iva isento
+                    foreach (var motivo in StaticProperty.motivosIsencao)
+                    {
+                        foreach (var item in compraArtigos)
+                        {
+                            if (StaticProperty.artigos.Where(x => x.codigo == item.codigo && x.codigoIva == motivo.codigo).Any())
+                            {
+                                if (StaticProperty.artigos.Where(x => x.codigo == item.codigo && x.codigoIva == motivo.codigo).First().regimeIva == OpcaoBinaria.Nao)
+                                {
+                                    incidencia += item.preco * item.qtd;
+                                }
+                            }
+                        }
+                        if (incidencia > 0)
+                        {
 
+                            e.Graphics.DrawString("Isento", fontCabecalhoNegrito, cor, new PointF(50, 560 + i), formatToLeft);
+                            e.Graphics.DrawString("0,00", new Font("Arial", 10, FontStyle.Underline, GraphicsUnit.Pixel), cor, new PointF(130, 560 + i), formatToLeft);
+                            e.Graphics.DrawString(incidencia.ToString("F2"), fontCabecalho, cor, new PointF(200, 560 + i), formatToLeft);
+                            e.Graphics.DrawString("0,00", fontCabecalho, cor, new PointF(300, 560 + i), formatToLeft);
+                            e.Graphics.DrawString($"{motivo.mencao}", fontCabecalho, cor, new PointF(400, 560 + i), formatToLeft);
+                            i = i + 10;
+                            incidencia = 0;
+                        }
+
+                    }
+                }
+                if (!documento.Equals("VNC") && !documento.Equals("VND") && !documento.Equals("VGT") && !documento.Equals("VGR"))
+                {
+                    e.Graphics.DrawString($"Retenção           0,00 ", fontCabecalho, new SolidBrush(Color.Red), new PointF(50, 680 + i), formatToCenter);
+
+                }
+                if (documento.Equals("PCO") || documento.Equals("VGR"))
+                {
+                    e.Graphics.DrawString($"Este documento não serve como factura ", fontCabecalho, new SolidBrush(Color.Red), new PointF(280, 720 + i), formatToCenter);
+                }
+                else if (documento.Equals("VFT") || documento.Equals("VFR"))
+                {
+                    e.Graphics.DrawString($"Os bens/serviços foram colocados á disposição do adquirente na data e local do documento", fontCabecalho, new SolidBrush(Color.Black), new PointF(210, 720 + i), formatToCenter);
+                }
+
+                if (documento.Equals("VGT") || documento.Equals("VGR"))
+                {
+                    e.Graphics.DrawString("Entreguei", fontCabecalho, cor, new PointF(100, 720 + i), formatToLeft);
+                    e.Graphics.DrawLine(caneta, 50, 780 + i, 200, 780 + i);
+
+                    e.Graphics.DrawString("Recebi", fontCabecalho, cor, new PointF(660, 720 + i), formatToLeft);
+                    e.Graphics.DrawLine(caneta, 600, 780 + i, 750, 780 + i);
+                }
+
+                if (documento.Equals("VNC"))
+                {
+                    e.Graphics.DrawString("O Cliente", fontCabecalho, cor, new PointF(100, 720 + i), formatToLeft);
+                    e.Graphics.DrawLine(caneta, 50, 780 + i, 200, 780 + i);
+
+                }
+
+                if (documento.Equals("VGT") || documento.Equals("ECF"))
+                {
+                    e.Graphics.DrawString("Local de Carga:", fontCabecalhoNegrito, cor, new PointF(50, 820 + i), formatToLeft);
+
+                    e.Graphics.DrawString($"Viana", fontCabecalho, cor, new PointF(150, 820 + i), formatToLeft);
+
+                    e.Graphics.DrawString("Local de Descarga:", fontCabecalhoNegrito, cor, new PointF(50, 835 + i), formatToLeft);
+
+                    e.Graphics.DrawString($"{localEntrega}", fontCabecalho, cor, new PointF(150, 835 + i), formatToLeft);
                 }
 
                 // Desenhando a imagem no documento
@@ -1317,6 +1374,11 @@ namespace AscFrontEnd
                 Console.WriteLine($"Erro: {ex.Message}");
                 throw new Exception("Erro ao desenhar a string: " + ex.Message);
             }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 

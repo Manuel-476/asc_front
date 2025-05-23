@@ -18,6 +18,8 @@ using static AscFrontEnd.DTOs.Enums.Enums;
 using AscFrontEnd.DTOs.ContasCorrentes;
 using AscFrontEnd.Application;
 using AscFrontEnd.Application.Validacao;
+using System.Windows.Forms.DataVisualization.Charting;
+using DocumentFormat.OpenXml.Bibliography;
 
 namespace AscFrontEnd
 {
@@ -27,13 +29,22 @@ namespace AscFrontEnd
         FornecedorDTO fornecedor;
         Entidade _entidade;
         Documento _getCodigoDocumento;
+        Requisicoes _requisicoes;
+        List<int> _docUsed;
+
+        List<int> _adiantamentoIdList;
+        List<int> _regAdiantamentoIdList;
 
         int _entidadeId;
-        int adiantamentoId;
-        int documentoId;
+        int _adiantamentoId;
+        int _regAdiantamentoId;
+        int _documentoId;
 
-        float valorAdiantado = 0;
-        float valorRegulado = 0;
+        float _valorAdiantado = 0;
+        float _valorRegulado = 0;
+
+        float _totalAdiantado = 0f;
+        float _totalPorRegular = 0f;
 
         public RegularAdiantamentoForm(Entidade entidade, int entidadeId)
         {
@@ -42,19 +53,23 @@ namespace AscFrontEnd
             _entidade = entidade;
             _entidadeId = entidadeId;
             _getCodigoDocumento = new Documento();
+            _adiantamentoIdList = new List<int>();
+            _regAdiantamentoIdList = new List<int>();
+            _requisicoes = new Requisicoes();
+            _docUsed = new List<int>();
 
-            if(entidade == Entidade.cliente) 
+            if (entidade == Entidade.cliente)
             {
-                if(StaticProperty.clientes.Where(cl => cl.id == entidadeId).Any())
+                if (StaticProperty.clientes.Where(cl => cl.id == entidadeId).Any())
                 {
                     cliente = StaticProperty.clientes.Where(cl => cl.id == entidadeId).First();
                 }
             }
-            else if(entidade == Entidade.fornecedor) 
+            else if (entidade == Entidade.fornecedor)
             {
-                if(StaticProperty.fornecedores.Where(f => f.id == entidadeId).Any())
-                { 
-                       fornecedor = StaticProperty.fornecedores.Where(f => f.id == entidadeId).First();
+                if (StaticProperty.fornecedores.Where(f => f.id == entidadeId).Any())
+                {
+                    fornecedor = StaticProperty.fornecedores.Where(f => f.id == entidadeId).First();
                 }
 
             }
@@ -65,27 +80,34 @@ namespace AscFrontEnd
 
         private void RegularAdiantamentoForm_Load(object sender, EventArgs e)
         {
+            docRegularTable.DataSource = null;
+            adiantamentoTable.DataSource = null;
 
-            this.carregarTabelas( ref valorAdiantado, ref valorRegulado);
+            this.carregarTabelas(ref _valorAdiantado, ref _valorRegulado);
 
-            adiantado.Text = $"Adiantado: {valorAdiantado.ToString("F2")}";
-            liquidado.Text = $"Liquidado: {valorRegulado.ToString("F2")}";
+            adiantado.Text = $"Adiantado: {_valorAdiantado.ToString("F2")}";
+            liquidado.Text = $"Liquidar: {_valorRegulado.ToString("F2")}";
         }
 
         private void adiantamentoTable_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
-                adiantamentoId = int.Parse(adiantamentoTable.Rows[e.RowIndex].Cells[0].Value.ToString());
+                var selectedRows = adiantamentoTable.SelectedRows;
 
-                if (_entidade == Entidade.cliente)
+                _totalAdiantado = 0;
+
+                _adiantamentoIdList.Clear();
+
+                foreach (DataGridViewRow row in selectedRows)
                 {
-                   // documentoAdiantamento.Text = StaticProperty.adiantamentoClientes.Where(ad => ad.id == adiantamentoId).First().documento;
+                    _adiantamentoId = int.Parse(row.Cells[0].Value.ToString());
+                    _totalAdiantado += float.Parse(row.Cells[2].Value.ToString());
+
+                    _adiantamentoIdList.Add(_adiantamentoId);
+
                 }
-                else if (_entidade == Entidade.fornecedor)
-                {
-                   // documentoAdiantamento.Text = StaticProperty.adiantamentoForns.Where(ad => ad.id == adiantamentoId).First().documento;
-                }
+                adiantarLabel.Text = $"Adiantar: {_totalAdiantado.ToString("F2")}";
             }
             catch { return; }
         }
@@ -94,19 +116,24 @@ namespace AscFrontEnd
         {
             try
             {
-                documentoId = int.Parse(docRegularTable.Rows[e.RowIndex].Cells[0].Value.ToString());
+                var selectedRows = docRegularTable.SelectedRows;
 
-                if (_entidade == Entidade.cliente)
+                _totalPorRegular = 0;
+
+                _regAdiantamentoIdList.Clear();
+
+                foreach (DataGridViewRow row in selectedRows)
                 {
-                    //documentoPagamento.Text = StaticProperty.frs.Where(ad => ad.id == documentoId).First().documento;
-                    valorDocumento.Text = StaticProperty.frs.Where(x => x.id == documentoId).Sum(x => x.frArtigo.Sum(f => f.preco * f.qtd)).ToString("F2");
+                    _regAdiantamentoId = int.Parse(row.Cells[0].Value.ToString());
+                    _totalPorRegular += float.Parse(row.Cells[2].Value.ToString());
+
+                    _regAdiantamentoIdList.Add(_regAdiantamentoId);
 
                 }
-                else if (_entidade == Entidade.fornecedor)
-                {
-                  //  documentoPagamento.Text = StaticProperty.vfrs.Where(ad => ad.id == documentoId).First().documento;
-                    valorDocumento.Text = StaticProperty.vfrs.Where(x => x.id == documentoId).Sum(x => x.vfrArtigo.Sum(f => f.preco * f.qtd)).ToString("F2");
-                }
+
+                regularLabel.Text = $"Regular: {_totalPorRegular.ToString("F2")}";
+
+                valorDocumento.Text = _totalPorRegular.ToString("F2");
             }
             catch { return; }
         }
@@ -123,17 +150,28 @@ namespace AscFrontEnd
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+            if (!_adiantamentoIdList.Any()) 
+            {
+                MessageBox.Show("Nenhum documento de adiantamento foi selecionado!","Selecione um adiantamento",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            
+                return;
+            }
+            if (!_regAdiantamentoIdList.Any())
+            {
+                MessageBox.Show("Nenhum documento de venda foi selecionado!", "Selecione uma venda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
             if (_entidade == Entidade.cliente)
             {
                 documento = await Documento.GetCodigoDocumentoAsync("RGC");
 
-                var fr = StaticProperty.frs.Where(x => x.id == documentoId).First();
-                
+
                 var regAdiantamento = new RegAdiantamentoClienteDTO()
                 {
-                    adiantamentoId = adiantamentoId,
                     documento = documento,
-                    frId = documentoId,
+                    adiantaFrs = new List<AdiantaFrDTO>() { new AdiantaFrDTO() { regAdiantamentoClientesid = 0, frId = _regAdiantamentoIdList, adiantamentoClienteId = _adiantamentoIdList } },
                     status = DocState.ativo,
                     empresaId = StaticProperty.empresaId,
                 };
@@ -144,44 +182,13 @@ namespace AscFrontEnd
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var responseRegAdCliente = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Regular/Adiantamento/Cliente/WithRelations");
-
-                    var responseRegAdForn = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Regular/Adiantamento/Fornecedor/WithRelations");
-                 
-                    var responseAdCliente = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Cliente");
-
-                    var responseAdForn = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Fornecedor");
-
-                    if (responseAdForn.IsSuccessStatusCode)
-                    {
-                        var contentAdForn = await responseAdForn.Content.ReadAsStringAsync();
-                        StaticProperty.adiantamentoForns = JsonConvert.DeserializeObject<List<AdiantamentoFornDTO>>(contentAdForn);
-                    }
-
-                    if (responseAdCliente.IsSuccessStatusCode)
-                    {
-                        var contentAdCliente = await responseAdCliente.Content.ReadAsStringAsync();
-                        StaticProperty.adiantamentoClientes = JsonConvert.DeserializeObject<List<AdiantamentoClienteDTO>>(contentAdCliente);
-                    }
-
-                    if (responseRegAdCliente.IsSuccessStatusCode)
-                    {
-                        var contentRegAdCliente = await responseRegAdCliente.Content.ReadAsStringAsync();
-                        StaticProperty.regAdiantamentoClientes = JsonConvert.DeserializeObject<List<RegAdiantamentoClienteDTO>>(contentRegAdCliente);
-                    }
-                    if (responseRegAdForn.IsSuccessStatusCode)
-                    {
-                        var contentRegAdForn = await responseRegAdForn.Content.ReadAsStringAsync();
-                        StaticProperty.regAdiantamentoForns = JsonConvert.DeserializeObject<List<RegAdiantamentoFornDTO>>(contentRegAdForn);
-                    }
+                    await _requisicoes.GetRegAdiantamantoCliente();                 
+                    await _requisicoes.GetAdCliente();                 
 
                     var result = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show(result.ToString(), "Feito Com Sucesso", MessageBoxButtons.OK,MessageBoxIcon.Information);
 
-                    this.carregarTabelas(ref valorAdiantado,ref valorRegulado);
+                    MessageBox.Show(result.ToString(), "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    adiantado.Text = $"Adiantado: {valorAdiantado.ToString("F2")}";
-                    liquidado.Text = $"Liquidado: {valorRegulado.ToString("F2")}";
                 }
                 else
                 {
@@ -191,13 +198,12 @@ namespace AscFrontEnd
             else if (_entidade == Entidade.fornecedor)
             {
                 documento = await Documento.GetCodigoDocumentoAsync("RGF");
-                var vfr = StaticProperty.vfrs.Where(x => x.id == documentoId).First();
+                var vfr = StaticProperty.vfrs.Where(x => x.id == _documentoId).First();
 
                 var regAdiantamento = new RegAdiantamentoFornDTO()
                 {
-                    adiantamentoId = adiantamentoId,
                     documento = documento,
-                    vfrId = documentoId,
+                    adiantaVfrs = new List<AdiantaVfrDTO>() { new AdiantaVfrDTO() { regAdiantamentoFornecedorid = 0, vfrId = _regAdiantamentoIdList, adiantamentoFornId = _adiantamentoIdList } },
                     status = DocState.ativo,
                     empresaId = StaticProperty.empresaId,
                 };
@@ -208,19 +214,18 @@ namespace AscFrontEnd
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var responseRegAdForn = await client.GetAsync($"https://localhost:7200/api/ContaCorrente/Regular/Adiantamento/Fornecedor/WithRelations");
-
-                    if (responseRegAdForn.IsSuccessStatusCode)
-                    {
-                        var contentRegAdForn = await responseRegAdForn.Content.ReadAsStringAsync();
-                        StaticProperty.regAdiantamentoForns = JsonConvert.DeserializeObject<List<RegAdiantamentoFornDTO>>(contentRegAdForn);
-                    }
+                    await _requisicoes.GetRegAdFornecedor();
+                    await _requisicoes.GetAdFornecedor();
                 }
                 else
                 {
                     MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
                 }
             }
+
+            WindowsConfig.LimparFormulario(this);
+
+            RegularAdiantamentoForm_Load(this, EventArgs.Empty);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -237,11 +242,11 @@ namespace AscFrontEnd
                 {
                     if (item.documento.ToUpper().Contains(textBox1.Text.ToUpper().ToString()) || item.created_at.ToString().ToUpper().Contains(textBox1.Text.ToUpper().ToString()))
                     {
-                        dt.Rows.Add(item.id, item.documento, item.valorAdiantado);
-
-                        adiantamentoTable.DataSource = dt;
+                        dt.Rows.Add(item.id, item.documento, item.valorAdiantado);                   
                     }
                 }
+
+                adiantamentoTable.DataSource = dt;
             }
             else if (_entidade == Entidade.fornecedor)
             {
@@ -249,11 +254,11 @@ namespace AscFrontEnd
                 {
                     if (item.documento.ToUpper().Contains(textBox1.Text.ToUpper().ToString()) || item.created_at.ToString().ToUpper().Contains(textBox1.Text.ToUpper().ToString()))
                     {
-                        dt.Rows.Add(item.id, item.documento, item.valorAdiantado);
-
-                        docRegularTable.DataSource = dt;
+                        dt.Rows.Add(item.id, item.documento, item.valorAdiantado);                  
                     }
                 }
+
+                docRegularTable.DataSource = dt;
             }
         }
 
@@ -270,11 +275,11 @@ namespace AscFrontEnd
                 {
                     if (item.documento.ToUpper().Contains(textBox1.Text.ToUpper().ToString()) || item.created_at.ToString().ToUpper().Contains(textBox1.Text.ToUpper().ToString()))
                     {
-                        dtDocs.Rows.Add(item.id, item.documento, item.frArtigo.Sum(x => x.preco * x.qtd));
-
-                        docRegularTable.DataSource = dtDocs;
+                        dtDocs.Rows.Add(item.id, item.documento, item.frArtigo.Sum(x => x.preco * x.qtd).ToString("F2")); 
                     }
                 }
+
+                docRegularTable.DataSource = dtDocs;
             }
             else if (_entidade == Entidade.fornecedor)
             {
@@ -282,16 +287,17 @@ namespace AscFrontEnd
                 {
                     if (item.documento.ToUpper().Contains(textBox1.Text.ToUpper().ToString()) || item.created_at.ToString().ToUpper().Contains(textBox1.Text.ToUpper().ToString()))
                     {
-                        dtDocs.Rows.Add(item.id, item.documento, item.vfrArtigo.Sum(x => x.preco * x.qtd));
-
-                        docRegularTable.DataSource = dtDocs;
+                        dtDocs.Rows.Add(item.id, item.documento, item.vfrArtigo.Sum(x => x.preco * x.qtd).ToString("F2"));                
                     }
                 }
+
+                docRegularTable.DataSource = dtDocs;
             }
         }
 
-        private void carregarTabelas(ref float valorAdiantado, ref float valorRegulado) 
+        private void carregarTabelas(ref float valorAdiantado, ref float valorRegulado)
         {
+           
             DataTable dt = new DataTable();
             dt.Columns.Add("id", typeof(int));
             dt.Columns.Add("Documento", typeof(string));
@@ -309,53 +315,143 @@ namespace AscFrontEnd
                 {
                     valorAdiantado += item.valorAdiantado;
 
-                    if (StaticProperty.regAdiantamentoClientes.Where(x => x.adiantamentoId == item.id).Any())
+                    if (StaticProperty.regAdiantamentoClientes != null)
                     {
-                        valorRegulado += StaticProperty.regAdiantamentoClientes.Where(x => x.adiantamentoId == item.id).Sum(x => x.fr.frArtigo.Sum(f => f.preco * f.qtd));
+                        if (StaticProperty.regAdiantamentoClientes.Where(x => x.adiantaFrs.Where(a => a.adiantamentoClienteId.Contains(item.id)).Any()).Any())
+                        {
+                            foreach (var reg in StaticProperty.regAdiantamentoClientes.Where(x => x.adiantaFrs.Where(a => a.adiantamentoClienteId.Contains(item.id)).Any()))
+                            {
+                                foreach (var af in reg.adiantaFrs)
+                                {
+                                    foreach (var frId in af.frId)
+                                    {
+                                        valorRegulado += StaticProperty.frs.FirstOrDefault(x => x.id == frId).frArtigo.Sum(f => f.preco * f.qtd);
+                                    }
+                                }
+                            }
+                        }
                     }
 
-                    dt.Rows.Add(item.id, item.documento, item.valorAdiantado);
-
-                   
+                    dt.Rows.Add(item.id, item.documento, item.valorAdiantado.ToString("F2"));
                 }
-               
+
+                //carregar o _docUsed
+                VendasReguladasCliente();
+
+                // listar a tabela com as facturas FR
                 foreach (var item in StaticProperty.frs.Where(cl => cl.clienteId == _entidadeId).ToList())
                 {
-                    dtDocs.Rows.Add(item.id, item.documento, item.frArtigo.Sum(x => x.preco * x.qtd));
-        
+                    if (!_docUsed.Contains(item.id))
+                    {
+                        dtDocs.Rows.Add(item.id, item.documento, item.frArtigo.Sum(x => x.preco * x.qtd).ToString("F2"));
+                    }
                 }
+
+                // carregar tabela
                 adiantamentoTable.DataSource = dt;
                 docRegularTable.DataSource = dtDocs;
             }
             else if (_entidade == Entidade.fornecedor)
             {
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.adiantamentoForns.Where(f => f.fornecedorId == _entidadeId))
+                foreach (var item in StaticProperty.adiantamentoForns.Where(f => f.fornecedorId == _entidadeId && f.resolvido == OpcaoBinaria.Nao))
                 {
                     valorAdiantado += item.valorAdiantado;
 
-                    if (StaticProperty.regAdiantamentoForns.Where(x => x.adiantamentoId == item.id).Any())
+                    if (StaticProperty.regAdiantamentoForns != null)
                     {
-                        valorRegulado += StaticProperty.regAdiantamentoForns.Where(x => x.adiantamentoId == item.id).Sum(x => x.Vfr.vfrArtigo.Sum(f => f.preco * f.qtd));
+                        if (StaticProperty.regAdiantamentoForns.Where(x => x.adiantaVfrs.Where(a => a.adiantamentoFornId.Contains(item.id)).Any()).Any())
+                        {
+                            foreach (var reg in StaticProperty.regAdiantamentoForns.Where(x => x.adiantaVfrs.Where(a => a.adiantamentoFornId.Contains(item.id)).Any()))
+                            {
+                                foreach (var av in reg.adiantaVfrs)
+                                {
+                                    foreach (var vfrId in av.vfrId)
+                                    {
+                                        valorRegulado += StaticProperty.vfrs.FirstOrDefault(x => x.id == item.id).vfrArtigo.Sum(f => f.preco * f.qtd);
+                                    }
+                                }
+                            }
+                        }
                     }
 
-                    dt.Rows.Add(item.id, item.documento, item.valorAdiantado);
-
-                    docRegularTable.DataSource = dt;
+                    dt.Rows.Add(item.id, item.documento, item.valorAdiantado.ToString("F2"));
                 }
+
+                //Carregar _docUsed
+                ComprasReguladaForn();
 
                 foreach (var item in StaticProperty.vfrs.Where(f => f.fornecedorId == _entidadeId))
                 {
-                    dtDocs.Rows.Add(item.id, item.documento, item.vfrArtigo.Sum(x => x.preco * x.qtd));
-
-                    docRegularTable.DataSource = dtDocs;
+                    if (!_docUsed.Contains(item.id))
+                    {
+                        dtDocs.Rows.Add(item.id, item.documento, item.vfrArtigo.Sum(x => x.preco * x.qtd).ToString("F2"));
+                    }
                 }
+
+                adiantamentoTable.DataSource = dt;
+                docRegularTable.DataSource = dtDocs;
             }
         }
 
         private void documentoAdiantamento_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void docRegularTable_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+        public void VendasReguladasCliente()
+        {
+            foreach (var item in StaticProperty.adiantamentoClientes.Where(cl => cl.clienteId == _entidadeId ))
+            {
+                if (StaticProperty.regAdiantamentoClientes != null)
+                {
+                    if (StaticProperty.regAdiantamentoClientes.Where(x => x.adiantaFrs.Where(a => a.adiantamentoClienteId.Contains(item.id)).Any()).Any())
+                    {
+                        foreach (var reg in StaticProperty.regAdiantamentoClientes.Where(x => x.adiantaFrs.Where(a => a.adiantamentoClienteId.Contains(item.id)).Any()))
+                        {
+                            foreach (var af in reg.adiantaFrs)
+                            {
+                                foreach (var frId in af.frId)
+                                {
+                                    if (!_docUsed.Contains(frId))
+                                    {
+                                        _docUsed.Add(frId);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        public void ComprasReguladaForn()        
+        {
+            foreach (var item in StaticProperty.adiantamentoForns.Where(f => f.fornecedorId == _entidadeId))
+            {
+                if (StaticProperty.regAdiantamentoForns != null)
+                {
+                    if (StaticProperty.regAdiantamentoForns.Where(x => x.adiantaVfrs.Where(a => a.adiantamentoFornId.Contains(item.id)).Any()).Any())
+                    {
+                        foreach (var reg in StaticProperty.regAdiantamentoForns.Where(x => x.adiantaVfrs.Where(a => a.adiantamentoFornId.Contains(item.id)).Any()))
+                        {
+                            foreach (var av in reg.adiantaVfrs)
+                            {
+                                foreach (var vfrId in av.vfrId)
+                                {
+                                    if (!_docUsed.Contains(vfrId))
+                                    {
+                                        _docUsed.Add(vfrId);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

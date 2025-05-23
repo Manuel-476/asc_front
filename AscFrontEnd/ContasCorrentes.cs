@@ -456,7 +456,7 @@ namespace AscFrontEnd
             // Adicionando linhas ao DataTable
             foreach (var ft in ftResult)
             {
-                if (ftResult.Any())
+                if (ftResult.Where(x => x.Key == ft.Key).Any())
                 {
                     var clEmpresaId = StaticProperty.clientes.Where(x => x.id == ft.Key).First().empresaid;
                     if (clEmpresaId == StaticProperty.empresaId || clEmpresaId == 0)
@@ -493,11 +493,14 @@ namespace AscFrontEnd
             {
                 foreach (var ad in cliente)
                 {
-                    if (ftResult.Any())
+                    if (ftResult != null)
                     {
-                        if (ftResult.Where(x => x.Key == ad.id).First().First().ftArtigo.Any())
+                        if (ftResult.Where(x => x.Key == ad.id).Any())
                         {
-                            result = ftResult.Where(x => x.Key == ad.id).First().Sum(vt => vt.ftArtigo.Sum(va => va.preco * va.qtd));
+                            if (ftResult.Where(x => x.Key == ad.id).First().First().ftArtigo.Any())
+                            {
+                                result = ftResult.Where(x => x.Key == ad.id).First().Sum(vt => vt.ftArtigo.Sum(va => va.preco * va.qtd));
+                            }
                         }
                     }
                     if (cliente.Where(f => f.id == ad.id).First().adiantamentos.Any())

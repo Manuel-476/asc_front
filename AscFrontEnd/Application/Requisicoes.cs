@@ -65,7 +65,7 @@ namespace AscFrontEnd.Application
             }
             catch (Exception ex)
             {
-                throw new Exception($"Ocorreu um erro: {ex.Message}");
+                 throw new Exception($"Ocorreu um erro: {ex.Message}");
             }
         }
 

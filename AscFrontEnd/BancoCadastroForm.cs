@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using AscFrontEnd.Application;
 
 namespace AscFrontEnd
 {
@@ -26,7 +27,7 @@ namespace AscFrontEnd
         {
             InitializeComponent();
             bancos = new List<BancoDTO>();
-            dt = new DataTable();
+           
             idBanco = new List<int>();
         }
 
@@ -57,6 +58,7 @@ namespace AscFrontEnd
 
         private void BancoCadastroForm_Load(object sender, EventArgs e)
         {
+            dt = new DataTable();
             eliminarPicture.Enabled = false;
             dt.Columns.Add("Id", typeof(int));
             dt.Columns.Add("Codigo", typeof(string));
@@ -138,6 +140,12 @@ namespace AscFrontEnd
                 }
                 else { MessageBox.Show("Erro ao salvar Banco", "Ocorreu um erro", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error); }
             }
+
+            WindowsConfig.LimparFormulario(this);
+
+            bancoTable.DataSource = null;
+
+            BancoCadastroForm_Load(this, EventArgs.Empty);
         }
     }
 }

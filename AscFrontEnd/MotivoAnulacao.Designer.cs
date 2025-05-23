@@ -125,7 +125,7 @@
             this.Anular.Name = "Anular";
             this.Anular.Size = new System.Drawing.Size(128, 30);
             this.Anular.TabIndex = 7;
-            this.Anular.Text = "Anular";
+            this.Anular.Text = "Estornar";
             this.Anular.UseVisualStyleBackColor = false;
             this.Anular.Click += new System.EventHandler(this.Anular_Click);
             // 

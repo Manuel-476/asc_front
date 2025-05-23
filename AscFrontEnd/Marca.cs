@@ -11,14 +11,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AscFrontEnd.DTOs.StaticsDto;
 using Newtonsoft.Json;
+using AscFrontEnd.Application;
 
 namespace AscFrontEnd
 {
     public partial class Marca : Form
     {
+        Requisicoes _requisicoes;
         public Marca()
         {
             InitializeComponent();
+
+            _requisicoes = new Requisicoes();
         }
 
         private async void balvarBtn_Click(object sender, EventArgs e)
@@ -52,19 +56,14 @@ namespace AscFrontEnd
                 MessageBox.Show("Marca Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
                 //Actualizar Propriedade estatica marca
                 // Marca
-                var responseMarca = await client.GetAsync($"https://localhost:7200/api/Artigo/Marca");
 
-                if (responseMarca.IsSuccessStatusCode)
-                {
-                    var contentMarca = await responseMarca.Content.ReadAsStringAsync();
-
-                    StaticProperty.marcas = JsonConvert.DeserializeObject<List<MarcaDTO>>(contentMarca);
-                }
+                await _requisicoes.GetMarcas();
             }
             else
             {
                 MessageBox.Show("Ocorreu um erro ao tentar Salvar", "Erro", MessageBoxButtons.RetryCancel);
             }
+            WindowsConfig.LimparFormulario(this);
         }
 
         private void Marca_Load(object sender, EventArgs e)

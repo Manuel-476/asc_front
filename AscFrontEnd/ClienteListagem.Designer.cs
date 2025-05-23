@@ -46,6 +46,7 @@
             this.tabelaCliente.BackgroundColor = System.Drawing.Color.White;
             this.tabelaCliente.Location = new System.Drawing.Point(12, 130);
             this.tabelaCliente.Name = "tabelaCliente";
+            this.tabelaCliente.ReadOnly = true;
             this.tabelaCliente.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tabelaCliente.Size = new System.Drawing.Size(772, 253);
             this.tabelaCliente.TabIndex = 0;

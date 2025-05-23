@@ -22,8 +22,8 @@ namespace AscFrontEnd.DTOs.ContasCorrentes
     public class AdiantaFrDTO
     {
         public int Id { get; set; }
-        public int frId { get; set; }
-        public int adiantamentoClienteId { get; set; }
-        public int regAdiantamentoClienteid { get; set; }
+        public List<int> frId { get; set; }
+        public List<int> adiantamentoClienteId { get; set; }
+        public int regAdiantamentoClientesid { get; set; }
     }
 }
