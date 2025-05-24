@@ -25,7 +25,7 @@ namespace AscFrontEnd
         DataTable dt;
         DataTable dtSelected;
         Acao _acao;
-        bool ok; 
+        bool ok;
 
         int permissionId;
         int selectedId;
@@ -34,8 +34,8 @@ namespace AscFrontEnd
         {
             InitializeComponent();
 
-             dt = new DataTable();
-          
+            dt = new DataTable();
+
             _user = user;
 
             _acao = acao;
@@ -62,8 +62,8 @@ namespace AscFrontEnd
                 }
 
                 StaticProperty.relationUserPermissions.Add(new RelationUserPermissionDTO() { userEntityId = _user.id, permissionId = permissionId, userId = 0, Id = 0 });
-               
-               
+
+
                 dtSelected = new DataTable();
                 dtSelected.Columns.Add("Id", typeof(int));
                 dtSelected.Columns.Add("Descricao", typeof(string));
@@ -78,7 +78,7 @@ namespace AscFrontEnd
                         {
                             var permission = permissions.Where(x => x.Id == item.permissionId).First();
                             dtSelected.Rows.Add(item.permissionId, permission.descricao);
-                            
+
                         }
                     }
 
@@ -86,7 +86,7 @@ namespace AscFrontEnd
 
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 throw new Exception($"Erro: {ex.Message}");
             }
@@ -101,7 +101,7 @@ namespace AscFrontEnd
             {
                 foreach (var item in StaticProperty.permissions)
                 {
-                    dt.Rows.Add(item.Id,item.descricao);
+                    dt.Rows.Add(item.Id, item.descricao);
                 }
 
                 permissionGridView.DataSource = dt;
@@ -113,7 +113,7 @@ namespace AscFrontEnd
             {
                 btnOk.Text = "OK";
             }
-            else if (_acao == Acao.Editar) 
+            else if (_acao == Acao.Editar)
             {
                 dtSelected = new DataTable();
                 dtSelected.Columns.Add("Id", typeof(int));
@@ -129,7 +129,7 @@ namespace AscFrontEnd
                         {
                             var permission = permissions.Where(x => x.Id == item.permissionId).First();
 
-                            StaticProperty.relationUserPermissions.Add(new RelationUserPermissionDTO() { Id = 0, permissionId = item.permissionId, userEntityId = _user.id});
+                            StaticProperty.relationUserPermissions.Add(new RelationUserPermissionDTO() { Id = 0, permissionId = item.permissionId, userEntityId = _user.id });
 
                             dtSelected.Rows.Add(item.permissionId, permission.descricao);
 
@@ -180,6 +180,8 @@ namespace AscFrontEnd
                     }
 
                     selecaoGridView.DataSource = dtSelected;
+
+                    tudoCheck.Checked = false;
                 }
                 else
                 {
@@ -188,11 +190,11 @@ namespace AscFrontEnd
             }
         }
 
-    
+
 
         private void PermissionsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(!ok)
+            if (!ok)
             {
                 StaticProperty.relationUserPermissions.Clear();
             }
@@ -235,12 +237,12 @@ namespace AscFrontEnd
                     // Envio dos dados para a API
                     HttpResponseMessage responsePermission = await client.PutAsync($"/api/Funcionario/User/Permissions/{_user.id}", new StringContent(json, Encoding.UTF8, "application/json"));
 
-                    if (responsePermission.IsSuccessStatusCode) 
+                    if (responsePermission.IsSuccessStatusCode)
                     {
-                        MessageBox.Show("Feito com sucesso","As permissões foram alteradas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show("Feito com sucesso", "As permissões foram alteradas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
                     }
-                    else 
+                    else
                     {
                         MessageBox.Show("Ocorreu um erro", "Alguma coisa correu mal ao tentar alterar as permissões", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
 
@@ -252,6 +254,41 @@ namespace AscFrontEnd
                     MessageBox.Show($"Erro ao Activar Serie: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
                     return;
                 }
+            }
+        }
+
+        private void tudoCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            if (tudoCheck.Checked)
+            {
+                dtSelected = new DataTable();
+                dtSelected.Columns.Add("Id", typeof(int));
+                dtSelected.Columns.Add("Descricao", typeof(string));
+
+                StaticProperty.relationUserPermissions.Clear();
+                
+                StaticProperty.relationUserPermissions = new List<RelationUserPermissionDTO>();
+
+                if (_user == null)
+                {
+                    _user = new UserDTO();
+                    _user.id = 0;
+                }
+
+                if (StaticProperty.permissions.Any())
+                {
+                    foreach (var item in StaticProperty.permissions)
+                    {
+                        StaticProperty.relationUserPermissions.Add(new RelationUserPermissionDTO() { Id = 0, permissionId = item.Id, userEntityId = _user.id });
+
+                        dtSelected.Rows.Add(item.Id, item.descricao);
+
+
+                    }
+
+                    selecaoGridView.DataSource = dtSelected;
+                }
+
             }
         }
     }

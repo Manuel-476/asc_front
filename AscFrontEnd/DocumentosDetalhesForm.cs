@@ -46,18 +46,18 @@ namespace AscFrontEnd
         private string codigoDoc = string.Empty;
         private string descricaoDocumento = string.Empty;
 
-        public DocumentosDetalhesForm(string documento,int documentoId,Entidade entidade)
+        public DocumentosDetalhesForm(string documento, int documentoId, Entidade entidade)
         {
             InitializeComponent();
 
             _documento = documento;
             _entidade = entidade;
             _documentoId = documentoId;
-            if(_entidade == Entidade.cliente) 
+            if (_entidade == Entidade.cliente)
             {
                 vendaArtigos = new List<VendaArtigo>();
             }
-            else 
+            else
             {
                 compraArtigos = new List<CompraArtigo>();
             }
@@ -72,7 +72,7 @@ namespace AscFrontEnd
         {
             DataTable data = new DataTable();
 
-            data.Columns.Add("Artigo",typeof(string));
+            data.Columns.Add("Artigo", typeof(string));
             data.Columns.Add("Qtd", typeof(float));
             data.Columns.Add("Iva", typeof(float));
             data.Columns.Add("Preço", typeof(float));
@@ -84,17 +84,17 @@ namespace AscFrontEnd
             int index;
             int indexSpace;
 
-            if (_entidade == Entidade.fornecedor) 
+            if (_entidade == Entidade.fornecedor)
             {
-                if (_documento.ToUpper().Equals("VFR")) 
+                if (_documento.ToUpper().Equals("VFR"))
                 {
-                  var documentoDados =  StaticProperty.vfrs.Where(v => v.id == _documentoId).First();
+                    var documentoDados = StaticProperty.vfrs.Where(v => v.id == _documentoId).First();
 
                     indexSpace = documentoDados.documento.IndexOf(" ");
                     codigo = documentoDados.documento.Substring(0, indexSpace);
 
                     index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index+1);
+                    num = documentoDados.documento.Substring(index + 1);
 
                     serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
 
@@ -107,29 +107,29 @@ namespace AscFrontEnd
                     foreach (var art in documentoDados.vfrArtigo)
                     {
                         var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
-                     
+
                         data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
                     }
                 }
                 else if (_documento.ToUpper().Equals("VFT"))
                 {
-                   var documentoDados = StaticProperty.vfts.Where(v => v.id == _documentoId).First();
-                 
+                    var documentoDados = StaticProperty.vfts.Where(v => v.id == _documentoId).First();
+
                     indexSpace = documentoDados.documento.IndexOf(" ");
                     codigo = documentoDados.documento.Substring(0, indexSpace);
 
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace,(index-indexSpace));
+                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
-                   
 
-                    foreach(var art in documentoDados.vftArtigo) 
+
+                    foreach (var art in documentoDados.vftArtigo)
                     {
                         var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
 
@@ -146,7 +146,7 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
+                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
@@ -172,13 +172,13 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
+                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
-                 
+
 
 
                     foreach (var art in documentoDados.vgtArtigo)
@@ -204,7 +204,7 @@ namespace AscFrontEnd
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
-               
+
 
                     foreach (var art in documentoDados.vgrArtigo)
                     {
@@ -223,7 +223,7 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
+                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
@@ -248,7 +248,7 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
+                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
@@ -273,7 +273,7 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
+                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
@@ -298,7 +298,7 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
+                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
@@ -326,13 +326,12 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
+                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
                     serieDocumento.Text = serie;
                     dataDocumento.Text = documentoDados.data.ToString();
-
 
                     foreach (var art in documentoDados.frArtigo)
                     {
@@ -401,7 +400,7 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
+                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
@@ -451,7 +450,7 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
+                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
@@ -469,7 +468,7 @@ namespace AscFrontEnd
                 else if (_documento.ToUpper().Equals("ND"))
                 {
                     var documentoDados = StaticProperty.nds.Where(v => v.id == _documentoId).First();
-                 
+
                     indexSpace = documentoDados.documento.IndexOf(" ");
                     codigo = documentoDados.documento.Substring(0, indexSpace);
 
@@ -526,7 +525,7 @@ namespace AscFrontEnd
                     index = documentoDados.documento.IndexOf("/");
                     num = documentoDados.documento.Substring(index + 1);
 
-                    serie = documentoDados.documento.Substring(indexSpace , (index - indexSpace));
+                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
 
                     codigoDocumento.Text = codigo;
                     numDocumento.Text = num;
@@ -541,8 +540,9 @@ namespace AscFrontEnd
                         data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
                     }
                 }
+
             }
-         
+            dataTable.DataSource = data;
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
@@ -552,8 +552,8 @@ namespace AscFrontEnd
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-       
-            
+
+
             if (_entidade == Entidade.cliente)
             {
                 vendaArtigos.Clear();
@@ -563,28 +563,34 @@ namespace AscFrontEnd
                 else if (_documento == "GT") { descricaoDocumento = "Guia de Transporte"; }
                 else if (_documento == "PP") { descricaoDocumento = "Factura Proforma"; }
                 else if (_documento == "NC") { descricaoDocumento = "Nota Credito"; }
-                else if (_documento  == "ND") { descricaoDocumento = "Nota Debito"; }
+                else if (_documento == "ND") { descricaoDocumento = "Nota Debito"; }
                 else if (_documento == "OR") { descricaoDocumento = "Orçamento"; }
                 else if (_documento == "GR") { descricaoDocumento = "Guia Remessa"; }
 
                 if (_documento.Equals("FT"))
                 {
-                     var entidade = StaticProperty.fts.Where(x => x.id == _documentoId).Any()?
-                                    StaticProperty.fts.Where(x => x.id == _documentoId).First() : new FtDTO();
+                    var entidade = StaticProperty.fts.Where(x => x.id == _documentoId).Any() ?
+                                   StaticProperty.fts.Where(x => x.id == _documentoId).First() : new FtDTO();
 
                     StaticProperty.hash = entidade.shortHash;
                     codigoDoc = entidade.documento;
 
                     anulado = entidade.status == DocState.anulado ? true : false;
 
-                    foreach (var item in entidade.ftArtigo) 
+                    foreach (var item in entidade.ftArtigo)
                     {
-                        vendaArtigos.Add(new VendaArtigo { codigo = StaticProperty.artigos.Where(x => x.id == item.artigoId).First().codigo ?? string.Empty,
-                                                           desconto = item.desconto, iva = item.iva, preco = item.preco, qtd = item.qtd});
+                        vendaArtigos.Add(new VendaArtigo
+                        {
+                            codigo = StaticProperty.artigos.Where(x => x.id == item.artigoId).First().codigo ?? string.Empty,
+                            desconto = item.desconto,
+                            iva = item.iva,
+                            preco = item.preco,
+                            qtd = item.qtd
+                        });
 
                     }
 
-                    clienteResult = StaticProperty.clientes.Where(x => x.id == entidade.clienteId ).Any() ? StaticProperty.clientes.Where(x => x.id == entidade.clienteId).First() : new ClienteDTO();
+                    clienteResult = StaticProperty.clientes.Where(x => x.id == entidade.clienteId).Any() ? StaticProperty.clientes.Where(x => x.id == entidade.clienteId).First() : new ClienteDTO();
                 }
                 else if (_documento.Equals("FR"))
                 {
@@ -614,7 +620,7 @@ namespace AscFrontEnd
                 else if (_documento.Equals("ECL"))
                 {
                     var entidade = StaticProperty.ecls.Where(x => x.id == _documentoId).Any() ?
-                                   StaticProperty.ecls.Where(x => x.id == _documentoId).First(): new EncomendaClienteDTO();
+                                   StaticProperty.ecls.Where(x => x.id == _documentoId).First() : new EncomendaClienteDTO();
 
                     StaticProperty.hash = entidade.shortHash;
 
@@ -712,7 +718,7 @@ namespace AscFrontEnd
                 else if (_documento.Equals("NC"))
                 {
                     var entidade = StaticProperty.ncs.Where(x => x.id == _documentoId).Any() ?
-                                   StaticProperty.ncs.Where(x => x.id == _documentoId).First(): new NcDTO();
+                                   StaticProperty.ncs.Where(x => x.id == _documentoId).First() : new NcDTO();
 
                     codigoDoc = entidade.documento;
                     StaticProperty.hash = entidade.shortHash;
@@ -793,7 +799,7 @@ namespace AscFrontEnd
                 {
                     printVenda.Print();
                 }
-                
+
             }
 
             if (_entidade == Entidade.fornecedor)
@@ -859,7 +865,7 @@ namespace AscFrontEnd
                 {
                     var entidade = StaticProperty.ecfs.Where(x => x.id == _documentoId).Any() ?
                                    StaticProperty.ecfs.Where(x => x.id == _documentoId).First() : new EncomendaFornecedorDTO();
-                    
+
                     codigoDoc = entidade.documento;
                     anulado = entidade.status == DocState.anulado ? true : false;
 
@@ -894,7 +900,7 @@ namespace AscFrontEnd
                             desconto = item.desconto,
                             iva = item.iva,
                             preco = item.preco,
-                          //  qtd = item.qtd
+                            //  qtd = item.qtd
                         });
 
                     }
@@ -904,7 +910,7 @@ namespace AscFrontEnd
                 else if (_documento.Equals("VGT"))
                 {
                     var entidade = StaticProperty.vgts.Where(x => x.id == _documentoId).Any() ?
-                                   StaticProperty.vgts.Where(x => x.id == _documentoId).First(): new VgtDTO();
+                                   StaticProperty.vgts.Where(x => x.id == _documentoId).First() : new VgtDTO();
 
                     codigoDoc = entidade.documento;
                     anulado = entidade.status == DocState.anulado ? true : false;
@@ -1086,7 +1092,7 @@ namespace AscFrontEnd
                     e.Graphics.DrawString("Documento de Origem:", fontNormalNegrito, cor, new PointF(550, 245), formatToLeft);
                     e.Graphics.DrawString($"{StaticProperty.documentoOrigem.ToString()}", fontNormal, cor, new PointF(690, 247), formatToLeft);
                 }
-                if (anulado) 
+                if (anulado)
                 {
                     e.Graphics.DrawString("Documento Anulado", fontNormalNegrito, new SolidBrush(Color.Red), new PointF(550, 215), formatToLeft);
                 }
@@ -1112,30 +1118,54 @@ namespace AscFrontEnd
                 {
                     e.Graphics.DrawString($"-", fontNormal, cor, new Rectangle(500, 330, 650, 340));
                 }
-
-                e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
-                e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 350, 420));
-                e.Graphics.DrawString($"Quantidade", fontNormalNegrito, cor, new Rectangle(350, 400, 450, 420));
-                e.Graphics.DrawString($"P/Unitario", fontNormalNegrito, cor, new Rectangle(450, 400, 550, 420));
-                e.Graphics.DrawString("Iva %", fontNormalNegrito, cor, new Rectangle(550, 400, 650, 420));
-                e.Graphics.DrawString($"Desconto", fontNormalNegrito, cor, new Rectangle(600, 400, 700, 420));
-                e.Graphics.DrawString($"Total", fontNormalNegrito, cor, new Rectangle(700, 400, 750, 420));
-                e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
                 int i = 15;
-                foreach (VendaArtigo va in vendaArtigos)
+                if (!_documento.Equals("GT") && !_documento.Equals("GR"))
                 {
-                    totalIva += va.iva;
-                    total += va.preco * float.Parse(va.qtd.ToString());
+                    e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
+                    e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 350, 420));
+                    e.Graphics.DrawString($"Quantidade", fontNormalNegrito, cor, new Rectangle(350, 400, 450, 420));
+                    e.Graphics.DrawString($"P/Unitario", fontNormalNegrito, cor, new Rectangle(450, 400, 550, 420));
+                    e.Graphics.DrawString("Iva %", fontNormalNegrito, cor, new Rectangle(550, 400, 650, 420));
+                    e.Graphics.DrawString($"Desconto", fontNormalNegrito, cor, new Rectangle(600, 400, 700, 420));
+                    e.Graphics.DrawString($"Total", fontNormalNegrito, cor, new Rectangle(700, 400, 750, 420));
+                    e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
 
-                    e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
-                    e.Graphics.DrawString($"{StaticProperty.artigos.Where(art => art.codigo == va.codigo && art.empresaId == StaticProperty.empresaId).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 350, 425 + i));
-                    e.Graphics.DrawString($"{va.qtd:F4}", fontNormal, cor, new Rectangle(350, 410 + i, 450, 425 + i));
-                    e.Graphics.DrawString($"{va.preco.ToString("F4")}", fontNormal, cor, new Rectangle(450, 410 + i, 550, 425 + i));
-                    e.Graphics.DrawString($"{(StaticProperty.artigos.Where(art => art.codigo == va.codigo && art.empresaId == StaticProperty.empresaId).First().regimeIva == OpcaoBinaria.Sim ? va.iva : 0).ToString("F4")} %", fontNormal, cor, new Rectangle(550, 410 + i, 650, 425 + i));
-                    e.Graphics.DrawString($"{(((va.preco - (va.preco * (clienteResult.desconto / 100))) * (va.desconto / 100)) * va.qtd).ToString("F2")}", fontNormal, cor, new Rectangle(600, 410 + i, 700, 425 + i));
-                    e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(700, 410 + i, 750, 425 + i));
+                    foreach (VendaArtigo va in vendaArtigos)
+                    {
+                        totalIva += va.iva;
+                        total += va.preco * float.Parse(va.qtd.ToString());
 
-                    i = i + 15;
+                        e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
+                        e.Graphics.DrawString($"{StaticProperty.artigos.Where(art => art.codigo == va.codigo && art.empresaId == StaticProperty.empresaId).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 350, 425 + i));
+                        e.Graphics.DrawString($"{va.qtd:F4}", fontNormal, cor, new Rectangle(350, 410 + i, 450, 425 + i));
+                        e.Graphics.DrawString($"{va.preco.ToString("F4")}", fontNormal, cor, new Rectangle(450, 410 + i, 550, 425 + i));
+                        e.Graphics.DrawString($"{(StaticProperty.artigos.Where(art => art.codigo == va.codigo && art.empresaId == StaticProperty.empresaId).First().regimeIva == OpcaoBinaria.Sim ? va.iva : 0).ToString("F4")} %", fontNormal, cor, new Rectangle(550, 410 + i, 650, 425 + i));
+                        e.Graphics.DrawString($"{(((va.preco - (va.preco * (clienteResult.desconto / 100))) * (va.desconto / 100)) * va.qtd).ToString("F2")}", fontNormal, cor, new Rectangle(600, 410 + i, 700, 425 + i));
+                        e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(700, 410 + i, 750, 425 + i));
+
+                        i = i + 15;
+                    }
+                }
+                else
+                {
+                    e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
+                    e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 400, 420));
+                    e.Graphics.DrawString($"Quantidade", fontNormalNegrito, cor, new Rectangle(400, 400, 500, 420));
+                    e.Graphics.DrawString($"Total", fontNormalNegrito, cor, new Rectangle(600, 400, 670, 420));
+                    e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
+
+                    foreach (VendaArtigo va in vendaArtigos)
+                    {
+                        totalIva += va.iva;
+                        total += va.preco * float.Parse(va.qtd.ToString());
+
+                        e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
+                        e.Graphics.DrawString($"{StaticProperty.artigos .Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 400, 425 + i));
+                        e.Graphics.DrawString($"{va.qtd:F2}", fontNormal, cor, new Rectangle(300, 410 + i, 500, 425 + i));
+                        e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(700, 410 + i, 670, 425 + i));
+
+                        i = i + 15;
+                    }
                 }
 
                 totalLiquido += CalculosVendaCompra.TotalVenda(vendaArtigos, clienteResult.desconto);
@@ -1342,10 +1372,10 @@ namespace AscFrontEnd
                 if (_documento.Equals("VNC"))
                 {
                     e.Graphics.DrawString("Anulação", fontNormalNegrito, cor, new PointF(550, 215), formatToLeft);
-                   /* e.Graphics.DrawString("Motivo:", fontNormalNegrito, cor, new PointF(550, 230), formatToLeft);
-                    e.Graphics.DrawString($"{StaticProperty.motivoAnulacao.ToString()}", fontNormal, cor, new PointF(600, 230), formatToLeft);
-                    e.Graphics.DrawString("Documento de Origem:", fontNormalNegrito, cor, new PointF(550, 245), formatToLeft);
-                    e.Graphics.DrawString($"{StaticProperty.documentoOrigem.ToString()}", fontNormal, cor, new PointF(690, 247), formatToLeft);*/
+                    /* e.Graphics.DrawString("Motivo:", fontNormalNegrito, cor, new PointF(550, 230), formatToLeft);
+                     e.Graphics.DrawString($"{StaticProperty.motivoAnulacao.ToString()}", fontNormal, cor, new PointF(600, 230), formatToLeft);
+                     e.Graphics.DrawString("Documento de Origem:", fontNormalNegrito, cor, new PointF(550, 245), formatToLeft);
+                     e.Graphics.DrawString($"{StaticProperty.documentoOrigem.ToString()}", fontNormal, cor, new PointF(690, 247), formatToLeft);*/
                 }
 
                 if (anulado)
@@ -1376,28 +1406,53 @@ namespace AscFrontEnd
                     e.Graphics.DrawString($"-", fontNormal, cor, new Rectangle(500, 330, 650, 340));
                 }
 
-                e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
-                e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 300, 420));
-                e.Graphics.DrawString($"Qtd", fontNormalNegrito, cor, new Rectangle(300, 400, 400, 420));
-                e.Graphics.DrawString($"Preco", fontNormalNegrito, cor, new Rectangle(400, 400, 500, 420));
-                e.Graphics.DrawString("Iva %", fontNormalNegrito, cor, new Rectangle(500, 400, 600, 420));
-                e.Graphics.DrawString($"Desconto", fontNormalNegrito, cor, new Rectangle(600, 400, 700, 420));
-                e.Graphics.DrawString($"Valor", fontNormalNegrito, cor, new Rectangle(700, 400, 750, 420));
-                e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
                 int i = 15;
-                foreach (CompraArtigo va in compraArtigos)
+                if (!_documento.Equals("VGR") && !_documento.Equals("VGT"))
                 {
-                    totalIva += va.iva;
-                    total += va.preco * float.Parse(va.qtd.ToString());
+                    e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
+                    e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 300, 420));
+                    e.Graphics.DrawString($"Qtd", fontNormalNegrito, cor, new Rectangle(300, 400, 400, 420));
+                    e.Graphics.DrawString($"Preco", fontNormalNegrito, cor, new Rectangle(400, 400, 500, 420));
+                    e.Graphics.DrawString("Iva %", fontNormalNegrito, cor, new Rectangle(500, 400, 600, 420));
+                    e.Graphics.DrawString($"Desconto", fontNormalNegrito, cor, new Rectangle(600, 400, 700, 420));
+                    e.Graphics.DrawString($"Valor", fontNormalNegrito, cor, new Rectangle(700, 400, 750, 420));
+                    e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
+                  
+                    foreach (CompraArtigo va in compraArtigos)
+                    {
+                        totalIva += va.iva;
+                        total += va.preco * float.Parse(va.qtd.ToString());
 
-                    e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
-                    e.Graphics.DrawString($"{StaticProperty.artigos.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 300, 425 + i));
-                    e.Graphics.DrawString($"{va.qtd:F2}", fontNormal, cor, new Rectangle(300, 410 + i, 400, 425 + i));
-                    e.Graphics.DrawString($"{va.preco.ToString("F2")}", fontNormal, cor, new Rectangle(400, 410 + i, 500, 425 + i));
-                    e.Graphics.DrawString($"{(va.iva).ToString("F2")} %", fontNormal, cor, new Rectangle(500, 410 + i, 600, 425 + i));
-                    e.Graphics.DrawString($"{(((va.preco - (va.preco * (fornecedorResult.desconto / 100))) * (va.desconto / 100)) * va.qtd).ToString("F2")}", fontNormal, cor, new Rectangle(600, 410 + i, 700, 425 + i));
-                    e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(700, 410 + i, 750, 425 + i));
-                    i = i + 15;
+                        e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
+                        e.Graphics.DrawString($"{StaticProperty.artigos.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 300, 425 + i));
+                        e.Graphics.DrawString($"{va.qtd:F2}", fontNormal, cor, new Rectangle(300, 410 + i, 400, 425 + i));
+                        e.Graphics.DrawString($"{va.preco.ToString("F2")}", fontNormal, cor, new Rectangle(400, 410 + i, 500, 425 + i));
+                        e.Graphics.DrawString($"{(va.iva).ToString("F2")} %", fontNormal, cor, new Rectangle(500, 410 + i, 600, 425 + i));
+                        e.Graphics.DrawString($"{(((va.preco - (va.preco * (fornecedorResult.desconto / 100))) * (va.desconto / 100)) * va.qtd).ToString("F2")}", fontNormal, cor, new Rectangle(600, 410 + i, 700, 425 + i));
+                        e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(700, 410 + i, 750, 425 + i));
+                        i = i + 15;
+                    }
+                }
+                else 
+                {
+                        e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
+                        e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 400, 420));
+                        e.Graphics.DrawString($"Qtd", fontNormalNegrito, cor, new Rectangle(400, 400, 500, 420));
+                        e.Graphics.DrawString($"Valor", fontNormalNegrito, cor, new Rectangle(500, 400, 670, 420));
+                        e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
+
+                        foreach (CompraArtigo va in compraArtigos)
+                        {
+                            totalIva += va.iva;
+                            total += va.preco * float.Parse(va.qtd.ToString());
+
+                            e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
+                            e.Graphics.DrawString($"{StaticProperty.artigos.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 400, 425 + i));
+                            e.Graphics.DrawString($"{va.qtd:F2}", fontNormal, cor, new Rectangle(400, 410 + i, 500, 425 + i));
+                            e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(400, 410 + i, 670, 425 + i));
+                            i = i + 15;
+                        }
+                    
                 }
 
                 totalLiquido += CalculosVendaCompra.TotalCompra(compraArtigos, fornecedorResult.desconto); ;

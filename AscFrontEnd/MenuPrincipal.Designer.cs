@@ -124,7 +124,7 @@
             // 
             this.clienteToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_client_80;
             this.clienteToolStripMenuItem.Name = "clienteToolStripMenuItem";
-            this.clienteToolStripMenuItem.Size = new System.Drawing.Size(149, 24);
+            this.clienteToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.clienteToolStripMenuItem.Text = "Cliente";
             this.clienteToolStripMenuItem.Click += new System.EventHandler(this.clienteToolStripMenuItem_Click);
             // 
@@ -132,7 +132,7 @@
             // 
             this.fornecedorToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_supplier_80;
             this.fornecedorToolStripMenuItem.Name = "fornecedorToolStripMenuItem";
-            this.fornecedorToolStripMenuItem.Size = new System.Drawing.Size(149, 24);
+            this.fornecedorToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.fornecedorToolStripMenuItem.Text = "Fornecedor";
             this.fornecedorToolStripMenuItem.Click += new System.EventHandler(this.fornecedorToolStripMenuItem_Click);
             // 
@@ -171,7 +171,7 @@
             // 
             this.cadastroToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_box_80;
             this.cadastroToolStripMenuItem.Name = "cadastroToolStripMenuItem";
-            this.cadastroToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
+            this.cadastroToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.cadastroToolStripMenuItem.Text = "Artigo";
             this.cadastroToolStripMenuItem.Click += new System.EventHandler(this.cadastroToolStripMenuItem_Click);
             // 
@@ -179,7 +179,7 @@
             // 
             this.listaToolStripMenuItem.Image = global::AscFrontEnd.Properties.Resources.icons8_stock_48;
             this.listaToolStripMenuItem.Name = "listaToolStripMenuItem";
-            this.listaToolStripMenuItem.Size = new System.Drawing.Size(138, 24);
+            this.listaToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.listaToolStripMenuItem.Text = "Inventario";
             this.listaToolStripMenuItem.Click += new System.EventHandler(this.listaToolStripMenuItem_Click);
             // 
@@ -196,7 +196,7 @@
             // cadastroToolStripMenuItem1
             // 
             this.cadastroToolStripMenuItem1.Name = "cadastroToolStripMenuItem1";
-            this.cadastroToolStripMenuItem1.Size = new System.Drawing.Size(134, 24);
+            this.cadastroToolStripMenuItem1.Size = new System.Drawing.Size(180, 24);
             this.cadastroToolStripMenuItem1.Text = "Cadastro";
             this.cadastroToolStripMenuItem1.Click += new System.EventHandler(this.cadastroToolStripMenuItem1_Click);
             // 

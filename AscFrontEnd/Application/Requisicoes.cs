@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Packaging;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -20,6 +22,7 @@ using AscFrontEnd.DTOs.Serie;
 using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.DTOs.Stock;
 using AscFrontEnd.DTOs.Venda;
+using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Office2013.Drawing.Chart;
 using DocumentFormat.OpenXml.Office2013.Drawing.ChartStyle;
 using DocumentFormat.OpenXml.Office2016.Drawing.Command;
@@ -27,6 +30,7 @@ using EAscFrontEnd;
 using ERP_Buyer.Application.DTOs.Documentos;
 using ERP_Seller.Application.DTOs.Documentos;
 using Newtonsoft.Json;
+using Path = System.IO.Path;
 
 namespace AscFrontEnd.Application
 {
@@ -40,14 +44,101 @@ namespace AscFrontEnd.Application
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             _httpClient.BaseAddress = new Uri("https://localhost:7200");
             _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("image/*"));
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json")); // Para respostas de erro
         }
 
+        public async Task<bool> GeLogo()
+        {
+            try
+            {
+                // Evitar buscar para empresaId == 1 (manter a lógica existente, se desejado)
+                if (StaticProperty.empresaId == 1)
+                {
+                    return true;
+                }
+
+                // Obter o nome do arquivo do logotipo, se disponível
+                var imageName = StaticProperty.empresa?.logotipo?.Replace("Upload/", "");
+                if (string.IsNullOrEmpty(imageName))
+                {
+                    imageName = $"logo_{StaticProperty.empresaId}";
+                }
+                else
+                {
+                    imageName = System.IO.Path.GetFileName(imageName); // Garantir apenas o nome do arquivo
+                }
+
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "Files/LogoImagesEntity");
+
+            
+
+                if (File.Exists(Path.Combine(uploadsFolder,imageName))) 
+                {
+                    StaticProperty.empresaLogo = Path.Combine(uploadsFolder, imageName);
+                    return true;
+                }
+                // Definir o caminho da pasta
+              
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                // Fazer a requisição para buscar o logotipo
+                var response = await _httpClient.GetAsync($"api/Empresa/Enviar/Logo/{StaticProperty.empresaId}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Erro na requisição: {response.StatusCode} - {await response.Content.ReadAsStringAsync()}");
+                    return false;
+                }
+
+                // Ler o conteúdo da resposta como bytes
+                var logoBytes = await response.Content.ReadAsByteArrayAsync();
+                if (logoBytes == null || logoBytes.Length == 0)
+                {
+                    Console.WriteLine("Nenhum dado de imagem recebido.");
+                    return false;
+                }
+                var extension = string.Empty;
+                // Determinar a extensão com base no Content-Type
+                var contentType = response.Content.Headers.ContentType?.MediaType;
+                 switch(contentType)
+                {
+                    case "image/jpeg" : { extension = ".jpg";break; }
+                    case "image/png" : { extension = ".png"; break; }
+                    case "image/bmp": { extension = ".bmp"; break; }
+                   default: { extension = ".jpg"; break; } // Extensão padrão
+                };
+
+                // Gerar um nome único para o arquivo
+                var uniqueFileName = $"{Guid.NewGuid()}_{imageName}";
+                if (!uniqueFileName.EndsWith(extension, StringComparison.OrdinalIgnoreCase))
+                {
+                    uniqueFileName += extension;
+                }
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                // Salvar o arquivo
+                File.WriteAllBytes(filePath, logoBytes);
+
+                // Atualizar a propriedade estática com o nome do arquivo salvo
+                StaticProperty.empresaLogo = uniqueFileName;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao baixar ou salvar o logotipo: {ex.Message}");
+                return false;
+            }
+        }
         public async Task<List<VftDTO>> GetVft()
         {
             try
             {
-                var responseVft = await _httpClient.GetAsync($"https://localhost:7200/api/Compra/VftByRelations");
+                var responseVft = await _httpClient.GetAsync($"api/Compra/VftByRelations");
 
                 if (responseVft.IsSuccessStatusCode)
                 {
@@ -73,7 +164,7 @@ namespace AscFrontEnd.Application
         {
             try
             {
-                var responseVfr = await _httpClient.GetAsync($"https://localhost:7200/api/Compra/VfrByRelations");
+                var responseVfr = await _httpClient.GetAsync($"api/Compra/VfrByRelations");
 
                 if (responseVfr.IsSuccessStatusCode)
                 {
@@ -97,7 +188,7 @@ namespace AscFrontEnd.Application
         {
             try
             {
-                var responseVgt = await _httpClient.GetAsync($"https://localhost:7200/api/Compra/VgtByRelation");
+                var responseVgt = await _httpClient.GetAsync($"api/Compra/VgtByRelation");
 
                 if (responseVgt.IsSuccessStatusCode)
                 {

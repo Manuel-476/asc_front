@@ -36,6 +36,7 @@
             this.btnEliminar = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.tudoCheck = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.permissionGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.selecaoGridView)).BeginInit();
@@ -68,8 +69,9 @@
             this.permissionGridView.BackgroundColor = System.Drawing.SystemColors.Control;
             this.permissionGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.permissionGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.permissionGridView.Location = new System.Drawing.Point(12, 109);
+            this.permissionGridView.Location = new System.Drawing.Point(12, 118);
             this.permissionGridView.Name = "permissionGridView";
+            this.permissionGridView.ReadOnly = true;
             this.permissionGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.permissionGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.permissionGridView.Size = new System.Drawing.Size(371, 280);
@@ -81,7 +83,7 @@
             this.selecaoGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.selecaoGridView.BackgroundColor = System.Drawing.SystemColors.Control;
             this.selecaoGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.selecaoGridView.Location = new System.Drawing.Point(417, 109);
+            this.selecaoGridView.Location = new System.Drawing.Point(417, 118);
             this.selecaoGridView.Name = "selecaoGridView";
             this.selecaoGridView.ReadOnly = true;
             this.selecaoGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
@@ -123,7 +125,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label2.Location = new System.Drawing.Point(9, 80);
+            this.label2.Location = new System.Drawing.Point(9, 89);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(162, 17);
             this.label2.TabIndex = 13;
@@ -134,17 +136,31 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.label3.Location = new System.Drawing.Point(414, 80);
+            this.label3.Location = new System.Drawing.Point(414, 89);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(181, 17);
             this.label3.TabIndex = 14;
             this.label3.Text = "Permissões selecionadas:";
+            // 
+            // tudoCheck
+            // 
+            this.tudoCheck.AutoSize = true;
+            this.tudoCheck.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tudoCheck.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.tudoCheck.Location = new System.Drawing.Point(12, 69);
+            this.tudoCheck.Name = "tudoCheck";
+            this.tudoCheck.Size = new System.Drawing.Size(104, 18);
+            this.tudoCheck.TabIndex = 15;
+            this.tudoCheck.Text = "Selecionar Tudo";
+            this.tudoCheck.UseVisualStyleBackColor = true;
+            this.tudoCheck.CheckedChanged += new System.EventHandler(this.tudoCheck_CheckedChanged);
             // 
             // PermissionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 447);
+            this.Controls.Add(this.tudoCheck);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnEliminar);
@@ -178,5 +194,6 @@
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox tudoCheck;
     }
 }

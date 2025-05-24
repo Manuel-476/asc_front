@@ -30,6 +30,7 @@ namespace AscFrontEnd.DTOs.StaticsDto
         public static int funcionarioId { get; set; }
         public static int userId { get; set; }
         public static int empresaId {get; set;}
+        public static string empresaLogo {  get; set; }
         public static string nome { get; set; }
         public static string codigo { get; set; }
         public static string descricao { get; set; }

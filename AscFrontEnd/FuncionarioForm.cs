@@ -152,6 +152,11 @@ namespace AscFrontEnd
 
         private void paisCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(paisCombo.Text.ToString()))
+            {
+                return;
+            }
+
             string pais = paisCombo.SelectedItem.ToString();
 
             if (StaticProperty.paises.Where(x => x.nome == pais).Any())
@@ -169,6 +174,11 @@ namespace AscFrontEnd
 
         private void provinciaCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(provinciaCombo.Text.ToString()))
+            {
+                return;
+            }
+
             string provincia = provinciaCombo.SelectedItem.ToString();
 
             if (StaticProperty.provincias.Where(x => x.nome == provincia).Any())
@@ -179,6 +189,11 @@ namespace AscFrontEnd
 
         private void naturalidadeCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(naturalidadeCombo.Text.ToString())) 
+            {
+                return;
+            }
+
             string pais = naturalidadeCombo.SelectedItem.ToString();
 
             if (StaticProperty.paises.Where(x => x.nome == pais).Any())

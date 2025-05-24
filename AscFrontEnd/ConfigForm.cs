@@ -42,5 +42,10 @@ namespace AscFrontEnd
         {
             new ConfigIpServerForm().ShowDialog();
         }
+
+        private void saftPicture_Click(object sender, EventArgs e)
+        {
+            new GerarSaftForm().ShowDialog();
+        }
     }
 }

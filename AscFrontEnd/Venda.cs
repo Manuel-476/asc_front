@@ -1194,7 +1194,7 @@ namespace AscFrontEnd
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
-                string imagePathEmpresa = Path.Combine(projectPath, "Files", "Smart_Entity.png");
+                string imagePathEmpresa = Path.Combine(StaticProperty.empresaLogo);
                 string imagePathAsc = Path.Combine(projectPath, "Files", "asc.png");
                 // Testar com valores fixos para desenhar uma string
                 Font fontNormal = new Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -1282,31 +1282,55 @@ namespace AscFrontEnd
                     e.Graphics.DrawString($"-", fontNormal, cor, new Rectangle(500, 330, 650, 340));
                 }
 
-                e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
-                e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 300, 420));
-                e.Graphics.DrawString($"Quantidade", fontNormalNegrito, cor, new Rectangle(300, 400, 400, 420));
-                e.Graphics.DrawString($"P/Unitário", fontNormalNegrito, cor, new Rectangle(400, 400, 500, 420));
-                e.Graphics.DrawString("Iva %", fontNormalNegrito, cor, new Rectangle(500, 400, 600, 420));
-                e.Graphics.DrawString($"Desconto", fontNormalNegrito, cor, new Rectangle(600, 400, 700, 420));
-                e.Graphics.DrawString($"Total", fontNormalNegrito, cor, new Rectangle(700, 400, 750, 420)); 
-                e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
                 int i = 15;
-                foreach (VendaArtigo va in vendaArtigos)
+                if (!documento.Text.Equals("GR") && !documento.Text.Equals("GT"))
                 {
-                    totalIva += va.iva;
-                    total += va.preco * float.Parse(va.qtd.ToString());
+                    e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
+                    e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 300, 420));
+                    e.Graphics.DrawString($"Quantidade", fontNormalNegrito, cor, new Rectangle(300, 400, 400, 420));
+                    e.Graphics.DrawString($"P/Unitário", fontNormalNegrito, cor, new Rectangle(400, 400, 500, 420));
+                    e.Graphics.DrawString("Iva %", fontNormalNegrito, cor, new Rectangle(500, 400, 600, 420));
+                    e.Graphics.DrawString($"Desconto", fontNormalNegrito, cor, new Rectangle(600, 400, 700, 420));
+                    e.Graphics.DrawString($"Total", fontNormalNegrito, cor, new Rectangle(700, 400, 750, 420));
+                    e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
+                
+                    foreach (VendaArtigo va in vendaArtigos)
+                    {
+                        totalIva += va.iva;
+                        total += va.preco * float.Parse(va.qtd.ToString());
 
-                    e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
-                    e.Graphics.DrawString($"{dados.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 300, 425 + i));
-                    e.Graphics.DrawString($"{va.qtd:F2}", fontNormal, cor, new Rectangle(300, 410 + i, 400, 425 + i));
-                    e.Graphics.DrawString($"{va.preco.ToString("F2")}", fontNormal, cor, new Rectangle(400, 410 + i, 500, 425 + i));
-                    e.Graphics.DrawString($"{(dados.Where(art => art.codigo == va.codigo).First().regimeIva == OpcaoBinaria.Sim? va.iva:0).ToString("F2")} %", fontNormal, cor, new Rectangle(500, 410 + i, 600, 425 + i));
-                    e.Graphics.DrawString($"{(((va.preco - (va.preco * (clienteResult.desconto / 100))) * (va.desconto / 100)) * va.qtd).ToString("F2")}", fontNormal, cor, new Rectangle(600, 410 + i, 700, 425 + i));
-                    e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(700, 410 + i, 750, 425 + i)); 
+                        e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
+                        e.Graphics.DrawString($"{dados.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 300, 425 + i));
+                        e.Graphics.DrawString($"{va.qtd:F2}", fontNormal, cor, new Rectangle(300, 410 + i, 400, 425 + i));
+                        e.Graphics.DrawString($"{va.preco.ToString("F2")}", fontNormal, cor, new Rectangle(400, 410 + i, 500, 425 + i));
+                        e.Graphics.DrawString($"{(dados.Where(art => art.codigo == va.codigo).First().regimeIva == OpcaoBinaria.Sim ? va.iva : 0).ToString("F2")} %", fontNormal, cor, new Rectangle(500, 410 + i, 600, 425 + i));
+                        e.Graphics.DrawString($"{(((va.preco - (va.preco * (clienteResult.desconto / 100))) * (va.desconto / 100)) * va.qtd).ToString("F2")}", fontNormal, cor, new Rectangle(600, 410 + i, 700, 425 + i));
+                        e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(700, 410 + i, 750, 425 + i));
 
-                    i = i + 15;
+                        i = i + 15;
+                    }
                 }
+                else 
+                {
+                    e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
+                    e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 400, 420));
+                    e.Graphics.DrawString($"Quantidade", fontNormalNegrito, cor, new Rectangle(400, 400, 500, 420));
+                    e.Graphics.DrawString($"Total", fontNormalNegrito, cor, new Rectangle(600, 400, 670, 420));
+                    e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
+                   
+                    foreach (VendaArtigo va in vendaArtigos)
+                    {
+                        totalIva += va.iva;
+                        total += va.preco * float.Parse(va.qtd.ToString());
 
+                        e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
+                        e.Graphics.DrawString($"{dados.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 400, 425 + i));
+                        e.Graphics.DrawString($"{va.qtd:F2}", fontNormal, cor, new Rectangle(300, 410 + i, 500, 425 + i));
+                        e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(700, 410 + i, 670, 425 + i));
+
+                        i = i + 15;
+                    }
+                }
                 totalLiquido = CalculosVendaCompra.TotalVenda(vendaArtigos, clienteResult.desconto);
 
                 string mercadoria = $"Total Ilíquido";

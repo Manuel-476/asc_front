@@ -1167,31 +1167,53 @@ namespace AscFrontEnd
                 {
                     e.Graphics.DrawString($"-", fontNormal, cor, new Rectangle(500, 330, 650, 340));
                 }
-
-                e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
-                e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 300, 420));
-                e.Graphics.DrawString($"Qtd", fontNormalNegrito, cor, new Rectangle(300, 400, 400, 420));
-                e.Graphics.DrawString($"Preco", fontNormalNegrito, cor, new Rectangle(400, 400, 500, 420));
-                e.Graphics.DrawString("Iva %", fontNormalNegrito, cor, new Rectangle(500, 400, 600, 420));
-                e.Graphics.DrawString($"Desconto", fontNormalNegrito, cor, new Rectangle(600, 400, 700, 420) );
-                e.Graphics.DrawString($"Valor", fontNormalNegrito, cor, new Rectangle(700, 400, 750, 420));
-                e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
                 int i = 15;
-                foreach (CompraArtigo va in compraArtigos)
+                if (!documento.Text.Equals("VGR") && !documento.Text.Equals("VGT"))
                 {
-                    totalIva += va.iva;
-                    total += va.preco * float.Parse(va.qtd.ToString());
+                    e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
+                    e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 300, 420));
+                    e.Graphics.DrawString($"Qtd", fontNormalNegrito, cor, new Rectangle(300, 400, 400, 420));
+                    e.Graphics.DrawString($"Preco", fontNormalNegrito, cor, new Rectangle(400, 400, 500, 420));
+                    e.Graphics.DrawString("Iva %", fontNormalNegrito, cor, new Rectangle(500, 400, 600, 420));
+                    e.Graphics.DrawString($"Desconto", fontNormalNegrito, cor, new Rectangle(600, 400, 700, 420));
+                    e.Graphics.DrawString($"Valor", fontNormalNegrito, cor, new Rectangle(700, 400, 750, 420));
+                    e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
 
-                    e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
-                    e.Graphics.DrawString($"{StaticProperty.artigos.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 300, 425 + i));
-                    e.Graphics.DrawString($"{va.qtd:F2}", fontNormal, cor, new Rectangle(300, 410 + i, 400, 425 + i));
-                    e.Graphics.DrawString($"{va.preco.ToString("F2")}", fontNormal, cor, new Rectangle(400, 410 + i, 500, 425 + i));
-                    e.Graphics.DrawString($"{(va.iva).ToString("F2")} %", fontNormal, cor, new Rectangle(500, 410 + i, 600, 425 + i));
-                    e.Graphics.DrawString($"{(((va.preco - (va.preco * (fornecedorResult.desconto/100))) * (va.desconto/100)) * va.qtd).ToString("F2")}", fontNormal, cor, new Rectangle(600, 410 + i, 700, 425 + i));
-                    e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(700, 410 + i, 750, 425 + i));
-                    i = i + 15;
+                    foreach (CompraArtigo va in compraArtigos)
+                    {
+                        totalIva += va.iva;
+                        total += va.preco * float.Parse(va.qtd.ToString());
+
+                        e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
+                        e.Graphics.DrawString($"{StaticProperty.artigos.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 300, 425 + i));
+                        e.Graphics.DrawString($"{va.qtd:F2}", fontNormal, cor, new Rectangle(300, 410 + i, 400, 425 + i));
+                        e.Graphics.DrawString($"{va.preco.ToString("F2")}", fontNormal, cor, new Rectangle(400, 410 + i, 500, 425 + i));
+                        e.Graphics.DrawString($"{(va.iva).ToString("F2")} %", fontNormal, cor, new Rectangle(500, 410 + i, 600, 425 + i));
+                        e.Graphics.DrawString($"{(((va.preco - (va.preco * (fornecedorResult.desconto / 100))) * (va.desconto / 100)) * va.qtd).ToString("F2")}", fontNormal, cor, new Rectangle(600, 410 + i, 700, 425 + i));
+                        e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(700, 410 + i, 750, 425 + i));
+                        i = i + 15;
+                    }
                 }
+                else 
+                {
+                    e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
+                    e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 400, 420));
+                    e.Graphics.DrawString($"Qtd", fontNormalNegrito, cor, new Rectangle(400, 400, 500, 420));
+                    e.Graphics.DrawString($"Valor", fontNormalNegrito, cor, new Rectangle(500, 400, 670, 420));
+                    e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
 
+                    foreach (CompraArtigo va in compraArtigos)
+                    {
+                        totalIva += va.iva;
+                        total += va.preco * float.Parse(va.qtd.ToString());
+
+                        e.Graphics.DrawString($"{va.codigo}", fontNormal, cor, new Rectangle(50, 410 + i, 200, 425 + i));
+                        e.Graphics.DrawString($"{StaticProperty.artigos.Where(art => art.codigo == va.codigo).First().descricao}", fontNormal, cor, new Rectangle(200, 410 + i, 400, 425 + i));
+                        e.Graphics.DrawString($"{va.qtd:F2}", fontNormal, cor, new Rectangle(400, 410 + i, 500, 425 + i));
+                        e.Graphics.DrawString($"{(va.preco * float.Parse(va.qtd.ToString())).ToString("F2")}", fontNormal, cor, new Rectangle(400, 410 + i, 670, 425 + i));
+                        i = i + 15;
+                    }
+                }
                 totalLiquido += CalculosVendaCompra.TotalCompra(compraArtigos,fornecedorResult.desconto); ;
                 total = total - CalculosVendaCompra.TotalDescontoCompra(compraArtigos, fornecedorResult.desconto);
 

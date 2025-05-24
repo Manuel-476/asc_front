@@ -36,10 +36,13 @@
             this.imgPicture = new System.Windows.Forms.PictureBox();
             this.stockPicture = new System.Windows.Forms.PictureBox();
             this.senhaPicture = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.saftPicture = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.ipPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stockPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.senhaPicture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.saftPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // senhaLabel
@@ -119,11 +122,32 @@
             this.senhaPicture.TabStop = false;
             this.senhaPicture.Click += new System.EventHandler(this.senhaPicture_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(684, 194);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Gerar Saft";
+            // 
+            // saftPicture
+            // 
+            this.saftPicture.BackColor = System.Drawing.Color.OrangeRed;
+            this.saftPicture.Location = new System.Drawing.Point(652, 21);
+            this.saftPicture.Name = "saftPicture";
+            this.saftPicture.Size = new System.Drawing.Size(119, 150);
+            this.saftPicture.TabIndex = 8;
+            this.saftPicture.TabStop = false;
+            this.saftPicture.Click += new System.EventHandler(this.saftPicture_Click);
+            // 
             // ConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(635, 237);
+            this.ClientSize = new System.Drawing.Size(803, 237);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.saftPicture);
             this.Controls.Add(this.ipLabel);
             this.Controls.Add(this.imgLabel);
             this.Controls.Add(this.stockLabel);
@@ -142,6 +166,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.imgPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stockPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.senhaPicture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.saftPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -157,5 +182,7 @@
         private System.Windows.Forms.Label stockLabel;
         private System.Windows.Forms.Label imgLabel;
         private System.Windows.Forms.Label ipLabel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox saftPicture;
     }
 }

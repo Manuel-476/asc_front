@@ -30,6 +30,7 @@ using AscFrontEnd.DTOs.Regiao;
 using AscFrontEnd.DTOs.Funcionario;
 using AscFrontEnd.DTOs.Configuration;
 using AscFrontEnd.DTOs.Compra;
+using AscFrontEnd.Application;
 
 namespace AscFrontEnd
 {
@@ -612,6 +613,12 @@ namespace AscFrontEnd
                     processValue += 1;
                 }
 
+                await new Requisicoes().GetEmpresas();
+
+               if(!await  new Requisicoes().GeLogo()) 
+                {
+                    Console.WriteLine("Logo nao encontrado!");
+                }
 
             }
             catch (Exception ex)

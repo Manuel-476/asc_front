@@ -338,6 +338,7 @@ C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\BouncyCas
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\DocumentFormat.OpenXml.dll
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\DocumentFormat.OpenXml.Framework.dll
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\itextsharp.dll
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\Microsoft.AspNetCore.Http.Features.dll
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\Microsoft.Extensions.DependencyInjection.dll
@@ -354,6 +355,7 @@ C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\PdfSharp.
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\PdfSharp.WPFonts.dll
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\System.Buffers.dll
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\System.IO.Pipelines.dll
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\System.Memory.dll
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\System.Numerics.Vectors.dll
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
@@ -365,6 +367,7 @@ C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\BouncyCas
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\DocumentFormat.OpenXml.xml
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\DocumentFormat.OpenXml.Framework.xml
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\itextsharp.xml
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\Microsoft.AspNetCore.Http.Features.xml
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\Microsoft.Extensions.DependencyInjection.xml
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
@@ -386,6 +389,7 @@ C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\PdfSharp.
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\PdfSharp.WPFonts.xml
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\System.Buffers.xml
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\System.Diagnostics.DiagnosticSource.xml
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\System.IO.Pipelines.xml
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\System.Memory.xml
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
@@ -435,6 +439,7 @@ C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontE
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.FornecedorTable.resources
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.FuncionarioForm.resources
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.FuncionarioListagem.resources
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.GerarSaftForm.resources
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.Historico.resources
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.IncrementarStock.resources
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.IvaForm.resources
