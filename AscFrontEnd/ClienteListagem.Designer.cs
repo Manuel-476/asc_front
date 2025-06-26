@@ -35,6 +35,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.checkDesconhecido = new System.Windows.Forms.CheckBox();
+            this.btnActualizar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaCliente)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -75,6 +76,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.Controls.Add(this.btnActualizar);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Location = new System.Drawing.Point(-1, 1);
@@ -115,6 +117,22 @@
             this.checkDesconhecido.UseVisualStyleBackColor = true;
             this.checkDesconhecido.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
+            // btnActualizar
+            // 
+            this.btnActualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnActualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnActualizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnActualizar.ForeColor = System.Drawing.Color.White;
+            this.btnActualizar.Location = new System.Drawing.Point(611, 46);
+            this.btnActualizar.Name = "btnActualizar";
+            this.btnActualizar.Size = new System.Drawing.Size(178, 40);
+            this.btnActualizar.TabIndex = 29;
+            this.btnActualizar.Text = "Atualizar";
+            this.btnActualizar.UseVisualStyleBackColor = false;
+            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
+            this.btnActualizar.MouseLeave += new System.EventHandler(this.btnActualizar_MouseLeave);
+            this.btnActualizar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.btnActualizar_MouseMove);
+            // 
             // ClienteListagem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -129,8 +147,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ClienteListagem";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ClienteListagem";
             this.Load += new System.EventHandler(this.ClienteListagem_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tabelaCliente)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -150,5 +168,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.CheckBox checkDesconhecido;
+        private System.Windows.Forms.Button btnActualizar;
     }
 }

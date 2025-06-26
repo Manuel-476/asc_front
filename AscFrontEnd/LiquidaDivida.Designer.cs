@@ -43,6 +43,7 @@
             this.Imprimir = new System.Drawing.Printing.PrintDocument();
             this.tabelaFaturas = new System.Windows.Forms.DataGridView();
             this.listDocumentos = new System.Windows.Forms.ListBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -52,6 +53,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -191,6 +193,20 @@
             this.listDocumentos.Size = new System.Drawing.Size(174, 121);
             this.listDocumentos.TabIndex = 11;
             // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(493, 39);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(137, 33);
+            this.button2.TabIndex = 37;
+            this.button2.Text = "Atualizar";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.MouseLeave += new System.EventHandler(this.button2_MouseLeave);
+            this.button2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.button2_MouseMove);
+            // 
             // LiquidaDivida
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -238,5 +254,6 @@
         private System.Drawing.Printing.PrintDocument Imprimir;
         private System.Windows.Forms.DataGridView tabelaFaturas;
         private System.Windows.Forms.ListBox listDocumentos;
+        private System.Windows.Forms.Button button2;
     }
 }

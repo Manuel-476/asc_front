@@ -31,14 +31,15 @@ namespace AscFrontEnd
 
         private void marcaPicture_Click(object sender, EventArgs e)
         {
-            ModeloArtigo modelo = new ModeloArtigo();
-            modelo.ShowDialog();
+
+            Marca marca = new Marca();
+            marca.ShowDialog();
         }
 
         private void modeloPicture_Click(object sender, EventArgs e)
         {
-            Marca marca = new Marca();
-            marca.ShowDialog();
+            ModeloArtigo modelo = new ModeloArtigo();
+            modelo.ShowDialog();
         }
 
         private void familiaPicture_MouseMove(object sender, MouseEventArgs e)

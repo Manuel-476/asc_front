@@ -51,46 +51,52 @@ namespace AscFrontEnd
             dt.Columns.Add("Estado", typeof(string));
             dt.Columns.Add("Data", typeof(string));
 
-            if(_entidade == Entidade.cliente)
+            if (_entidade == Entidade.cliente)
             {
-                if (documentoVendas.Any())
+                if (documentoVendas != null)
                 {
-                    foreach (var item in documentoVendas.Where(x => x.status != DocState.estornado && x.status != DocState.anulado && x.clienteId == StaticProperty.entityId))
+                    if (documentoVendas.Any())
                     {
-                        var clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).Any() ?
-                                         StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia : string.Empty;
-
-                        var estado = string.Empty;
-                        if (item.status == DocState.anulado) { estado = "Anulado"; }
-                        else if (item.status == DocState.estornado) { estado = "Estornado"; }
-                        else { estado = "activo"; }
-
-                        dt.Rows.Add(item.id, clienteNome, item.documento, estado, item.data);
-                    }
-
-                    docsTable.DataSource = dt;
-                }
-            }
-            else 
-            {
-                if (documentoCompras.Any())
-                {
-                    foreach (var item in documentoCompras.Where(x => x.status != DocState.estornado && x.status != DocState.anulado && x.fornecedorId == StaticProperty.entityId).OrderByDescending(x => x.data))
-                    {
-                        if (StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).Any())
+                        foreach (var item in documentoVendas.Where(x => x.status != DocState.estornado && x.status != DocState.anulado && x.clienteId == StaticProperty.entityId))
                         {
-                            var fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).Any() ?
-                                                 StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia : string.Empty;
+                            var clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).Any() ?
+                                             StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia : string.Empty;
 
                             var estado = string.Empty;
                             if (item.status == DocState.anulado) { estado = "Anulado"; }
                             else if (item.status == DocState.estornado) { estado = "Estornado"; }
                             else { estado = "activo"; }
 
-                            dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
+                            dt.Rows.Add(item.id, clienteNome, item.documento, estado, item.data);
                         }
+
+                        docsTable.DataSource = dt;
                     }
-                    docsTable.DataSource = dt;
+                }
+            }
+            else
+            {
+                if (documentoCompras != null)
+                {
+                    if (documentoCompras.Any())
+                    {
+                        foreach (var item in documentoCompras.Where(x => x.status != DocState.estornado && x.status != DocState.anulado && x.fornecedorId == StaticProperty.entityId).OrderByDescending(x => x.data))
+                        {
+                            if (StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).Any())
+                            {
+                                var fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).Any() ?
+                                                     StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia : string.Empty;
+
+                                var estado = string.Empty;
+                                if (item.status == DocState.anulado) { estado = "Anulado"; }
+                                else if (item.status == DocState.estornado) { estado = "Estornado"; }
+                                else { estado = "activo"; }
+
+                                dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
+                            }
+                        }
+                        docsTable.DataSource = dt;
+                    }
                 }
             }
         }
@@ -98,91 +104,108 @@ namespace AscFrontEnd
         public void SetCompras()
         {
             documentoCompras.Clear();
-           
-            foreach (var item in StaticProperty.vfts.Where(x => x.empresaId == StaticProperty.empresaId))
+            if (StaticProperty.vfts != null)
             {
-                documentoCompras.Add(new DocumentoCompra()
+                foreach (var item in StaticProperty.vfts.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
+                    documentoCompras.Add(new DocumentoCompra()
+                    {
+                        id = item.id,
+                        fornecedorId = item.fornecedorId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
             }
-            foreach (var item in StaticProperty.vfrs.Where(x => x.empresaId == StaticProperty.empresaId))
+            if (StaticProperty.vfts != null)
             {
-                documentoCompras.Add(new DocumentoCompra()
+                foreach (var item in StaticProperty.vfrs.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
+                    documentoCompras.Add(new DocumentoCompra()
+                    {
+                        id = item.id,
+                        fornecedorId = item.fornecedorId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
             }
-            foreach (var item in StaticProperty.vgrs.Where(x => x.empresaId == StaticProperty.empresaId))
+            if (StaticProperty.vgrs != null)
             {
-                documentoCompras.Add(new DocumentoCompra()
+                foreach (var item in StaticProperty.vgrs.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
+                    documentoCompras.Add(new DocumentoCompra()
+                    {
+                        id = item.id,
+                        fornecedorId = item.fornecedorId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
             }
         }
 
         public void SetVendas()
         {
             documentoVendas.Clear();
-          
-            foreach (var item in StaticProperty.fts.Where(x => x.empresaId == StaticProperty.empresaId))
-            {
-                documentoVendas.Add(new DocumentoVenda()
-                {
-                    id = item.id,
-                    clienteId = item.clienteId,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
-            }
-            foreach (var item in StaticProperty.frs.Where(x => x.empresaId == StaticProperty.empresaId))
-            {
-                documentoVendas.Add(new DocumentoVenda()
-                {
-                    id = item.id,
-                    clienteId = item.clienteId,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
-            }
 
-            foreach (var item in StaticProperty.ors.Where(x => x.empresaId == StaticProperty.empresaId && x.aprovado == OpcaoBinaria.Sim))
+            if (StaticProperty.fts != null)
             {
-                documentoVendas.Add(new DocumentoVenda()
+                foreach (var item in StaticProperty.fts.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    id = item.id,
-                    clienteId = item.clienteId,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
+                    documentoVendas.Add(new DocumentoVenda()
+                    {
+                        id = item.id,
+                        clienteId = item.clienteId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
             }
-
-            foreach (var item in StaticProperty.grs.Where(x => x.empresaId == StaticProperty.empresaId))
-            {
-                documentoVendas.Add(new DocumentoVenda()
+            if (StaticProperty.frs != null) {
+                foreach (var item in StaticProperty.frs.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    id = item.id,
-                    clienteId = item.clienteId,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
+                    documentoVendas.Add(new DocumentoVenda()
+                    {
+                        id = item.id,
+                        clienteId = item.clienteId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
+            }
+            if (StaticProperty.ors != null)
+            {
+                foreach (var item in StaticProperty.ors.Where(x => x.empresaId == StaticProperty.empresaId && x.aprovado == OpcaoBinaria.Sim))
+                {
+                    documentoVendas.Add(new DocumentoVenda()
+                    {
+                        id = item.id,
+                        clienteId = item.clienteId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
+            }
+            if (StaticProperty.grs != null)
+            {
+                foreach (var item in StaticProperty.grs.Where(x => x.empresaId == StaticProperty.empresaId))
+                {
+                    documentoVendas.Add(new DocumentoVenda()
+                    {
+                        id = item.id,
+                        clienteId = item.clienteId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
             }
         }
 

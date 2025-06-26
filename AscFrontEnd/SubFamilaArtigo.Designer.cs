@@ -106,8 +106,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SubFamilaArtigo";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SubFamilaArtigo";
             this.Load += new System.EventHandler(this.SubFamilaArtigo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -12,7 +12,10 @@ namespace AscFrontEnd.Application
 {
     public class Documento
     {
-
+        public Documento()
+        {
+            
+        }
 
         public static async Task<string> GetCodigoDocumentoAsync(string documento) 
         {
@@ -21,11 +24,11 @@ namespace AscFrontEnd.Application
             {
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                client.BaseAddress = new Uri("https://sua-api.com/");
+                client.BaseAddress = new Uri("http://localhost:7200/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync($"https://localhost:7200/api/serie/codigoDocumento/{documento}/{StaticProperty.empresaId}");
+                HttpResponseMessage response = await client.GetAsync($"api/serie/codigoDocumento/{documento}/{StaticProperty.empresaId}");
 
                 if (response.IsSuccessStatusCode)
                 {

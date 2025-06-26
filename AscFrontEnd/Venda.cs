@@ -1,5 +1,4 @@
-﻿
-using AscFrontEnd.DTOs.Cliente;
+﻿using AscFrontEnd.DTOs.Cliente;
 using AscFrontEnd.DTOs.Venda;
 using Newtonsoft.Json;
 using System;
@@ -28,6 +27,8 @@ using AscFrontEnd.Application.Validacao;
 using System.Globalization;
 using AscFrontEnd.DTOs.Fornecedor;
 using AscFrontEnd.DTOs;
+using AscFrontEnd.DTOs.Funcionario;
+using DocumentFormat.OpenXml.Office.CustomUI;
 
 
 namespace AscFrontEnd
@@ -69,8 +70,9 @@ namespace AscFrontEnd
         MotivoAnulacao formAnulacao;
 
         HttpClient client;
+        UserDTO _user;
 
-        static  int artigoId = 0;
+        static int artigoId = 0;
         static float precoArtigo = 0;
 
         public class VendaArtigo
@@ -83,13 +85,13 @@ namespace AscFrontEnd
             public float desconto { get; set; }
         }
 
-        public Venda()
+        public Venda(UserDTO user)
         {
             InitializeComponent();
 
             client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://localhost:7200/");
+            client.BaseAddress = new Uri("http://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -114,10 +116,14 @@ namespace AscFrontEnd
 
             descontoTxt.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
             descontoTxt.TextChanged += ValidacaoForms.TratarTextChanged;
+
+            _user = user;
         }
 
-        private  void Venda_Load(object sender, EventArgs e)
+        private void Venda_Load(object sender, EventArgs e)
         {
+            if (StaticProperty.artigos != null)
+            {
                 dados = StaticProperty.artigos;
                 clientetxt.Text = "cliente: " + ClienteDTO.clienteId;
 
@@ -128,46 +134,46 @@ namespace AscFrontEnd
                 dtVenda.Columns.Add("Iva", typeof(float));
                 dtVenda.Columns.Add("Desconto", typeof(string));
 
-            DataTable dt = new DataTable();
+                DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Artigo", typeof(string));
                 dt.Columns.Add("Descricao", typeof(string));
                 dt.Columns.Add("preco", typeof(string));
 
 
-            // Adicionando linhas ao DataTable
-            if (StaticProperty.artigos.Where(x => x.empresaId == StaticProperty.empresaId) != null)
-            {
-                foreach (var item in StaticProperty.artigos.Where(x => x.empresaId == StaticProperty.empresaId))
+                // Adicionando linhas ao DataTable
+                if (StaticProperty.artigos.Where(x => x.empresaId == StaticProperty.empresaId) != null)
                 {
-                    dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario.ToString("F2"));
+                    foreach (var item in StaticProperty.artigos.Where(x => x.empresaId == StaticProperty.empresaId))
+                    {
+                        dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario.ToString("F2"));
+                    }
+                    tabelaArtigos.DataSource = dt;
                 }
-                tabelaArtigos.DataSource = dt;
             }
+                // Carregar documentos
+                documento.Items.Add("PP");
+                documento.Items.Add("ECL");
+                documento.Items.Add("FR");
+                documento.Items.Add("FT");
+                documento.Items.Add("GT");
+                documento.Items.Add("GR");
+                documento.Items.Add("NC");
+                documento.Items.Add("ND");
+                documento.Items.Add("OR");
 
-            // Carregar documentos
-            documento.Items.Add("PP");
-            documento.Items.Add("ECL");
-            documento.Items.Add("FR");
-            documento.Items.Add("FT");
-            documento.Items.Add("GT");
-            documento.Items.Add("GR");
-            documento.Items.Add("NC");
-            documento.Items.Add("ND");
-            documento.Items.Add("OR");
+                Qtd.Text = "0";
+                descontoTxt.Text = "0";
 
-            Qtd.Text = "0";
-            descontoTxt.Text = "0";
+                descricaoLabel.Text = string.Empty;
 
-            descricaoLabel.Text = string.Empty;
+                eliminarBtn.Enabled = false;
 
-            eliminarBtn.Enabled = false;
+                totalAgragado(vendaArtigos);
 
-            totalAgragado(vendaArtigos);
-
-            timerRefresh.Start();
+                timerRefresh.Start();
+           
         }
-
         private void clienteBtn_Click(object sender, EventArgs e)
         {
             ClienteListagem clienteListagem = new ClienteListagem();
@@ -205,20 +211,25 @@ namespace AscFrontEnd
 
         private async void salvarBtn_Click(object sender, EventArgs e)
         {
+            ProcessoForm processoForm = new ProcessoForm();
+
+            processoForm.Show();
+
             FaturaDetalhes form;
             HttpResponseMessage response = null;
-            var client = new HttpClient();
+
             var clientGet = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+
             clientGet.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
 
             // Configuração do HttpClient
-            client.BaseAddress = new Uri("https://localhost:7200/");
-            clientGet.BaseAddress = new Uri("https://localhost:7200/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            if(!vendaArtigos.Any() || vendaArtigos == null) 
+            clientGet.BaseAddress = new Uri("http://localhost:7200/");
+
+            StaticProperty.percentual += 10;
+
+
+            if (!vendaArtigos.Any() || vendaArtigos == null)
             {
                 MessageBox.Show("Nenhum artigo foi selecionado", "Impossivel concluir a ação", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -226,7 +237,7 @@ namespace AscFrontEnd
             }
 
             float totalPreco = vendaArtigos.Sum(x => x.preco * x.qtd);
-            
+
             if (documento.Text == "FR")
             {
                 //actualizar a lista de artigos
@@ -235,7 +246,7 @@ namespace AscFrontEnd
                 {
                     artigos.Add(new FrArtigoDTO()
                     {
-                        artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id:0,
+                        artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id : 0,
                         preco = vendaArtigo.preco,
                         qtd = vendaArtigo.qtd,
                         iva = vendaArtigo.iva,
@@ -265,12 +276,11 @@ namespace AscFrontEnd
                     }
                 }
 
-
-
             }
 
             if (documento.Text == "FT")
             {
+                var doc = codigoDocumento.Text;
                 FtDTO fts = new FtDTO()
                 {
                     documento = codigoDocumento.Text,
@@ -360,7 +370,7 @@ namespace AscFrontEnd
                     clienteId = StaticProperty.entityId,
                     gtArtigo = gtArtigos,
                     empresaId = StaticProperty.empresaId,
-                    status =  DTOs.Enums.Enums.DocState.ativo,
+                    status = DTOs.Enums.Enums.DocState.ativo,
                     created_at = DateTime.Now,
                 };
 
@@ -396,7 +406,7 @@ namespace AscFrontEnd
                     empresaId = StaticProperty.empresaId,
                     created_at = DateTime.Now,
                 };
-   
+
 
                 form = new FaturaDetalhes(totalPreco, grs);
                 if (form.ShowDialog() != DialogResult.OK)
@@ -423,7 +433,7 @@ namespace AscFrontEnd
                         preco = vendaArtigo.preco,
                         qtd = vendaArtigo.qtd,
                         iva = 0f,//vendaArtigo.iva,
-                        desconto= vendaArtigo.desconto,
+                        desconto = vendaArtigo.desconto,
                     });
                 }
 
@@ -445,7 +455,7 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(ecls);
 
                 // Envio dos dados para a API
-                response = await client.PostAsync($"api/Venda/Ecl/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json")); 
+                response = await client.PostAsync($"api/Venda/Ecl/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             if (documento.Text == "NC")
@@ -464,31 +474,31 @@ namespace AscFrontEnd
                     });
                 }
 
-                formAnulacao = new MotivoAnulacao(Entidade.cliente,OpcaoBinaria.Nao);
+                formAnulacao = new MotivoAnulacao(Entidade.cliente, OpcaoBinaria.Nao);
                 formAnulacao.ShowDialog();
                 if (formAnulacao.DialogResult == DialogResult.OK)
                 {
-                   NcDTO ncs = new NcDTO()
-                   {
-                      documento = codigoDocumento.Text,
-                      data = DateTime.Parse(dataDocumento.Text),
-                      clienteId = StaticProperty.entityId,
-                      documentoOrigem = StaticProperty.documentoOrigem,
-                      motivo = StaticProperty.motivoAnulacao,
-                      ncArtigo = ncArtigos,
-                       empresaId = StaticProperty.empresaId,
-                       status = DTOs.Enums.Enums.DocState.ativo,
-                      created_at = DateTime.Now,
-                   };
+                    NcDTO ncs = new NcDTO()
+                    {
+                        documento = codigoDocumento.Text,
+                        data = DateTime.Parse(dataDocumento.Text),
+                        clienteId = StaticProperty.entityId,
+                        documentoOrigem = StaticProperty.documentoOrigem,
+                        motivo = StaticProperty.motivoAnulacao,
+                        ncArtigo = ncArtigos,
+                        empresaId = StaticProperty.empresaId,
+                        status = DTOs.Enums.Enums.DocState.ativo,
+                        created_at = DateTime.Now,
+                    };
 
                     // Conversão do objeto Film para JSON
                     string json = System.Text.Json.JsonSerializer.Serialize(ncs);
 
                     // Envio dos dados para a API
                     response = await client.PostAsync($"api/Venda/Nc/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
-                 
+
                 }
-                else 
+                else
                 {
                     return;
                 }
@@ -516,7 +526,7 @@ namespace AscFrontEnd
                     ndArtigo = ndArtigos,
                     empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
-                    created_at = DateTime.Now, 
+                    created_at = DateTime.Now,
                 };
 
                 // Conversão do objeto Film para JSON
@@ -556,7 +566,7 @@ namespace AscFrontEnd
                         artigoId = StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).Any() ? StaticProperty.artigos.Where(x => x.codigo == vendaArtigo.codigo).First().id : 0,
                         preco = vendaArtigo.preco,
                         qtd = vendaArtigo.qtd,
-                        iva =0f,// vendaArtigo.iva,
+                        iva = 0f,// vendaArtigo.iva,
                         desconto = vendaArtigo.desconto,
                     });
                 }
@@ -567,24 +577,30 @@ namespace AscFrontEnd
                 // Envio dos dados para a API
                 response = await client.PostAsync($"api/Venda/Or/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             }
+            StaticProperty.percentual += 30;
 
-            if (documento.Text != "FR" && documento.Text != "GR") {
+            if (documento.Text != "FR" && documento.Text != "GR")
+            {
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
-                    if(result == "-1") 
+                    if (result == "-1")
                     {
-                        MessageBox.Show("A data deste documento é inferior a data da ultimo documento\n", "Não é possível concluir a acão!", MessageBoxButtons.OKCancel,MessageBoxIcon.Error);
+                        processoForm.Close();
+
+                        MessageBox.Show("A data deste documento é inferior a data da ultimo documento\n", "Não é possível concluir a acão!", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                         return;
                     }
                     else if (result == "-2")
                     {
+                        processoForm.Close();
+
                         MessageBox.Show("A data do sistema não segue a sequencia dos documentos anterior\n Verfique a se a data do sistema está correcto e reinicie o programa", "Não é possível concluir a acão!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
 
                         return;
                     }
 
-                    if(documento.Text == "FT")
+                    if (documento.Text == "FT")
                     {
                         ft = JsonConvert.DeserializeObject<FtDTO>(result);
                         StaticProperty.hash = ft.shortHash;
@@ -692,6 +708,8 @@ namespace AscFrontEnd
                         var contentNd = await responseNd.Content.ReadAsStringAsync();
                         StaticProperty.nds = JsonConvert.DeserializeObject<List<NdDTO>>(contentNd);
                     }
+
+                    StaticProperty.percentual += 10;
                 }
                 else
                 {
@@ -702,18 +720,44 @@ namespace AscFrontEnd
 
 
             preVisualizacaoDialog.Document = Imprimir;
+            processoForm.Close();
 
             if (preVisualizacaoDialog.ShowDialog() == DialogResult.OK)
             {
-                Imprimir.Print();
+                
+             //   Imprimir.Print();
             }
 
-            MessageBox.Show("Venda Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+            printDialog1 = new PrintDialog
+            {
+                Document = Imprimir, // Associa o PrintDocument ao PrintDialog
+                AllowSomePages = true, // Permite selecionar intervalo de páginas
+                AllowPrintToFile = false, // Desativa opção de imprimir para arquivo
+                ShowNetwork = true // Mostra impressoras de rede
+            };
 
+            // Exibir o PrintDialog e verificar se o usuário confirmou
+            if (printDialog1.ShowDialog() == DialogResult.OK)
+            {
+                // Aplica as configurações do PrintDialog ao PrintDocument
+                Imprimir.PrinterSettings = printDialog1.PrinterSettings;
+
+                // Executa a impressão
+                try
+                {
+                    Imprimir.Print();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erro ao imprimir: {ex.Message}", "Erro de Impressão", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                MessageBox.Show("Venda Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+            }
             vendaArtigos.Clear();
 
-            
-            
+
+
             totalAgragado(vendaArtigos);
 
             WindowsConfig.LimparFormulario(this);
@@ -722,16 +766,15 @@ namespace AscFrontEnd
 
             documento.Items.Clear();
 
-            Venda_Load(this,EventArgs.Empty);
+            Venda_Load(this, EventArgs.Empty);
 
-           // this.Refresh();
+            // this.Refresh();
         }
 
         private async void textBox1_TextChanged(object sender, EventArgs e)
         {
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            var response = await client.GetAsync($"https://localhost:7200/api/Artigo/Search/{textBox1.Text}");
+
+            var response = await client.GetAsync($"api/Artigo/Search/{textBox1.Text}");
 
 
             if (response.IsSuccessStatusCode)
@@ -758,25 +801,18 @@ namespace AscFrontEnd
 
         private async void documento_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
 
-            if(!OutrasValidacoes.SerieExist())
+
+            if (!OutrasValidacoes.SerieExist(_user))
             {
-                    return;
+                return;
             }
-            var response = await client.GetAsync($"https://localhost:7200/api/serie/codigoDocumento/{documento.Text}/{StaticProperty.empresaId}");
+            codigoDocumento.Text = await Documento.GetCodigoDocumentoAsync(documento.Text.ToString());
 
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                string dados = content.ToString();
 
-                codigoDocumento.Text = dados;
-            }
             if (documento.Text == "FR") { descricaoDocumento = "Factura Recibo"; }
             else if (documento.Text == "FT") { descricaoDocumento = "Factura"; }
-            else if(documento.Text == "ECL") { descricaoDocumento = "Encomenda a Cliente"; }
+            else if (documento.Text == "ECL") { descricaoDocumento = "Encomenda a Cliente"; }
             else if (documento.Text == "GT") { descricaoDocumento = "Guia de Transporte"; }
             else if (documento.Text == "GR") { descricaoDocumento = "Guia de Remessa"; }
             else if (documento.Text == "PP") { descricaoDocumento = "Factura Proforma"; }
@@ -792,7 +828,7 @@ namespace AscFrontEnd
             }
             else
             {
-                if(documento.Text == "ECL") 
+                if (documento.Text == "ECL")
                 {
                     localEntregatxt.Enabled = true;
                 }
@@ -806,272 +842,287 @@ namespace AscFrontEnd
             string codigo;
             try
             {
-                if (StaticProperty.entityId <=0) 
+                if (StaticProperty.entityId <= 0)
                 {
                     if (MessageBox.Show("Precisas Selecionar o cliente, caso o contrario o cliente passará como desconhecido", "Atenção", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                     {
                         StaticProperty.entityId = 1;
+
+                        clienteResult = StaticProperty.clientes.Where(x => x.id == 1).FirstOrDefault();
+
+                        if (clienteResult != null)
+                        {
+                            clientetxt.Text = $"Cliente: {clienteResult.nome_fantasia}";
+                        }
+
+                        else
+                        {
+                            MessageBox.Show("Cliente nao encontrado", "Alguma coisa correu mal", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            return;
+                        }
                     }
-                    else
-                    {
-                        return;
-                    }
                 }
-                if (artigoId <= 0) 
-                {
-                    MessageBox.Show("Nenhum Artigo Foi Selecionado", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-                if (string.IsNullOrWhiteSpace(documento.Text.ToString())) 
-                {
-                    MessageBox.Show("Selecione um documento de Venda", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-                if (float.Parse(Qtd.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) <= 0 || string.IsNullOrEmpty(Qtd.Text.ToString()))
-                {
-                    MessageBox.Show("A quantidade nao pode ser igual a 0 ou vazia", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                codigo = dados.Where(art => art.id == artigoId).First().codigo;
-
-                if (vendaArtigos.Where(x => x.codigo == codigo).Any()) 
+                else
                 {
                     return;
                 }
-                
-                int idVendaArtigo = tabelaVenda.Rows.Count;
+            
+                if (artigoId <= 0)
+            {
+                MessageBox.Show("Nenhum Artigo Foi Selecionado", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(documento.Text.ToString()))
+            {
+                MessageBox.Show("Selecione um documento de Venda", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (float.Parse(Qtd.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) <= 0 || string.IsNullOrEmpty(Qtd.Text.ToString()))
+            {
+                MessageBox.Show("A quantidade nao pode ser igual a 0 ou vazia", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-                List<VendaArtigo> refreshVendaArtigo = new List<VendaArtigo>();
-                int i = 1;
+            codigo = dados.Where(art => art.id == artigoId).First().codigo;
 
-                dtVenda.Rows.Clear();
-                tabelaVenda.DataSource = dtVenda;
+            if (vendaArtigos.Where(x => x.codigo == codigo).Any())
+            {
+                return;
+            }
 
-                
+            int idVendaArtigo = tabelaVenda.Rows.Count;
 
-                foreach (var va in vendaArtigos)
+            List<VendaArtigo> refreshVendaArtigo = new List<VendaArtigo>();
+            int i = 1;
+
+            dtVenda.Rows.Clear();
+            tabelaVenda.DataSource = dtVenda;
+
+
+
+            foreach (var va in vendaArtigos)
+            {
+                var vArtigo = new VendaArtigo
                 {
-                    var vArtigo = new VendaArtigo
-                    {
-                        id = i,
-                        codigo = va.codigo,
-                        preco = va.preco,
-                        qtd = va.qtd,
-                        iva = va.iva,
-                        desconto = va.desconto,
-                    };
-                    refreshVendaArtigo.Add(vArtigo);
-                    i++;
-                }
+                    id = i,
+                    codigo = va.codigo,
+                    preco = va.preco,
+                    qtd = va.qtd,
+                    iva = va.iva,
+                    desconto = va.desconto,
+                };
+                refreshVendaArtigo.Add(vArtigo);
+                i++;
+            }
 
-                vendaArtigos.Clear();
+            vendaArtigos.Clear();
 
-                vendaArtigos = refreshVendaArtigo;
+            vendaArtigos = refreshVendaArtigo;
 
-                var qtd = !string.IsNullOrEmpty(Qtd.Text.ToString())? float.Parse(Qtd.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture):0f;
-                var desconto = !string.IsNullOrEmpty(descontoTxt.Text.ToString())?float.Parse(descontoTxt.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture):0f;
+            var qtd = !string.IsNullOrEmpty(Qtd.Text.ToString()) ? float.Parse(Qtd.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) : 0f;
+            var desconto = !string.IsNullOrEmpty(descontoTxt.Text.ToString()) ? float.Parse(descontoTxt.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) : 0f;
 
-                vendaArtigos.Add(new VendaArtigo()
+            vendaArtigos.Add(new VendaArtigo()
+            {
+                id = idVendaArtigo,
+                codigo = codigo,
+                preco = precoArtigo,
+                qtd = qtd,
+                iva = dados.Where(art => art.id == artigoId).First().iva,
+                desconto = desconto,
+
+            });
+
+            if (documento.Text == "FR")
+            {
+                artigos.Add(new FrArtigoDTO()
                 {
-                    id = idVendaArtigo,
-                    codigo = codigo,
+                    artigoId = artigoId,
                     preco = precoArtigo,
                     qtd = qtd,
                     iva = dados.Where(art => art.id == artigoId).First().iva,
-                    desconto = desconto,
-
+                    desconto = desconto
                 });
 
-                if (documento.Text == "FR")
+
+                foreach (var fr in vendaArtigos)
                 {
-                    artigos.Add(new FrArtigoDTO()
-                    {
-                        artigoId = artigoId,
-                        preco = precoArtigo,
-                        qtd = qtd,
-                        iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = desconto
-                    });
 
+                    dtVenda.Rows.Add(fr.id, fr.codigo, fr.preco.ToString("F2"), fr.qtd.ToString("F2"), fr.iva.ToString("F2"), fr.desconto.ToString("F2"));
 
-                    foreach (var fr in vendaArtigos)
-                    {
-
-                        dtVenda.Rows.Add(fr.id, fr.codigo, fr.preco.ToString("F2"), fr.qtd.ToString("F2"), fr.iva.ToString("F2"),fr.desconto.ToString("F2"));
-
-                    }
-                        tabelaVenda.DataSource = dtVenda;
                 }
-
-                if (documento.Text == "FT")
-                {
-                    ftArtigos.Add(new FtArtigoDTO()
-                    {
-                        artigoId = artigoId,
-                        preco = precoArtigo,
-                        qtd = qtd,
-                        iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = desconto
-                    });
-
-                    foreach (var ft in vendaArtigos)
-                    {
-
-                        dtVenda.Rows.Add(ft.id, ft.codigo, ft.preco.ToString("F2"), ft.qtd.ToString("F2"), ft.iva.ToString("F2"),ft.desconto.ToString("F2"));
-
-                    }
-                        tabelaVenda.DataSource = dtVenda;
-                }
-
-                if (documento.Text == "PP")
-                {
-                    fpArtigos.Add(new FaturaProformaArtigoDTO()
-                    {
-                        artigoId = artigoId,
-                        preco = precoArtigo,
-                        iva = dados.Where(art => art.id == artigoId).First().iva,
-                        qtd = qtd,
-                        desconto = desconto
-                    });
-
-                    foreach (var fp in vendaArtigos)
-                    {
-
-                        dtVenda.Rows.Add(fp.id, fp.codigo, fp.preco.ToString("F2"), fp.qtd.ToString("F2"), fp.iva.ToString("F2"), fp.desconto.ToString("F2"));
-
-                    }
-                        tabelaVenda.DataSource = dtVenda;
-                }
-
-                if (documento.Text == "ECL")
-                {
-                    eclArtigos.Add(new EclArtigoDTO()
-                    {
-                        artigoId = artigoId,
-                        preco = precoArtigo,
-                        qtd = qtd,
-                        iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = desconto
-                    });
-
-                    foreach (var ecl in vendaArtigos)
-                    {
-
-                        dtVenda.Rows.Add(ecl.id, ecl.codigo, ecl.preco.ToString("F2"), ecl.qtd.ToString("F2"), ecl.iva.ToString("F2"),ecl.desconto.ToString("F2"));
-
-                    }
-                        tabelaVenda.DataSource = dtVenda;
-                }
-
-                if (documento.Text == "GT")
-                {
-                    gtArtigos.Add(new GtArtigoDTO()
-                    {
-                        artigoId = artigoId,
-                        preco = precoArtigo,
-                        qtd = qtd,
-                        iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = desconto
-                    });
-
-                    foreach (var gt in vendaArtigos)
-                    {
-
-                        dtVenda.Rows.Add(gt.id, gt.codigo, gt.preco.ToString("F2"), gt.qtd.ToString("F2"), gt.iva.ToString("F2"),gt.desconto.ToString("F2"));
-
-                    }
-                        tabelaVenda.DataSource = dtVenda;
-                }
-
-                if (documento.Text == "GR")
-                {
-                    grArtigos.Add(new GrArtigoDTO()
-                    {
-                        artigoId = artigoId,
-                        preco = precoArtigo,
-                        qtd = qtd,
-                        iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = desconto
-                    });
-
-                    foreach (var gr in vendaArtigos)
-                    {
-
-                        dtVenda.Rows.Add(gr.id, gr.codigo, gr.preco.ToString("F2"), gr.qtd.ToString("F2"), gr.iva.ToString("F2"), gr.desconto.ToString("F2"));
-
-                    }
-                        tabelaVenda.DataSource = dtVenda;
-                }
-
-                if (documento.Text == "NC")
-                {
-                    ncArtigos.Add(new NcArtigoDTO()
-                    {
-                        artigoId = artigoId,
-                        preco = precoArtigo,
-                        qtd = qtd,
-                        iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = desconto
-                    });
-
-                    foreach (var nc in vendaArtigos)
-                    {
-
-                        dtVenda.Rows.Add(nc.id, nc.codigo, nc.preco.ToString("F2"), nc.qtd.ToString("F2"), nc.iva.ToString("F2"),nc.desconto.ToString("F2"));
-
-                    }
-                        tabelaVenda.DataSource = dtVenda;
-                }
-
-                if (documento.Text == "ND")
-                {
-                    ndArtigos.Add(new NdArtigoDTO()
-                    {
-                        artigoId = artigoId,
-                        preco = precoArtigo,
-                        qtd = qtd,
-                        iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = desconto
-                    });
-
-                    foreach (var nd in vendaArtigos)
-                    {
-
-                        dtVenda.Rows.Add(nd.id, nd.codigo, nd.preco.ToString("F2"), nd.qtd.ToString("F2"), nd.iva.ToString("F2"),nd.desconto.ToString("F2"));
-
-                    }
-                        tabelaVenda.DataSource = dtVenda;
-                }
-
-                if (documento.Text == "OR")
-                {
-                    orArtigos.Add(new OrArtigoDTO()
-                    {
-                        artigoId = artigoId,
-                        preco = precoArtigo,
-                        qtd = qtd,
-                        iva = dados.Where(art => art.id == artigoId).First().iva,
-                        desconto = desconto
-                    });
-
-                    foreach (var or in vendaArtigos)
-                    {
-
-                        dtVenda.Rows.Add(or.id, or.codigo, or.preco.ToString("F2"), or.qtd.ToString("F2"), or.iva.ToString("F2"));
-
-                    }
-                        tabelaVenda.DataSource = dtVenda;
-                }
-
-                artigoId = 0;
-
-                totalAgragado(vendaArtigos);
+                tabelaVenda.DataSource = dtVenda;
             }
+
+            if (documento.Text == "FT")
+            {
+                ftArtigos.Add(new FtArtigoDTO()
+                {
+                    artigoId = artigoId,
+                    preco = precoArtigo,
+                    qtd = qtd,
+                    iva = dados.Where(art => art.id == artigoId).First().iva,
+                    desconto = desconto
+                });
+
+                foreach (var ft in vendaArtigos)
+                {
+
+                    dtVenda.Rows.Add(ft.id, ft.codigo, ft.preco.ToString("F2"), ft.qtd.ToString("F2"), ft.iva.ToString("F2"), ft.desconto.ToString("F2"));
+
+                }
+                tabelaVenda.DataSource = dtVenda;
+            }
+
+            if (documento.Text == "PP")
+            {
+                fpArtigos.Add(new FaturaProformaArtigoDTO()
+                {
+                    artigoId = artigoId,
+                    preco = precoArtigo,
+                    iva = dados.Where(art => art.id == artigoId).First().iva,
+                    qtd = qtd,
+                    desconto = desconto
+                });
+
+                foreach (var fp in vendaArtigos)
+                {
+
+                    dtVenda.Rows.Add(fp.id, fp.codigo, fp.preco.ToString("F2"), fp.qtd.ToString("F2"), fp.iva.ToString("F2"), fp.desconto.ToString("F2"));
+
+                }
+                tabelaVenda.DataSource = dtVenda;
+            }
+
+            if (documento.Text == "ECL")
+            {
+                eclArtigos.Add(new EclArtigoDTO()
+                {
+                    artigoId = artigoId,
+                    preco = precoArtigo,
+                    qtd = qtd,
+                    iva = dados.Where(art => art.id == artigoId).First().iva,
+                    desconto = desconto
+                });
+
+                foreach (var ecl in vendaArtigos)
+                {
+
+                    dtVenda.Rows.Add(ecl.id, ecl.codigo, ecl.preco.ToString("F2"), ecl.qtd.ToString("F2"), ecl.iva.ToString("F2"), ecl.desconto.ToString("F2"));
+
+                }
+                tabelaVenda.DataSource = dtVenda;
+            }
+
+            if (documento.Text == "GT")
+            {
+                gtArtigos.Add(new GtArtigoDTO()
+                {
+                    artigoId = artigoId,
+                    preco = precoArtigo,
+                    qtd = qtd,
+                    iva = dados.Where(art => art.id == artigoId).First().iva,
+                    desconto = desconto
+                });
+
+                foreach (var gt in vendaArtigos)
+                {
+
+                    dtVenda.Rows.Add(gt.id, gt.codigo, gt.preco.ToString("F2"), gt.qtd.ToString("F2"), gt.iva.ToString("F2"), gt.desconto.ToString("F2"));
+
+                }
+                tabelaVenda.DataSource = dtVenda;
+            }
+
+            if (documento.Text == "GR")
+            {
+                grArtigos.Add(new GrArtigoDTO()
+                {
+                    artigoId = artigoId,
+                    preco = precoArtigo,
+                    qtd = qtd,
+                    iva = dados.Where(art => art.id == artigoId).First().iva,
+                    desconto = desconto
+                });
+
+                foreach (var gr in vendaArtigos)
+                {
+
+                    dtVenda.Rows.Add(gr.id, gr.codigo, gr.preco.ToString("F2"), gr.qtd.ToString("F2"), gr.iva.ToString("F2"), gr.desconto.ToString("F2"));
+
+                }
+                tabelaVenda.DataSource = dtVenda;
+            }
+
+            if (documento.Text == "NC")
+            {
+                ncArtigos.Add(new NcArtigoDTO()
+                {
+                    artigoId = artigoId,
+                    preco = precoArtigo,
+                    qtd = qtd,
+                    iva = dados.Where(art => art.id == artigoId).First().iva,
+                    desconto = desconto
+                });
+
+                foreach (var nc in vendaArtigos)
+                {
+
+                    dtVenda.Rows.Add(nc.id, nc.codigo, nc.preco.ToString("F2"), nc.qtd.ToString("F2"), nc.iva.ToString("F2"), nc.desconto.ToString("F2"));
+
+                }
+                tabelaVenda.DataSource = dtVenda;
+            }
+
+            if (documento.Text == "ND")
+            {
+                ndArtigos.Add(new NdArtigoDTO()
+                {
+                    artigoId = artigoId,
+                    preco = precoArtigo,
+                    qtd = qtd,
+                    iva = dados.Where(art => art.id == artigoId).First().iva,
+                    desconto = desconto
+                });
+
+                foreach (var nd in vendaArtigos)
+                {
+
+                    dtVenda.Rows.Add(nd.id, nd.codigo, nd.preco.ToString("F2"), nd.qtd.ToString("F2"), nd.iva.ToString("F2"), nd.desconto.ToString("F2"));
+
+                }
+                tabelaVenda.DataSource = dtVenda;
+            }
+
+            if (documento.Text == "OR")
+            {
+                orArtigos.Add(new OrArtigoDTO()
+                {
+                    artigoId = artigoId,
+                    preco = precoArtigo,
+                    qtd = qtd,
+                    iva = dados.Where(art => art.id == artigoId).First().iva,
+                    desconto = desconto
+                });
+
+                foreach (var or in vendaArtigos)
+                {
+
+                    dtVenda.Rows.Add(or.id, or.codigo, or.preco.ToString("F2"), or.qtd.ToString("F2"), or.iva.ToString("F2"));
+
+                }
+                tabelaVenda.DataSource = dtVenda;
+            }
+
+            artigoId = 0;
+
+            totalAgragado(vendaArtigos);
+        }
             catch { return; }
         }
 
-        private  void excelBtn_Click(object sender, EventArgs e)
+        private void excelBtn_Click(object sender, EventArgs e)
         {
             exportar exp = new exportar();
 
@@ -1131,12 +1182,12 @@ namespace AscFrontEnd
 
         private void createPicture_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void clienteBtn_MouseLeave(object sender, EventArgs e)
         {
-            clienteBtn.BackColor = Color.FromArgb(64,64,64);
+            clienteBtn.BackColor = Color.FromArgb(64, 64, 64);
             clienteBtn.ForeColor = Color.White;
         }
 
@@ -1156,28 +1207,30 @@ namespace AscFrontEnd
 
         }
 
-        private async void timerRefresh_Tick(object sender, EventArgs e)
+        private void timerRefresh_Tick(object sender, EventArgs e)
         {
             if (StaticProperty.entityId > 0)
             {
-                var responseGet = await client.GetAsync($"api/Cliente/{StaticProperty.entityId}");
-
-                if (responseGet.IsSuccessStatusCode)
+                if (clienteResult.id != StaticProperty.entityId)
                 {
-                    var content = await responseGet.Content.ReadAsStringAsync();
+                    clienteResult = StaticProperty.clientes.Where(x => x.id == clienteResult.id).FirstOrDefault();
 
-                    clienteResult = JsonConvert.DeserializeObject<ClienteDTO>(content);
+                    if (clienteResult != null)
+                    {
+                        clientetxt.Text = $"Cliente: {clienteResult.nome_fantasia}";
+                    }
 
-                    clientetxt.Text = $"Cliente: {clienteResult.nome_fantasia}";
-                }
-                else
-                {
-                    MessageBox.Show("Cliente nao encontrado", "Alguma coisa correu mal", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else
+                    {
+                        MessageBox.Show("Cliente nao encontrado", "Alguma coisa correu mal", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    return;
+                        return;
+                    }
                 }
             }
         }
+
+        
 
         private void Imprimir_PrintPage(object sender, PrintPageEventArgs e)
         {
@@ -1194,7 +1247,7 @@ namespace AscFrontEnd
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
-                string imagePathEmpresa = Path.Combine(StaticProperty.empresaLogo);
+                string imagePathEmpresa = StaticProperty.empresaId == 1 ? Path.Combine(projectPath, "Files", "Smart_Entity.png") : Path.Combine(StaticProperty.empresaLogo);
                 string imagePathAsc = Path.Combine(projectPath, "Files", "asc.png");
                 // Testar com valores fixos para desenhar uma string
                 Font fontNormal = new Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -1226,6 +1279,10 @@ namespace AscFrontEnd
                 string clienteCabecalho = $"Exmo (s) Senhor (a)\n";
                 string clienteOutros = $"{clienteResult.nome_fantasia.ToUpper()}\nEndereço: {clienteResult.localizacao}\nNif: {clienteResult.nif}\n" +
                                           $"Email: {clienteResult.email}\nTel: {tel}";
+
+                //Process Bar
+                StaticProperty.percentual += 7;
+
 
                 Pen caneta = new Pen(Color.Black, 2); // Define a cor e a largura da linha
                 Pen canetaFina = new Pen(Color.Black, 1);
@@ -1281,7 +1338,8 @@ namespace AscFrontEnd
                 {
                     e.Graphics.DrawString($"-", fontNormal, cor, new Rectangle(500, 330, 650, 340));
                 }
-
+                //Process Bar
+                StaticProperty.percentual += 8;
                 int i = 15;
                 if (!documento.Text.Equals("GR") && !documento.Text.Equals("GT"))
                 {
@@ -1293,7 +1351,7 @@ namespace AscFrontEnd
                     e.Graphics.DrawString($"Desconto", fontNormalNegrito, cor, new Rectangle(600, 400, 700, 420));
                     e.Graphics.DrawString($"Total", fontNormalNegrito, cor, new Rectangle(700, 400, 750, 420));
                     e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
-                
+
                     foreach (VendaArtigo va in vendaArtigos)
                     {
                         totalIva += va.iva;
@@ -1309,15 +1367,17 @@ namespace AscFrontEnd
 
                         i = i + 15;
                     }
+                    //Process Bar
+                    StaticProperty.percentual += 5;
                 }
-                else 
+                else
                 {
                     e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
                     e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 400, 420));
                     e.Graphics.DrawString($"Quantidade", fontNormalNegrito, cor, new Rectangle(400, 400, 500, 420));
                     e.Graphics.DrawString($"Total", fontNormalNegrito, cor, new Rectangle(600, 400, 670, 420));
                     e.Graphics.DrawLine(caneta, 50, 415, 750, 415);
-                   
+
                     foreach (VendaArtigo va in vendaArtigos)
                     {
                         totalIva += va.iva;
@@ -1344,22 +1404,22 @@ namespace AscFrontEnd
                 {
                     e.Graphics.DrawRectangle(caneta, new Rectangle(540, 530 + i, 210, 70 + i));
 
-                e.Graphics.DrawString(mercadoria, fontCabecalho, cor, new PointF(550, 545 + i), formatToLeft);
-                e.Graphics.DrawString(totalLiquido.ToString("F2"), fontCabecalho, cor, new PointF(680, 545 + i), formatToLeft);
-                e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 555 + i), formatToLeft);
-                e.Graphics.DrawString((total * (totalIva / 100)).ToString("F2"), fontCabecalho, cor, new PointF(680, 555 + i), formatToLeft);
-                e.Graphics.DrawString("Desconto", fontCabecalho, cor,new PointF(550, 565 + i), formatToLeft);
-                e.Graphics.DrawString($"{desconto:F2}", fontCabecalho, cor, new PointF(680, 565 + i), formatToLeft);
+                    e.Graphics.DrawString(mercadoria, fontCabecalho, cor, new PointF(550, 545 + i), formatToLeft);
+                    e.Graphics.DrawString(totalLiquido.ToString("F2"), fontCabecalho, cor, new PointF(680, 545 + i), formatToLeft);
+                    e.Graphics.DrawString(totalIvaValor, fontCabecalho, cor, new PointF(550, 555 + i), formatToLeft);
+                    e.Graphics.DrawString((total * (totalIva / 100)).ToString("F2"), fontCabecalho, cor, new PointF(680, 555 + i), formatToLeft);
+                    e.Graphics.DrawString("Desconto", fontCabecalho, cor, new PointF(550, 565 + i), formatToLeft);
+                    e.Graphics.DrawString($"{desconto:F2}", fontCabecalho, cor, new PointF(680, 565 + i), formatToLeft);
 
-                e.Graphics.DrawLine(canetaFina, 550, 580 + i, 740, 580 + i);
-                e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 605 + i), formatToLeft);
-                e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 605 + i), formatToLeft);
+                    e.Graphics.DrawLine(canetaFina, 550, 580 + i, 740, 580 + i);
+                    e.Graphics.DrawString(totalFinal, fontNormalNegrito, cor, new PointF(550, 605 + i), formatToLeft);
+                    e.Graphics.DrawString(total.ToString("F2"), fontNormalNegrito, cor, new PointF(680, 605 + i), formatToLeft);
 
-                string conta = $"Conta nº";
-                string iban = $"IBAN ";
-                string banco = $"Banco Angolano de Investimento";
+                    string conta = $"Conta nº";
+                    string iban = $"IBAN ";
+                    string banco = $"Banco Angolano de Investimento";
 
-   
+
                     e.Graphics.DrawString($"Resumo Imposto", fontCabecalho, cor, new PointF(50, 515 + i), formatToCenter);
 
                     e.Graphics.DrawLine(caneta, 50, 530 + i, 530, 530 + i);
@@ -1394,6 +1454,10 @@ namespace AscFrontEnd
                             i = i + 10;
                         }
                     }
+
+                    //Process Bar
+                    StaticProperty.percentual += 5;
+
                     // Artigos com iva isento
                     foreach (var motivo in StaticProperty.motivosIsencao)
                     {
@@ -1435,7 +1499,7 @@ namespace AscFrontEnd
                     e.Graphics.DrawString($"Os bens/serviços foram colocados á disposição do adquirente na data e local do documento", fontCabecalho, new SolidBrush(Color.Black), new PointF(210, 720 + i), formatToCenter);
                 }
 
-                if (documento.Text.Equals("GT") || documento.Text.Equals("GR")) 
+                if (documento.Text.Equals("GT") || documento.Text.Equals("GR"))
                 {
                     e.Graphics.DrawString("Entreguei", fontCabecalho, cor, new PointF(100, 720 + i), formatToLeft);
                     e.Graphics.DrawLine(caneta, 50, 780 + i, 200, 780 + i);
@@ -1450,7 +1514,8 @@ namespace AscFrontEnd
                     e.Graphics.DrawLine(caneta, 50, 780 + i, 200, 780 + i);
 
                 }
-
+                //Process Bar
+                StaticProperty.percentual += 5;
                 if (documento.Text.Equals("GT") || documento.Text.Equals("ECL"))
                 {
                     e.Graphics.DrawString("Local de Carga:", fontCabecalhoNegrito, cor, new PointF(50, 820 + i), formatToLeft);
@@ -1464,9 +1529,11 @@ namespace AscFrontEnd
 
                 // Desenhando a imagem no documento
                 e.Graphics.DrawImage(Image.FromFile(imagePathAsc), new Rectangle(10, 900, 200, 90));
-                
+
 
                 Console.WriteLine("Texto desenhado com sucesso.");
+                StaticProperty.percentual += 10;
+               
 
                 // Liberar recursos
                 fontNormal.Dispose();
@@ -1483,7 +1550,7 @@ namespace AscFrontEnd
         private void vendaBtn_MouseMove(object sender, MouseEventArgs e)
         {
             vendaBtn.BackColor = Color.White;
-            vendaBtn.ForeColor = Color.FromArgb(64,64,64);
+            vendaBtn.ForeColor = Color.FromArgb(64, 64, 64);
         }
 
         private void vendaBtn_MouseLeave(object sender, EventArgs e)
@@ -1520,7 +1587,7 @@ namespace AscFrontEnd
             string texto = textBox.Text.Replace(".", "").Replace(",", ".");
             // Pode validar aqui se quiser, mas não altere o textBox.Text*/
         }
-      
+
         private void Qtd_Leave(object sender, EventArgs e)
         {
             TextBox textBox = (TextBox)sender;
@@ -1549,7 +1616,7 @@ namespace AscFrontEnd
 
         private void descontoTxt_Leave(object sender, EventArgs e)
         {
- 
+
         }
 
         private void descontoTxt_TextChanged(object sender, EventArgs e)
@@ -1557,7 +1624,7 @@ namespace AscFrontEnd
 
         }
 
-        private void totalAgragado(List<VendaArtigo> vendaArtigos) 
+        private void totalAgragado(List<VendaArtigo> vendaArtigos)
         {
             totalBruto.Text = $"Total: {CalculosVendaCompra.TotalVenda(vendaArtigos, clienteResult.desconto).ToString("F2")}";
             ivaTotal.Text = $"Iva: {CalculosVendaCompra.TotalIvaVenda(vendaArtigos).ToString("F2")}";
@@ -1574,6 +1641,25 @@ namespace AscFrontEnd
         private void tabelaVenda_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            documento.Items.Clear();
+
+            Venda_Load(this, EventArgs.Empty);
+        }
+
+        private void btnActualizar_MouseMove(object sender, MouseEventArgs e)
+        {
+            btnActualizar.BackColor = Color.White;
+            btnActualizar.ForeColor = Color.FromArgb(64, 64, 64);
+        }
+
+        private void btnActualizar_MouseLeave(object sender, EventArgs e)
+        {
+            btnActualizar.BackColor = Color.FromArgb(64, 64, 64); 
+            btnActualizar.ForeColor = Color.White;
         }
     }
 

@@ -52,7 +52,7 @@ namespace AscFrontEnd
 
             client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://localhost:7200/");
+            client.BaseAddress = new Uri("http://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
@@ -92,17 +92,20 @@ namespace AscFrontEnd
             this.SetVendas();
             this.ActivarBotaoAprovar();
             // Adicionando linhas ao DataTable
-            foreach (var item in documentoVendas.OrderByDescending(f => f.data))
+            if (documentoVendas != null)
             {
-                clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                foreach (var item in documentoVendas.OrderByDescending(f => f.data))
+                {
+                    clienteNome = StaticProperty.clientes != null? StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia : string.Empty;
 
-                var estado = string.Empty;
-                if (item.status == DocState.anulado) { estado = "Anulado"; }
-                else if (item.status == DocState.estornado) { estado = "Estornado"; }
-                else if(item.status == DocState.resolvido){ estado = "activo"; }
-                else { estado = item.documento.Contains("ECL ")?"Pendente": "activo"; }
+                    var estado = string.Empty;
+                    if (item.status == DocState.anulado) { estado = "Anulado"; }
+                    else if (item.status == DocState.estornado) { estado = "Estornado"; }
+                    else if (item.status == DocState.resolvido) { estado = "activo"; }
+                    else { estado = item.documento.Contains("ECL ") ? "Pendente" : "activo"; }
 
-                dt.Rows.Add(item.id, clienteNome, item.documento, estado, item.data);
+                    dt.Rows.Add(item.id, clienteNome, item.documento, estado, item.data);
+                }
             }
             dataGridView1.DataSource = dt;
 
@@ -122,25 +125,28 @@ namespace AscFrontEnd
                 dt.Columns.Add("Estado", typeof(string));               
                 dt.Columns.Add("Data", typeof(string));
 
-                if (!StaticProperty.fts.Any() || StaticProperty.fts == null)
+                if ( StaticProperty.fts == null || !StaticProperty.fts.Any())
                 {
                     this.CleanDataGridView();
                 }
                 else
                 {
-                    // Adicionando linhas ao DataTable
-                    foreach (var item in StaticProperty.fts.Where(v => v.status != DocState.anulado && v.empresaId == StaticProperty.empresaId))
+                    if (StaticProperty.fts != null)
                     {
-                        if (StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First() != null)
+                        // Adicionando linhas ao DataTable
+                        foreach (var item in StaticProperty.fts.Where(v => v.status != DocState.anulado && v.empresaId == StaticProperty.empresaId))
                         {
-                            clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                            if (StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First() != null)
+                            {
+                                clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                            }
+                            var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+
+                            dt.Rows.Add(item.id, clienteNome, item.documento, estado, item.data);
+
                         }
-                        var estado = item.status == DocState.estornado ? "Estornado" : "activo";
-
-                        dt.Rows.Add(item.id, clienteNome, item.documento, estado, item.data);
-
                     }
-                    dataGridView1.DataSource = dt;
+                        dataGridView1.DataSource = dt;
                 }
             }
         }
@@ -158,24 +164,27 @@ namespace AscFrontEnd
                 dt.Columns.Add("Estado", typeof(string));
                 dt.Columns.Add("Data", typeof(string));
 
-                if (!StaticProperty.frs.Any() || StaticProperty.frs == null)
+                if (StaticProperty.frs == null || !StaticProperty.frs.Any())
                 {
                     this.CleanDataGridView();
                 }
                 else
                 {
-                    // Adicionando linhas ao DataTable
-                    foreach (var item in StaticProperty.frs.Where(v => v.status != DocState.anulado &&  v.empresaId == StaticProperty.empresaId))
+                    if (StaticProperty.frs != null)
                     {
-                        if (StaticProperty.artigos.Where(x => x.id == item.frArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                        // Adicionando linhas ao DataTable
+                        foreach (var item in StaticProperty.frs.Where(v => v.status != DocState.anulado && v.empresaId == StaticProperty.empresaId))
                         {
-                            clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                            if (StaticProperty.artigos.Where(x => x.id == item.frArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                            {
+                                clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
 
-                            var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+                                var estado = item.status == DocState.estornado ? "Estornado" : "activo";
 
-                            dt.Rows.Add(item.id, clienteNome, item.documento, estado, item.data);
+                                dt.Rows.Add(item.id, clienteNome, item.documento, estado, item.data);
+                            }
                         }
-                        dataGridView1.DataSource = dt;
+                            dataGridView1.DataSource = dt;
                     }
                 }
             }
@@ -194,24 +203,26 @@ namespace AscFrontEnd
                 dt.Columns.Add("Estado", typeof(string));
                 dt.Columns.Add("Data", typeof(string));
 
-                if (!StaticProperty.gts.Any() || StaticProperty.gts == null)
+                if (StaticProperty.gts == null ||  !StaticProperty.gts.Any()  )
                 {
                     this.CleanDataGridView();
                 }
                 else
                 {
-                    // Adicionando linhas ao DataTable
-                    foreach (var item in StaticProperty.gts.Where(v => v.status != DocState.anulado && v.empresaId == StaticProperty.empresaId))
-                    {
-                        if (StaticProperty.artigos.Where(x => x.id == item.gtArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                    if(StaticProperty.gts != null) {
+                        // Adicionando linhas ao DataTable
+                        foreach (var item in StaticProperty.gts.Where(v => v.status != DocState.anulado && v.empresaId == StaticProperty.empresaId))
                         {
-                            clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                            if (StaticProperty.artigos.Where(x => x.id == item.gtArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                            {
+                                clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
 
-                            var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+                                var estado = item.status == DocState.estornado ? "Estornado" : "activo";
 
-                            dt.Rows.Add(item.id, clienteNome, item.documento, estado, item.data);
+                                dt.Rows.Add(item.id, clienteNome, item.documento, estado, item.data);
 
 
+                            }
                         }
                     }
                         dataGridView1.DataSource = dt;
@@ -232,25 +243,28 @@ namespace AscFrontEnd
                 dt.Columns.Add("Estado", typeof(string));
                 dt.Columns.Add("Data", typeof(string));
 
-                if (!StaticProperty.ncs.Any() || StaticProperty.ncs == null)
+                if (StaticProperty.ncs == null || !StaticProperty.ncs.Any())
                 {
                     this.CleanDataGridView();
                 }
                 else
                 {
-                    // Adicionando linhas ao DataTable
-                    foreach (var item in StaticProperty.ncs.Where(v => v.status != DocState.anulado && v.empresaId == StaticProperty.empresaId))
+                    if (StaticProperty.ncs != null)
                     {
-                        if (StaticProperty.artigos.Where(x => x.id == item.ncArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                        // Adicionando linhas ao DataTable
+                        foreach (var item in StaticProperty.ncs.Where(v => v.status != DocState.anulado && v.empresaId == StaticProperty.empresaId))
                         {
-                            clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                            if (StaticProperty.artigos.Where(x => x.id == item.ncArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                            {
+                                clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
 
-                            var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+                                var estado = item.status == DocState.estornado ? "Estornado" : "activo";
 
-                            dt.Rows.Add(item.id, clienteNome, item.documento, estado, item.data);
+                                dt.Rows.Add(item.id, clienteNome, item.documento, estado, item.data);
 
+                            }
                         }
-                        dataGridView1.DataSource = dt;
+                            dataGridView1.DataSource = dt;
                     }
                 }
             }
@@ -300,11 +314,14 @@ namespace AscFrontEnd
 
                 if (documento.Equals("OR")) 
                 {
-                    if (StaticProperty.ors.Where(x => x.id == id).Any()) 
+                    if (StaticProperty.ors != null)
                     {
-                        if(StaticProperty.ors.Where(x => x.id == id).First().aprovado == OpcaoBinaria.Sim) 
+                        if (StaticProperty.ors.Where(x => x.id == id).Any())
                         {
-                            estornarPicture.Enabled = true;
+                            if (StaticProperty.ors.Where(x => x.id == id).First().aprovado == OpcaoBinaria.Sim)
+                            {
+                                estornarPicture.Enabled = true;
+                            }
                         }
                     }
                 }
@@ -334,141 +351,150 @@ namespace AscFrontEnd
 
                     if (documento.Equals("FR"))
                     {
-                        var fr = StaticProperty.frs.Where(cl => cl.id == id).First();
-                        codigoDocumentoOrigem = fr.documento;
-
-                        clienteResult = StaticProperty.clientes.Where(cl => cl.id == fr.clienteId).First();
-
-                        foreach (var item in fr.frArtigo)
+                        if (StaticProperty.frs != null)
                         {
-                            vendaArtigos.Add(new Venda.VendaArtigo()
+                            var fr = StaticProperty.frs.Where(cl => cl.id == id).First();
+                            codigoDocumentoOrigem = fr.documento;
+
+                            clienteResult = StaticProperty.clientes.Where(cl => cl.id == fr.clienteId).First();
+
+                            foreach (var item in fr.frArtigo)
                             {
-                                codigo = StaticProperty.artigos.Where(x => x.id == item.artigoId).First().codigo,
-                                iva = item.iva,
-                                preco = item.preco,
-                                qtd = item.qtd
-                            });
+                                vendaArtigos.Add(new Venda.VendaArtigo()
+                                {
+                                    codigo = StaticProperty.artigos.Where(x => x.id == item.artigoId).First().codigo,
+                                    iva = item.iva,
+                                    preco = item.preco,
+                                    qtd = item.qtd
+                                });
 
-                            ncArtigos.Add(new NcArtigoDTO()
+                                ncArtigos.Add(new NcArtigoDTO()
+                                {
+                                    artigoId = item.artigoId,
+                                    iva = item.iva,
+                                    preco = item.preco,
+                                    qtd = item.qtd
+                                });
+                            }
+
+                            // Conversão do objeto Film para JSON
+                            json = System.Text.Json.JsonSerializer.Serialize(DocState.estornado);
+
+                            // Envio dos dados para a API
+                            HttpResponseMessage responseFr = await client.PutAsync($"api/Venda/Fr/Change/State/{id}/{DocState.estornado}", new StringContent(json, Encoding.UTF8, "application/json"));
+
+                            if (responseFr.IsSuccessStatusCode)
                             {
-                                artigoId = item.artigoId,
-                                iva = item.iva,
-                                preco = item.preco,
-                                qtd = item.qtd
-                            });
-                        }
-
-                        // Conversão do objeto Film para JSON
-                        json = System.Text.Json.JsonSerializer.Serialize(DocState.estornado);
-
-                        // Envio dos dados para a API
-                        HttpResponseMessage responseFr = await client.PutAsync($"api/Venda/Fr/Change/State/{id}/{DocState.estornado}", new StringContent(json, Encoding.UTF8, "application/json"));
-
-                        if (responseFr.IsSuccessStatusCode)
-                        {
-                            MessageBox.Show($"O documento {codigoDocumentoOrigem} foi estornado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show($"O documento {codigoDocumentoOrigem} foi estornado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
                     }
                     else if (documento.Equals("FT"))
                     {
-                        var ft = StaticProperty.fts.Where(cl => cl.id == id).First();
-
-                        codigoDocumentoOrigem = ft.documento;
-
-                        clienteResult = StaticProperty.clientes.Where(cl => cl.id == ft.clienteId).First();
-
-                        foreach (var item in ft.ftArtigo)
+                        if (StaticProperty.fts != null)
                         {
-                            vendaArtigos.Add(new Venda.VendaArtigo()
+                            var ft = StaticProperty.fts.Where(cl => cl.id == id).First();
+
+                            codigoDocumentoOrigem = ft.documento;
+
+                            clienteResult = StaticProperty.clientes.Where(cl => cl.id == ft.clienteId).First();
+
+                            foreach (var item in ft.ftArtigo)
                             {
-                                codigo = StaticProperty.artigos.Where(x => x.id == item.artigoId).First().codigo,
-                                iva = item.iva,
-                                preco = item.preco,
-                                qtd = item.qtd
-                            });
-                            ncArtigos.Add(new NcArtigoDTO()
+                                vendaArtigos.Add(new Venda.VendaArtigo()
+                                {
+                                    codigo = StaticProperty.artigos.Where(x => x.id == item.artigoId).First().codigo,
+                                    iva = item.iva,
+                                    preco = item.preco,
+                                    qtd = item.qtd
+                                });
+                                ncArtigos.Add(new NcArtigoDTO()
+                                {
+                                    artigoId = item.artigoId,
+                                    iva = item.iva,
+                                    preco = item.preco,
+                                    qtd = item.qtd
+                                });
+                            }
+
+                            // Conversão do objeto Film para JSON
+                            string json = System.Text.Json.JsonSerializer.Serialize(DocState.estornado);
+
+                            // Envio dos dados para a API
+                            HttpResponseMessage responseF = await client.PutAsync($"api/Venda/Ft/Change/State/{id}/{DocState.estornado}", new StringContent(json, Encoding.UTF8, "application/json"));
+
+                            if (responseF.IsSuccessStatusCode)
                             {
-                                artigoId = item.artigoId,
-                                iva = item.iva,
-                                preco = item.preco,
-                                qtd = item.qtd
-                            });
+                                MessageBox.Show($"O documento {codigoDocumentoOrigem} foi estornado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
-
-                        // Conversão do objeto Film para JSON
-                        string json = System.Text.Json.JsonSerializer.Serialize(DocState.estornado);
-
-                        // Envio dos dados para a API
-                        HttpResponseMessage responseF = await client.PutAsync($"api/Venda/Ft/Change/State/{id}/{DocState.estornado}", new StringContent(json, Encoding.UTF8, "application/json"));
-
-                        if (responseF.IsSuccessStatusCode)
-                        {
-                            MessageBox.Show($"O documento {codigoDocumentoOrigem} foi estornado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-
                     }
                     else if (documento.Equals("GR"))
                     {
-                        var gr = StaticProperty.grs.Where(cl => cl.id == id).First();
-
-                        codigoDocumentoOrigem = gr.documento;
-
-                        clienteResult = StaticProperty.clientes.Where(cl => cl.id == gr.clienteId).First();
-
-                        foreach (var item in gr.grArtigo)
+                        if (StaticProperty.grs != null)
                         {
-                            vendaArtigos.Add(new Venda.VendaArtigo()
+                            var gr = StaticProperty.grs.Where(cl => cl.id == id).First();
+
+                            codigoDocumentoOrigem = gr.documento;
+
+                            clienteResult = StaticProperty.clientes.Where(cl => cl.id == gr.clienteId).First();
+
+                            foreach (var item in gr.grArtigo)
                             {
-                                codigo = StaticProperty.artigos.Where(x => x.id == item.artigoId).First().codigo,
-                                iva = item.iva,
-                                preco = item.preco,
-                                qtd = item.qtd
-                            });
+                                vendaArtigos.Add(new Venda.VendaArtigo()
+                                {
+                                    codigo = StaticProperty.artigos.Where(x => x.id == item.artigoId).First().codigo,
+                                    iva = item.iva,
+                                    preco = item.preco,
+                                    qtd = item.qtd
+                                });
+                            }
+
+                            // Conversão do objeto Film para JSON
+                            string json = System.Text.Json.JsonSerializer.Serialize(DocState.estornado);
+
+                            // Envio dos dados para a API
+                            HttpResponseMessage responseF = await client.PutAsync($"api/Venda/Gr/Change/State/{id}/{DocState.estornado}", new StringContent(json, Encoding.UTF8, "application/json"));
+
+                            if (responseF.IsSuccessStatusCode)
+                            {
+                                MessageBox.Show($"O documento {codigoDocumentoOrigem} foi estornado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
-
-                        // Conversão do objeto Film para JSON
-                        string json = System.Text.Json.JsonSerializer.Serialize(DocState.estornado);
-
-                        // Envio dos dados para a API
-                        HttpResponseMessage responseF = await client.PutAsync($"api/Venda/Gr/Change/State/{id}/{DocState.estornado}", new StringContent(json, Encoding.UTF8, "application/json"));
-
-                        if (responseF.IsSuccessStatusCode)
-                        {
-                            MessageBox.Show($"O documento {codigoDocumentoOrigem} foi estornado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-
                     }
 
                     else if (documento.Equals("OR"))
                     {
-                        var or = StaticProperty.ors.Where(cl => cl.id == id).First();
-
-                        codigoDocumentoOrigem = or.documento;
-
-                        clienteResult = StaticProperty.clientes.Where(cl => cl.id == or.clienteId).First();
-
-                        foreach (var item in or.orArtigos)
+                        if (StaticProperty.ors != null)
                         {
-                            vendaArtigos.Add(new Venda.VendaArtigo()
+                            var or = StaticProperty.ors.Where(cl => cl.id == id).First();
+
+                            codigoDocumentoOrigem = or.documento;
+
+                            clienteResult = StaticProperty.clientes.Where(cl => cl.id == or.clienteId).First();
+
+                            foreach (var item in or.orArtigos)
                             {
-                                codigo = StaticProperty.artigos.Where(x => x.id == item.artigoId).First().codigo,
-                                iva = item.iva,
-                                preco = item.preco,
-                                qtd = item.qtd
-                            });
+                                vendaArtigos.Add(new Venda.VendaArtigo()
+                                {
+                                    codigo = StaticProperty.artigos.Where(x => x.id == item.artigoId).First().codigo,
+                                    iva = item.iva,
+                                    preco = item.preco,
+                                    qtd = item.qtd
+                                });
+                            }
+
+                            // Conversão do objeto Film para JSON
+                            string json = System.Text.Json.JsonSerializer.Serialize(DocState.estornado);
+
+                            // Envio dos dados para a API
+                            HttpResponseMessage responseF = await client.PutAsync($"api/Venda/Or/Change/State/Doc/{id}/{DocState.estornado}", new StringContent(json, Encoding.UTF8, "application/json"));
+
+                            if (responseF.IsSuccessStatusCode)
+                            {
+                                MessageBox.Show($"O documento {codigoDocumentoOrigem} foi estornado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
-
-                        // Conversão do objeto Film para JSON
-                        string json = System.Text.Json.JsonSerializer.Serialize(DocState.estornado);
-
-                        // Envio dos dados para a API
-                        HttpResponseMessage responseF = await client.PutAsync($"api/Venda/Or/Change/State/Doc/{id}/{DocState.estornado}", new StringContent(json, Encoding.UTF8, "application/json"));
-
-                        if (responseF.IsSuccessStatusCode)
-                        {
-                            MessageBox.Show($"O documento {codigoDocumentoOrigem} foi estornado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-
                     }
                     codigoDocumento = await Documento.GetCodigoDocumentoAsync("NC");
 
@@ -527,33 +553,38 @@ namespace AscFrontEnd
                 dt.Columns.Add("Documento", typeof(string));
                 dt.Columns.Add("Data", typeof(string));
 
-                if (!StaticProperty.fps.Any() || StaticProperty.fps == null)
+                if (StaticProperty.fps == null || !StaticProperty.fps.Any())
                 {
                     this.CleanDataGridView();
                 }
                 else
                 {
-                    foreach (var item in StaticProperty.fps.Where(x => x.empresaId == StaticProperty.empresaId))
+                    if (StaticProperty.fps != null)
                     {
-                        if (StaticProperty.artigos.Where(x => x.id == item.fpArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                        foreach (var item in StaticProperty.fps.Where(x => x.empresaId == StaticProperty.empresaId))
                         {
-                            clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
-                            dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
+                            if (StaticProperty.artigos.Where(x => x.id == item.fpArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                            {
+                                clienteNome = StaticProperty.clientes.Where(cl => cl.id == item.clienteId).First().nome_fantasia;
+                                dt.Rows.Add(item.id, clienteNome, item.documento, item.data);
 
 
+                            }
                         }
-                    }
-                    dataGridView1.DataSource = dt;
-                    foreach (var item in StaticProperty.fps)
-                    {
-                        documentoVendas.Add(new DocumentoVenda()
+
+                        dataGridView1.DataSource = dt;
+
+                        foreach (var item in StaticProperty.fps)
                         {
-                            id = item.id,
-                            clienteId = item.clienteId,
-                            documento = item.documento,
-                            data = item.data,
-                            status = item.status
-                        });
+                            documentoVendas.Add(new DocumentoVenda()
+                            {
+                                id = item.id,
+                                clienteId = item.clienteId,
+                                documento = item.documento,
+                                data = item.data,
+                                status = item.status
+                            });
+                        }
                     }
                 }
             }
@@ -923,7 +954,7 @@ namespace AscFrontEnd
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
-                string imagePathEmpresa = Path.Combine(projectPath, "Files", "Smart_Entity.png");
+                string imagePathEmpresa = StaticProperty.empresaLogo;
                 string imagePathAsc = Path.Combine(projectPath, "Files", "asc.png");
                 // Testar com valores fixos para desenhar uma string
                 Font fontNormal = new Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -1547,6 +1578,29 @@ namespace AscFrontEnd
         private void pictureAprovar_MouseLeave(object sender, EventArgs e)
         {
             pictureAprovar.BackColor = Color.FromArgb(0, 120, 215);
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            VendaListagem_Load(this, EventArgs.Empty);
+        }
+
+        private void btnActualizar_MouseMove(object sender, MouseEventArgs e)
+        {
+            btnActualizar.BackColor = Color.White;
+            btnActualizar.ForeColor = Color.FromArgb(64, 64, 64);
+        }
+
+        private void btnActualizar_MouseLeave(object sender, EventArgs e)
+        {
+            btnActualizar.BackColor = Color.FromArgb(64, 64, 64);
+            btnActualizar.ForeColor = Color.White;
+        }
+
+        private void excelBtn_MouseMove(object sender, MouseEventArgs e)
+        {
+            excelBtn.BackColor = Color.White;
+            excelBtn.ForeColor = Color.FromArgb(64, 64, 64);
         }
     }
     public class DocumentoVenda

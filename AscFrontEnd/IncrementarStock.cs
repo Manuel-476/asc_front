@@ -25,12 +25,22 @@ namespace AscFrontEnd
         ArtigoDTO _artigo;
         Requisicoes _requisicoes; 
         int _qtd;
+
+        HttpClient client;
+
         public IncrementarStock(ArtigoDTO artigo, int qtd)
         {
             InitializeComponent();
             _artigo = artigo;
             _qtd = qtd;
             _requisicoes = new Requisicoes();
+
+            client = new HttpClient();
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            client.BaseAddress = new Uri("http://localhost:7200/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         private void IncrementarStock_Load(object sender, EventArgs e)
@@ -41,21 +51,16 @@ namespace AscFrontEnd
 
         private async void salvarBtn_Click(object sender, EventArgs e)
         {
-            var client = new HttpClient();
+           
             try
             {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                client.BaseAddress = new Uri("https://sua-api.com/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
                 // Conversão do objeto Film para JSON
                 string json = System.Text.Json.JsonSerializer.Serialize(_artigo.id);
 
                 var qtd = !string.IsNullOrEmpty(qtdText.Text.ToString()) ? float.Parse(qtdText.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) : 0f;
 
                 // Envio dos dados para a API
-                HttpResponseMessage response = await client.PutAsync($"https://localhost:7200/api/Armazem/Stock/Qtd/Artigo/Incremento/{_artigo.id}/{qtd}/{StaticProperty.funcionarioId}/{StaticProperty.empresaId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                var response = await client.PutAsync($"api/Armazem/Stock/Qtd/Artigo/Incremento/{_artigo.id}/{qtd}/{StaticProperty.funcionarioId}/{StaticProperty.empresaId}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -65,6 +70,11 @@ namespace AscFrontEnd
 
                     MessageBox.Show($"Quantidade acrescentada com sucesso",
                                      "Feito com sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else 
+                {
+                    MessageBox.Show($"Ocorreu um erro","Impossivel concluir!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
 
                 // Actualizar tabela

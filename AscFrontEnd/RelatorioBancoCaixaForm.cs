@@ -58,7 +58,7 @@ namespace AscFrontEnd
             _httpClient = new HttpClient();
 
             // Defina a URL base da sua API
-            _httpClient.BaseAddress = new Uri("https://localhost:7200");
+            _httpClient.BaseAddress = new Uri("http://localhost:7200");
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
         }
 
@@ -315,7 +315,7 @@ namespace AscFrontEnd
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
-                string imagePathEmpresa = Path.Combine(projectPath, "Files", "Smart_Entity.png");
+                string imagePathEmpresa = StaticProperty.empresaLogo;
                 string imagePathAsc = Path.Combine(projectPath, "Files", "asc.png");
                 string docFinanceiro = string.Empty;
 
@@ -341,7 +341,7 @@ namespace AscFrontEnd
                 var empresa = StaticProperty.empresa;
 
                 string empresaNome = $"{empresa.nome_fantasia}";
-                string empresaCabecalho = $"{empresa.endereco}\nContribuente: {empresa.nif}\n" +
+                string empresaCabecalho = $"{empresa.endereco}\nNif: {empresa.nif}\n" +
                                           $"Email: {empresa.email}\nTel: {empresa.telefone}";
 
                 Pen caneta = new Pen(Color.Black, 2); // Define a cor e a largura da linha
@@ -490,7 +490,7 @@ namespace AscFrontEnd
                 var deposito = CalcularTotaisPorBancoECaixa(result);
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
-                string imagePathEmpresa = Path.Combine(projectPath, "Files", "Smart_Entity.png");
+                string imagePathEmpresa = StaticProperty.empresaLogo;
                 string imagePathAsc = Path.Combine(projectPath, "Files", "asc.png");
                 string docFinanceiro = string.Empty;
 
@@ -516,7 +516,7 @@ namespace AscFrontEnd
                 var empresa = StaticProperty.empresa;
 
                 string empresaNome = $"{empresa.nome_fantasia}";
-                string empresaCabecalho = $"{empresa.endereco}\nContribuente: {empresa.nif}\n" +
+                string empresaCabecalho = $"{empresa.endereco}\nNif: {empresa.nif}\n" +
                                           $"Email: {empresa.email}\nTel: {empresa.telefone}";
 
                 Pen caneta = new Pen(Color.Black, 2); // Define a cor e a largura da linha
@@ -545,40 +545,57 @@ namespace AscFrontEnd
                 e.Graphics.DrawString($"Data", fontNormalNegrito, cor, new Rectangle(700, 280, 780, 300));
                 e.Graphics.DrawLine(caneta, 50, 295, 750, 295);
                 int i = 15;
-                foreach (var p in _parcelas)
+
+                if (_parcelas != null)
                 {
-                    
-                    var cliente = string.Empty;
-
-                    var compra = StaticProperty.compra.Where(x => $"{x.documento} {x.serie}/{x.numeroDocumento}".ToUpper().Equals(p.documento.ToUpper())).Any() ?
-                                StaticProperty.compra.Where(x => $"{x.documento} {x.serie}/{x.numeroDocumento}".ToUpper().Equals(p.documento)).First() : new CompraDTO();
-
-                    cliente = StaticProperty.fornecedores.Where(x => x.id == compra.fornecedorId).Any() ? StaticProperty.fornecedores.Where(x => x.id == compra.fornecedorId).First().nome_fantasia : string.Empty;
-
-                    // Nao mostrar os documntos de venda 
-                    if ((!p.documento.Contains("VFR ") && !p.documento.Contains("VFT ") && !p.documento.Contains("VGR ")) || compra.state == DocState.anulado || compra.state == DocState.estornado)
-                    { 
-                        //Fazer desaparecer os dados de deposito que nao seram usado no calculo final
-                       result.Remove(p);
-
-                        deposito = CalcularTotaisPorBancoECaixa(result);
-
-                        continue;
-                    }
-
-                    total += p.valor;
-
-                    var bancoCodigo = StaticProperty.bancos.Where(x => x.id == p.bancoId).Any() ? StaticProperty.bancos.Where(x => x.id == p.bancoId).First().codigo : "-";
-                    var caixaCodigo = StaticProperty.caixas.Where(x => x.id == p.caixaId).Any() ? StaticProperty.caixas.Where(x => x.id == p.caixaId).First().codigo : "-";
-
-                    if (compra.documento == "VFT")
+                    foreach (var p in _parcelas)
                     {
-                        if (StaticProperty.vfts.Where(x => x.documento == $"{compra.documento} {compra.serie}/{compra.numeroDocumento}").Any())
-                        {
-                            docFinanceiro = StaticProperty.vfts.Where(x => x.documento == $"{compra.documento} {compra.serie}/{compra.numeroDocumento}").Any() ?
-                                            StaticProperty.nps.Where(x => x.vftNps.First().vftId == StaticProperty.vfts.Where(f => f.documento == $"{compra.documento} {compra.serie}/{compra.numeroDocumento}").First().id).Any() ?
-                                            StaticProperty.nps.Where(x => x.vftNps.First().vftId == StaticProperty.vfts.Where(f => f.documento == $"{compra.documento} {compra.serie}/{compra.numeroDocumento}").First().id).First().documento : "-" : "-";
 
+                        var cliente = string.Empty;
+
+                        var compra = StaticProperty.compra != null && StaticProperty.compra.Where(x => $"{x.documento} {x.serie}/{x.numeroDocumento}".ToUpper().Equals(p.documento.ToUpper())).Any() ?
+                                    StaticProperty.compra.Where(x => $"{x.documento} {x.serie}/{x.numeroDocumento}".ToUpper().Equals(p.documento)).First() : new CompraDTO();
+
+                        cliente = StaticProperty.fornecedores != null && StaticProperty.fornecedores.Where(x => x.id == compra.fornecedorId).Any() ? StaticProperty.fornecedores.Where(x => x.id == compra.fornecedorId).First().nome_fantasia : string.Empty;
+
+                        // Nao mostrar os documntos de venda 
+                        if ((!p.documento.Contains("VFR ") && !p.documento.Contains("VFT ") && !p.documento.Contains("VGR ")) || compra.state == DocState.anulado || compra.state == DocState.estornado)
+                        {
+                            //Fazer desaparecer os dados de deposito que nao seram usado no calculo final
+                            result.Remove(p);
+
+                            deposito = CalcularTotaisPorBancoECaixa(result);
+
+                            continue;
+                        }
+
+                        total += p.valor;
+
+                        var bancoCodigo = StaticProperty.bancos != null && StaticProperty.bancos.Where(x => x.id == p.bancoId).Any() ? StaticProperty.bancos.Where(x => x.id == p.bancoId).First().codigo : "-";
+                        var caixaCodigo = StaticProperty.caixas != null && StaticProperty.caixas.Where(x => x.id == p.caixaId).Any() ? StaticProperty.caixas.Where(x => x.id == p.caixaId).First().codigo : "-";
+
+                        if (compra.documento == "VFT")
+                        {
+                            if (StaticProperty.vfts != null)
+                            {
+                                if (StaticProperty.vfts.Where(x => x.documento == $"{compra.documento} {compra.serie}/{compra.numeroDocumento}").Any())
+                                {
+                                    docFinanceiro = StaticProperty.vfts.Where(x => x.documento == $"{compra.documento} {compra.serie}/{compra.numeroDocumento}").Any() ?
+                                                    StaticProperty.nps.Where(x => x.vftNps.First().vftId == StaticProperty.vfts.Where(f => f.documento == $"{compra.documento} {compra.serie}/{compra.numeroDocumento}").First().id).Any() ?
+                                                    StaticProperty.nps.Where(x => x.vftNps.First().vftId == StaticProperty.vfts.Where(f => f.documento == $"{compra.documento} {compra.serie}/{compra.numeroDocumento}").First().id).First().documento : "-" : "-";
+
+                                    e.Graphics.DrawString($"{p.documento}", fontNormal, cor, new Rectangle(50, 290 + i, 150, 305 + i));
+                                    e.Graphics.DrawString($"{cliente}", fontNormal, cor, new Rectangle(150, 290 + i, 250, 305 + i));
+                                    e.Graphics.DrawString($"{docFinanceiro}", fontNormal, cor, new Rectangle(250, 290 + i, 400, 305 + i));
+                                    e.Graphics.DrawString($"{bancoCodigo}", fontNormal, cor, new Rectangle(400, 290 + i, 500, 305 + i));
+                                    e.Graphics.DrawString($"{caixaCodigo}", fontNormal, cor, new Rectangle(500, 290 + i, 600, 305 + i));
+                                    e.Graphics.DrawString($"{p.valor:F2}", fontNormal, cor, new Rectangle(600, 290 + i, 700, 305 + i));
+                                    e.Graphics.DrawString($"{p.data:dd-MM-yyyy}", fontNormal, cor, new Rectangle(700, 290 + i, 780, 425 + i));
+                                }
+                            }
+                        }
+                        else
+                        {
                             e.Graphics.DrawString($"{p.documento}", fontNormal, cor, new Rectangle(50, 290 + i, 150, 305 + i));
                             e.Graphics.DrawString($"{cliente}", fontNormal, cor, new Rectangle(150, 290 + i, 250, 305 + i));
                             e.Graphics.DrawString($"{docFinanceiro}", fontNormal, cor, new Rectangle(250, 290 + i, 400, 305 + i));
@@ -587,19 +604,9 @@ namespace AscFrontEnd
                             e.Graphics.DrawString($"{p.valor:F2}", fontNormal, cor, new Rectangle(600, 290 + i, 700, 305 + i));
                             e.Graphics.DrawString($"{p.data:dd-MM-yyyy}", fontNormal, cor, new Rectangle(700, 290 + i, 780, 425 + i));
                         }
-                    }
-                    else
-                    {
-                        e.Graphics.DrawString($"{p.documento}", fontNormal, cor, new Rectangle(50, 290 + i, 150, 305 + i));
-                        e.Graphics.DrawString($"{cliente}", fontNormal, cor, new Rectangle(150, 290 + i, 250, 305 + i));
-                        e.Graphics.DrawString($"{docFinanceiro}", fontNormal, cor, new Rectangle(250, 290 + i, 400, 305 + i));
-                        e.Graphics.DrawString($"{bancoCodigo}", fontNormal, cor, new Rectangle(400, 290 + i, 500, 305 + i));
-                        e.Graphics.DrawString($"{caixaCodigo}", fontNormal, cor, new Rectangle(500, 290 + i, 600, 305 + i));
-                        e.Graphics.DrawString($"{p.valor:F2}", fontNormal, cor, new Rectangle(600, 290 + i, 700, 305 + i));
-                        e.Graphics.DrawString($"{p.data:dd-MM-yyyy}", fontNormal, cor, new Rectangle(700, 290 + i, 780, 425 + i));
-                    }
 
-                    i = i + 15;
+                        i = i + 15;
+                    }
                 }
 
                 string totalFinal = $"TOTAL";
@@ -655,7 +662,7 @@ namespace AscFrontEnd
                 .GroupBy(p => p.bancoId)
                 .Select(g => new TotalPorBancoECaixa
                 {
-                    Tipo = StaticProperty.bancos.Where(x => x.id == g.First().bancoId).Any() ? StaticProperty.bancos.Where(x => x.id == g.First().bancoId).First().codigo : "",
+                    Tipo = StaticProperty.bancos != null && StaticProperty.bancos.Where(x => x.id == g.First().bancoId).Any() ? StaticProperty.bancos.Where(x => x.id == g.First().bancoId).First().codigo : "",
                     Id = g.Key,
                     ValorTotal = g.Sum(p => p.valor)
                 });
@@ -666,7 +673,7 @@ namespace AscFrontEnd
                 .GroupBy(p => p.caixaId)
                 .Select(g => new TotalPorBancoECaixa
                 {
-                    Tipo = StaticProperty.caixas.Where(x => x.id == g.First().caixaId).Any() ? StaticProperty.caixas.Where(x => x.id == g.First().caixaId).First().codigo : "",
+                    Tipo = StaticProperty.caixas != null && StaticProperty.caixas.Where(x => x.id == g.First().caixaId).Any() ? StaticProperty.caixas.Where(x => x.id == g.First().caixaId).First().codigo : "",
                     Id = g.Key,
                     ValorTotal = g.Sum(p => p.valor)
                 });

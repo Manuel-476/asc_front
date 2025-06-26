@@ -185,8 +185,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Stock";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Stock";
             this.Load += new System.EventHandler(this.Stock_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

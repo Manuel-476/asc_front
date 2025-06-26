@@ -83,7 +83,7 @@ namespace AscFrontEnd
             // Configuração do HttpClient
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.BaseAddress = new Uri("http://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -92,13 +92,13 @@ namespace AscFrontEnd
             if (MessageBox.Show("Tens certeza que queres salvar estas alterações?", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
             {
                 // Envio dos dados para a API
-                HttpResponseMessage response = await client.PutAsync($"https://localhost:7200/api/Cliente/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage response = await client.PutAsync($"api/Cliente/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Cliente alterado Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
-                    var responseCliente = await client.GetAsync($"https://localhost:7200/api/Cliente/ClientesByRelations");
+                    var responseCliente = await client.GetAsync($"api/Cliente/ClientesByRelations");
 
                     if (responseCliente.IsSuccessStatusCode)
                     {

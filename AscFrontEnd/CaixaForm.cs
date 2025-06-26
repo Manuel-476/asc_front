@@ -27,16 +27,23 @@ namespace AscFrontEnd
 
         private void addBtn_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(codigoText.Text.ToString()))
+            if (string.IsNullOrEmpty(codigoText.Text.ToString()))
             {
-                MessageBox.Show("O campo do codigo esta vazio", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("O campo do código está vázio", "Impossível Concluir a ação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 return;
             }
 
-            if (!string.IsNullOrEmpty(descText.Text.ToString()))
+            if (string.IsNullOrEmpty(descText.Text.ToString()))
             {
-                MessageBox.Show("O campo do descricao esta vazio", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("O campo do descrição está vázio", "Impossível Concluir a ação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            if (caixas.Any() && caixas.Where(x => x.codigo == codigoText.Text).Any()) 
+            {
+                MessageBox.Show("Já adicionaste um caixa com este código", "O código já existe", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 return;
             }

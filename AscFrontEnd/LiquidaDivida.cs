@@ -29,6 +29,7 @@ using System.Globalization;
 using DocumentFormat.OpenXml.Office.CustomUI;
 using DocumentFormat.OpenXml.Office2010.Word;
 using DocumentFormat.OpenXml.Spreadsheet;
+using AscFrontEnd.DTOs.Funcionario;
 
 namespace AscFrontEnd
 {
@@ -49,11 +50,12 @@ namespace AscFrontEnd
         List<ArtigoDTO> dados;
         DataTable faturas;
         HttpClient client;
+        UserDTO _user;
         float divida = 0, regulado = 0;
 
         string codigo = string.Empty;
 
-        public LiquidaDivida(int docId, Entidade entidade)
+        public LiquidaDivida(int docId, Entidade entidade,UserDTO user)
         {
             InitializeComponent();
 
@@ -73,24 +75,22 @@ namespace AscFrontEnd
 
             client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://localhost:7200/");
+            client.BaseAddress = new Uri("http://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             valorTxt.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
             valorTxt.TextChanged += ValidacaoForms.TratarTextChanged;
+
+            _user = user;
         }
 
         private void LiquidaDivida_Load(object sender, EventArgs e)
         {
             dados = StaticProperty.artigos;
 
+            OutrasValidacoes.SerieExist(_user);
 
-            if (StaticProperty.series == null || !StaticProperty.series.Any())
-            {
-                MessageBox.Show("Nenhuma Serie Foi Criada", "Precisa de uma Serie", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
 
             faturas.Columns.Add("id", typeof(int));
             faturas.Columns.Add("Documento", typeof(string));
@@ -100,52 +100,57 @@ namespace AscFrontEnd
             if (_entidade == Entidade.fornecedor)
             {
                 this.codigo = "np";
-
-                vftResult = StaticProperty.vfts.Where(vft => vft.id == _docId).First();
-                var result = StaticProperty.vfts.Where(vft => vft.fornecedorId == vftResult.fornecedorId).ToList();
-
-                foreach (var item in result)
+                if (StaticProperty.vfts != null)
                 {
-                    if (item.pago == Enums.OpcaoBinaria.Nao)
+                    vftResult = StaticProperty.vfts.Where(vft => vft.id == _docId).First();
+                    var result = StaticProperty.vfts.Where(vft => vft.fornecedorId == vftResult.fornecedorId).ToList();
+
+                    foreach (var item in result)
                     {
-                        divida += item.vftArtigo.Sum(d => d.preco * d.qtd);
-                        regulado += StaticProperty.nps != null && StaticProperty.nps.Any() ? StaticProperty.nps.Where(np => np.vftNps.Where(f =>f.vftId == item.id).Any()).Sum(np => np.quantia):0f;
+                        if (item.pago == Enums.OpcaoBinaria.Nao)
+                        {
+                            divida += item.vftArtigo.Sum(d => d.preco * d.qtd);
+                            regulado += StaticProperty.nps != null && StaticProperty.nps.Any() ? StaticProperty.nps.Where(np => np.vftNps.Where(f => f.vftId == item.id).Any()).Sum(np => np.quantia) : 0f;
 
-                        var reguladoByLinha = StaticProperty.nps != null && StaticProperty.nps.Any() ? StaticProperty.nps.Where(np => np.vftNps.Where(f => f.vftId == item.id).Any()).Sum(np => np.quantia) : 0f;
+                            var reguladoByLinha = StaticProperty.nps != null && StaticProperty.nps.Any() ? StaticProperty.nps.Where(np => np.vftNps.Where(f => f.vftId == item.id).Any()).Sum(np => np.quantia) : 0f;
 
-                        faturas.Rows.Add(item.id, item.documento, item.vftArtigo.Sum(d => d.preco * d.qtd) - reguladoByLinha);
+                            faturas.Rows.Add(item.id, item.documento, item.vftArtigo.Sum(d => d.preco * d.qtd) - reguladoByLinha);
+                        }
+
+
                     }
-
-
+                    entidadeLabel.Text = StaticProperty.fornecedores.Where(f => f.id == vftResult.fornecedorId).First().nome_fantasia;
+                    dividaLabel.Text = $"Divida: {divida}";
+                    liquidado.Text = $"Liquidado: {regulado}";
                 }
-                entidadeLabel.Text = StaticProperty.fornecedores.Where(f => f.id == vftResult.fornecedorId).First().nome_fantasia;
-                dividaLabel.Text = $"Divida: {divida}";
-                liquidado.Text = $"Liquidado: {regulado}";
 
             }
             if (_entidade == Entidade.cliente)
             {
-                this.codigo = "rg";
-                ftResult = StaticProperty.fts.Where(ft => ft.id == _docId).First();
-                var result = StaticProperty.fts.Where(ft => ft.clienteId == ftResult.clienteId).ToList();
-
-                foreach (var item in result)
+                if (StaticProperty.fts != null)
                 {
-                    if (item.pago == Enums.OpcaoBinaria.Nao)
+                    this.codigo = "rg";
+                    ftResult = StaticProperty.fts.Where(ft => ft.id == _docId).First();
+                    var result = StaticProperty.fts.Where(ft => ft.clienteId == ftResult.clienteId).ToList();
+
+                    foreach (var item in result)
                     {
-                        divida += item.ftArtigo.Sum(d => d.preco * d.qtd);
-                        regulado += StaticProperty.recibos != null && StaticProperty.recibos.Any() ? StaticProperty.recibos.Where(re => re.ftRecibos.Where(x => x.ftId == item.id).Any()).Sum(np => np.quantia):0f;
+                        if (item.pago == Enums.OpcaoBinaria.Nao)
+                        {
+                            divida += item.ftArtigo.Sum(d => d.preco * d.qtd);
+                            regulado += StaticProperty.recibos != null && StaticProperty.recibos.Any() ? StaticProperty.recibos.Where(re => re.ftRecibos.Where(x => x.ftId == item.id).Any()).Sum(np => np.quantia) : 0f;
 
-                        var reguladoByLinha = StaticProperty.recibos != null && StaticProperty.recibos.Any() ? StaticProperty.recibos.Where(re => re.ftRecibos.Where(x => x.ftId == item.id).Any()).Sum(np => np.quantia) : 0f;
+                            var reguladoByLinha = StaticProperty.recibos != null && StaticProperty.recibos.Any() ? StaticProperty.recibos.Where(re => re.ftRecibos.Where(x => x.ftId == item.id).Any()).Sum(np => np.quantia) : 0f;
 
-                        faturas.Rows.Add(item.id, item.documento, item.ftArtigo.Sum(d => d.preco * d.qtd) - reguladoByLinha);
+                            faturas.Rows.Add(item.id, item.documento, item.ftArtigo.Sum(d => d.preco * d.qtd) - reguladoByLinha);
+                        }
+
                     }
 
+                    entidadeLabel.Text = StaticProperty.clientes.Where(f => f.id == ftResult.clienteId).First().nome_fantasia;
+                    dividaLabel.Text = $"Divida: {divida}";
+                    liquidado.Text = $"Liquidado: {regulado}";
                 }
-
-                entidadeLabel.Text = StaticProperty.clientes.Where(f => f.id == ftResult.clienteId).First().nome_fantasia;
-                dividaLabel.Text = $"Divida: {divida}";
-                liquidado.Text = $"Liquidado: {regulado}";
             }
 
             tabelaFaturas.DataSource = faturas;
@@ -325,24 +330,30 @@ namespace AscFrontEnd
                 var listDoc = string.Empty;
                 if (_entidade == Entidade.cliente)
                 {
-                    foreach (var doc in ftRecibo)
+                    if (ftRecibo != null)
                     {
-                      listDoc  = StaticProperty.fts.Where(x => x.id == doc.ftId).Any() ?
-                                      StaticProperty.fts.Where(x => x.id == doc.ftId).First().documento : string.Empty;
+                        foreach (var doc in ftRecibo)
+                        {
+                            listDoc = StaticProperty.fts.Where(x => x.id == doc.ftId).Any() ?
+                                            StaticProperty.fts.Where(x => x.id == doc.ftId).First().documento : string.Empty;
 
-                        e.Graphics.DrawString($"{listDoc}", fontNormal, cor, new Rectangle(50, 330 + k, 200, 340));
-                        k += 15;
-                   }                  
+                            e.Graphics.DrawString($"{listDoc}", fontNormal, cor, new Rectangle(50, 330 + k, 200, 340));
+                            k += 15;
+                        }
+                    }              
                 }
                 else 
                 {
-                    foreach (var doc in ftRecibo)
+                    if (ftRecibo != null)
                     {
-                        listDoc = StaticProperty.vfts.Where(x => x.id == doc.ftId).Any() ?
-                              StaticProperty.vfts.Where(x => x.id == doc.ftId).First().documento : string.Empty;
+                        foreach (var doc in ftRecibo)
+                        {
+                            listDoc = StaticProperty.vfts.Where(x => x.id == doc.ftId).Any() ?
+                                  StaticProperty.vfts.Where(x => x.id == doc.ftId).First().documento : string.Empty;
 
-                        e.Graphics.DrawString($"{listDoc}", fontNormal, cor, new Rectangle(50, 330 + k, 200, 340 ));
-                        k += 15;
+                            e.Graphics.DrawString($"{listDoc}", fontNormal, cor, new Rectangle(50, 330 + k, 200, 340));
+                            k += 15;
+                        }
                     }
                 }
                 e.Graphics.DrawString($"{DateTime.Now.Date.ToString("dd-mm-yyyy")}", fontNormal, cor, new Rectangle(200, 330, 350, 340));
@@ -487,18 +498,20 @@ namespace AscFrontEnd
                         ftRecibo.Clear();
 
                         ftRecibo.Add(new FtReciboDTO() { Id = 0, reciboId = 0, ftId = _docId });
-
-                        foreach (var item in  StaticProperty.fts.Where(x => x.id == _docId && x.pago == OpcaoBinaria.Nao).First().ftArtigo)
+                        if (StaticProperty.fts != null)
                         {
-                            vendaArtigos.Add(new VendaArtigo()
+                            foreach (var item in StaticProperty.fts.Where(x => x.id == _docId && x.pago == OpcaoBinaria.Nao).First().ftArtigo)
                             {
-                                codigo = dados.Where(x => x.id == item.artigoId).First().codigo,
-                                preco = item.preco,
-                                iva = item.iva,
-                                qtd = item.qtd
-                            });
+                                vendaArtigos.Add(new VendaArtigo()
+                                {
+                                    codigo = dados.Where(x => x.id == item.artigoId).First().codigo,
+                                    preco = item.preco,
+                                    iva = item.iva,
+                                    qtd = item.qtd
+                                });
 
-                            valorTotal += float.Parse(tabelaFaturas.Rows[e.RowIndex].Cells[2].Value.ToString());
+                                valorTotal += float.Parse(tabelaFaturas.Rows[e.RowIndex].Cells[2].Value.ToString());
+                            }
                         }
                     }
                     else
@@ -507,16 +520,19 @@ namespace AscFrontEnd
 
                         vftNp.Add(new VftNpDTO() { Id = 0, npId = 0, vftId = _docId });
 
-                        foreach (var item in StaticProperty.vfts.Where(x => x.id == _docId && x.pago == OpcaoBinaria.Nao).First().vftArtigo)
+                        if (StaticProperty.vfts != null)
                         {
-                            vendaArtigos.Add(new VendaArtigo()
+                            foreach (var item in StaticProperty.vfts.Where(x => x.id == _docId && x.pago == OpcaoBinaria.Nao).First().vftArtigo)
                             {
-                                codigo = dados.Where(x => x.id == item.artigoId).First().codigo,
-                                preco = item.preco,
-                                iva = item.iva,
-                                qtd = item.qtd
-                            });
-                            valorTotal += float.Parse(tabelaFaturas.Rows[e.RowIndex].Cells[2].Value.ToString());
+                                vendaArtigos.Add(new VendaArtigo()
+                                {
+                                    codigo = dados.Where(x => x.id == item.artigoId).First().codigo,
+                                    preco = item.preco,
+                                    iva = item.iva,
+                                    qtd = item.qtd
+                                });
+                                valorTotal += float.Parse(tabelaFaturas.Rows[e.RowIndex].Cells[2].Value.ToString());
+                            }
                         }
                     }
 
@@ -535,6 +551,18 @@ namespace AscFrontEnd
             }
         }
 
+        private void button2_MouseMove(object sender, MouseEventArgs e)
+        {
+            button2.BackColor = Color.White;
+            button2.ForeColor = Color.FromArgb(64, 64, 64);
+        }
+
+        private void button2_MouseLeave(object sender, EventArgs e)
+        {
+            button2.BackColor = Color.FromArgb(64, 64, 64);
+            button2.ForeColor = Color.White;
+        }
+
         //===================================================================================
         private void LoadRefresh()
         {
@@ -546,10 +574,13 @@ namespace AscFrontEnd
             dados = StaticProperty.artigos;
 
 
-            if (StaticProperty.series == null || !StaticProperty.series.Any())
+            if (StaticProperty.series != null)
             {
-                MessageBox.Show("Nenhuma Serie Foi Criada", "Precisa de uma Serie", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
+                if (!StaticProperty.series.Any())
+                {
+                    MessageBox.Show("Nenhuma Serie Foi Criada", "Precisa de uma Serie", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
             }
 
             faturas.Rows.Clear();
@@ -557,48 +588,52 @@ namespace AscFrontEnd
             if (_entidade == Entidade.fornecedor)
             {
                 codigo = "np";
-
-                vftResult = StaticProperty.vfts.Where(vft => vft.id == _docId).First();
-                var result = StaticProperty.vfts.Where(vft => vft.fornecedorId == vftResult.fornecedorId).ToList();
-
-                foreach (var item in result)
+                if (StaticProperty.vfts != null)
                 {
-                    if (item.pago == Enums.OpcaoBinaria.Nao)
+                    vftResult = StaticProperty.vfts.Where(vft => vft.id == _docId).First();
+                    var result = StaticProperty.vfts.Where(vft => vft.fornecedorId == vftResult.fornecedorId).ToList();
+
+                    foreach (var item in result)
                     {
-                        divida += item.vftArtigo.Sum(d => d.preco * d.qtd);
-                        regulado += StaticProperty.nps.Where(np => np.vftNps.Where(f => f.vftId == item.id).Any()).Sum(np => np.quantia);
+                        if (item.pago == Enums.OpcaoBinaria.Nao)
+                        {
+                            divida += item.vftArtigo.Sum(d => d.preco * d.qtd);
+                            regulado += StaticProperty.nps.Where(np => np.vftNps.Where(f => f.vftId == item.id).Any()).Sum(np => np.quantia);
 
-                        faturas.Rows.Add(item.id, item.documento, item.vftArtigo.Sum(d => d.preco * d.qtd));
+                            faturas.Rows.Add(item.id, item.documento, item.vftArtigo.Sum(d => d.preco * d.qtd));
+                        }
+
                     }
-
+                    entidadeLabel.Text = StaticProperty.fornecedores.Where(f => f.id == vftResult.fornecedorId).First().nome_fantasia;
+                    dividaLabel.Text = $"Divida: {divida}";
+                    liquidado.Text = $"Liquidado: {regulado}";
                 }
-                entidadeLabel.Text = StaticProperty.fornecedores.Where(f => f.id == vftResult.fornecedorId).First().nome_fantasia;
-                dividaLabel.Text = $"Divida: {divida}";
-                liquidado.Text = $"Liquidado: {regulado}";
-
             }
             if (_entidade == Entidade.cliente)
             {
-                codigo = "rg";
-                ftResult = StaticProperty.fts.Where(ft => ft.id == _docId).First();
-                var result = StaticProperty.fts.Where(ft => ft.clienteId == ftResult.clienteId).ToList();
-
-                foreach (var item in result)
+                if (StaticProperty.fts != null)
                 {
-                    if (item.pago == Enums.OpcaoBinaria.Nao)
-                    {
-                        divida += item.ftArtigo.Sum(d => d.preco * d.qtd);
-                        regulado += StaticProperty.recibos.Where(re => re.ftRecibos.First().ftId == item.id).Sum(np => np.quantia);
+                    codigo = "rg";
+                    ftResult = StaticProperty.fts.Where(ft => ft.id == _docId).First();
+                    var result = StaticProperty.fts.Where(ft => ft.clienteId == ftResult.clienteId).ToList();
 
-                        faturas.Rows.Add(item.id, item.documento, item.ftArtigo.Sum(d => d.preco * d.qtd));
+                    foreach (var item in result)
+                    {
+                        if (item.pago == Enums.OpcaoBinaria.Nao)
+                        {
+                            divida += item.ftArtigo.Sum(d => d.preco * d.qtd);
+                            regulado += StaticProperty.recibos.Where(re => re.ftRecibos.First().ftId == item.id).Sum(np => np.quantia);
+
+                            faturas.Rows.Add(item.id, item.documento, item.ftArtigo.Sum(d => d.preco * d.qtd));
+                        }
+
+
                     }
 
-
+                    entidadeLabel.Text = StaticProperty.clientes.Where(f => f.id == ftResult.clienteId).First().nome_fantasia;
+                    dividaLabel.Text = $"Divida: {divida}";
+                    liquidado.Text = $"Liquidado: {regulado}";
                 }
-
-                entidadeLabel.Text = StaticProperty.clientes.Where(f => f.id == ftResult.clienteId).First().nome_fantasia;
-                dividaLabel.Text = $"Divida: {divida}";
-                liquidado.Text = $"Liquidado: {regulado}";
             }
         }
     }

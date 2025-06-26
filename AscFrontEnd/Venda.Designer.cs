@@ -48,9 +48,9 @@
             this.eliminarBtn = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnActualizar = new System.Windows.Forms.Button();
             this.vendaBtn = new System.Windows.Forms.Button();
             this.logoPicture = new System.Windows.Forms.PictureBox();
-            this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.Imprimir = new System.Drawing.Printing.PrintDocument();
             this.preVisualizacaoDialog = new System.Windows.Forms.PrintPreviewDialog();
             this.dataDocumento = new System.Windows.Forms.DateTimePicker();
@@ -66,6 +66,8 @@
             this.descontoCliente = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.dataEntrega = new System.Windows.Forms.DateTimePicker();
+            this.timerRefresh = new System.Windows.Forms.Timer(this.components);
+            this.printDialog1 = new System.Windows.Forms.PrintDialog();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaArtigos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaVenda)).BeginInit();
             this.panel1.SuspendLayout();
@@ -145,9 +147,9 @@
             this.clienteBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.clienteBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.clienteBtn.ForeColor = System.Drawing.SystemColors.Control;
-            this.clienteBtn.Location = new System.Drawing.Point(720, 47);
+            this.clienteBtn.Location = new System.Drawing.Point(662, 47);
             this.clienteBtn.Name = "clienteBtn";
-            this.clienteBtn.Size = new System.Drawing.Size(177, 33);
+            this.clienteBtn.Size = new System.Drawing.Size(139, 33);
             this.clienteBtn.TabIndex = 6;
             this.clienteBtn.Text = "Cliente";
             this.clienteBtn.UseVisualStyleBackColor = false;
@@ -267,6 +269,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.Controls.Add(this.btnActualizar);
             this.panel1.Controls.Add(this.vendaBtn);
             this.panel1.Controls.Add(this.logoPicture);
             this.panel1.Controls.Add(this.clienteBtn);
@@ -277,14 +280,30 @@
             this.panel1.Size = new System.Drawing.Size(1086, 83);
             this.panel1.TabIndex = 20;
             // 
+            // btnActualizar
+            // 
+            this.btnActualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnActualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnActualizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnActualizar.ForeColor = System.Drawing.Color.White;
+            this.btnActualizar.Location = new System.Drawing.Point(948, 47);
+            this.btnActualizar.Name = "btnActualizar";
+            this.btnActualizar.Size = new System.Drawing.Size(133, 33);
+            this.btnActualizar.TabIndex = 33;
+            this.btnActualizar.Text = "Atualizar";
+            this.btnActualizar.UseVisualStyleBackColor = false;
+            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
+            this.btnActualizar.MouseLeave += new System.EventHandler(this.btnActualizar_MouseLeave);
+            this.btnActualizar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.btnActualizar_MouseMove);
+            // 
             // vendaBtn
             // 
             this.vendaBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.vendaBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.vendaBtn.ForeColor = System.Drawing.SystemColors.Control;
-            this.vendaBtn.Location = new System.Drawing.Point(903, 47);
+            this.vendaBtn.Location = new System.Drawing.Point(806, 47);
             this.vendaBtn.Name = "vendaBtn";
-            this.vendaBtn.Size = new System.Drawing.Size(177, 33);
+            this.vendaBtn.Size = new System.Drawing.Size(137, 33);
             this.vendaBtn.TabIndex = 19;
             this.vendaBtn.Text = "Vendas";
             this.vendaBtn.UseVisualStyleBackColor = false;
@@ -301,10 +320,6 @@
             this.logoPicture.Size = new System.Drawing.Size(117, 92);
             this.logoPicture.TabIndex = 18;
             this.logoPicture.TabStop = false;
-            // 
-            // timerRefresh
-            // 
-            this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
             // 
             // Imprimir
             // 
@@ -452,6 +467,15 @@
             this.dataEntrega.Size = new System.Drawing.Size(140, 20);
             this.dataEntrega.TabIndex = 55;
             // 
+            // timerRefresh
+            // 
+            this.timerRefresh.Interval = 2500;
+            this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
+            // 
+            // printDialog1
+            // 
+            this.printDialog1.UseEXDialog = true;
+            // 
             // Venda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -524,7 +548,6 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox logoPicture;
-        private System.Windows.Forms.Timer timerRefresh;
         private System.Drawing.Printing.PrintDocument Imprimir;
         private System.Windows.Forms.Button vendaBtn;
         private System.Windows.Forms.PrintPreviewDialog preVisualizacaoDialog;
@@ -541,5 +564,8 @@
         private System.Windows.Forms.Label descontoCliente;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DateTimePicker dataEntrega;
+        private System.Windows.Forms.Timer timerRefresh;
+        private System.Windows.Forms.Button btnActualizar;
+        private System.Windows.Forms.PrintDialog printDialog1;
     }
 }

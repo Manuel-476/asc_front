@@ -331,9 +331,11 @@ C:\Users\Devs\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.TelaL
 C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.FaturaDetalhes.resources
 C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.FormaPagamentoForm.resources
 C:\Users\i 3 8 GERACAO\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.MotivoAnulacao.resources
-C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\AscFrontEnd.exe.config
-C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\AscFrontEnd.exe
-C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\AscFrontEnd.pdb
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\ASC.exe.config
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\ASC.exe.manifest
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\ASC.application
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\ASC.exe
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\ASC.pdb
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\BouncyCastle.Cryptography.dll
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\DocumentFormat.OpenXml.dll
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\bin\Debug\DocumentFormat.OpenXml.Framework.dll
@@ -450,6 +452,7 @@ C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontE
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.NotificacaoOrderForm.resources
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.NotificacoForm.resources
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.PermissionsForm.resources
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.ProcessoForm.resources
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.RegularAdiantamentoForm.resources
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.RelatorioBancoCaixaForm.resources
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.RelatorioFiltros.resources
@@ -473,6 +476,8 @@ C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontE
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.VendaListagem.resources
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.csproj.GenerateResource.cache
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.csproj.CoreCompileInputs.cache
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\ASC.exe.manifest
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\ASC.application
 C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFront.B658B33A.Up2Date
-C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.exe
-C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\AscFrontEnd.pdb
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\ASC.exe
+C:\Users\Smart Entity\Documents\GitHub\asc_front\AscFrontEnd\obj\Debug\ASC.pdb

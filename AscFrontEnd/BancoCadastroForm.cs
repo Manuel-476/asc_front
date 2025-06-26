@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using AscFrontEnd.Application;
+using AscFrontEnd.Application.Validacao;
 
 namespace AscFrontEnd
 {
@@ -33,6 +34,44 @@ namespace AscFrontEnd
 
         private void addBtn_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(codigoText.Text.ToString()))
+            {
+                MessageBox.Show("O campo do código está vázio", "Impossível Concluir a ação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(descText.Text.ToString()))
+            {
+                MessageBox.Show("O campo do descrição está vázio", "Impossível Concluir a ação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(contaText.Text.ToString()))
+            {
+                MessageBox.Show("O campo do conta esta vázio", "Impossível Concluir a ação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(ibanText.Text.ToString()))
+            {
+                MessageBox.Show("O campo do IBAN está vázio", "Impossivel Concluir a ação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+            if (OutrasValidacoes.BancoCodigoExiste(codigoText.Text.ToString())) 
+            {
+                return;
+            }
+            if (bancos.Any() && bancos.Where(x => x.codigo == codigoText.Text).Any())
+            {
+                MessageBox.Show("Já adicionaste um banco com este código", "O código já existe", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
             int id = bancoTable.Rows.Count;
             dt.Rows.Clear();
             bancoTable.DataSource = dt;
@@ -115,7 +154,7 @@ namespace AscFrontEnd
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.BaseAddress = new Uri("http://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             foreach (var item in this.bancos)
@@ -124,12 +163,12 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(item);
 
                 // Envio dos dados para a API
-                var response = await client.PostAsync($"https://localhost:7200/api/Deposito/Banco", new StringContent(json, Encoding.UTF8, "application/json"));
+                var response = await client.PostAsync($"api/Deposito/Banco", new StringContent(json, Encoding.UTF8, "application/json"));
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Banco Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
-                    var responseBanco = await client.GetAsync($"https://localhost:7200/api/Deposito/Bancos");
+                    var responseBanco = await client.GetAsync($"api/Deposito/Bancos");
 
                     if (responseBanco.IsSuccessStatusCode)
                     {

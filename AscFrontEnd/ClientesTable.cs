@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -22,10 +23,17 @@ namespace AscFrontEnd
     {
         int id=0;
         public List<ClienteDTO> clientes;
+        HttpClient client;
         public ClientesTable()
         {
             InitializeComponent();
             clientes = new List<ClienteDTO>();
+
+             client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            client.BaseAddress = new Uri("http://localhost:7200/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         private  void ClientesTable_Load(object sender, EventArgs e)
@@ -39,24 +47,23 @@ namespace AscFrontEnd
                 dt.Columns.Add("pessoa", typeof(string));
                 dt.Columns.Add("localizacao", typeof(string));
 
-
+            if (StaticProperty.clientes != null)
+            {
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.clientes.Where(c=>c.status == Status.activo && c.id != 1 && c.empresaid == StaticProperty.empresaId))
+                foreach (var item in StaticProperty.clientes.Where(c => c.status == Status.activo && c.id != 1 && c.empresaid == StaticProperty.empresaId))
                 {
                     dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
 
-                    tabelaCliente.DataSource = dt;
+                   
                 }
-
+                tabelaCliente.DataSource = dt;
+            }
                 editarPicture.Enabled = false;
         }
 
         private async void pesqText_TextChanged(object sender, EventArgs e)
         {
-            var client = new HttpClient();
-
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            var response = await client.GetAsync($"https://localhost:7200/api/Cliente/Search/{pesqText.Text}");
+            var response = await client.GetAsync($"api/Cliente/Search/{pesqText.Text}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -72,11 +79,14 @@ namespace AscFrontEnd
                 dt.Columns.Add("localizacao", typeof(string));
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in clientes.Where(x => x.empresaid == StaticProperty.empresaId))
+                if (clientes != null)
                 {
-                    dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
+                    foreach (var item in clientes.Where(x => x.empresaid == StaticProperty.empresaId))
+                    {
+                        dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
 
-                    tabelaCliente.DataSource = dt;
+                    }
+                        tabelaCliente.DataSource = dt;
                 }
             }
         }
@@ -94,13 +104,15 @@ namespace AscFrontEnd
 
         private async void transformar_Click(object sender, EventArgs e)
         {
-            var cliente = StaticProperty.clientes.Where(cl => cl.id == id).First();
+            var cliente = !StaticProperty.clientes.Where(cl => cl.id == id).Any() || StaticProperty.clientes.Where(cl => cl.id == id).First() == null ?
+                           new ClienteDTO(): StaticProperty.clientes.Where(cl => cl.id == id).First();
 
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://localhost:7200/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            if(cliente.id <= 0) 
+            {
+                MessageBox.Show($"O cliente não foi encontrado", "Sem Sucesso", MessageBoxButtons.OK);
+
+                return;
+            }
 
             if(cliente.nif == "999999999") 
             {
@@ -165,11 +177,7 @@ namespace AscFrontEnd
                 try
                 {
                     HttpResponseMessage response = null;
-                    var client = new HttpClient();
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                    client.BaseAddress = new Uri("https://sua-api.com/");
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+         
 
                     // Conversão do objeto Film para JSON
                     string json = JsonSerializer.Serialize(id);
@@ -177,17 +185,22 @@ namespace AscFrontEnd
                     // Envio dos dados para a API
                     if (hasSellCliente(id)) 
                     {
-                        response = await client.DeleteAsync($"https://localhost:7200/api/Cliente/{id}");
+                        response = await client.DeleteAsync($"api/Cliente/{id}");
                     }
                     else 
                     {
-                        response = await client.PutAsync($"https://localhost:7200/api/Cliente/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json"));
+                        response = await client.PutAsync($"api/Cliente/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json"));
                     }
                   
 
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show("Cliente foi eliminar com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+                        MessageBox.Show("Cliente foi eliminado com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
+                    }
+                    else 
+                    {
+                        MessageBox.Show("Erro ao eliminar cliente", "Sem Sucesso", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                        return;
                     }
                 }
                 catch (Exception ex)
@@ -203,12 +216,34 @@ namespace AscFrontEnd
 
         private bool hasSellCliente(int clienteId)
         {
-            if (!StaticProperty.frs.Where(x => x.clienteId == clienteId).Any() && !StaticProperty.fts.Where(x => x.clienteId == clienteId).Any() && !StaticProperty.fps.Where(x => x.clienteId == clienteId).Any() &&
-               !StaticProperty.ecls.Where(x => x.clienteId == clienteId).Any())
+            if (StaticProperty.frs.Where(x => x.clienteId == clienteId).ToList() != null && StaticProperty.fts.Where(x => x.clienteId == clienteId).ToList() != null && StaticProperty.fps.Where(x => x.clienteId == clienteId).ToList() != null &&
+               StaticProperty.ecls.Where(x => x.clienteId == clienteId).ToList() != null)
             {
-               return true; 
+                if (!StaticProperty.frs.Where(x => x.clienteId == clienteId).Any() && !StaticProperty.fts.Where(x => x.clienteId == clienteId).Any() && !StaticProperty.fps.Where(x => x.clienteId == clienteId).Any() &&
+               !StaticProperty.ecls.Where(x => x.clienteId == clienteId).Any())
+                {
+                    return true;
+                }
+                else { return false; }
             }
-            else { return false; }
+            return false;
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            ClientesTable_Load(this, EventArgs.Empty);
+        }
+
+        private void btnActualizar_MouseMove(object sender, MouseEventArgs e)
+        {
+            btnActualizar.BackColor = Color.White;
+            btnActualizar.ForeColor = Color.Black;
+        }
+
+        private void btnActualizar_MouseLeave(object sender, EventArgs e)
+        {
+            btnActualizar.BackColor = Color.Transparent;
+            btnActualizar.ForeColor = Color.White;
         }
     }
 }

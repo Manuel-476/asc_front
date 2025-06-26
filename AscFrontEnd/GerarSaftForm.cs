@@ -21,7 +21,7 @@ namespace AscFrontEnd
         {
             InitializeComponent();
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("https://localhost:7200");
+            _httpClient.BaseAddress = new Uri("http://localhost:7200");
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));

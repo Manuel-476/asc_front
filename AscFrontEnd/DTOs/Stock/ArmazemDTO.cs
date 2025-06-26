@@ -12,7 +12,7 @@ namespace AscFrontEnd.DTOs.Stock
         public int id { get; set; }
         public string codigo { get; set; }
         public string descricao { get; set; }
-        public List<LocationStoreDTO> storeLocations { get; set; }
+        public List<LocationStoreDTO> storeLocations { get; set; } = new List<LocationStoreDTO>();
         public int sectorId { get; set; }
         public int funcionarioId { get; set; }
         public Status status { get; set; }

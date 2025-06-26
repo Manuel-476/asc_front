@@ -14,15 +14,19 @@ using AscFrontEnd.DTOs.Empresa;
 using AscFrontEnd.Application.Validacao;
 using AscFrontEnd.Application;
 using System.IO;
+using AscFrontEnd.DTOs.Funcionario;
 
 namespace AscFrontEnd
 {
     public partial class EmpresaForm : Form
     {
         string logo;
-        public EmpresaForm()
+        UserDTO _user;
+        public EmpresaForm(UserDTO user)
         {
             InitializeComponent();
+
+            _user = user;
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -33,6 +37,8 @@ namespace AscFrontEnd
             {
                 logo = logoFile.FileName;
                 var pathLogo = Path.GetFileName(logo);
+
+                logoTxt.Text = logo;
             }
         }
 
@@ -58,13 +64,15 @@ namespace AscFrontEnd
 
                 return;
             }
+            ProcessoForm processo = new ProcessoForm();
+            processo.Show();
 
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             HttpResponseMessage response = null;
             try
             {
-                client.BaseAddress = new Uri("https://localhost:7200/");
+                client.BaseAddress = new Uri("http://localhost:7200/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -88,7 +96,7 @@ namespace AscFrontEnd
                     telefone = !string.IsNullOrEmpty(telText.Text.ToString()) ? telText.Text : string.Empty,
                 };
 
-
+                StaticProperty.percentual += 10;
                 using (var content = new MultipartFormDataContent())
                 {
                     /* var empresaJson = System.Text.Json.JsonSerializer.Serialize(empresa);
@@ -113,7 +121,7 @@ namespace AscFrontEnd
                     content.Add(new StringContent(System.Text.Json.JsonSerializer.Serialize(empresa.bancos)), "bancos");
                     content.Add(new StringContent(System.Text.Json.JsonSerializer.Serialize(empresa.caixas)), "caixas");
 
-
+                    StaticProperty.percentual += 20;
                     if (!string.IsNullOrEmpty(logo) && File.Exists(logo))
                     {
                         var fileBytes = File.ReadAllBytes(logo);
@@ -136,11 +144,12 @@ namespace AscFrontEnd
                         var logoResult = Path.GetFileName(logo);
                         content.Add(fileContent, "imagem", Path.GetFileName(logo));
                     }
-
+                    StaticProperty.percentual += 30;
                     response = await client.PostAsync($"api/Empresa/{StaticProperty.funcionarioId}", content);
                     
                     if (response.IsSuccessStatusCode)
                     {
+                        StaticProperty.percentual += 50;
                         StaticProperty.bancosEmpresa = null;
                         StaticProperty.caixasEmpresa = null;
 
@@ -149,9 +158,18 @@ namespace AscFrontEnd
                         var result = await response.Content.ReadAsStringAsync();
 
                         StaticProperty.empresaId = int.Parse(result);
-
-                        FuncionarioForm form = new FuncionarioForm();
+                     
+                        StaticProperty.percentual += 10;
+                        processo.Close();
+                        FuncionarioForm form = new FuncionarioForm(_user);
                         form.ShowDialog();
+                   
+                    }
+                    else 
+                    {
+                        processo.Close();
+                        MessageBox.Show("Ocorreu um erro!", "Verifica se todos os campos estão prenchidos", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                        return;
                     }
                 }
             }
@@ -196,9 +214,12 @@ namespace AscFrontEnd
 
         private void EmpresaForm_Load(object sender, EventArgs e)
         {
-            foreach (var item in StaticProperty.provincias)
+            if (StaticProperty.provincias != null)
             {
-                provinciaCombo.Items.Add(item.nome);
+                foreach (var item in StaticProperty.provincias)
+                {
+                    provinciaCombo.Items.Add(item.nome);
+                }
             }
         }
     }

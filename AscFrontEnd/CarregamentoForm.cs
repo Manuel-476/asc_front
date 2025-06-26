@@ -51,7 +51,7 @@ namespace AscFrontEnd
             timer1.Start();
 
             var client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:7200");
+            client.BaseAddress = new Uri("http://localhost:7200/");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             try
             {
@@ -64,6 +64,11 @@ namespace AscFrontEnd
 
                     StaticProperty.stockMinims = JsonConvert.DeserializeObject<List<StockMinimDTO>>(contentStock);
 
+
+                    if(StaticProperty.stockMinims == null)
+                    {
+                        StaticProperty.stockMinims = new List<StockMinimDTO>();
+                    }
                     processValue += 1;
                 }
                 // Compra
@@ -615,7 +620,7 @@ namespace AscFrontEnd
 
                 await new Requisicoes().GetEmpresas();
 
-               if(!await  new Requisicoes().GeLogo()) 
+               if(!await  new Requisicoes().GetLogo()) 
                 {
                     Console.WriteLine("Logo nao encontrado!");
                 }
@@ -630,18 +635,24 @@ namespace AscFrontEnd
             }
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private async void timer1_Tick(object sender, EventArgs e)
         {
-            if (processValue < 100)
+            if ((_user.nivel_acesso.Equals("Administrador") || _user.nivel_acesso.Equals("Tecnico")) && processValue < 100)
             {
                 progressBar1.Value = processValue;
 
+            }
+            else if (_user.nivel_acesso.Equals("Caixa") && processValue < 25) 
+            {
+                progressBar1.Value = processValue;
             }
             else 
             {
                 timer1.Stop();
 
                 this.Hide();
+
+                await new Requisicoes().SystemRefresh();
 
                 MenuPrincipal menuForm = new MenuPrincipal(_user);
                 menuForm.ShowDialog();

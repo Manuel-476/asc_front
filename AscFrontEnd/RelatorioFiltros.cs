@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -73,7 +74,8 @@ namespace AscFrontEnd
             _httpClient = new HttpClient();
 
             // Defina a URL base da sua API
-            _httpClient.BaseAddress = new Uri("https://localhost:7200");
+            _httpClient.BaseAddress = new Uri("http://localhost:7200");
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -181,11 +183,13 @@ namespace AscFrontEnd
                 dialogEntidadeCl.ShowDialog();
 
                 _entidadeIds = dialogEntidadeCl.GetClienteIdList();
-
-                foreach (var item in _entidadeIds)
+                if (_entidadeIds != null)
                 {
-                    entidadeList.Text += $"{StaticProperty.clientes.Where(x => x.id == item).First().nome_fantasia}\n";
-                };
+                    foreach (var item in _entidadeIds)
+                    {
+                        entidadeList.Text += $"{StaticProperty.clientes.Where(x => x.id == item).First().nome_fantasia}\n";
+                    };
+                }
             }
             else
             {
@@ -194,10 +198,13 @@ namespace AscFrontEnd
 
                 _entidadeIds = dialogEntidadeForn.GetFornecedorIdList();
 
-                foreach (var item in _entidadeIds)
+                if (_entidadeIds != null)
                 {
-                    entidadeList.Text += $"{StaticProperty.fornecedores.Where(x => x.id == item).First().nome_fantasia}\n";
-                };
+                    foreach (var item in _entidadeIds)
+                    {
+                        entidadeList.Text += $"{StaticProperty.fornecedores.Where(x => x.id == item).First().nome_fantasia}\n";
+                    };
+                }
             }
         }
 
@@ -210,9 +217,12 @@ namespace AscFrontEnd
 
             _armazemIds = dialogArmazem.GetArmazemIdList();
 
-            foreach (var item in _armazemIds)
+            if (_armazemIds != null)
             {
-                armazemList.Text += $"{StaticProperty.armazens.Where(x => x.id == item).First().descricao}\n";
+                foreach (var item in _armazemIds)
+                {
+                    armazemList.Text += $"{StaticProperty.armazens.Where(x => x.id == item).First().descricao}\n";
+                }
             }
         }
 
@@ -222,14 +232,17 @@ namespace AscFrontEnd
 
             dialogArtigo.ShowDialog();
 
-            _artigoIds = dialogArtigo.GetArtigoIdList();
+          /*  _artigoIds = dialogArtigo.GetArtigoIdList();
 
             artigoList.Text = "";
 
-            foreach (var item in _artigoIds)
+            if (_artigoIds != null)
             {
-                artigoList.Text += $"{StaticProperty.artigos.Where(x => x.id == item).First().descricao}\n";
-            }
+                foreach (var item in _artigoIds)
+                {
+                    artigoList.Text += $"{StaticProperty.artigos.Where(x => x.id == item).First().descricao}\n";
+                }
+            }*/
         }
 
         private async void btnImprimir_Click(object sender, EventArgs e)
@@ -341,7 +354,7 @@ namespace AscFrontEnd
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
-                string imagePathEmpresa = Path.Combine(projectPath, "Files", "Smart_Entity.png");
+                string imagePathEmpresa = StaticProperty.empresaLogo;
                 string imagePathAsc = Path.Combine(projectPath, "Files", "asc.png");
 
 
@@ -367,7 +380,7 @@ namespace AscFrontEnd
                 var empresa = StaticProperty.empresa;
 
                 string empresaNome = $"{empresa.nome_fantasia}";
-                string empresaCabecalho = $"{empresa.endereco}\nContribuente: {empresa.nif}\n" +
+                string empresaCabecalho = $"{empresa.endereco}\nNif: {empresa.nif}\n" +
                                           $"Email: {empresa.email}\nTel: {empresa.telefone}";
 
                 Pen caneta = new Pen(Color.Black, 2); // Define a cor e a largura da linha
@@ -400,19 +413,39 @@ namespace AscFrontEnd
                 e.Graphics.DrawString($"Data", fontNormalNegrito, cor, new Rectangle(700, 280, 750, 300));
                 e.Graphics.DrawLine(caneta, 50, 295, 750, 295);
                 int i = 15;
-                foreach (var venda in _vendas)
+                if (_vendas != null)
                 {
-                    foreach (var va in venda.artigoVendas)
+                    foreach (var venda in _vendas)
                     {
-                        totalIva += (va.preco * float.Parse(va.qtd.ToString()) * (va.iva / 100));
-                        total += va.preco * float.Parse(va.qtd.ToString());
-                        desconto += (va.preco * float.Parse(va.qtd.ToString()) * (va.desconto / 100));
-                        var valorIva = (va.preco * float.Parse(va.qtd.ToString()) * (va.iva / 100));
-                        var descontoLinha = (va.preco * float.Parse(va.qtd.ToString()) * (va.desconto / 100));
-
-                        if (_artigoIds.Any())
+                        foreach (var va in venda.artigoVendas)
                         {
-                            if (_artigoIds.Contains(va.artigoId))
+                            totalIva += (va.preco * float.Parse(va.qtd.ToString()) * (va.iva / 100));
+                            total += va.preco * float.Parse(va.qtd.ToString());
+                            desconto += (va.preco * float.Parse(va.qtd.ToString()) * (va.desconto / 100));
+                            var valorIva = (va.preco * float.Parse(va.qtd.ToString()) * (va.iva / 100));
+                            var descontoLinha = (va.preco * float.Parse(va.qtd.ToString()) * (va.desconto / 100));
+
+                            if (_artigoIds != null)
+                            {
+                                if (_artigoIds.Any())
+                                {
+                                    if (_artigoIds.Contains(va.artigoId))
+                                    {
+                                        e.Graphics.DrawString($"{_dados.Where(art => art.id == va.artigoId).First().codigo}", fontNormal, cor, new Rectangle(50, 290 + i, 110, 305 + i));
+                                        e.Graphics.DrawString($"{_dados.Where(art => art.id == va.artigoId).First().descricao}", fontNormal, cor, new Rectangle(110, 290 + i, 200, 305 + i));
+                                        e.Graphics.DrawString($"{va.qtd}", fontNormal, cor, new Rectangle(200, 290 + i, 250, 305 + i));
+                                        e.Graphics.DrawString($"{va.preco.ToString("F2")}", fontNormal, cor, new Rectangle(250, 290 + i, 310, 305 + i));
+                                        e.Graphics.DrawString($"{StaticProperty.clientes.Where(cl => cl.id == venda.clienteId).First().nome_fantasia}", fontNormal, cor, new Rectangle(310, 290 + i, 370, 305 + i));
+                                        e.Graphics.DrawString($"{venda.documento} {venda.serie}/{venda.numeroDocumento}", fontNormal, cor, new Rectangle(370, 290 + i, 450, 305 + i));
+                                        e.Graphics.DrawString($"{(va.preco * va.qtd).ToString("F2")}", fontNormal, cor, new Rectangle(450, 290 + i, 510, 425 + i));
+                                        e.Graphics.DrawString($"{((va.preco * va.qtd) - descontoLinha).ToString("F2")}", fontNormal, cor, new Rectangle(520, 290 + i, 580, 305 + i));
+                                        e.Graphics.DrawString($"{va.desconto.ToString("F2")}", fontNormal, cor, new Rectangle(590, 290 + i, 650, 425 + i));
+                                        e.Graphics.DrawString($"{valorIva.ToString("F2")} %", fontNormal, cor, new Rectangle(655, 290 + i, 700, 305 + i));
+                                        e.Graphics.DrawString($"{(venda.data.ToString("dd-MM-yyyy"))}", fontNormal, cor, new Rectangle(700, 290 + i, 750, 305 + i));
+                                    }
+                                }
+                            }
+                            else
                             {
                                 e.Graphics.DrawString($"{_dados.Where(art => art.id == va.artigoId).First().codigo}", fontNormal, cor, new Rectangle(50, 290 + i, 110, 305 + i));
                                 e.Graphics.DrawString($"{_dados.Where(art => art.id == va.artigoId).First().descricao}", fontNormal, cor, new Rectangle(110, 290 + i, 200, 305 + i));
@@ -425,25 +458,11 @@ namespace AscFrontEnd
                                 e.Graphics.DrawString($"{va.desconto.ToString("F2")}", fontNormal, cor, new Rectangle(590, 290 + i, 650, 425 + i));
                                 e.Graphics.DrawString($"{valorIva.ToString("F2")} %", fontNormal, cor, new Rectangle(655, 290 + i, 700, 305 + i));
                                 e.Graphics.DrawString($"{(venda.data.ToString("dd-MM-yyyy"))}", fontNormal, cor, new Rectangle(700, 290 + i, 750, 305 + i));
+
                             }
-                        }
-                        else
-                        {
-                            e.Graphics.DrawString($"{_dados.Where(art => art.id == va.artigoId).First().codigo}", fontNormal, cor, new Rectangle(50, 290 + i, 110, 305 + i));
-                            e.Graphics.DrawString($"{_dados.Where(art => art.id == va.artigoId).First().descricao}", fontNormal, cor, new Rectangle(110, 290 + i, 200, 305 + i));
-                            e.Graphics.DrawString($"{va.qtd}", fontNormal, cor, new Rectangle(200, 290 + i, 250, 305 + i));
-                            e.Graphics.DrawString($"{va.preco.ToString("F2")}", fontNormal, cor, new Rectangle(250, 290 + i, 310, 305 + i));
-                            e.Graphics.DrawString($"{StaticProperty.clientes.Where(cl => cl.id == venda.clienteId).First().nome_fantasia}", fontNormal, cor, new Rectangle(310, 290 + i, 370, 305 + i));
-                            e.Graphics.DrawString($"{venda.documento} {venda.serie}/{venda.numeroDocumento}", fontNormal, cor, new Rectangle(370, 290 + i, 450, 305 + i));
-                            e.Graphics.DrawString($"{(va.preco * va.qtd).ToString("F2")}", fontNormal, cor, new Rectangle(450, 290 + i, 510, 425 + i));
-                            e.Graphics.DrawString($"{((va.preco * va.qtd) - descontoLinha).ToString("F2")}", fontNormal, cor, new Rectangle(520, 290 + i, 580, 305 + i));
-                            e.Graphics.DrawString($"{va.desconto.ToString("F2")}", fontNormal, cor, new Rectangle(590, 290 + i, 650, 425 + i));
-                            e.Graphics.DrawString($"{valorIva.ToString("F2")} %", fontNormal, cor, new Rectangle(655, 290 + i, 700, 305 + i));
-                            e.Graphics.DrawString($"{(venda.data.ToString("dd-MM-yyyy"))}", fontNormal, cor, new Rectangle(700, 290 + i, 750, 305 + i));
 
+                            i = i + 15;
                         }
-
-                        i = i + 15;
                     }
                 }
 
@@ -499,7 +518,7 @@ namespace AscFrontEnd
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
-                string imagePathEmpresa = Path.Combine(projectPath, "Files", "Smart_Entity.png");
+                string imagePathEmpresa = StaticProperty.empresaLogo;
                 string imagePathAsc = Path.Combine(projectPath, "Files", "asc.png");
 
 
@@ -525,7 +544,7 @@ namespace AscFrontEnd
                 var empresa = StaticProperty.empresa;
 
                 string empresaNome = $"{empresa.nome_fantasia}";
-                string empresaCabecalho = $"{empresa.endereco}\nContribuente: {empresa.nif}\n" +
+                string empresaCabecalho = $"{empresa.endereco}\nNIF: {empresa.nif}\n" +
                                           $"Email: {empresa.email}\nTel: {empresa.telefone}";
 
                 Pen caneta = new Pen(Color.Black, 2); // Define a cor e a largura da linha
@@ -658,7 +677,7 @@ namespace AscFrontEnd
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
-                string imagePathEmpresa = Path.Combine(projectPath, "Files", "Smart_Entity.png");
+                string imagePathEmpresa = StaticProperty.empresaLogo;
                 string imagePathAsc = Path.Combine(projectPath, "Files", "asc.png");
 
 
@@ -684,7 +703,7 @@ namespace AscFrontEnd
                 var empresa = StaticProperty.empresa;
 
                 string empresaNome = $"{empresa.nome_fantasia}";
-                string empresaCabecalho = $"{empresa.endereco}\nContribuente: {empresa.nif}\n" +
+                string empresaCabecalho = $"{empresa.endereco}\nNIF: {empresa.nif}\n" +
                                           $"Email: {empresa.email}\nTel: {empresa.telefone}";
 
                 Pen caneta = new Pen(Color.Black, 2); // Define a cor e a largura da linha
@@ -767,15 +786,21 @@ namespace AscFrontEnd
 
         private void timerRelatorio_Tick(object sender, EventArgs e)
         {
-            _artigoIds = dialogArtigo.GetArtigoIdList();
-
-            artigoList.Text = "";
-
-            if (_artigoIds != null && _artigoIds.Any())
+            if (dialogArtigo != null)
             {
-                foreach (var item in _artigoIds)
+                _artigoIds = dialogArtigo.GetArtigoIdList();
+
+                artigoList.Text = "";
+
+                if (_artigoIds != null)
                 {
-                    artigoList.Text += $"{StaticProperty.artigos.Where(x => x.id == item).First().descricao}\n";
+                    if (_artigoIds.Any())
+                    {
+                        foreach (var item in _artigoIds)
+                        {
+                            artigoList.Text += $"{StaticProperty.artigos.Where(x => x.id == item).First().descricao}\n";
+                        }
+                    }
                 }
             }
             //==============================================
@@ -786,28 +811,32 @@ namespace AscFrontEnd
 
                 entidadeList.Text = "";
 
-                if (_entidadeIds != null && _entidadeIds.Any())
+                if (_entidadeIds != null)
                 {
-
-
-                    foreach (var item in _entidadeIds)
+                    if (_entidadeIds.Any())
                     {
-                        entidadeList.Text += $"{StaticProperty.clientes.Where(x => x.id == item).First().nome_fantasia}\n";
-                    };
+                        foreach (var item in _entidadeIds)
+                        {
+                            entidadeList.Text += $"{StaticProperty.clientes.Where(x => x.id == item).First().nome_fantasia}\n";
+                        };
+                    }
                 }
             }
             else
             {
                 _entidadeIds = dialogEntidadeForn.GetFornecedorIdList();
 
-                if (_entidadeIds != null && _entidadeIds.Any())
+                if (_entidadeIds != null)
                 {
-                    entidadeList.Text = "";
-
-                    foreach (var item in _entidadeIds)
+                    if (_entidadeIds.Any())
                     {
-                        entidadeList.Text += $"{StaticProperty.fornecedores.Where(x => x.id == item).First().nome_fantasia}\n";
-                    };
+                        entidadeList.Text = "";
+
+                        foreach (var item in _entidadeIds)
+                        {
+                            entidadeList.Text += $"{StaticProperty.fornecedores.Where(x => x.id == item).First().nome_fantasia}\n";
+                        };
+                    }
                 }
             }
 
@@ -815,12 +844,15 @@ namespace AscFrontEnd
 
             _armazemIds = dialogArmazem.GetArmazemIdList();
             armazemList.Text = "";
-            if (_armazemIds != null && _armazemIds.Any())
+            if (_armazemIds != null)
             {
-
-                foreach (var item in _armazemIds)
+                if (_armazemIds.Any())
                 {
-                    armazemList.Text += $"{StaticProperty.armazens.Where(x => x.id == item).First().descricao}\n";
+
+                    foreach (var item in _armazemIds)
+                    {
+                        armazemList.Text += $"{StaticProperty.armazens.Where(x => x.id == item).First().descricao}\n";
+                    }
                 }
             }
         }

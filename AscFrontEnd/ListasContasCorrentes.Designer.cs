@@ -36,6 +36,7 @@
             this.entidadeText = new System.Windows.Forms.Label();
             this.radioAdiantamento = new System.Windows.Forms.RadioButton();
             this.radioDivida = new System.Windows.Forms.RadioButton();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.correnteTable)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -73,6 +74,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(-1, -1);
             this.panel1.Name = "panel1";
@@ -128,6 +130,21 @@
             this.radioDivida.UseVisualStyleBackColor = false;
             this.radioDivida.CheckedChanged += new System.EventHandler(this.radioDivida_CheckedChanged);
             // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(394, 30);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(123, 26);
+            this.button2.TabIndex = 38;
+            this.button2.Text = "Atualizar";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.MouseLeave += new System.EventHandler(this.button2_MouseLeave);
+            this.button2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.button2_MouseMove);
+            // 
             // ListasContasCorrentes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -146,7 +163,6 @@
             this.Name = "ListasContasCorrentes";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Listas ContasCorrentes";
             this.Load += new System.EventHandler(this.ListasContasCorrentes_Load);
             ((System.ComponentModel.ISupportInitialize)(this.correnteTable)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -166,5 +182,6 @@
         private System.Windows.Forms.Label entidadeText;
         private System.Windows.Forms.RadioButton radioAdiantamento;
         private System.Windows.Forms.RadioButton radioDivida;
+        private System.Windows.Forms.Button button2;
     }
 }

@@ -104,7 +104,7 @@ namespace AscFrontEnd
             // Configuração do HttpClient
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.BaseAddress = new Uri("http://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -114,13 +114,13 @@ namespace AscFrontEnd
             // Envio dos dados para a API
             if(MessageBox.Show("Tens certeza que queres salvar estas alterações?","Atenção",MessageBoxButtons.OK,MessageBoxIcon.Question)==DialogResult.OK)
             { 
-                HttpResponseMessage response = await client.PutAsync($"https://localhost:7200/api/Artigo/{_artigoId}/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage response = await client.PutAsync($"api/Artigo/{_artigoId}/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
                 if (response.IsSuccessStatusCode)
                 {
                    MessageBox.Show("Artigo Alterado Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
                   // Artigo
-                  var responseArtigo = await client.GetAsync($"https://localhost:7200/api/Artigo");
+                  var responseArtigo = await client.GetAsync($"api/Artigo");
 
                   if (responseArtigo.IsSuccessStatusCode)
                   {

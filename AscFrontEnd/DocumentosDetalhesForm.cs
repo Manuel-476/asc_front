@@ -78,239 +78,247 @@ namespace AscFrontEnd
             data.Columns.Add("Preço", typeof(float));
 
             string codigo;
-            string num;
+            int num;
             string serie;
-
-            int index;
-            int indexSpace;
 
             if (_entidade == Entidade.fornecedor)
             {
                 if (_documento.ToUpper().Equals("VFR"))
                 {
-                    var documentoDados = StaticProperty.vfrs.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-
-                    foreach (var art in documentoDados.vfrArtigo)
+                    if (StaticProperty.vfrs != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.vfrs.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+
+
+                        foreach (var art in documentoDados.vfrArtigo)
+                        {
+                            var artigoDescricao = StaticProperty.artigos == null ? string.Empty : StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
                 }
                 else if (_documento.ToUpper().Equals("VFT"))
                 {
-                    var documentoDados = StaticProperty.vfts.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-
-                    foreach (var art in documentoDados.vftArtigo)
+                    if (StaticProperty.vfts != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.vfts.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+
+
+                        foreach (var art in documentoDados.vftArtigo)
+                        {
+                            var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
                 }
                 else if (_documento.ToUpper().Equals("ECF"))
                 {
-                    var documentoDados = StaticProperty.ecfs.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-                    localEntrega = documentoDados.local_entrega;
-
-
-                    foreach (var art in documentoDados.ecfArtigo)
+                    if (StaticProperty.ecfs != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.ecfs.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+                        localEntrega = documentoDados.local_entrega;
+
+
+                        foreach (var art in documentoDados.ecfArtigo)
+                        {
+                            var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
                 }
                 else if (_documento.ToUpper().Equals("VGT"))
                 {
-                    var documentoDados = StaticProperty.vgts.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-
-
-                    foreach (var art in documentoDados.vgtArtigo)
+                    if (StaticProperty.vgts != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.vgts.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+
+
+
+                        foreach (var art in documentoDados.vgtArtigo)
+                        {
+                            var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
                 }
                 else if (_documento.ToUpper().Equals("VGR"))
                 {
-                    var documentoDados = StaticProperty.vgrs.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-
-                    foreach (var art in documentoDados.vgrArtigo)
+                    if (StaticProperty.vgrs != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.vgrs.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+
+
+                        foreach (var art in documentoDados.vgrArtigo)
+                        {
+                            var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
                 }
                 else if (_documento.ToUpper().Equals("VNC"))
                 {
-                    var documentoDados = StaticProperty.vncs.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-
-                    foreach (var art in documentoDados.vncArtigo)
+                    if (StaticProperty.vncs != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.vncs.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+
+
+                        foreach (var art in documentoDados.vncArtigo)
+                        {
+                            var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
                 }
                 else if (_documento.ToUpper().Equals("VND"))
                 {
-                    var documentoDados = StaticProperty.vnds.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-
-                    foreach (var art in documentoDados.vndArtigo)
+                    if (StaticProperty.vnds != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.vnds.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+
+
+                        foreach (var art in documentoDados.vndArtigo)
+                        {
+                            var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
                 }
                 else if (_documento.ToUpper().Equals("PCO"))
                 {
-                    var documentoDados = StaticProperty.pcos.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-
-                    foreach (var art in documentoDados.pcArtigo)
+                    if (StaticProperty.pcos != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.pcos.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+
+
+                        foreach (var art in documentoDados.pcArtigo)
+                        {
+                            var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
                 }
                 else if (_documento.ToUpper().Equals("COT"))
                 {
-                    var documentoDados = StaticProperty.cots.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-
-                    foreach (var art in documentoDados.cArtigo)
+                    if (StaticProperty.cots != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.cots.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+
+
+                        foreach (var art in documentoDados.cArtigo)
+                        {
+                            var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
                 }
             }
@@ -318,226 +326,234 @@ namespace AscFrontEnd
             {
                 if (_documento.ToUpper().Equals("FR"))
                 {
-                    var documentoDados = StaticProperty.frs.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-                    foreach (var art in documentoDados.frArtigo)
+                    if (StaticProperty.frs != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.frs.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+
+                        foreach (var art in documentoDados.frArtigo)
+                        {
+                            var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
-                }
-                else if (_documento.ToUpper().Equals("FT"))
-                {
-                    var documentoDados = StaticProperty.fts.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-
-                    foreach (var art in documentoDados.ftArtigo)
+                    else if (_documento.ToUpper().Equals("FT"))
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        if (StaticProperty.fts != null)
+                        {
+                            var documentoDados = StaticProperty.fts.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                            codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                            num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                            serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                            codigoDocumento.Text = codigo;
+                            numDocumento.Text = num.ToString();
+                            serieDocumento.Text = serie;
+                            dataDocumento.Text = documentoDados.data.ToString();
+
+
+                            foreach (var art in documentoDados.ftArtigo)
+                            {
+                                var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                                data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                            }
+                        }
                     }
                 }
                 else if (_documento.ToUpper().Equals("ECL"))
                 {
-                    var documentoDados = StaticProperty.ecls.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-
-                    foreach (var art in documentoDados.eclArtigo)
+                    if (StaticProperty.ecls != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.ecls.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+
+
+                        foreach (var art in documentoDados.eclArtigo)
+                        {
+                            var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
                 }
                 else if (_documento.ToUpper().Equals("GT"))
                 {
-                    var documentoDados = StaticProperty.gts.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-
-                    foreach (var art in documentoDados.gtArtigo)
+                    if (StaticProperty.gts != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.gts.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+
+
+                        foreach (var art in documentoDados.gtArtigo)
+                        {
+                            var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
                 }
                 else if (_documento.ToUpper().Equals("GR"))
                 {
-                    var documentoDados = StaticProperty.grs.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-
-                    foreach (var art in documentoDados.grArtigo)
+                    if (StaticProperty.grs != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.grs.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+
+
+                        foreach (var art in documentoDados.grArtigo)
+                        {
+                            var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
                 }
                 else if (_documento.ToUpper().Equals("NC"))
                 {
-                    var documentoDados = StaticProperty.ncs.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-
-                    foreach (var art in documentoDados.ncArtigo)
+                    if (StaticProperty.ncs != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.ncs.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+
+
+                        foreach (var art in documentoDados.ncArtigo)
+                        {
+                            var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
                 }
                 else if (_documento.ToUpper().Equals("ND"))
                 {
-                    var documentoDados = StaticProperty.nds.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-
-                    foreach (var art in documentoDados.ndArtigo)
+                    if (StaticProperty.nds != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.nds.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+
+
+                        foreach (var art in documentoDados.ndArtigo)
+                        {
+                            var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
                 }
                 else if (_documento.ToUpper().Equals("OR"))
                 {
-                    var documentoDados = StaticProperty.ors.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-
-                    foreach (var art in documentoDados.orArtigos)
+                    if (StaticProperty.ors != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.ors.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+
+
+                        foreach (var art in documentoDados.orArtigos)
+                        {
+                            var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
                 }
                 else if (_documento.ToUpper().Equals("FP"))
                 {
-                    var documentoDados = StaticProperty.fps.Where(v => v.id == _documentoId).First();
-
-                    indexSpace = documentoDados.documento.IndexOf(" ");
-                    codigo = documentoDados.documento.Substring(0, indexSpace);
-
-                    index = documentoDados.documento.IndexOf("/");
-                    num = documentoDados.documento.Substring(index + 1);
-
-                    serie = documentoDados.documento.Substring(indexSpace, (index - indexSpace));
-
-                    codigoDocumento.Text = codigo;
-                    numDocumento.Text = num;
-                    serieDocumento.Text = serie;
-                    dataDocumento.Text = documentoDados.data.ToString();
-
-
-                    foreach (var art in documentoDados.fpArtigo)
+                    if (StaticProperty.fps != null)
                     {
-                        var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+                        var documentoDados = StaticProperty.fps.Where(v => v.id == _documentoId).First();
 
-                        data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        codigo = Documento.GetCodigoDocumento(documentoDados.documento);
+
+                        num = Documento.GetNumeroDocumento(documentoDados.documento);
+
+                        serie = Documento.GetSerieDocumento(documentoDados.documento);
+
+                        codigoDocumento.Text = codigo;
+                        numDocumento.Text = num.ToString();
+                        serieDocumento.Text = serie;
+                        dataDocumento.Text = documentoDados.data.ToString();
+
+
+                        foreach (var art in documentoDados.fpArtigo)
+                        {
+                            var artigoDescricao = StaticProperty.artigos.Where(a => a.id == art.artigoId).First().descricao;
+
+                            data.Rows.Add(artigoDescricao, art.qtd, art.iva, art.preco);
+                        }
                     }
                 }
 
@@ -1024,7 +1040,7 @@ namespace AscFrontEnd
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
-                string imagePathEmpresa = Path.Combine(projectPath, "Files", "Smart_Entity.png");
+                string imagePathEmpresa = StaticProperty.empresaLogo;
                 string imagePathAsc = Path.Combine(projectPath, "Files", "asc.png");
                 // Testar com valores fixos para desenhar uma string
                 Font fontNormal = new Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -1311,7 +1327,7 @@ namespace AscFrontEnd
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
-                string imagePathEmpresa = Path.Combine(projectPath, "Files", "Smart_Entity.png");
+                string imagePathEmpresa = StaticProperty.empresaLogo;
                 string imagePathAsc = Path.Combine(projectPath, "Files", "asc.png");
                 // Testar com valores fixos para desenhar uma string
                 Font fontNormal = new Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel);

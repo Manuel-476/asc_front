@@ -18,6 +18,7 @@ using AscFrontEnd.DTOs.Deposito;
 using AscFrontEnd.Application.Validacao;
 using System.Globalization;
 using AscFrontEnd.Application;
+using DocumentFormat.OpenXml.InkML;
 
 
 
@@ -50,13 +51,13 @@ namespace AscFrontEnd
 
             if (!ValidacaoForms.IsValidEmail(emailText.Text.ToString()))
             {
-                MessageBox.Show("O Email introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("O Email introduzido não é valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 return;
             }
             if (!string.IsNullOrEmpty(telefonetxt.Text.ToString()) && !ValidacaoForms.IsValidPhone(telefonetxt.Text.ToString()))
             {
-                MessageBox.Show("O Telefone introduzido nao e valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("O Telefone introduzido não é valido", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 return;
             }
@@ -86,7 +87,7 @@ namespace AscFrontEnd
             // Configuração do HttpClient
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.BaseAddress = new Uri("http://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -94,13 +95,13 @@ namespace AscFrontEnd
             string json = JsonSerializer.Serialize(cliente);
 
             // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Cliente/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage response = await client.PostAsync($"api/Cliente/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
          
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Cliente Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
-                var responseCliente = await client.GetAsync($"https://localhost:7200/api/Cliente/ClientesByRelation");
+                var responseCliente = await client.GetAsync($"api/Cliente/ClientesByRelation");
 
                 if (responseCliente.IsSuccessStatusCode)
                 {
@@ -109,7 +110,7 @@ namespace AscFrontEnd
                 }
 
                 // Depositos
-                var responseBanco = await client.GetAsync($"https://localhost:7200/api/Deposito/Banco");
+                var responseBanco = await client.GetAsync($"api/Deposito/Banco");
 
                 if (responseBanco.IsSuccessStatusCode)
                 {
@@ -117,7 +118,7 @@ namespace AscFrontEnd
                     StaticProperty.bancos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<BancoDTO>>(contentBanco);
                 }
 
-                var responseCaixa = await client.GetAsync($"https://localhost:7200/api/Deposito/Caixa");
+                var responseCaixa = await client.GetAsync($"api/Deposito/Caixa");
 
                 if (responseCaixa.IsSuccessStatusCode)
                 {
@@ -131,6 +132,10 @@ namespace AscFrontEnd
             }
             dtFilial = null;
             tabelaFilial.DataSource = null;
+
+            pessoaCombo.Items.Clear();
+            espacoFiscalCombo.Items.Clear();
+
             WindowsConfig.LimparFormulario(this);
 
             Cliente_Load(this, EventArgs.Empty);
@@ -146,7 +151,7 @@ namespace AscFrontEnd
             exportar exp = new exportar();
             exp.ShowDialog();
             //var client = new HttpClient();
-            //var response = await client.GetAsync($"https://localhost:7200/api/Cliente/DownloadExcel");
+            //var response = await client.GetAsync($"api/Cliente/DownloadExcel");
 
             //if (response.IsSuccessStatusCode)
             //{
@@ -216,6 +221,13 @@ namespace AscFrontEnd
 
         private void addFilialBtn_Click(object sender, EventArgs e)
         {
+            if (filiais.Any() && filiais.Where(x => x.codigo == codigotxt.Text).Any())
+            {
+                MessageBox.Show("Já adicionaste uma Filial com este código", "O código já existe", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
             int idFilais = tabelaFilial.Rows.Count;
             int id = 1;
 

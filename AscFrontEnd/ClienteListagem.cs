@@ -13,6 +13,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Color = System.Drawing.Color;
 
 namespace AscFrontEnd
 {
@@ -23,7 +24,8 @@ namespace AscFrontEnd
         public ClienteListagem()
         {
             InitializeComponent();
-         
+            List<int> _clienteIds = new List<int>();
+
         }
         public ClienteListagem(bool multi,List<int> clienteIds)
         {
@@ -48,11 +50,14 @@ namespace AscFrontEnd
                 tabelaCliente.MultiSelect = true;
                 checkDesconhecido.Visible = false;
 
-                // Adiciona linhas ao DataTable
-                foreach (var item in StaticProperty.clientes.Where(x => x.empresaid == StaticProperty.empresaId  && x.status == DTOs.Enums.Enums.Status.activo))
+                if (StaticProperty.clientes != null)
                 {
-                    dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
-             
+                    // Adiciona linhas ao DataTable
+                    foreach (var item in StaticProperty.clientes.Where(x => x.empresaid == StaticProperty.empresaId && x.status == DTOs.Enums.Enums.Status.activo))
+                    {
+                        dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
+
+                    }
                 }
                 // Define o DataSource do DataGridView (fora do loop)
                 tabelaCliente.DataSource = dt;
@@ -74,11 +79,14 @@ namespace AscFrontEnd
             {
                 tabelaCliente.MultiSelect = false;
 
-                // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.clientes.Where(x => x.empresaid == StaticProperty.empresaId && x.id != 1 && x.status == DTOs.Enums.Enums.Status.activo))
+                if (StaticProperty.clientes != null)
                 {
-                    dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.clientes.Where(x => x.empresaid == StaticProperty.empresaId && x.id != 1 && x.status == DTOs.Enums.Enums.Status.activo))
+                    {
+                        dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
 
+                    }
                 }
                     tabelaCliente.DataSource = dt;
 
@@ -98,8 +106,9 @@ namespace AscFrontEnd
         private async void textBox1_TextChanged(object sender, EventArgs e)
         {
             var client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:7200/");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            var response = await client.GetAsync($"https://localhost:7200/api/Cliente/Search/{pesqText.Text}");
+            var response = await client.GetAsync($"api/Cliente/Search/{pesqText.Text}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -116,11 +125,14 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in dados.Where(x => x.empresaid == StaticProperty.empresaId))
+                if (dados != null)
                 {
-                    dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
+                    foreach (var item in dados.Where(x => x.empresaid == StaticProperty.empresaId))
+                    {
+                        dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
 
-                    tabelaCliente.DataSource = dt;
+                        tabelaCliente.DataSource = dt;
+                    }
                 }
             }
         }
@@ -186,6 +198,23 @@ namespace AscFrontEnd
         public List<int> GetClienteIdList() 
         {
             return _clienteIds;
+        }
+
+        private void btnActualizar_MouseMove(object sender, MouseEventArgs e)
+        {
+            btnActualizar.BackColor = Color.White;
+            btnActualizar.ForeColor = Color.Black;
+        }
+
+        private void btnActualizar_MouseLeave(object sender, EventArgs e)
+        {
+            btnActualizar.BackColor = Color.Transparent;
+            btnActualizar.ForeColor = Color.White;
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            ClienteListagem_Load(this , EventArgs.Empty);
         }
     }
 }

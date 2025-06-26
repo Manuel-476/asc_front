@@ -64,7 +64,7 @@
             this.botaoEntidade.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.botaoEntidade.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.botaoEntidade.ForeColor = System.Drawing.Color.White;
-            this.botaoEntidade.Location = new System.Drawing.Point(543, 46);
+            this.botaoEntidade.Location = new System.Drawing.Point(544, 46);
             this.botaoEntidade.Name = "botaoEntidade";
             this.botaoEntidade.Size = new System.Drawing.Size(135, 34);
             this.botaoEntidade.TabIndex = 60;

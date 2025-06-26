@@ -22,6 +22,7 @@ namespace AscFrontEnd
         FornecedorDTO _fornecedor;
         List<FornecedorFilialDTO> filiais;
         DataTable dtFilial;
+        HttpClient client;
         public FornecedorEditar(int fornecedorId)
         {
             InitializeComponent();
@@ -29,6 +30,12 @@ namespace AscFrontEnd
             dtFilial = new DataTable();
             _fornecedorId = fornecedorId;
             _fornecedor = StaticProperty.fornecedores.Where(x => x.id == _fornecedorId).First();
+
+            client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            client.BaseAddress = new Uri("http://localhost:7200/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         private void FornecedorEditar_Load(object sender, EventArgs e)
@@ -108,12 +115,7 @@ namespace AscFrontEnd
                 empresaid = StaticProperty.empresaId
             };
 
-            // Configuração do HttpClient
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://sua-api.com/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
 
             // Conversão do objeto Film para JSON
             string json = JsonSerializer.Serialize(fornecedor);
@@ -121,14 +123,14 @@ namespace AscFrontEnd
             if (MessageBox.Show("Tens certeza que queres salvar estas alterações?", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
             {
                 // Envio dos dados para a API
-                HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Fornecedor/{_fornecedorId}/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage response = await client.PostAsync($"api/Fornecedor/{_fornecedorId}/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Fornecedor Alterado Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
                     // Actualizar dados nas propriedades estaticas
 
                     // Fornecedor
-                    var responseFornecedor = await client.GetAsync($"https://localhost:7200/api/Fornecedor/FornecedoresByRelation");
+                    var responseFornecedor = await client.GetAsync($"api/Fornecedor/FornecedoresByRelation");
 
                     if (responseFornecedor.IsSuccessStatusCode)
                     {

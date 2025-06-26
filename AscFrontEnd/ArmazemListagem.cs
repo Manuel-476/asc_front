@@ -11,20 +11,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.Json;
+using AscFrontEnd.DTOs.Venda;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Color = System.Drawing.Color;
 
 namespace AscFrontEnd
 {
     public partial class ArmazemListagem : Form
     {
-        int id=0;
+        int id = 0;
         bool _multi = false;
 
         List<int> _armazemIds;
         public ArmazemListagem()
         {
             InitializeComponent();
+            _armazemIds =  new List<int>();
         }
-        public ArmazemListagem(bool multi,List<int> armazemIds)
+        public ArmazemListagem(bool multi, List<int> armazemIds)
         {
             _multi = multi;
 
@@ -48,13 +52,16 @@ namespace AscFrontEnd
                 eliminarPicture.Visible = false;
 
                 // Adiciona linhas ao DataTable
-                foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == StaticProperty.empresaId))
+                if (StaticProperty.armazens != null)
                 {
-                    dt.Rows.Add(item.id, item.codigo, item.descricao);
+                    foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == StaticProperty.empresaId))
+                    {
+                        dt.Rows.Add(item.id, item.codigo, item.descricao);
 
-                }
+                    }
+                    dataGridView1.ClearSelection();
                     dataGridView1.DataSource = dt;
-
+                }
 
                 // Seleciona automaticamente as linhas cujos IDs estão em _artigoIds
                 if (_armazemIds != null && _armazemIds.Any())
@@ -73,13 +80,16 @@ namespace AscFrontEnd
             {
                 dataGridView1.MultiSelect = false;
 
-                // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == StaticProperty.empresaId))
+                if (StaticProperty.armazens != null)
                 {
-                    dt.Rows.Add(item.id, item.codigo, item.descricao);
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == StaticProperty.empresaId))
+                    {
+                        dt.Rows.Add(item.id, item.codigo, item.descricao);
 
-                }
+                    }
                     dataGridView1.DataSource = dt;
+                }
 
             }
         }
@@ -91,7 +101,7 @@ namespace AscFrontEnd
 
         private void editarPicture_MouseLeave(object sender, EventArgs e)
         {
-            editarPicture.BackColor= Color.Transparent;
+            editarPicture.BackColor = Color.Transparent;
         }
 
         private void eliminarPicture_MouseLeave(object sender, EventArgs e)
@@ -118,18 +128,27 @@ namespace AscFrontEnd
             dt.Columns.Add("P. Unitario", typeof(string));
             dt.Columns.Add("mov. Stock", typeof(string));
             dt.Columns.Add("mov. Lote", typeof(string));
-
-            // Adicionando linhas ao DataTable
-            foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == StaticProperty.empresaId && (arm.codigo.Contains(pesqText.Text) || arm.descricao.Contains(pesqText.Text))))
+            if (StaticProperty.armazens != null)
             {
-                dt.Rows.Add(item.id, item.codigo, item.descricao);
+                // Adicionando linhas ao DataTable
+                foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == StaticProperty.empresaId && (arm.codigo.Contains(pesqText.Text) || arm.descricao.Contains(pesqText.Text))))
+                {
+                    dt.Rows.Add(item.id, item.codigo, item.descricao);
 
-                dataGridView1.DataSource = dt;
+                    dataGridView1.DataSource = dt;
+                }
             }
         }
 
         private void editarPicture_Click(object sender, EventArgs e)
         {
+            if (id <= 0)
+            {
+                MessageBox.Show("Atenção", "Nenhum armazem selecionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+
             new ArmazemEditar(id).ShowDialog();
         }
 
@@ -138,27 +157,23 @@ namespace AscFrontEnd
             try
             {
                 string nome = string.Empty;
+                var rowsSelected = dataGridView1.SelectedRows;
 
-                if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+                if (_armazemIds != null)
                 {
-                    // Obtém o valor da célula clicada
-                    id = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
-
-                    if (_multi)
+                    _armazemIds.Clear();
+              
+                foreach (DataGridViewRow row in rowsSelected)
+                {
+                    if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
                     {
-                        var idAdd = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
+                 
+                        // Obtém o valor da célula clicada
+                        id = int.Parse(row.Cells[0].Value.ToString());
 
-                        nome = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
-
-                        if (!_armazemIds.Contains(idAdd))
-                        {
-                            _armazemIds.Add(idAdd);
-                        }
-                        else
-                        {
-                            _armazemIds.Remove(idAdd);
-                        }
+                        _armazemIds.Add(id);
                     }
+                }
                 }
             }
             catch { return; }
@@ -166,6 +181,12 @@ namespace AscFrontEnd
 
         private async void eliminarPicture_Click(object sender, EventArgs e)
         {
+            if (id <= 0)
+            {
+                MessageBox.Show("Atenção", "Nenhum armazem selecionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             string nome = StaticProperty.armazens.Where(c => c.id == id).First().codigo;
 
             try
@@ -173,7 +194,7 @@ namespace AscFrontEnd
                 HttpResponseMessage response = null;
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                client.BaseAddress = new Uri("https://sua-api.com/");
+                client.BaseAddress = new Uri("http://localhost:7200/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -182,7 +203,7 @@ namespace AscFrontEnd
 
                 if (MessageBox.Show($"Tens certeza que pretendes eliminar {nome}", "Atencao", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
                 {
-                    response = await client.PutAsync($"https://localhost:7200/api/Armazem/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json")); 
+                    response = await client.PutAsync($"api/Armazem/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -203,6 +224,23 @@ namespace AscFrontEnd
         public List<int> GetArmazemIdList()
         {
             return _armazemIds;
+        }
+
+        private void btnAtualizar_MouseMove(object sender, MouseEventArgs e)
+        {
+            btnAtualizar.BackColor = Color.White;
+            btnAtualizar.ForeColor = Color.FromArgb(64, 64, 64);
+        }
+
+        private void btnAtualizar_MouseLeave(object sender, EventArgs e)
+        {
+            btnAtualizar.BackColor = Color.Transparent;
+            btnAtualizar.ForeColor = Color.White;
+        }
+
+        private void btnAtualizar_Click(object sender, EventArgs e)
+        {
+             ArmazemListagem_Load(this, EventArgs.Empty);
         }
     }
 }

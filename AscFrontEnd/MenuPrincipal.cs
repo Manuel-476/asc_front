@@ -67,19 +67,19 @@ namespace AscFrontEnd
 
         private void vendaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Venda venda = new Venda();
+            Venda venda = new Venda(_user);
             venda.ShowDialog();
         }
 
         private void cadastroToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Artigo cadastro = new Artigo();
+            Artigo cadastro = new Artigo(_user);
             cadastro.ShowDialog();
         }
 
         private void compraToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Compra compra = new Compra();
+            Compra compra = new Compra(_user);
             compra.ShowDialog();
         }
 
@@ -91,13 +91,13 @@ namespace AscFrontEnd
 
         private void listaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Stock stock = new Stock();
+            Stock stock = new Stock(_user);
             stock.ShowDialog();
         }
 
         private void contaCorrenteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ContasCorrentes ccForm = new ContasCorrentes();
+            ContasCorrentes ccForm = new ContasCorrentes(_user);
             ccForm.ShowDialog();
         }
 
@@ -109,13 +109,13 @@ namespace AscFrontEnd
 
         private void funcionarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FuncionarioForm funcionario = new FuncionarioForm();
+            FuncionarioForm funcionario = new FuncionarioForm(_user);
             funcionario.ShowDialog();
         }
 
         private void empresaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EmpresaForm empresaForm = new EmpresaForm();    
+            EmpresaForm empresaForm = new EmpresaForm(_user);    
             empresaForm.ShowDialog();
         }
 
@@ -147,19 +147,20 @@ namespace AscFrontEnd
         private async void MenuPrincipal_Load(object sender, EventArgs e)
         {
             this.ApagarTodosTools();
+          
 
-            foreach (var item in _user.userPermissions) 
+            foreach (var item in _user.userPermissions)
             {
-                if(StaticProperty.permissions.Where(x => x.Id == item.permissionId).Any()) 
+                if (StaticProperty.permissions.Where(x => x.Id == item.permissionId).Any())
                 {
                     var permission = StaticProperty.permissions.Where(x => x.Id == item.permissionId).First();
-                    if (string.Compare(permission.descricao, "Criar e editar pedidos de venda.",true) == 0)
+                    if (string.Compare(permission.descricao, "Criar e editar pedidos de venda.", true) == 0)
                     {
                         vendaToolStripMenuItem.Visible = true;
                     }
                     if (string.Compare(permission.descricao, "Gerenciar clientes e contatos.", true) == 0)
                     {
-                      
+
 
                         clienteToolStripMenuItem.Visible = true;
                     }
@@ -169,8 +170,6 @@ namespace AscFrontEnd
                     }
                     if (string.Compare(permission.descricao, "Gerenciar fornecedores e contratos.", true) == 0)
                     {
-        
-
                         fornecedorToolStripMenuItem.Visible = true;
                     }
                     if (string.Compare(permission.descricao, "Visualizar e ajustar níveis de estoque.", true) == 0)
@@ -179,7 +178,7 @@ namespace AscFrontEnd
                     }
                     if (string.Compare(permission.descricao, "Gerenciar contas a pagar e a receber.", true) == 0)
                     {
-                        contaCorrenteToolStripMenuItem.Visible=true;
+                        contaCorrenteToolStripMenuItem.Visible = true;
                     }
                     if (string.Compare(permission.descricao, "Criar Serie.", true) == 0)
                     {
@@ -195,15 +194,21 @@ namespace AscFrontEnd
                     }
                     if (string.Compare(_user.nivel_acesso, "Tecnico", true) == 0 || string.Compare(_user.nivel_acesso, "Administrador", true) == 0)
                     {
-                        funcionarioToolStripMenuItem.Visible = true;         
-                    }
-                    if (string.Compare(_user.nivel_acesso, "Tecnico", true) == 0 || string.Compare(_user.nivel_acesso, "Administrador", true) == 0)
-                    {
+                        funcionarioToolStripMenuItem.Visible = true;
+
                         cadastroToolStripMenuItem1.Visible = true;
+
+                        historicoToolStripMenuItem.Visible = true;
+
+                        panel1.Visible = true;
                     }
                     if (string.Compare(_user.nivel_acesso, "Tecnico", true) == 0)
                     {
                         empresaToolStripMenuItem.Visible = true;
+                    }
+                    if (string.Compare(_user.nivel_acesso, "Gerente", true) == 0)
+                    {
+                        historicoToolStripMenuItem.Visible = true;
                     }
                     if (string.Compare(permission.descricao, "Gerar relatórios.", true) == 0)
                     {
@@ -213,29 +218,35 @@ namespace AscFrontEnd
                     //
                 }
 
-              
+
             }
             timer1.Start();
 
-            var qtdMinim = StaticProperty.stockMinims.Where(x => x.empresaId == StaticProperty.empresaId).FirstOrDefault() == null
-                          ? 0: StaticProperty.stockMinims.Where(x => x.empresaId == StaticProperty.empresaId).FirstOrDefault().qtdMinim;
-            
-            await this.NotificationStockAsync(qtdMinim);
-
-            await NotificationOrderAsync();
-
-            await NotificationOrderFornAsync();
-
-            if(_notifications.Count<=0 && _notificationsOrder.Count <= 0 && _notificationsOrderForn.Count <= 0) 
+            if (!_user.nivel_acesso.Equals("Caixa"))
             {
-                stockLabel.Text = "Sem Notificação";
-                orderClLabel.Text = "";
-                orderFornLabel.Text = "";
+                if (StaticProperty.stockMinims != null)
+                {
+                    var qtdMinim = !StaticProperty.stockMinims.Where(x => x.empresaId == StaticProperty.empresaId).Any() || StaticProperty.stockMinims.Where(x => x.empresaId == StaticProperty.empresaId).First() == null
+                                  ? 0 : StaticProperty.stockMinims.Where(x => x.empresaId == StaticProperty.empresaId).FirstOrDefault().qtdMinim;
+
+                    await this.NotificationStockAsync(qtdMinim);
+
+                    await NotificationOrderAsync();
+
+                    await NotificationOrderFornAsync();
+
+                    if (_notifications.Count <= 0 && _notificationsOrder.Count <= 0 && _notificationsOrderForn.Count <= 0)
+                    {
+                        stockLabel.Text = "Sem Notificação";
+                        orderClLabel.Text = "";
+                        orderFornLabel.Text = "";
+                    }
+
+                    totalVendaLabel.Text = $"Total Vendas:\n{DashBoard.VendaTotal().ToString("F2")}";
+                    totalCompraLabel.Text = $"Total Compras:\n{DashBoard.CompraTotal().ToString("F2")}";
+
+                }
             }
-
-            totalVendaLabel.Text = $"Total Vendas:\n{DashBoard.VendaTotal().ToString("F2")}";
-            totalCompraLabel.Text = $"Total Compras:\n{DashBoard.CompraTotal().ToString("F2")}";
-
         }
 
         public bool ApagarTodosTools() 
@@ -268,11 +279,13 @@ namespace AscFrontEnd
 
             depositoToolStripMenuItem.Visible = false;
 
-            // historicoToolStripMenuItem.Visible = false;
+            historicoToolStripMenuItem.Visible = false;
 
             // formaPagamentoToolStripMenuItem.Visible = false;
 
             relatoriosToolStripMenuItem.Visible = false;
+
+            panel1.Visible = false;
 
             return true;
         }
@@ -289,7 +302,7 @@ namespace AscFrontEnd
 
         private void configuracoesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new ConfigForm().ShowDialog();
+            new ConfigForm(_user).ShowDialog();
         }
 
         public async Task NotificationStockAsync(float qtdMinim)

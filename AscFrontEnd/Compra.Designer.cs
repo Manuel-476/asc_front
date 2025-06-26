@@ -51,6 +51,7 @@
             this.tabelaCompra = new System.Windows.Forms.DataGridView();
             this.eliminarBtn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.Imprimir = new System.Drawing.Printing.PrintDocument();
@@ -68,6 +69,7 @@
             this.dataEntrega = new System.Windows.Forms.DateTimePicker();
             this.label9 = new System.Windows.Forms.Label();
             this.dataDocumento = new System.Windows.Forms.DateTimePicker();
+            this.printDialog1 = new System.Windows.Forms.PrintDialog();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaArtigos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabelaCompra)).BeginInit();
             this.panel1.SuspendLayout();
@@ -90,9 +92,9 @@
             this.comprasBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.comprasBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comprasBtn.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.comprasBtn.Location = new System.Drawing.Point(893, 59);
+            this.comprasBtn.Location = new System.Drawing.Point(840, 58);
             this.comprasBtn.Name = "comprasBtn";
-            this.comprasBtn.Size = new System.Drawing.Size(190, 33);
+            this.comprasBtn.Size = new System.Drawing.Size(126, 33);
             this.comprasBtn.TabIndex = 34;
             this.comprasBtn.Text = "Compras";
             this.comprasBtn.UseVisualStyleBackColor = false;
@@ -170,9 +172,9 @@
             this.clienteBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.clienteBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.clienteBtn.ForeColor = System.Drawing.Color.White;
-            this.clienteBtn.Location = new System.Drawing.Point(720, 59);
+            this.clienteBtn.Location = new System.Drawing.Point(713, 58);
             this.clienteBtn.Name = "clienteBtn";
-            this.clienteBtn.Size = new System.Drawing.Size(164, 33);
+            this.clienteBtn.Size = new System.Drawing.Size(121, 34);
             this.clienteBtn.TabIndex = 24;
             this.clienteBtn.Text = "Fornecedores";
             this.clienteBtn.UseVisualStyleBackColor = false;
@@ -308,6 +310,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.fornecedortxt);
@@ -318,6 +321,21 @@
             this.panel1.Size = new System.Drawing.Size(1097, 95);
             this.panel1.TabIndex = 41;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.button2.Location = new System.Drawing.Point(972, 58);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(121, 34);
+            this.button2.TabIndex = 37;
+            this.button2.Text = "Atualizar";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.MouseLeave += new System.EventHandler(this.button2_MouseLeave);
+            this.button2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.button2_MouseMove);
             // 
             // pictureBox1
             // 
@@ -331,6 +349,7 @@
             // 
             // timerRefresh
             // 
+            this.timerRefresh.Interval = 2500;
             this.timerRefresh.Tick += new System.EventHandler(this.timerRefresh_Tick);
             // 
             // Imprimir
@@ -479,6 +498,10 @@
             this.dataDocumento.Size = new System.Drawing.Size(128, 20);
             this.dataDocumento.TabIndex = 56;
             // 
+            // printDialog1
+            // 
+            this.printDialog1.UseEXDialog = true;
+            // 
             // Compra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -573,5 +596,7 @@
         private System.Windows.Forms.DateTimePicker dataEntrega;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DateTimePicker dataDocumento;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.PrintDialog printDialog1;
     }
 }

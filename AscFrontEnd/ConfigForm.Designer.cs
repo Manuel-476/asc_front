@@ -32,17 +32,17 @@
             this.stockLabel = new System.Windows.Forms.Label();
             this.imgLabel = new System.Windows.Forms.Label();
             this.ipLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.saftPicture = new System.Windows.Forms.PictureBox();
             this.ipPicture = new System.Windows.Forms.PictureBox();
             this.imgPicture = new System.Windows.Forms.PictureBox();
             this.stockPicture = new System.Windows.Forms.PictureBox();
             this.senhaPicture = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.saftPicture = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.saftPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ipPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stockPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.senhaPicture)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.saftPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // senhaLabel
@@ -82,46 +82,6 @@
             this.ipLabel.TabIndex = 7;
             this.ipLabel.Text = "Endereço Servidor";
             // 
-            // ipPicture
-            // 
-            this.ipPicture.BackColor = System.Drawing.SystemColors.Highlight;
-            this.ipPicture.Location = new System.Drawing.Point(493, 21);
-            this.ipPicture.Name = "ipPicture";
-            this.ipPicture.Size = new System.Drawing.Size(119, 150);
-            this.ipPicture.TabIndex = 3;
-            this.ipPicture.TabStop = false;
-            this.ipPicture.Click += new System.EventHandler(this.ipPicture_Click);
-            // 
-            // imgPicture
-            // 
-            this.imgPicture.BackColor = System.Drawing.Color.Red;
-            this.imgPicture.Location = new System.Drawing.Point(327, 21);
-            this.imgPicture.Name = "imgPicture";
-            this.imgPicture.Size = new System.Drawing.Size(119, 150);
-            this.imgPicture.TabIndex = 2;
-            this.imgPicture.TabStop = false;
-            this.imgPicture.Click += new System.EventHandler(this.imgPicture_Click);
-            // 
-            // stockPicture
-            // 
-            this.stockPicture.BackColor = System.Drawing.Color.SpringGreen;
-            this.stockPicture.Location = new System.Drawing.Point(175, 21);
-            this.stockPicture.Name = "stockPicture";
-            this.stockPicture.Size = new System.Drawing.Size(119, 150);
-            this.stockPicture.TabIndex = 1;
-            this.stockPicture.TabStop = false;
-            this.stockPicture.Click += new System.EventHandler(this.stockPicture_Click);
-            // 
-            // senhaPicture
-            // 
-            this.senhaPicture.BackColor = System.Drawing.Color.Gold;
-            this.senhaPicture.Location = new System.Drawing.Point(12, 21);
-            this.senhaPicture.Name = "senhaPicture";
-            this.senhaPicture.Size = new System.Drawing.Size(119, 150);
-            this.senhaPicture.TabIndex = 0;
-            this.senhaPicture.TabStop = false;
-            this.senhaPicture.Click += new System.EventHandler(this.senhaPicture_Click);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -133,13 +93,73 @@
             // 
             // saftPicture
             // 
-            this.saftPicture.BackColor = System.Drawing.Color.OrangeRed;
+            this.saftPicture.BackColor = System.Drawing.SystemColors.Highlight;
+            this.saftPicture.BackgroundImage = global::AscFrontEnd.Properties.Resources.document;
+            this.saftPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.saftPicture.Location = new System.Drawing.Point(652, 21);
             this.saftPicture.Name = "saftPicture";
             this.saftPicture.Size = new System.Drawing.Size(119, 150);
             this.saftPicture.TabIndex = 8;
             this.saftPicture.TabStop = false;
             this.saftPicture.Click += new System.EventHandler(this.saftPicture_Click);
+            this.saftPicture.MouseLeave += new System.EventHandler(this.saftPicture_MouseLeave);
+            this.saftPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.saftPicture_MouseMove);
+            // 
+            // ipPicture
+            // 
+            this.ipPicture.BackColor = System.Drawing.SystemColors.Highlight;
+            this.ipPicture.BackgroundImage = global::AscFrontEnd.Properties.Resources.ip_address;
+            this.ipPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.ipPicture.Location = new System.Drawing.Point(493, 21);
+            this.ipPicture.Name = "ipPicture";
+            this.ipPicture.Size = new System.Drawing.Size(119, 150);
+            this.ipPicture.TabIndex = 3;
+            this.ipPicture.TabStop = false;
+            this.ipPicture.Click += new System.EventHandler(this.ipPicture_Click);
+            this.ipPicture.MouseLeave += new System.EventHandler(this.ipPicture_MouseLeave);
+            this.ipPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ipPicture_MouseMove);
+            // 
+            // imgPicture
+            // 
+            this.imgPicture.BackColor = System.Drawing.SystemColors.Highlight;
+            this.imgPicture.BackgroundImage = global::AscFrontEnd.Properties.Resources.image_editing;
+            this.imgPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.imgPicture.Location = new System.Drawing.Point(327, 21);
+            this.imgPicture.Name = "imgPicture";
+            this.imgPicture.Size = new System.Drawing.Size(119, 150);
+            this.imgPicture.TabIndex = 2;
+            this.imgPicture.TabStop = false;
+            this.imgPicture.Click += new System.EventHandler(this.imgPicture_Click);
+            this.imgPicture.MouseLeave += new System.EventHandler(this.imgPicture_MouseLeave);
+            this.imgPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.imgPicture_MouseMove);
+            // 
+            // stockPicture
+            // 
+            this.stockPicture.BackColor = System.Drawing.SystemColors.Highlight;
+            this.stockPicture.BackgroundImage = global::AscFrontEnd.Properties.Resources.trend;
+            this.stockPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.stockPicture.Location = new System.Drawing.Point(175, 21);
+            this.stockPicture.Name = "stockPicture";
+            this.stockPicture.Size = new System.Drawing.Size(119, 150);
+            this.stockPicture.TabIndex = 1;
+            this.stockPicture.TabStop = false;
+            this.stockPicture.Click += new System.EventHandler(this.stockPicture_Click);
+            this.stockPicture.MouseLeave += new System.EventHandler(this.stockPicture_MouseLeave);
+            this.stockPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.stockPicture_MouseMove);
+            // 
+            // senhaPicture
+            // 
+            this.senhaPicture.BackColor = System.Drawing.SystemColors.Highlight;
+            this.senhaPicture.BackgroundImage = global::AscFrontEnd.Properties.Resources.password;
+            this.senhaPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.senhaPicture.Location = new System.Drawing.Point(12, 21);
+            this.senhaPicture.Name = "senhaPicture";
+            this.senhaPicture.Size = new System.Drawing.Size(119, 150);
+            this.senhaPicture.TabIndex = 0;
+            this.senhaPicture.TabStop = false;
+            this.senhaPicture.Click += new System.EventHandler(this.senhaPicture_Click);
+            this.senhaPicture.MouseLeave += new System.EventHandler(this.senhaPicture_MouseLeave);
+            this.senhaPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.senhaPicture_MouseMove);
             // 
             // ConfigForm
             // 
@@ -162,11 +182,12 @@
             this.Name = "ConfigForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Load += new System.EventHandler(this.ConfigForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.saftPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ipPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stockPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.senhaPicture)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.saftPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

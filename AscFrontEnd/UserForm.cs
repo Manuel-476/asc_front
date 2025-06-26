@@ -20,30 +20,35 @@ namespace AscFrontEnd
     {
         HttpClient client;
         string _tittle = string.Empty;
-        int _userId;
-        public UserForm()
+
+        UserDTO _user;
+
+        public UserForm(UserDTO user)
         {
 
             InitializeComponent();
 
 
             client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:7200");
+            client.BaseAddress = new Uri("http://localhost:7200");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
 
+            _user = user;
+
         }
 
-        public UserForm(string tittle, int userId)
+        public UserForm
+        (string tittle, UserDTO user)
         {
             InitializeComponent();
 
             _tittle = tittle;
-            _userId = userId;
+            _user = user;
 
             client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:7200");
+            client.BaseAddress = new Uri("http://localhost:7200");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
@@ -66,7 +71,7 @@ namespace AscFrontEnd
             }
             else 
             {
-                user.id = _userId;
+                user.id = _user.id;
 
                 string json = System.Text.Json.JsonSerializer.Serialize(user);
 
@@ -74,7 +79,7 @@ namespace AscFrontEnd
                
                 if (response.IsSuccessStatusCode) 
                 {
-                    MessageBox.Show("Credencias Alterado", "Feito Com Sucesso", MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    MessageBox.Show("Credencias Alterada", "Feito Com Sucesso", MessageBoxButtons.OK,MessageBoxIcon.Information);
 
                     new TelaLogin().ShowDialog();
                     this.Close();
@@ -97,7 +102,15 @@ namespace AscFrontEnd
                 nivelAcesso.Dispose();
                 nivelAcessoLabel.Dispose();
                 linkPermissions.Dispose();
+
             }
+            if (_user.nivel_acesso.Equals("Tecnico"))
+            {
+                nivelAcesso.Items.Add("Tecnico");
+            }
+            nivelAcesso.Items.Add("Administrador");
+            nivelAcesso.Items.Add("Gerente");
+            nivelAcesso.Items.Add("Caixa");
         }
 
         private void linkPermissions_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

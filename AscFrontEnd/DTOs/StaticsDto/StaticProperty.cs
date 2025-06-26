@@ -37,6 +37,7 @@ namespace AscFrontEnd.DTOs.StaticsDto
         public static string token {  get; set; }
         public static string motivoAnulacao { get; set; }
         public static string documentoOrigem { get; set; }
+        public static int percentual { get; set; } = 0;
 
         // Cliente
         public static List<ClienteDTO> clientes { get; set; }

@@ -37,12 +37,13 @@ namespace AscFrontEnd
         string codigoDocumentoOrigem = string.Empty;
         string codigoDocumento = string.Empty;
         string localEntrega = string.Empty;
-     
+
 
         List<DocumentoCompra> documentoCompras;
         List<CompraArtigo> compraArtigos;
         VncDTO vnc;
         FornecedorDTO fornecedorResult;
+        HttpClient client;
         public CompraListagem()
         {
             InitializeComponent();
@@ -51,6 +52,11 @@ namespace AscFrontEnd
             compraArtigos = new List<CompraArtigo>();
             fornecedorResult = new FornecedorDTO();
             vnc = new VncDTO();
+
+            client.BaseAddress = new Uri("http://localhost:7200/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         private void radioFp_CheckedChanged(object sender, EventArgs e)
@@ -124,22 +130,27 @@ namespace AscFrontEnd
 
             // Adicionando linhas ao DataTable
             this.SetCompras();
-
-            foreach (var item in documentoCompras.OrderByDescending(x => x.data))
+            if (documentoCompras != null)
             {
-                if (StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).Any())
+                foreach (var item in documentoCompras.OrderByDescending(x => x.data))
                 {
-                    fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                    if (StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId) != null)
+                    {
+                        if (StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).Any())
+                        {
+                            fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                        }
+                    }
+                    var estado = string.Empty;
+                    if (item.status == DocState.anulado) { estado = "Anulado"; }
+                    else if (item.status == DocState.estornado) { estado = "Estornado"; }
+                    else { estado = item.documento.Contains("ECF ") ? "Pendente" : "activo"; }
+
+                    dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
                 }
-                var estado = string.Empty;
-                if (item.status == DocState.anulado) { estado = "Anulado"; }
-                else if (item.status == DocState.estornado) { estado = "Estornado"; }
-                else { estado = item.documento.Contains("ECF ") ? "Pendente" : "activo"; }
-
-                dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
             }
-
             dataGridView1.DataSource = dt;
+
         }
 
         private void radioVft_CheckedChanged(object sender, EventArgs e)
@@ -155,16 +166,18 @@ namespace AscFrontEnd
                 dt.Columns.Add("Estado", typeof(string));
                 dt.Columns.Add("Data", typeof(string));
 
-
-                // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vfts.Where(f => f.status != DocState.anulado && f.empresaId == StaticProperty.empresaId))
+                if (StaticProperty.vfts != null)
                 {
-                    fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.vfts.Where(f => f.status != DocState.anulado && f.empresaId == StaticProperty.empresaId))
+                    {
+                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
 
-                    var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+                        var estado = item.status == DocState.estornado ? "Estornado" : "activo";
 
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
+                        dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
 
+                    }
                     dataGridView1.DataSource = dt;
                 }
             }
@@ -183,19 +196,20 @@ namespace AscFrontEnd
                 dt.Columns.Add("Estado", typeof(string));
                 dt.Columns.Add("Data", typeof(string));
 
-
-                // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vfrs.Where(f => f.status != DocState.anulado && f.status != DocState.estornado && f.empresaId == StaticProperty.empresaId).ToList())
+                if (StaticProperty.vfrs != null)
                 {
-                    fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.vfrs.Where(f => f.status != DocState.anulado && f.status != DocState.estornado && f.empresaId == StaticProperty.empresaId).ToList())
+                    {
+                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
 
-                    var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+                        var estado = item.status == DocState.estornado ? "Estornado" : "activo";
 
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
+                        dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
 
+                    }
                     dataGridView1.DataSource = dt;
                 }
-
             }
         }
 
@@ -212,16 +226,18 @@ namespace AscFrontEnd
                 dt.Columns.Add("Estado", typeof(string));
                 dt.Columns.Add("Data", typeof(string));
 
-
-                // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vgts.Where(f => f.status != DocState.anulado && f.empresaId == StaticProperty.empresaId))
+                if (StaticProperty.vgts != null)
                 {
-                    fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.vgts.Where(f => f.status != DocState.anulado && f.empresaId == StaticProperty.empresaId))
+                    {
+                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
 
-                    var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+                        var estado = item.status == DocState.estornado ? "Estornado" : "activo";
 
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
+                        dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
 
+                    }
                     dataGridView1.DataSource = dt;
                 }
             }
@@ -240,16 +256,18 @@ namespace AscFrontEnd
                 dt.Columns.Add("Estado", typeof(string));
                 dt.Columns.Add("Data", typeof(string));
 
-
-                // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vgrs.Where(f => f.status != DocState.anulado && f.empresaId == StaticProperty.empresaId))
+                if (StaticProperty.vgrs != null)
                 {
-                    fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.vgrs.Where(f => f.status != DocState.anulado && f.empresaId == StaticProperty.empresaId))
+                    {
+                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
 
-                    var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+                        var estado = item.status == DocState.estornado ? "Estornado" : "activo";
 
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
+                        dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
 
+                    }
                     dataGridView1.DataSource = dt;
                 }
             }
@@ -268,16 +286,18 @@ namespace AscFrontEnd
                 dt.Columns.Add("Estado", typeof(string));
                 dt.Columns.Add("Data", typeof(string));
 
-
-                // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vncs.Where(x => x.empresaId == StaticProperty.empresaId))
+                if (StaticProperty.vncs != null)
                 {
-                    fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.vncs.Where(x => x.empresaId == StaticProperty.empresaId))
+                    {
+                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
 
-                    var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+                        var estado = item.status == DocState.estornado ? "Estornado" : "activo";
 
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
+                        dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
 
+                    }
                     dataGridView1.DataSource = dt;
                 }
             }
@@ -292,17 +312,19 @@ namespace AscFrontEnd
                 dt.Columns.Add("Documento", typeof(string));
                 dt.Columns.Add("Data", typeof(string));
 
-
-                // Adicionando linhas ao DataTable
-                foreach (var item in documentoCompras.Where(f => f.status == DocState.anulado).OrderByDescending(x => x.data))
+                if (documentoCompras != null)
                 {
-                    if (StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First() != null)
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in documentoCompras.Where(f => f.status == DocState.anulado).OrderByDescending(x => x.data))
                     {
-                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                        if (StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First() != null)
+                        {
+                            fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                        }
+
+                        dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
                     }
-
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
-
                 }
                 dataGridView1.DataSource = dt;
             }
@@ -317,42 +339,54 @@ namespace AscFrontEnd
             dt.Columns.Add("Data", typeof(string));
             if (radioVft.Checked)
             {
-                // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vfts.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+                if (StaticProperty.vfts != null)
                 {
-                    fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
-
-                    dataGridView1.DataSource = dt;
-                }
-                foreach (var item2 in StaticProperty.fornecedores.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text)))
-                {
-                    foreach (var item in StaticProperty.vfts.Where(f => f.fornecedorId == item2.id).ToList())
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.vfts.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
                     {
                         fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
                         dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
 
+                    }
+                    dataGridView1.DataSource = dt;
+                }
+                if (StaticProperty.fornecedores != null)
+                {
+                    foreach (var item2 in StaticProperty.fornecedores.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text)))
+                    {
+                        foreach (var item in StaticProperty.vfts.Where(f => f.fornecedorId == item2.id).ToList())
+                        {
+                            fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
+                            dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                        }
                         dataGridView1.DataSource = dt;
                     }
                 }
             }
             else if (radioVfr.Checked)
             {
-                // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vfrs.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado && f.status != DocState.estornado))
+                if (StaticProperty.vfrs != null)
                 {
-                    fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
-
-                    dataGridView1.DataSource = dt;
-                }
-                foreach (var item2 in StaticProperty.fornecedores.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text)))
-                {
-                    foreach (var item in StaticProperty.vfrs.Where(f => f.fornecedorId == item2.id && f.status != DocState.anulado && f.status != DocState.estornado).ToList())
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.vfrs.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado && f.status != DocState.estornado))
                     {
                         fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
                         dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
 
+                    }
+                    dataGridView1.DataSource = dt;
+                }
+                if (StaticProperty.fornecedores != null)
+                {
+                    foreach (var item2 in StaticProperty.fornecedores.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text)))
+                    {
+                        foreach (var item in StaticProperty.vfrs.Where(f => f.fornecedorId == item2.id && f.status != DocState.anulado && f.status != DocState.estornado).ToList())
+                        {
+                            fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
+                            dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                        }
                         dataGridView1.DataSource = dt;
                     }
                 }
@@ -360,58 +394,63 @@ namespace AscFrontEnd
             else if (radioPco.Checked)
             {
                 // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.pcos.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
+                if (StaticProperty.pcos != null)
                 {
-                    fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
-
-                    dataGridView1.DataSource = dt;
-                }
-                foreach (var item2 in StaticProperty.fornecedores.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text)))
-                {
-                    foreach (var item in StaticProperty.pcos.Where(f => f.fornecedorId == item2.id && f.status != DocState.anulado).ToList())
+                    foreach (var item in StaticProperty.pcos.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
                     {
                         fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
                         dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
 
-                        dataGridView1.DataSource = dt;
+                    }
+                    dataGridView1.DataSource = dt;
+                }
+                if (StaticProperty.fornecedores != null)
+                {
+                    foreach (var item2 in StaticProperty.fornecedores.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text)))
+                    {
+                        foreach (var item in StaticProperty.pcos.Where(f => f.fornecedorId == item2.id && f.status != DocState.anulado).ToList())
+                        {
+                            fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
+                            dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                            dataGridView1.DataSource = dt;
+                        }
                     }
                 }
             }
             else if (radioVgt.Checked)
             {
-                // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vgts.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
+                if (StaticProperty.vgts != null)
                 {
-                    fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
-
-                    dataGridView1.DataSource = dt;
-                }
-                foreach (var item2 in StaticProperty.fornecedores.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text)))
-                {
-                    foreach (var item in StaticProperty.vgts.Where(f => f.fornecedorId == item2.id && f.status != DocState.anulado).ToList())
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.vgts.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
                     {
                         fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
                         dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
 
+                    }
+                    dataGridView1.DataSource = dt;
+                }
+                if (StaticProperty.fornecedores != null)
+                {
+                    foreach (var item2 in StaticProperty.fornecedores.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text)))
+                    {
+                        foreach (var item in StaticProperty.vgts.Where(f => f.fornecedorId == item2.id && f.status != DocState.anulado).ToList())
+                        {
+                            fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
+                            dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                        }
                         dataGridView1.DataSource = dt;
                     }
                 }
             }
             else if (radioVnc.Checked)
             {
-                // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.vncs.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
+                if (StaticProperty.vncs != null)
                 {
-                    fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
-
-                    dataGridView1.DataSource = dt;
-                }
-                foreach (var item2 in StaticProperty.fornecedores.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text) && f.status == Status.activo))
-                {
-                    foreach (var item in StaticProperty.vncs.Where(f => f.fornecedorId == item2.id).ToList())
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.vncs.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
                     {
                         fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
                         dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
@@ -419,25 +458,44 @@ namespace AscFrontEnd
                         dataGridView1.DataSource = dt;
                     }
                 }
+                if (StaticProperty.fornecedores != null)
+                {
+                    foreach (var item2 in StaticProperty.fornecedores.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text) && f.status == Status.activo))
+                    {
+                        foreach (var item in StaticProperty.vncs.Where(f => f.fornecedorId == item2.id).ToList())
+                        {
+                            fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
+                            dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                        }
+                            dataGridView1.DataSource = dt;
+                    }
+                }
             }
             else if (radioEcf.Checked)
             {
-                // Adicionando linhas ao DataTable
-                foreach (var item in StaticProperty.ecfs.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
+                if (StaticProperty.ecfs != null)
                 {
-                    fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
-                    dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
-
-                    dataGridView1.DataSource = dt;
-                }
-                foreach (var item2 in StaticProperty.fornecedores.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text) && f.status == Status.activo))
-                {
-                    foreach (var item in StaticProperty.ecfs.Where(f => f.fornecedorId == item2.id).ToList())
+                    // Adicionando linhas ao DataTable
+                    foreach (var item in StaticProperty.ecfs.Where(f => f.documento.Contains(textBox1.Text) || f.data.ToString().Contains(textBox1.Text) && f.status != DocState.anulado))
                     {
                         fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
                         dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
 
                         dataGridView1.DataSource = dt;
+                    }
+                }
+                if (StaticProperty.fornecedores != null)
+                {
+                    foreach (var item2 in StaticProperty.fornecedores.Where(f => f.nome_fantasia.Contains(textBox1.Text) || f.razao_social.Contains(textBox1.Text) && f.status == Status.activo))
+                    {
+                        foreach (var item in StaticProperty.ecfs.Where(f => f.fornecedorId == item2.id).ToList())
+                        {
+                            fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
+                            dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+
+                        }
+                            dataGridView1.DataSource = dt;
                     }
                 }
             }
@@ -446,7 +504,6 @@ namespace AscFrontEnd
         private async void estornarPicture_Click(object sender, EventArgs e)
         {
             List<VncArtigoDTO> vncArtigos = new List<VncArtigoDTO>();
-            var client = new HttpClient();
             string documento = string.Empty;
 
             if (MessageBox.Show($"Documento: {codigoDocumento}\nTem certeza que pretende estornar este documento?", "Atenção", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) != DialogResult.OK)
@@ -455,11 +512,6 @@ namespace AscFrontEnd
             }
             try
             {
-
-                client.BaseAddress = new Uri("https://localhost:7200/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var formAnulacao = new MotivoAnulacao(OpcaoBinaria.Sim);
 
@@ -476,7 +528,7 @@ namespace AscFrontEnd
                         fornecedorResult = StaticProperty.fornecedores.Where(cl => cl.id == vfr.fornecedorId).First() ?? new FornecedorDTO();
 
                         // Conversão do objeto Film para JSON
-                         var jsonVfr = System.Text.Json.JsonSerializer.Serialize(DocState.estornado);
+                        var jsonVfr = System.Text.Json.JsonSerializer.Serialize(DocState.estornado);
 
                         // Envio dos dados para a API
                         HttpResponseMessage responseFr = await client.PutAsync($"api/Compra/Vfr/Change/State/{id}/{DocState.estornado}", new StringContent(jsonVfr, Encoding.UTF8, "application/json"));
@@ -517,7 +569,7 @@ namespace AscFrontEnd
                         fornecedorResult = StaticProperty.fornecedores.Where(cl => cl.id == vft.fornecedorId).First() ?? new FornecedorDTO();
 
                         // Conversão do objeto Film para JSON
-                         var jsonVft = System.Text.Json.JsonSerializer.Serialize(DocState.estornado);
+                        var jsonVft = System.Text.Json.JsonSerializer.Serialize(DocState.estornado);
 
                         // Envio dos dados para a API
                         HttpResponseMessage responseFt = await client.PutAsync($"api/Compra/Vft/Change/State/{id}/{DocState.estornado}", new StringContent(jsonVft, Encoding.UTF8, "application/json"));
@@ -528,7 +580,7 @@ namespace AscFrontEnd
                             {
                                 compraArtigos.Add(new CompraArtigo()
                                 {
-                                    codigo = StaticProperty.artigos.Where(x => x.id == item.artigoId).Any()?
+                                    codigo = StaticProperty.artigos.Where(x => x.id == item.artigoId).Any() ?
                                              StaticProperty.artigos.Where(x => x.id == item.artigoId).First().codigo : string.Empty,
                                     iva = item.iva,
                                     preco = item.preco,
@@ -621,8 +673,8 @@ namespace AscFrontEnd
                     compraArtigos.Clear();
                 }
 
-                    this.RefreshDocs();
-                }
+                this.RefreshDocs();
+            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ocorreu um erro mo processo de estorno: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
@@ -633,11 +685,7 @@ namespace AscFrontEnd
         private async void anularPicture_Click(object sender, EventArgs e)
         {
             string documentoDoc = string.Empty;
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:7200/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
 
             if (MessageBox.Show($"Documento: {codigoDocumento}\nTem certeza que pretende anular este documento?", "Atenção", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) != DialogResult.OK)
             {
@@ -669,16 +717,17 @@ namespace AscFrontEnd
                     dt.Columns.Add("Documento", typeof(string));
                     dt.Columns.Add("Data", typeof(string));
 
-
-                    // Adicionando linhas ao DataTable
-                    foreach (var item in StaticProperty.vfrs.Where(f => f.status != DocState.anulado && f.status != DocState.estornado && f.fornecedor.empresaid == StaticProperty.empresaId).ToList())
+                    if (StaticProperty.vfrs != null)
                     {
-                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
-                        dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+                        // Adicionando linhas ao DataTable
+                        foreach (var item in StaticProperty.vfrs.Where(f => f.status != DocState.anulado && f.status != DocState.estornado && f.fornecedor.empresaid == StaticProperty.empresaId).ToList())
+                        {
+                            fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                            dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
 
-                        dataGridView1.DataSource = dt;
+                        }
+                            dataGridView1.DataSource = dt;
                     }
-
                 }
                 else if (documento.Equals("VFT"))
                 {
@@ -702,14 +751,16 @@ namespace AscFrontEnd
                     dt.Columns.Add("Documento", typeof(string));
                     dt.Columns.Add("Data", typeof(string));
 
-
-                    // Adicionando linhas ao DataTable
-                    foreach (var item in StaticProperty.vfts.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+                    if (StaticProperty.vfts != null)
                     {
-                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
-                        dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+                        // Adicionando linhas ao DataTable
+                        foreach (var item in StaticProperty.vfts.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+                        {
+                            fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                            dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
 
-                        dataGridView1.DataSource = dt;
+                        }
+                            dataGridView1.DataSource = dt;
                     }
                 }
                 else if (documento.Equals("PCO"))
@@ -735,14 +786,16 @@ namespace AscFrontEnd
                     dt.Columns.Add("Documento", typeof(string));
                     dt.Columns.Add("Data", typeof(string));
 
-
-                    // Adicionando linhas ao DataTable
-                    foreach (var item in StaticProperty.pcos.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+                    if (StaticProperty.pcos != null)
                     {
-                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
-                        dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+                        // Adicionando linhas ao DataTable
+                        foreach (var item in StaticProperty.pcos.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+                        {
+                            fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                            dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
 
-                        dataGridView1.DataSource = dt;
+                        }
+                            dataGridView1.DataSource = dt;
                     }
                 }
                 else if (documento.Equals("COT"))
@@ -768,14 +821,16 @@ namespace AscFrontEnd
                     dt.Columns.Add("Documento", typeof(string));
                     dt.Columns.Add("Data", typeof(string));
 
-
-                    // Adicionando linhas ao DataTable
-                    foreach (var item in StaticProperty.cots.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+                    if (StaticProperty.cots != null)
                     {
-                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
-                        dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+                        // Adicionando linhas ao DataTable
+                        foreach (var item in StaticProperty.cots.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+                        {
+                            fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                            dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
 
-                        dataGridView1.DataSource = dt;
+                        }
+                            dataGridView1.DataSource = dt;
                     }
                 }
                 else if (documento.Equals("VGT"))
@@ -800,14 +855,16 @@ namespace AscFrontEnd
                     dt.Columns.Add("Documento", typeof(string));
                     dt.Columns.Add("Data", typeof(string));
 
-
-                    // Adicionando linhas ao DataTable
-                    foreach (var item in StaticProperty.vgts.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+                    if (StaticProperty.vgts != null)
                     {
-                        fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
-                        dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
+                        // Adicionando linhas ao DataTable
+                        foreach (var item in StaticProperty.vgts.Where(f => f.status != DocState.anulado && f.fornecedor.empresaid == StaticProperty.empresaId))
+                        {
+                            fornecedorNome = StaticProperty.fornecedores.Where(f => f.id == item.fornecedorId).First().nome_fantasia;
+                            dt.Rows.Add(item.id, fornecedorNome, item.documento, item.data);
 
-                        dataGridView1.DataSource = dt;
+                        }
+                            dataGridView1.DataSource = dt;
                     }
                 }
                 this.RefreshDocs();
@@ -822,16 +879,6 @@ namespace AscFrontEnd
         {
             try
             {
-                /*
-                 *               
-
-          
-
-                if (documento.Equals("FR") || documento.Equals("FT") || documento.Equals("GR"))
-                {
-
-                }
-                 */
                 var doc = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
                 var estado = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
 
@@ -895,17 +942,18 @@ namespace AscFrontEnd
             if (radioEcf.Checked)
             {
                 CleanDataGridView();
-
-                foreach (var item in StaticProperty.ecfs.Where(x => x.empresaId == StaticProperty.empresaId))
+                if (StaticProperty.ecfs != null)
                 {
-                    if (StaticProperty.artigos.Where(x => x.id == item.ecfArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                    foreach (var item in StaticProperty.ecfs.Where(x => x.empresaId == StaticProperty.empresaId))
                     {
-                        fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
+                        if (StaticProperty.artigos.Where(x => x.id == item.ecfArtigo.First().artigoId).First().empresaId == StaticProperty.empresaId)
+                        {
+                            fornecedorNome = StaticProperty.fornecedores.Where(cl => cl.id == item.fornecedorId).First().nome_fantasia;
 
-                        var estado = item.status == DocState.estornado ? "Estornado" : "activo";
-
-                        dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
-
+                            var estado = item.status == DocState.estornado ? "Estornado" : "activo";
+                            dt.Rows.Add(item.id, fornecedorNome, item.documento, estado, item.data);
+                        }
+                          
                     }
                 }
                 dataGridView1.DataSource = dt;
@@ -915,106 +963,131 @@ namespace AscFrontEnd
         public void SetCompras()
         {
             documentoCompras.Clear();
-            foreach (var item in StaticProperty.pcos.Where(x => x.empresaId == StaticProperty.empresaId))
+            if (StaticProperty.pcos != null)
             {
-                documentoCompras.Add(new DocumentoCompra()
+                foreach (var item in StaticProperty.pcos.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
+                    documentoCompras.Add(new DocumentoCompra()
+                    {
+                        id = item.id,
+                        fornecedorId = item.fornecedorId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
             }
-            foreach (var item in StaticProperty.cots.Where(x => x.empresaId == StaticProperty.empresaId))
+            if (StaticProperty.cots != null)
             {
-                documentoCompras.Add(new DocumentoCompra()
+                foreach (var item in StaticProperty.cots.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
+                    documentoCompras.Add(new DocumentoCompra()
+                    {
+                        id = item.id,
+                        fornecedorId = item.fornecedorId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
             }
-            foreach (var item in StaticProperty.vfts.Where(x => x.empresaId == StaticProperty.empresaId))
+            if (StaticProperty.vfts != null)
             {
-                documentoCompras.Add(new DocumentoCompra()
+                foreach (var item in StaticProperty.vfts.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
+                    documentoCompras.Add(new DocumentoCompra()
+                    {
+                        id = item.id,
+                        fornecedorId = item.fornecedorId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
             }
-            foreach (var item in StaticProperty.vfrs.Where(x => x.empresaId == StaticProperty.empresaId))
+            if (StaticProperty.vfrs != null)
             {
-                documentoCompras.Add(new DocumentoCompra()
+                foreach (var item in StaticProperty.vfrs.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
+                    documentoCompras.Add(new DocumentoCompra()
+                    {
+                        id = item.id,
+                        fornecedorId = item.fornecedorId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
             }
-
-            foreach (var item in StaticProperty.ecfs.Where(x => x.empresaId == StaticProperty.empresaId))
+            if (StaticProperty.ecfs != null)
             {
-                documentoCompras.Add(new DocumentoCompra()
+                foreach (var item in StaticProperty.ecfs.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
+                    documentoCompras.Add(new DocumentoCompra()
+                    {
+                        id = item.id,
+                        fornecedorId = item.fornecedorId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
             }
-            foreach (var item in StaticProperty.vncs.Where(x => x.empresaId == StaticProperty.empresaId))
+            if (StaticProperty.vncs != null)
             {
-                documentoCompras.Add(new DocumentoCompra()
+                foreach (var item in StaticProperty.vncs.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
+                    documentoCompras.Add(new DocumentoCompra()
+                    {
+                        id = item.id,
+                        fornecedorId = item.fornecedorId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
             }
-            foreach (var item in StaticProperty.vnds.Where(x => x.empresaId == StaticProperty.empresaId))
+            if (StaticProperty.vnds != null)
             {
-                documentoCompras.Add(new DocumentoCompra()
+                foreach (var item in StaticProperty.vnds.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
+                    documentoCompras.Add(new DocumentoCompra()
+                    {
+                        id = item.id,
+                        fornecedorId = item.fornecedorId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
             }
-
-            foreach (var item in StaticProperty.vgts.Where(x => x.empresaId == StaticProperty.empresaId))
+            if (StaticProperty.vgts != null)
             {
-                documentoCompras.Add(new DocumentoCompra()
+                foreach (var item in StaticProperty.vgts.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
+                    documentoCompras.Add(new DocumentoCompra()
+                    {
+                        id = item.id,
+                        fornecedorId = item.fornecedorId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
             }
-            foreach (var item in StaticProperty.vgrs.Where(x => x.empresaId == StaticProperty.empresaId))
+            if (StaticProperty.vgrs != null)
             {
-                documentoCompras.Add(new DocumentoCompra()
+                foreach (var item in StaticProperty.vgrs.Where(x => x.empresaId == StaticProperty.empresaId))
                 {
-                    id = item.id,
-                    fornecedorId = item.fornecedorId,
-                    documento = item.documento,
-                    data = item.data,
-                    status = item.status
-                });
+                    documentoCompras.Add(new DocumentoCompra()
+                    {
+                        id = item.id,
+                        fornecedorId = item.fornecedorId,
+                        documento = item.documento,
+                        data = item.data,
+                        status = item.status
+                    });
+                }
             }
         }
 
@@ -1026,9 +1099,6 @@ namespace AscFrontEnd
 
         private async void RefreshDocs()
         {
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:7200/");
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             try
             {
                 var responseVft = await client.GetAsync($"api/Compra/VftByRelations");
@@ -1119,12 +1189,12 @@ namespace AscFrontEnd
 
                 float total = 0f;
                 float incidencia = 0f;
-               
+
                 List<float> listaIvas = new List<float>();
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
-                string imagePathEmpresa = Path.Combine(projectPath, "Files", "Smart_Entity.png");
+                string imagePathEmpresa =StaticProperty.empresaLogo;
                 string imagePathAsc = Path.Combine(projectPath, "Files", "asc.png");
                 // Testar com valores fixos para desenhar uma string
                 Font fontNormal = new Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -1379,6 +1449,35 @@ namespace AscFrontEnd
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            CompraListagem_Load(this, EventArgs.Empty);
+        }
+
+        private void btnActualizar_MouseMove(object sender, MouseEventArgs e)
+        {
+            btnActualizar.BackColor = Color.White;
+            btnActualizar.ForeColor = Color.FromArgb(64, 64, 64);
+        }
+
+        private void btnActualizar_MouseLeave(object sender, EventArgs e)
+        {
+            btnActualizar.BackColor = Color.Transparent;
+            btnActualizar.ForeColor = Color.White;
+        }
+
+        private void excelBtn_MouseMove(object sender, MouseEventArgs e)
+        {
+            excelBtn.BackColor = Color.White;
+            excelBtn.ForeColor = Color.FromArgb(64, 64, 64);
+        }
+
+        private void excelBtn_MouseLeave(object sender, EventArgs e)
+        {
+            excelBtn.BackColor = Color.FromArgb(64, 64, 64); ;
+            excelBtn.ForeColor = Color.White;
         }
     }
 

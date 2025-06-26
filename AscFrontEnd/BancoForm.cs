@@ -1,6 +1,8 @@
-﻿using AscFrontEnd.DTOs.Deposito;
+﻿using AscFrontEnd.Application.Validacao;
+using AscFrontEnd.DTOs.Deposito;
 using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.DTOs.Stock;
+using DocumentFormat.OpenXml.InkML;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,30 +42,40 @@ namespace AscFrontEnd
 
         private void addBtn_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(codigoText.Text.ToString())) 
+            if (!string.IsNullOrEmpty(codigoText.Text.ToString()))
             {
-                MessageBox.Show("O campo do codigo esta vazio", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("O campo do código está vázio", "Impossível Concluir a ação", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 return;
             }
 
             if (!string.IsNullOrEmpty(descText.Text.ToString()))
             {
-                MessageBox.Show("O campo do descricao esta vazio", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("O campo do descrição está vázio", "Impossível Concluir a ação", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 return;
             }
 
             if (!string.IsNullOrEmpty(contaText.Text.ToString()))
             {
-                MessageBox.Show("O campo do conta esta vazio", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("O campo do conta esta vázio", "Impossível Concluir a ação", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 return;
             }
 
             if (!string.IsNullOrEmpty(ibanText.Text.ToString()))
             {
-                MessageBox.Show("O campo do IBAN esta vazio", "Impossivel Concluir a acao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("O campo do IBAN está vázio", "Impossivel Concluir a ação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+            if (OutrasValidacoes.BancoCodigoExiste(codigoText.Text.ToString()))
+            {
+                return;
+            }
+            if (bancos.Any() && bancos.Where(x => x.codigo == codigoText.Text).Any())
+            {
+                MessageBox.Show("Já adicionaste um banco com este código", "O código já existe", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 return;
             }

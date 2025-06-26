@@ -47,14 +47,17 @@ namespace AscFrontEnd
                 editarPicture.Visible = false;
                 eliminarPicture.Visible = false;
 
-                // Adiciona linhas ao DataTable
-                foreach (var item in StaticProperty.bancos.Where(x => x.empresaId == StaticProperty.empresaId))
+                if (StaticProperty.bancos != null)
                 {
-                    dt.Rows.Add(item.id, item.codigo, item.descricao, item.conta, item.iban);
+                    // Adiciona linhas ao DataTable
+                    foreach (var item in StaticProperty.bancos.Where(x => x.empresaId == StaticProperty.empresaId))
+                    {
+                        dt.Rows.Add(item.id, item.codigo, item.descricao, item.conta, item.iban);
+                    }
                 }
-
                 // Define o DataSource do DataGridView (fora do loop)
                 dataGridView1.DataSource = dt;
+                dataGridView1.ClearSelection();
 
                 // Seleciona automaticamente as linhas cujos IDs estão em _artigoIds
                 if (_depositoIds != null && _depositoIds.Any())
@@ -74,11 +77,13 @@ namespace AscFrontEnd
             }
             else
             {
-                foreach (var item in StaticProperty.bancos.Where(x => x.empresaId == StaticProperty.empresaId))
+                if (StaticProperty.bancos != null)
                 {
-                    dt.Rows.Add(item.id, item.codigo, item.descricao, item.conta, item.iban);
+                    foreach (var item in StaticProperty.bancos.Where(x => x.empresaId == StaticProperty.empresaId))
+                    {
+                        dt.Rows.Add(item.id, item.codigo, item.descricao, item.conta, item.iban);
+                    }
                 }
-
                 dataGridView1.DataSource = dt;
 
                 dataGridView1.MultiSelect = false;
@@ -96,20 +101,15 @@ namespace AscFrontEnd
         {
             try
             {
-                id = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
+                _depositoIds.Clear();
+                var rowsSelected = dataGridView1.SelectedRows;
 
-                if (_multi)
+                foreach(DataGridViewRow row in rowsSelected) 
                 {
-                    var id = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
+                  var id = int.Parse(row.Cells[0].Value.ToString());
 
-                    if (!_depositoIds.Contains(id))
-                    {
-                        _depositoIds.Add(id);
-                    }
-                    else
-                    {
-                        _depositoIds.Remove(id);
-                    }
+                   _depositoIds.Add(id);
+        
                 }
             }
             catch { return; }
@@ -128,6 +128,23 @@ namespace AscFrontEnd
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void btnActualizar_MouseMove(object sender, MouseEventArgs e)
+        {
+            btnActualizar.BackColor = Color.White;
+            btnActualizar.ForeColor = Color.Black;
+        }
+
+        private void btnActualizar_MouseLeave(object sender, EventArgs e)
+        {
+            btnActualizar.BackColor = Color.Transparent;
+            btnActualizar.ForeColor = Color.White;
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            BancoCaixaListagemForm_Load(this, EventArgs.Empty);
         }
     }
 }

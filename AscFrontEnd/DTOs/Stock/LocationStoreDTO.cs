@@ -15,6 +15,6 @@ namespace AscFrontEnd.DTOs.Stock
         public string localizacao_fisica { get; set; }
         public int status { get; set; }
         public int armazemId { get; set; }
-        public List<LocationArtigoDTO> locationArtigos { get; set; }
+        public List<LocationArtigoDTO> locationArtigos { get; set; } = new List<LocationArtigoDTO>();
     }
 }

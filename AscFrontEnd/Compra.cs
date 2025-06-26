@@ -26,6 +26,7 @@ using static AscFrontEnd.Venda;
 using AscFrontEnd.Application.Validacao;
 using System.Globalization;
 using System.Xml;
+using AscFrontEnd.DTOs.Funcionario;
 
 namespace AscFrontEnd
 {
@@ -41,7 +42,7 @@ namespace AscFrontEnd
         List<VncArtigoDTO> vncArtigos;
         List<VndArtigoDTO> vndArtigos;
         List<CompraArtigo> compraArtigos;
-        List<int> idCompra; 
+        List<int> idCompra;
         static int artigoId = 0;
         DataTable dtCompra;
         FornecedorDTO fornecedorResult;
@@ -49,33 +50,34 @@ namespace AscFrontEnd
         MotivoAnulacao formAnulacao;
 
         HttpClient client;
+        UserDTO _user;
 
         string descricaoDocumento = string.Empty;
         string localEntrega = string.Empty;
         float incidencia = 0;
-        public class CompraArtigo 
+        public class CompraArtigo
         {
-            public int id {  get; set; }
+            public int id { get; set; }
             public string codigo { get; set; }
             public float preco { get; set; }
             public float qtd { get; set; }
             public float iva { get; set; }
             public float desconto { get; set; }
         }
-        public Compra()
+        public Compra(UserDTO user)
         {
             InitializeComponent();
 
             client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://localhost:7200/");
+            client.BaseAddress = new Uri("http://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             artigos = new List<VfrArtigoDTO>();
             vftArtigos = new List<VftArtigoDTO>();
             pcoArtigos = new List<PedidoCotacaoArtigoDTO>();
-            cotArtigos = new List<CotacaoArtigoDTO> ();
+            cotArtigos = new List<CotacaoArtigoDTO>();
             ecfArtigos = new List<EcfArtigoDTO>();
             vgtArtigos = new List<VgtArtigoDTO>();
             vgrArtigos = new List<VgrArtigoDTO>();
@@ -95,9 +97,12 @@ namespace AscFrontEnd
             descontoTxt.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
             descontoTxt.TextChanged += ValidacaoForms.TratarTextChanged;
 
+            _user = user;
         }
-        private  void Compra_Load(object sender, EventArgs e) 
-        {           
+        private void Compra_Load(object sender, EventArgs e)
+        {
+            if (StaticProperty.artigos != null)
+            {
                 dtCompra.Columns.Add("id", typeof(int));
                 dtCompra.Columns.Add("Artigo", typeof(string));
                 dtCompra.Columns.Add("Preco", typeof(string));
@@ -105,7 +110,7 @@ namespace AscFrontEnd
                 dtCompra.Columns.Add("Iva", typeof(string));
                 dtCompra.Columns.Add("Desconto", typeof(string));
 
-            DataTable dt = new DataTable();
+                DataTable dt = new DataTable();
                 dt.Columns.Add("id", typeof(int));
                 dt.Columns.Add("Artigo", typeof(string));
                 dt.Columns.Add("Descricao", typeof(string));
@@ -118,7 +123,7 @@ namespace AscFrontEnd
 
                     tabelaArtigos.DataSource = dt;
                 }
-
+            }
                 documento.Items.Add("PCO");
                 documento.Items.Add("COT");
                 documento.Items.Add("ECF");
@@ -138,22 +143,27 @@ namespace AscFrontEnd
                 eliminarBtn.Enabled = false;
                 localEntregatxt.Enabled = false;
 
-            totalAgragado(compraArtigos);
-        
+                totalAgragado(compraArtigos);
 
-            timerRefresh.Start();
+
+                timerRefresh.Start();
+            
         }
 
         private async void salvarBtn_Click(object sender, EventArgs e)
         {
-           FaturaDetalhes form;
+            ProcessoForm processoForm = new ProcessoForm();
+
+            processoForm.Show();
+            FaturaDetalhes form;
 
             HttpResponseMessage response = null;
             var clientGet = new HttpClient();
             clientGet.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
 
-            clientGet.BaseAddress = new Uri("https://localhost:7200/");
-    
+            clientGet.BaseAddress = new Uri("http://localhost:7200/");
+            StaticProperty.percentual += 10;
+
 
             if (StaticProperty.series == null)
             {
@@ -167,7 +177,7 @@ namespace AscFrontEnd
 
                 return;
             }
-            float totalPreco = compraArtigos.Sum(x=> x.preco * x.qtd);
+            float totalPreco = compraArtigos.Sum(x => x.preco * x.qtd);
 
             if (documento.Text == "VFR")
             {
@@ -202,7 +212,7 @@ namespace AscFrontEnd
                 {
                     return;
                 }
-              
+
             }
 
             if (documento.Text == "VFT")
@@ -218,7 +228,7 @@ namespace AscFrontEnd
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
                         iva = compraArtigo.iva,
-                        desconto=compraArtigo.desconto,
+                        desconto = compraArtigo.desconto,
                     });
                 }
 
@@ -312,7 +322,7 @@ namespace AscFrontEnd
 
             if (documento.Text == "ECF")
             {
-                
+
                 ecfArtigos.Clear();
 
                 foreach (var compraArtigo in compraArtigos)
@@ -323,7 +333,7 @@ namespace AscFrontEnd
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
                         iva = 0,//compraArtigo.iva,
-                        desconto=compraArtigo.desconto,
+                        desconto = compraArtigo.desconto,
                     });
                 }
                 localEntrega = string.IsNullOrEmpty(localEntregatxt.Text.ToString()) ? string.Empty : localEntregatxt.Text.ToString();
@@ -349,7 +359,7 @@ namespace AscFrontEnd
 
             if (documento.Text == "VNC")
             {
-                formAnulacao = new MotivoAnulacao(Entidade.fornecedor,OpcaoBinaria.Nao);
+                formAnulacao = new MotivoAnulacao(Entidade.fornecedor, OpcaoBinaria.Nao);
                 formAnulacao.ShowDialog();
                 if (formAnulacao.DialogResult == DialogResult.OK)
                 {
@@ -385,7 +395,7 @@ namespace AscFrontEnd
                     // Envio dos dados para a API
                     response = await client.PostAsync($"api/Compra/Vnc/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
                 }
-                else 
+                else
                 {
                     return;
                 }
@@ -447,7 +457,7 @@ namespace AscFrontEnd
                     pcArtigo = pcoArtigos,
                     empresaId = StaticProperty.empresaId,
                     status = DTOs.Enums.Enums.DocState.ativo,
-                    
+
                 };
 
                 // Conversão do objeto Film para JSON
@@ -469,7 +479,7 @@ namespace AscFrontEnd
                         preco = compraArtigo.preco,
                         qtd = compraArtigo.qtd,
                         iva = compraArtigo.iva,
-                        desconto =compraArtigo.desconto
+                        desconto = compraArtigo.desconto
                     });
                 }
 
@@ -492,6 +502,8 @@ namespace AscFrontEnd
 
             }
 
+            StaticProperty.percentual += 30;
+
             var responseGet = await clientGet.GetAsync($"api/Fornecedor/{StaticProperty.entityId}");
 
             if (responseGet.IsSuccessStatusCode)
@@ -499,17 +511,41 @@ namespace AscFrontEnd
                 var content = await responseGet.Content.ReadAsStringAsync();
                 fornecedorResult = JsonConvert.DeserializeObject<FornecedorDTO>(content);
             }
-          
+
 
             preVisualizacaoDialog.Document = Imprimir;
+            StaticProperty.percentual += 10;
+            processoForm.Close();
 
             if (preVisualizacaoDialog.ShowDialog() == DialogResult.OK)
             {
-                Imprimir.Print();
+               // Imprimir.Print();
             }
+             printDialog1 = new PrintDialog
+            {
+                Document = Imprimir, // Associa o PrintDocument ao PrintDialog
+                AllowSomePages = true, // Permite selecionar intervalo de páginas
+                AllowPrintToFile = false, // Desativa opção de imprimir para arquivo
+                ShowNetwork = true // Mostra impressoras de rede
+            };
 
+            // Exibir o PrintDialog e verificar se o usuário confirmou
+            if (printDialog1.ShowDialog() == DialogResult.OK)
+            {
+                // Aplica as configurações do PrintDialog ao PrintDocument
+                Imprimir.PrinterSettings = printDialog1.PrinterSettings;
 
-            compraArtigos.Clear();
+                // Executa a impressão
+                try
+                {
+                    Imprimir.Print();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erro ao imprimir: {ex.Message}", "Erro de Impressão", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+                compraArtigos.Clear();
 
 
             if (documento.Text != "VFR" || documento.Text != "VGR")
@@ -600,12 +636,12 @@ namespace AscFrontEnd
 
             //Fazer Refresh
             totalAgragado(compraArtigos);
-          
+
             WindowsConfig.LimparFormulario(this);
 
             dtCompra = new DataTable();
             documento.Items.Clear();
-            Compra_Load(this,EventArgs.Empty);
+            Compra_Load(this, EventArgs.Empty);
 
             this.Refresh();
         }
@@ -632,6 +668,20 @@ namespace AscFrontEnd
                     if (MessageBox.Show("Precisas Selecionar o fornecedor, caso o contrario o fornecedor passará como desconhecido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information) == DialogResult.OK)
                     {
                         StaticProperty.entityId = 1;
+
+                        fornecedorResult = StaticProperty.fornecedores.Where(x => x.id == 1).FirstOrDefault();
+
+                        if (fornecedorResult != null)
+                        {
+                            fornecedortxt.Text = $"Fornecedor: {fornecedorResult.nome_fantasia}";
+                        }
+
+                        else
+                        {
+                            MessageBox.Show("Cliente nao encontrado", "Alguma coisa correu mal", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            return;
+                        }
                     }
                     else
                     {
@@ -648,7 +698,7 @@ namespace AscFrontEnd
                     MessageBox.Show("Selecione um documento de Compra", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                if(float.Parse(Qtd.Text.ToString().Replace(".","").Replace(",","."), CultureInfo.InvariantCulture) <= 0) 
+                if (float.Parse(Qtd.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) <= 0)
                 {
                     MessageBox.Show("A quantidade nao pode ser igual a 0", "Atencao", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
@@ -666,7 +716,7 @@ namespace AscFrontEnd
                 {
                     return;
                 }
-                        
+
                 int idCompraArtigo = tabelaCompra.Rows.Count;
                 List<CompraArtigo> refreshCompraArtigo = new List<CompraArtigo>();
                 int i = 1;
@@ -674,9 +724,9 @@ namespace AscFrontEnd
                 dtCompra.Rows.Clear();
                 tabelaCompra.DataSource = dtCompra;
 
-               
 
-                foreach (var ca in compraArtigos) 
+
+                foreach (var ca in compraArtigos)
                 {
                     var cArtigo = new CompraArtigo
                     {
@@ -688,14 +738,14 @@ namespace AscFrontEnd
                         desconto = ca.desconto,
                     };
                     refreshCompraArtigo.Add(cArtigo);
-                    i++;          
+                    i++;
                 }
 
                 compraArtigos.Clear();
 
                 compraArtigos = refreshCompraArtigo;
 
-                var preco = !string.IsNullOrEmpty(precotxt.Text.ToString()) ? precotxt.Text.ToString().Replace(".", "").Replace(",","."):"0";
+                var preco = !string.IsNullOrEmpty(precotxt.Text.ToString()) ? precotxt.Text.ToString().Replace(".", "").Replace(",", ".") : "0";
                 var qtd = !string.IsNullOrEmpty(Qtd.Text.ToString()) ? Qtd.Text.ToString().Replace(".", "").Replace(",", ".") : "0";
                 var desconto = !string.IsNullOrEmpty(descontoTxt.Text.ToString()) ? descontoTxt.Text.ToString().Replace(".", "").Replace(",", ".") : "0";
 
@@ -712,36 +762,36 @@ namespace AscFrontEnd
 
                 if (documento.Text == "VFR")
                 {
-                   /* artigos.Add(new VfrArtigoDTO()
-                    {
-                        artigoId = artigoId,
-                        preco = float.Parse(preco, CultureInfo.InvariantCulture),
-                        qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
-                        iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
-                    });
-                   */
+                    /* artigos.Add(new VfrArtigoDTO()
+                     {
+                         artigoId = artigoId,
+                         preco = float.Parse(preco, CultureInfo.InvariantCulture),
+                         qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
+                         iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
+                         desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
+                     });
+                    */
                     foreach (var vfr in compraArtigos)
                     {
 
                         dtCompra.Rows.Add(vfr.id, vfr.codigo, vfr.preco.ToString("F2"), vfr.qtd.ToString("F2"), vfr.iva.ToString("F2"), vfr.desconto.ToString("F2"));
 
                     }
-                        tabelaCompra.DataSource = dtCompra;
+                    tabelaCompra.DataSource = dtCompra;
                 }
 
                 if (documento.Text == "VFT")
                 {
-                   /* vftArtigos.Add(new VftArtigoDTO()
-                    {
-                        artigoId = artigoId,
-                        preco = float.Parse(preco, CultureInfo.InvariantCulture),
-                        qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
-                        iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
+                    /* vftArtigos.Add(new VftArtigoDTO()
+                     {
+                         artigoId = artigoId,
+                         preco = float.Parse(preco, CultureInfo.InvariantCulture),
+                         qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
+                         iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
+                         desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
 
-                    });
-                   */
+                     });
+                    */
                     foreach (var vft in compraArtigos)
                     {
                         idCompraArtigo = tabelaCompra.Rows.Count;
@@ -753,15 +803,15 @@ namespace AscFrontEnd
 
                 if (documento.Text == "ECF")
                 {
-                   /* ecfArtigos.Add(new EcfArtigoDTO()
-                    {
-                        artigoId = artigoId,
-                        preco = float.Parse(preco, CultureInfo.InvariantCulture),
-                        qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
-                        iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
-                    });
-                   */
+                    /* ecfArtigos.Add(new EcfArtigoDTO()
+                     {
+                         artigoId = artigoId,
+                         preco = float.Parse(preco, CultureInfo.InvariantCulture),
+                         qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
+                         iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
+                         desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
+                     });
+                    */
 
                     foreach (var ecf in compraArtigos)
                     {
@@ -774,14 +824,14 @@ namespace AscFrontEnd
 
                 if (documento.Text == "PCO")
                 {
-                   /* pcoArtigos.Add(new PedidoCotacaoArtigoDTO()
-                    {
-                        artigoId = artigoId,
-                        preco = float.Parse(preco, CultureInfo.InvariantCulture),
-                        qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
-                        iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
-                    });*/
+                    /* pcoArtigos.Add(new PedidoCotacaoArtigoDTO()
+                     {
+                         artigoId = artigoId,
+                         preco = float.Parse(preco, CultureInfo.InvariantCulture),
+                         qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
+                         iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
+                         desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
+                     });*/
 
 
                     foreach (var pco in compraArtigos)
@@ -795,15 +845,15 @@ namespace AscFrontEnd
 
                 if (documento.Text == "COT")
                 {
-                  /*  cotArtigos.Add(new CotacaoArtigoDTO()
-                    {
+                    /*  cotArtigos.Add(new CotacaoArtigoDTO()
+                      {
 
-                        artigoId = artigoId,
-                        preco = float.Parse(preco, CultureInfo.InvariantCulture),
-                        qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
-                        iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
-                    });*/
+                          artigoId = artigoId,
+                          preco = float.Parse(preco, CultureInfo.InvariantCulture),
+                          qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
+                          iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
+                          desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
+                      });*/
 
 
                     foreach (var cot in compraArtigos)
@@ -817,18 +867,18 @@ namespace AscFrontEnd
 
                 if (documento.Text == "VND")
                 {
-                   /* vndArtigos.Add(new VndArtigoDTO()
-                    {
-                        artigoId = artigoId,
-                        preco = float.Parse(preco, CultureInfo.InvariantCulture),
-                        qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
-                        iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
-                    });*/
+                    /* vndArtigos.Add(new VndArtigoDTO()
+                     {
+                         artigoId = artigoId,
+                         preco = float.Parse(preco, CultureInfo.InvariantCulture),
+                         qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
+                         iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
+                         desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
+                     });*/
 
                     foreach (var vnd in compraArtigos)
                     {
-                        dtCompra.Rows.Add(vnd.id, vnd.codigo, vnd.preco.ToString("F2"), vnd.qtd.ToString("F2"), vnd.iva.ToString("F2"),vnd.desconto.ToString("F2"));
+                        dtCompra.Rows.Add(vnd.id, vnd.codigo, vnd.preco.ToString("F2"), vnd.qtd.ToString("F2"), vnd.iva.ToString("F2"), vnd.desconto.ToString("F2"));
 
                         tabelaCompra.DataSource = dtCompra;
                     }
@@ -836,35 +886,35 @@ namespace AscFrontEnd
 
                 if (documento.Text == "VNC")
                 {
-                   /* vncArtigos.Add(new VncArtigoDTO()
-                    {
-                        artigoId = artigoId,
-                        preco = float.Parse(preco, CultureInfo.InvariantCulture),
-                        qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
-                        iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
-                    });*/
+                    /* vncArtigos.Add(new VncArtigoDTO()
+                     {
+                         artigoId = artigoId,
+                         preco = float.Parse(preco, CultureInfo.InvariantCulture),
+                         qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
+                         iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
+                         desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
+                     });*/
 
                     foreach (var vnc in compraArtigos)
                     {
                         dtCompra.Rows.Add(vnc.id, vnc.codigo, vnc.preco.ToString("F2"), vnc.qtd.ToString("F2"), vnc.iva.ToString("F2"), vnc.desconto.ToString("F2"));
 
                     }
-                        tabelaCompra.DataSource = dtCompra;
+                    tabelaCompra.DataSource = dtCompra;
 
                     StaticProperty.documentoOrigem = string.Empty;
 
                 }
                 if (documento.Text == "VGT")
                 {
-                   /* vncArtigos.Add(new VncArtigoDTO()
-                    {
-                        artigoId = artigoId,
-                        preco = float.Parse(preco, CultureInfo.InvariantCulture),
-                        qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
-                        iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
-                        desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
-                    });*/
+                    /* vncArtigos.Add(new VncArtigoDTO()
+                     {
+                         artigoId = artigoId,
+                         preco = float.Parse(preco, CultureInfo.InvariantCulture),
+                         qtd = float.Parse(qtd, CultureInfo.InvariantCulture),
+                         iva = StaticProperty.artigos.Where(art => art.id == artigoId).First().iva,
+                         desconto = float.Parse(desconto, CultureInfo.InvariantCulture)
+                     });*/
 
                     foreach (var vgt in compraArtigos)
                     {
@@ -876,6 +926,8 @@ namespace AscFrontEnd
                 totalAgragado(compraArtigos);
 
                 artigoId = 0;
+
+
             }
             catch { return; }
         }
@@ -890,6 +942,7 @@ namespace AscFrontEnd
                     string id = tabelaArtigos.Rows[e.RowIndex].Cells[0].Value.ToString();
 
                     artigoId = int.Parse(id);
+                    Qtd.Text = "1";
 
                 }
             }
@@ -898,17 +951,13 @@ namespace AscFrontEnd
 
         private async void documento_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var client = new HttpClient();
 
-            if (!OutrasValidacoes.SerieExist())
-            { 
-               return;   
+            if (!OutrasValidacoes.SerieExist(_user))
+            {
+                return;
             }
 
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-
             codigoDocumentotxt.Text = await Documento.GetCodigoDocumentoAsync(documento.Text.ToString());
-            
 
             if (documento.Text == "VFR") { descricaoDocumento = "V/Factura Recibo"; }
             else if (documento.Text == "VFT") { descricaoDocumento = "V/Factura"; }
@@ -923,11 +972,11 @@ namespace AscFrontEnd
 
             descricaoLabel.Text = descricaoDocumento;
 
-            if(documento.Text != "ECF" && documento.Text != "VGT")
+            if (documento.Text != "ECF" && documento.Text != "VGT")
             {
                 localEntregatxt.Enabled = false;
             }
-            else 
+            else
             {
                 if (documento.Text == "ECF")
                 {
@@ -953,7 +1002,7 @@ namespace AscFrontEnd
 
                     compraArtigos.Remove(result);
                 }
-            }       
+            }
 
             dtCompra.Rows.Clear();
             tabelaCompra.DataSource = dtCompra;
@@ -962,7 +1011,7 @@ namespace AscFrontEnd
             foreach (var ca in compraArtigos)
             {
 
-                dtCompra.Rows.Add(ca.id, ca.codigo.ToString(), ca.preco, ca.qtd, ca.iva,ca.desconto);
+                dtCompra.Rows.Add(ca.id, ca.codigo.ToString(), ca.preco, ca.qtd, ca.iva, ca.desconto);
 
                 tabelaCompra.DataSource = dtCompra;
             }
@@ -976,13 +1025,11 @@ namespace AscFrontEnd
 
         private async void textBox1_TextChanged(object sender, EventArgs e)
         {
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            var response= await client.GetAsync($"https://localhost:7200/api/Artigo/Search/{textBox1.Text}"); ;
+            var response = await client.GetAsync($"api/Artigo/Search/{textBox1.Text}"); ;
 
             if (string.IsNullOrWhiteSpace(textBox1.Text.ToString()))
             {
-                response = await client.GetAsync("https://localhost:7200/api/Artigo");
+                response = await client.GetAsync("api/Artigo");
             }
 
             if (response.IsSuccessStatusCode)
@@ -1003,7 +1050,7 @@ namespace AscFrontEnd
                     dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario.ToString("F2"));
 
                 }
-                    tabelaArtigos.DataSource = dt;
+                tabelaArtigos.DataSource = dt;
             }
         }
 
@@ -1021,7 +1068,7 @@ namespace AscFrontEnd
 
         private void clienteBtn_MouseLeave(object sender, EventArgs e)
         {
-            clienteBtn.BackColor = Color.FromArgb(64,64,64);
+            clienteBtn.BackColor = Color.FromArgb(64, 64, 64);
             clienteBtn.ForeColor = Color.White;
         }
 
@@ -1033,37 +1080,38 @@ namespace AscFrontEnd
 
         private void excelBtn_MouseLeave(object sender, EventArgs e)
         {
-            comprasBtn.BackColor = Color.FromArgb(64,64,64);
+            comprasBtn.BackColor = Color.FromArgb(64, 64, 64);
             comprasBtn.ForeColor = Color.White;
         }
 
         private void excelBtn_MouseMove(object sender, MouseEventArgs e)
         {
-            comprasBtn.BackColor= Color.White; 
-            comprasBtn.ForeColor= Color.Black;   
+            comprasBtn.BackColor = Color.White;
+            comprasBtn.ForeColor = Color.Black;
         }
 
-        private async void timerRefresh_Tick(object sender, EventArgs e)
+        private  void timerRefresh_Tick(object sender, EventArgs e)
         {
-            
 
-            if (StaticProperty.entityId > 0) {
-                var responseGet = await client.GetAsync($"api/Fornecedor/{StaticProperty.entityId}");
+            if (StaticProperty.entityId > 0)
+            {
 
-                if (responseGet.IsSuccessStatusCode)
-                {
-                    var content = await responseGet.Content.ReadAsStringAsync();
+                if (fornecedorResult.id != StaticProperty.entityId)
+                {                
+                    fornecedorResult = StaticProperty.fornecedores.Where(x => x.id == fornecedorResult.id).FirstOrDefault();
 
-                    fornecedorResult = JsonConvert.DeserializeObject<FornecedorDTO>(content);
+                    if (fornecedorResult != null)
+                    {
+                            fornecedortxt.Text = $"Fornecedor: {fornecedorResult.nome_fantasia}";
+                     }
+                    else
+                    {
+                        MessageBox.Show("Fornecedor nao encontrado", "Alguma coisa correu mal", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    fornecedortxt.Text = $"Fornecedor: {fornecedorResult.nome_fantasia}";
+                        return;
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("Fornecedor nao encontrado","Alguma coisa correu mal",MessageBoxButtons.OK,MessageBoxIcon.Information);
-
-                    return;
-                }
+       
             }
         }
 
@@ -1078,7 +1126,7 @@ namespace AscFrontEnd
 
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
                 string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
-                string imagePathEmpresa = Path.Combine(projectPath, "Files", "Smart_Entity.png");
+                string imagePathEmpresa = StaticProperty.empresaId == 1 ? Path.Combine(projectPath, "Files", "Smart_Entity.png") : Path.Combine(StaticProperty.empresaLogo); ;
                 string imagePathAsc = Path.Combine(projectPath, "Files", "asc.png");
                 // Testar com valores fixos para desenhar uma string
                 Font fontNormal = new Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -1153,7 +1201,9 @@ namespace AscFrontEnd
                 e.Graphics.DrawString("Data Vencimento", fontNormalNegrito, cor, new Rectangle(500, 300, 650, 310));
                 e.Graphics.DrawLine(caneta, 50, 315, 750, 315);
 
-                
+                //Process Bar
+                StaticProperty.percentual += 10;
+
                 e.Graphics.DrawString($"{StaticProperty.empresa.nif}", fontNormal, cor, new Rectangle(50, 330, 200, 340));
                 e.Graphics.DrawString("0,00", fontNormal, cor, new Rectangle(200, 330, 350, 340));
                 e.Graphics.DrawString($"{DateTime.Now.Date.ToString("dd-MM-yyyy")}", fontNormal, cor, new Rectangle(350, 330, 450, 340));
@@ -1194,7 +1244,7 @@ namespace AscFrontEnd
                         i = i + 15;
                     }
                 }
-                else 
+                else
                 {
                     e.Graphics.DrawString($"Artigo", fontNormalNegrito, cor, new Rectangle(50, 400, 200, 420));
                     e.Graphics.DrawString("Descricao", fontNormalNegrito, cor, new Rectangle(200, 400, 400, 420));
@@ -1214,7 +1264,10 @@ namespace AscFrontEnd
                         i = i + 15;
                     }
                 }
-                totalLiquido += CalculosVendaCompra.TotalCompra(compraArtigos,fornecedorResult.desconto); ;
+                //Process Bar
+                StaticProperty.percentual += 20;
+
+                totalLiquido += CalculosVendaCompra.TotalCompra(compraArtigos, fornecedorResult.desconto); ;
                 total = total - CalculosVendaCompra.TotalDescontoCompra(compraArtigos, fornecedorResult.desconto);
 
                 string mercadoria = $"Total Ilíquido";
@@ -1305,6 +1358,8 @@ namespace AscFrontEnd
 
                     }
                 }
+                //Process Bar
+                StaticProperty.percentual += 20;
                 if (!documento.Text.Equals("VNC") && !documento.Text.Equals("VND") && !documento.Text.Equals("VGT") && !documento.Text.Equals("VGR"))
                 {
                     e.Graphics.DrawString($"Retenção           0,00 ", fontCabecalho, new SolidBrush(Color.Red), new PointF(50, 680 + i), formatToCenter);
@@ -1351,6 +1406,9 @@ namespace AscFrontEnd
 
 
                 Console.WriteLine("Texto desenhado com sucesso.");
+
+                //Process Bar
+                StaticProperty.percentual += 10;
 
                 // Liberar recursos
                 fontNormal.Dispose();
@@ -1402,7 +1460,7 @@ namespace AscFrontEnd
 
         private void Qtd_KeyPress(object sender, KeyPressEventArgs e)
         {
-           
+
         }
         private void Qtd_Leave(object sender, EventArgs e)
         {
@@ -1420,13 +1478,32 @@ namespace AscFrontEnd
         {
         }
 
-        public void totalAgragado(List<CompraArtigo> compraArtigos) 
+        public void totalAgragado(List<CompraArtigo> compraArtigos)
         {
             totalBruto.Text = $"Total: {CalculosVendaCompra.TotalCompra(compraArtigos, fornecedorResult.desconto).ToString("F2")}";
             ivaTotal.Text = $"Iva: {CalculosVendaCompra.TotalIvaCompra(compraArtigos).ToString("F2")}";
             descontoTotal.Text = $"Desconto: {CalculosVendaCompra.TotalDescontoCompra(compraArtigos, fornecedorResult.desconto).ToString("F2")}";
             precoLiquido.Text = $"Preço: {compraArtigos.Sum(x => x.preco * x.qtd).ToString("F2")}";
-            descontoFornecedorTxt.Text = $" Desc, Fornecedor: {CalculosVendaCompra.TotalDescontoCompra(compraArtigos,fornecedorResult.desconto):F2}";
+            descontoFornecedorTxt.Text = $" Desc, Fornecedor: {CalculosVendaCompra.TotalDescontoCompra(compraArtigos, fornecedorResult.desconto):F2}";
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            documento.Items.Clear();
+
+            Compra_Load(this, EventArgs.Empty);
+        }
+
+        private void button2_MouseMove(object sender, MouseEventArgs e)
+        {
+            button2.BackColor = Color.White;
+            button2.ForeColor = Color.FromArgb(64, 64, 64);
+        }
+
+        private void button2_MouseLeave(object sender, EventArgs e)
+        {
+            comprasBtn.BackColor = Color.FromArgb(64, 64, 64);
+            comprasBtn.ForeColor = Color.White;
         }
     }
 }

@@ -232,8 +232,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "OpcaoDialog";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "OpcaoDialog";
             this.Load += new System.EventHandler(this.OpcaoDialog_Load);
             ((System.ComponentModel.ISupportInitialize)(this.unidadePicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ivaPicture)).EndInit();

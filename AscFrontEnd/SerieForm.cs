@@ -20,11 +20,19 @@ namespace AscFrontEnd.Files
     public partial class SerieForm : Form
     {
         Requisicoes _requisicoes;
+
+        HttpClient client;
         public SerieForm()
         {
             InitializeComponent();
 
             _requisicoes = new Requisicoes();
+
+            client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            client.BaseAddress = new Uri("http://localhost:7200/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         private async void CrairSerieBtn_Click(object sender, EventArgs e)
@@ -36,17 +44,11 @@ namespace AscFrontEnd.Files
                 status = DTOs.Enums.Enums.OpcaoBinaria.Sim,
             };
 
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://sua-api.com/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
             // Conversão do objeto Film para JSON
             string json = System.Text.Json.JsonSerializer.Serialize(serie);
 
             // Envio dos dados para a API
-            var response = await client.PostAsync("https://localhost:7200/api/Serie", new StringContent(json, Encoding.UTF8, "application/json"));
+            var response = await client.PostAsync("api/Serie", new StringContent(json, Encoding.UTF8, "application/json"));
            
             if (response.IsSuccessStatusCode)
             {

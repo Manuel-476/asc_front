@@ -147,6 +147,7 @@
             this.dateText.Name = "dateText";
             this.dateText.Size = new System.Drawing.Size(226, 20);
             this.dateText.TabIndex = 3;
+            this.dateText.ValueChanged += new System.EventHandler(this.dateText_ValueChanged);
             // 
             // label3
             // 

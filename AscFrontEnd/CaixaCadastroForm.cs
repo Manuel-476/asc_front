@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AscFrontEnd.Application;
+using AscFrontEnd.Application.Validacao;
 
 namespace AscFrontEnd
 {
@@ -32,6 +33,32 @@ namespace AscFrontEnd
 
         private void addBtn_Click(object sender, EventArgs e)
         {
+            if (OutrasValidacoes.CaixaCodigoExiste(codigoText.Text))
+            {
+                return;
+            }
+
+            if (caixas.Any() && caixas.Where(x => x.codigo == codigoText.Text).Any())
+            {
+                MessageBox.Show("Já adicionaste um caixa com este código", "O código já existe", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            if (string.IsNullOrEmpty(codigoText.Text.ToString()))
+            {
+                MessageBox.Show("O campo do código está vázio", "Impossível Concluir a ação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+            if (string.IsNullOrEmpty(descText.Text.ToString()))
+            {
+                MessageBox.Show("O campo do descrição está vázio", "Impossível Concluir a ação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
             int id = caixaTable.Rows.Count;
             dt.Rows.Clear();
             caixaTable.DataSource = dt;
@@ -57,7 +84,7 @@ namespace AscFrontEnd
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.BaseAddress = new Uri("http://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             foreach (var item in this.caixas)
@@ -66,12 +93,12 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(item);
 
                 // Envio dos dados para a API
-                HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Deposito/Caixa", new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage response = await client.PostAsync($"api/Deposito/Caixa", new StringContent(json, Encoding.UTF8, "application/json"));
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Caixa Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
-                    var responseCaixa = await client.GetAsync($"https://localhost:7200/api/Deposito/Caixa");
+                    var responseCaixa = await client.GetAsync($"api/Deposito/Caixa");
 
                     if (responseCaixa.IsSuccessStatusCode)
                     {

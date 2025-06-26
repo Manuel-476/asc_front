@@ -4,6 +4,7 @@ using AscFrontEnd.DTOs;
 using AscFrontEnd.DTOs.Funcionario;
 using AscFrontEnd.DTOs.StaticsDto;
 using Newtonsoft.Json;
+using PdfSharp.Snippets.Drawing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,9 +25,20 @@ namespace AscFrontEnd
         int paisId;
         int naturalidadeId;
         int provinciaId;
-        public FuncionarioForm()
+        UserDTO _user;
+        HttpClient client;
+            
+        public FuncionarioForm(UserDTO user)
         {
             InitializeComponent();
+
+            _user = user;
+
+            client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            client.BaseAddress = new Uri("http://localhost:7200/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -69,8 +81,6 @@ namespace AscFrontEnd
                 return;
             }
 
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             HttpResponseMessage response = null;
 
             List<FuncionarioPhoneDTO> phones = new List<FuncionarioPhoneDTO>();
@@ -99,15 +109,13 @@ namespace AscFrontEnd
                 nif = numIdent.Text,
                 foto = "empty"
             };
-            client.BaseAddress = new Uri("https://sua-api.com/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
 
             // Conversão do objeto Film para JSON
             string json = System.Text.Json.JsonSerializer.Serialize(funcionario);
 
             // Envio dos dados para a API
-            response = await client.PostAsync($"https://localhost:7200/api/Funcionario/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+            response = await client.PostAsync($"api/Funcionario/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
 
             if (response.IsSuccessStatusCode)
             {
@@ -128,7 +136,7 @@ namespace AscFrontEnd
 
         private void credenciaisLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            UserForm form = new UserForm();
+            UserForm form = new UserForm(_user);
             form.ShowDialog();
         }
 
@@ -140,11 +148,16 @@ namespace AscFrontEnd
 
         private void FuncionarioForm_Load(object sender, EventArgs e)
         {
-            foreach (var item in StaticProperty.paises) 
+            if (StaticProperty.paises != null)
             {
-                paisCombo.Items.Add(item.nome);
-                naturalidadeCombo.Items.Add(item.nome);
+                foreach (var item in StaticProperty.paises)
+                {
+                    paisCombo.Items.Add(item.nome);
+                    naturalidadeCombo.Items.Add(item.nome);
+                }
             }
+
+            dateText.Value = DateTime.Now.AddYears(-18).Date;
 
             generoCombo.Items.Add("M");
             generoCombo.Items.Add("F");
@@ -159,15 +172,20 @@ namespace AscFrontEnd
 
             string pais = paisCombo.SelectedItem.ToString();
 
-            if (StaticProperty.paises.Where(x => x.nome == pais).Any())
+            if (StaticProperty.paises != null)
             {
-                var paisResult = StaticProperty.paises.Where(x => x.nome == pais).First();
-
-                paisId = paisResult.id;
-
-                foreach(var item in StaticProperty.provincias.Where(x => x.paisId == paisId)) 
+                if (StaticProperty.paises.Where(x => x.nome == pais).Any())
                 {
-                    provinciaCombo.Items.Add(item.nome);
+                    var paisResult = StaticProperty.paises.Where(x => x.nome == pais).First();
+
+                    paisId = paisResult.id;
+                    if (StaticProperty.provincias != null)
+                    {
+                        foreach (var item in StaticProperty.provincias.Where(x => x.paisId == paisId))
+                        {
+                            provinciaCombo.Items.Add(item.nome);
+                        }
+                    }
                 }
             }
         }
@@ -180,31 +198,40 @@ namespace AscFrontEnd
             }
 
             string provincia = provinciaCombo.SelectedItem.ToString();
-
-            if (StaticProperty.provincias.Where(x => x.nome == provincia).Any())
+            if (StaticProperty.provincias != null)
             {
-                provinciaId = StaticProperty.provincias.Where(x => x.nome == provincia).First().id;
+                if (StaticProperty.provincias.Where(x => x.nome == provincia).Any())
+                {
+                    provinciaId = StaticProperty.provincias.Where(x => x.nome == provincia).First().id;
+                }
             }
         }
 
         private void naturalidadeCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(naturalidadeCombo.Text.ToString())) 
+            if (string.IsNullOrEmpty(naturalidadeCombo.Text.ToString()))
             {
                 return;
             }
 
             string pais = naturalidadeCombo.SelectedItem.ToString();
-
-            if (StaticProperty.paises.Where(x => x.nome == pais).Any())
+            if (StaticProperty.paises != null)
             {
-                naturalidadeId = StaticProperty.paises.Where(x => x.nome == pais).First().id;
+                if (StaticProperty.paises.Where(x => x.nome == pais).Any())
+                {
+                    naturalidadeId = StaticProperty.paises.Where(x => x.nome == pais).First().id;
+                }
             }
         }
 
         private void paisCombo_SelectedValueChanged(object sender, EventArgs e)
         {
-           
+
+        }
+
+        private void dateText_ValueChanged(object sender, EventArgs e)
+        {
+            dateText.Value = ValidacaoForms.IsValidDataNascimento(dateText.Value);
         }
     }
 }

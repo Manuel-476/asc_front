@@ -42,7 +42,7 @@ namespace AscFrontEnd
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
             try
             {
-                client.BaseAddress = new Uri("https://sua-api.com/");
+                client.BaseAddress = new Uri("http://localhost:7200/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -52,7 +52,7 @@ namespace AscFrontEnd
                 var qtd = !string.IsNullOrEmpty(qtdText.Text.ToString()) ? float.Parse(qtdText.Text.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture) : 0f;
 
                 // Envio dos dados para a API
-                HttpResponseMessage response = await client.PutAsync($"https://localhost:7200/api/Armazem/Stock/Qtd/Artigo/Decremento/{_artigo.id}/{qtd}/{StaticProperty.funcionarioId}/{StaticProperty.empresaId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage response = await client.PutAsync($"api/Armazem/Stock/Qtd/Artigo/Decremento/{_artigo.id}/{qtd}/{StaticProperty.funcionarioId}/{StaticProperty.empresaId}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -63,6 +63,11 @@ namespace AscFrontEnd
 
                     MessageBox.Show($"Quantidade Reduzida com sucesso",
                                      "Feito com sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show($"Ocorreu um erro", "Impossivel concluir!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
 
                 WindowsConfig.LimparFormulario(this);

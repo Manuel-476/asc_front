@@ -42,19 +42,23 @@ namespace AscFrontEnd.Application
             _httpClient = new HttpClient();
 
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            _httpClient.BaseAddress = new Uri("https://localhost:7200");
+            _httpClient.BaseAddress = new Uri("http://localhost:7200");
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("image/*"));
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json")); // Para respostas de erro
         }
 
-        public async Task<bool> GeLogo()
+        public async Task<bool> GetLogo()
         {
             try
             {
                 // Evitar buscar para empresaId == 1 (manter a lógica existente, se desejado)
                 if (StaticProperty.empresaId == 1)
                 {
+                    var basePath = AppDomain.CurrentDomain.BaseDirectory;
+                    var projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
+
+                    StaticProperty.empresaLogo = Path.Combine(projectPath, "Files", "Smart_Entity.png");
                     return true;
                 }
 
@@ -212,7 +216,7 @@ namespace AscFrontEnd.Application
         {
             try
             {
-                var responseVgr = await _httpClient.GetAsync($"https://localhost:7200/api/Compra/VgrByRelation");
+                var responseVgr = await _httpClient.GetAsync($"api/Compra/VgrByRelation");
 
                 if (responseVgr.IsSuccessStatusCode)
                 {
@@ -237,7 +241,7 @@ namespace AscFrontEnd.Application
         {
             try
             {
-                var responsePco = await _httpClient.GetAsync($"https://localhost:7200/api/Compra/PcoByRelation");
+                var responsePco = await _httpClient.GetAsync($"api/Compra/PcoByRelation");
 
                 if (responsePco.IsSuccessStatusCode)
                 {
@@ -263,7 +267,7 @@ namespace AscFrontEnd.Application
             try
             {
 
-                var responseCot = await _httpClient.GetAsync($"https://localhost:7200/api/Compra/CotByRelation");
+                var responseCot = await _httpClient.GetAsync($"api/Compra/CotByRelation");
 
                 if (responseCot.IsSuccessStatusCode)
                 {
@@ -413,7 +417,7 @@ namespace AscFrontEnd.Application
         {
             try
             {
-                var responseEcl = await _httpClient.GetAsync($"https://localhost:7200/api/Venda/EclByRelations");
+                var responseEcl = await _httpClient.GetAsync($"api/Venda/EclByRelations");
 
                 if (responseEcl.IsSuccessStatusCode)
                 {
@@ -721,7 +725,6 @@ namespace AscFrontEnd.Application
                 throw new Exception($"Ocorreu um erro: {ex.Message}");
             }
         }
-
 
         public async Task<List<LocationArtigoDTO>> GetLocalizacaoArtigo()
         {
@@ -1509,6 +1512,10 @@ namespace AscFrontEnd.Application
             StaticProperty.venda = await GetVendas();
 
             StaticProperty.compra = await GetCompras();
+
+            StaticProperty.paises = await GetPaises();
+
+            StaticProperty.provincias = await GetProvincias();
         }
     }
 }

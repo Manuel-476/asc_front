@@ -27,7 +27,7 @@ namespace AscFrontEnd
         public TelaLogin()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:7200");
+            client.BaseAddress = new Uri("http://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             resultUser = new UserDTO();
@@ -56,14 +56,15 @@ namespace AscFrontEnd
                             smsErro.ForeColor = Color.Black;
                             smsErro.Text = "Verificando usuario...";
                     }
-                    using (HttpClient client = new HttpClient())
-                    {
-                        // Adiciona o token JWT no cabeçalho
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userResult.token);
-
+                        //using (HttpClient client = new HttpClient())
+                        //{
+                        //    // Adiciona o token JWT no cabeçalho
+                           client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userResult.token);
+                      
+    
                         try
                         {
-                            var responseFuncionario = await client.GetAsync($"https://localhost:7200/api/Funcionario/{userResult.user.funcionarioid}");
+                            var responseFuncionario = await client.GetAsync($"api/Funcionario/{userResult.user.funcionarioid}");
                             var contentFuncionario = await responseFuncionario.Content.ReadAsStringAsync();
                             var funcionario = Newtonsoft.Json.JsonConvert.DeserializeObject<FuncionarioDTO>(contentFuncionario);
 
@@ -88,7 +89,7 @@ namespace AscFrontEnd
                         if (userResult.user.state == DTOs.Enums.Enums.OpcaoBinaria.Nao)
                         {
                                 smsErro.ForeColor = Color.Red;
-                                new UserForm("Alterar Credencias de Acesso", userResult.user.id).ShowDialog();
+                                new UserForm("Alterar Credencias de Acesso", userResult.user).ShowDialog();
                         }
                         else
                         {
@@ -103,7 +104,7 @@ namespace AscFrontEnd
                     return;
                     
                 }
-             }
+           //  }
             }
             catch (Exception ex)
             {
@@ -134,14 +135,14 @@ namespace AscFrontEnd
                             smsErro.Text = "Verificando usuario...";
                         }
 
-                        using (HttpClient client = new HttpClient())
-                        {
-                            // Adiciona o token JWT no cabeçalho
+                        //using (HttpClient client = new HttpClient())
+                        //{
+                        //    // Adiciona o token JWT no cabeçalho
                             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userResult.token);
 
                             try
                             {
-                                var responseFuncionario = await client.GetAsync($"https://localhost:7200/api/Funcionario/{userResult.user.funcionarioid}");
+                                var responseFuncionario = await client.GetAsync($"api/Funcionario/{userResult.user.funcionarioid}");
                                 var contentFuncionario = await responseFuncionario.Content.ReadAsStringAsync();
                                 var funcionario = Newtonsoft.Json.JsonConvert.DeserializeObject<FuncionarioDTO>(contentFuncionario);
 
@@ -165,7 +166,7 @@ namespace AscFrontEnd
 
                             if (userResult.user.state == DTOs.Enums.Enums.OpcaoBinaria.Nao)
                             {
-                                new UserForm("Alterar Credencias de Acesso", userResult.user.id).ShowDialog();
+                                new UserForm("Alterar Credencias de Acesso", userResult.user).ShowDialog();
                             }
                             else
                             {
@@ -181,7 +182,7 @@ namespace AscFrontEnd
                         smsErro.Text = "Nome de usuario ou senha errada!";
                         return;
                     }
-                }
+            //    }
 
             }
             catch (Exception ex) 

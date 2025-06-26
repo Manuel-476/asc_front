@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using AscFrontEnd.DTOs.StaticsDto;
 using Newtonsoft.Json;
 using AscFrontEnd.Application;
+using AscFrontEnd.Application.Validacao;
 
 namespace AscFrontEnd
 {
@@ -24,6 +25,10 @@ namespace AscFrontEnd
 
         private async void balvarBtn_Click(object sender, EventArgs e)
         {
+            if (OutrasValidacoes.FamiliaCodigoExiste(codigotxt.Text.ToString())) 
+            {
+                return;
+            }
             string codigo = codigotxt.Text;
             string descricao = descricaotxt.Text;
 
@@ -37,7 +42,7 @@ namespace AscFrontEnd
             // Configuração do HttpClient
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.BaseAddress = new Uri("http://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -45,14 +50,14 @@ namespace AscFrontEnd
             string json = System.Text.Json.JsonSerializer.Serialize(familia);
 
             // Envio dos dados para a API
-            var response = await client.PostAsync("https://localhost:7200/api/Artigo/Familia", new StringContent(json, Encoding.UTF8, "application/json"));
+            var response = await client.PostAsync("api/Artigo/Familia", new StringContent(json, Encoding.UTF8, "application/json"));
 
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Familia Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
                 // Familia
-                var responseFamilia = await client.GetAsync($"https://localhost:7200/api/Artigo/Familia");
+                var responseFamilia = await client.GetAsync($"api/Artigo/Familia");
 
                 if (responseFamilia.IsSuccessStatusCode)
                 {

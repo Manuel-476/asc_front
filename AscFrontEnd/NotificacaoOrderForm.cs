@@ -37,7 +37,7 @@ namespace AscFrontEnd
 
             client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://localhost:7200/");
+            client.BaseAddress = new Uri("http://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
@@ -45,13 +45,6 @@ namespace AscFrontEnd
 
         private void NotificacaoOrderForm_Load(object sender, EventArgs e)
         {
-            client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://localhost:7200/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-
 
             FillTable();
             timer1.Start();
@@ -124,22 +117,28 @@ namespace AscFrontEnd
 
             if (_entidade == Entidade.cliente)
             {
-                foreach (var ecl in _encomendas)
+                if (_encomendas != null)
                 {
-                    var cliente = StaticProperty.clientes.Where(cl => cl.id == ecl.clienteId).Any() ?
-                                  StaticProperty.clientes.Where(cl => cl.id == ecl.clienteId).First().nome_fantasia : string.Empty;
+                    foreach (var ecl in _encomendas)
+                    {
+                        var cliente = StaticProperty.clientes != null && StaticProperty.clientes.Where(cl => cl.id == ecl.clienteId).Any() ?
+                                      StaticProperty.clientes.Where(cl => cl.id == ecl.clienteId).First().nome_fantasia : string.Empty;
 
-                    _dataTable.Rows.Add(new object[] { ecl.id, cliente, ecl.documento, ecl.dataEntrega });
+                        _dataTable.Rows.Add(new object[] { ecl.id, cliente, ecl.documento, ecl.dataEntrega });
+                    }
                 }
             }
             else if (_entidade == Entidade.fornecedor)
             {
-                foreach (var ecf in _encomendasForn)
+                if (_encomendasForn != null)
                 {
-                    var forn = StaticProperty.fornecedores.Where(f => f.id == ecf.fornecedorId).Any() ?
-                                  StaticProperty.fornecedores.Where(f => f.id == ecf.fornecedorId).First().nome_fantasia : string.Empty;
+                    foreach (var ecf in _encomendasForn)
+                    {
+                        var forn = StaticProperty.fornecedores.Where(f => f.id == ecf.fornecedorId).Any() ?
+                                      StaticProperty.fornecedores.Where(f => f.id == ecf.fornecedorId).First().nome_fantasia : string.Empty;
 
-                    _dataTable.Rows.Add(new object[] { ecf.id, forn, ecf.documento, ecf.dataEntrega });
+                        _dataTable.Rows.Add(new object[] { ecf.id, forn, ecf.documento, ecf.dataEntrega });
+                    }
                 }
             }
 

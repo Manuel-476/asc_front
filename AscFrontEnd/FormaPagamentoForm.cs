@@ -1,4 +1,5 @@
 ﻿using AscFrontEnd.Application;
+using AscFrontEnd.Application.Validacao;
 using AscFrontEnd.DTOs.Deposito;
 using AscFrontEnd.DTOs.StaticsDto;
 using Newtonsoft.Json;
@@ -28,9 +29,14 @@ namespace AscFrontEnd
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            if (OutrasValidacoes.FormaPagamentoCodigoExiste(codigoTxt.Text.ToString()))
+            {
+                return;
+            }
+
             httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            httpClient.BaseAddress = new Uri("https://sua-api.com/");
+            httpClient.BaseAddress = new Uri("http://localhost:7200/");
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -54,7 +60,7 @@ namespace AscFrontEnd
 
 
 
-                var resposta = await httpClient.PostAsync("https://localhost:7200/api/Deposito/FormaPagamento", new StringContent(json, Encoding.UTF8, "application/json"));
+                var resposta = await httpClient.PostAsync("api/Deposito/FormaPagamento", new StringContent(json, Encoding.UTF8, "application/json"));
 
                 if (resposta.IsSuccessStatusCode)
                 {

@@ -22,9 +22,12 @@ namespace AscFrontEnd
 
         private void NotificacoForm_Load(object sender, EventArgs e)
         {
-            foreach (var item in _notifications) 
+            if (_notifications != null)
             {
-                notificacaoList.Items.Add(item);
+                foreach (var item in _notifications)
+                {
+                    notificacaoList.Items.Add(item);
+                }
             }
         }
     }

@@ -29,15 +29,17 @@ namespace AscFrontEnd
 
             valorIvaTxt.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
             valorIvaTxt.TextChanged += ValidacaoForms.TratarTextChanged;
+
+            httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            httpClient.BaseAddress = new Uri("http://localhost:7200/");
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            httpClient.BaseAddress = new Uri("https://sua-api.com/");
-            httpClient.DefaultRequestHeaders.Accept.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+          
 
             try
             {
@@ -52,9 +54,7 @@ namespace AscFrontEnd
                     };
                     json = System.Text.Json.JsonSerializer.Serialize(iva);
 
-
-
-                    var resposta = await httpClient.PostAsync("https://localhost:7200/api/Iva", new StringContent(json, Encoding.UTF8, "application/json"));
+                    var resposta = await httpClient.PostAsync("api/Iva", new StringContent(json, Encoding.UTF8, "application/json"));
 
                     if (resposta.IsSuccessStatusCode)
                     {

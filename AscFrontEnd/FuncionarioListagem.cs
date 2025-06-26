@@ -26,9 +26,17 @@ namespace AscFrontEnd
     public partial class FuncionarioListagem : Form
     {
         public int id;
+        HttpClient client;
         public FuncionarioListagem()
         {
             InitializeComponent();
+
+            client = new HttpClient();
+            
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            client.BaseAddress = new Uri("http://localhost:7200");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         private void editarPicture_MouseMove(object sender, MouseEventArgs e)
@@ -69,8 +77,8 @@ namespace AscFrontEnd
               {
                   dt.Rows.Add(item.Id, item.Nome, item.email, item.nif, item.morada, item.data_nascimento);
 
-                   dataGridView1.DataSource = dt;
               }
+                   dataGridView1.DataSource = dt;
             }
         }
 
@@ -86,12 +94,6 @@ namespace AscFrontEnd
             {
                 try 
                 { 
-                   var client = new HttpClient();
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                    client.BaseAddress = new Uri("https://localhost:7200/");
-                   client.DefaultRequestHeaders.Accept.Clear();
-                   client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
                    // Conversão do objeto Film para JSON
                    string json = System.Text.Json.JsonSerializer.Serialize(id);
 
@@ -116,13 +118,7 @@ namespace AscFrontEnd
 
         private async void pesqText_TextChanged(object sender, EventArgs e)
         {
-            var client = new HttpClient();
             List<FuncionarioDTO> dados = null;
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://localhost:7200");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
             DataTable dt = new DataTable();
             dt.Columns.Add("id", typeof(int));
             dt.Columns.Add("Nome", typeof(string));
@@ -140,33 +136,27 @@ namespace AscFrontEnd
 
                 dados = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FuncionarioDTO>>(content);
             }
-            // Adicionando linhas ao DataTable
-            foreach (var item in dados)
+            if (dados != null)
             {
-                dt.Rows.Add(item.Id, item.Nome, item.email, item.nif, item.morada, item.data_nascimento);
+                // Adicionando linhas ao DataTable
+                foreach (var item in dados)
+                {
+                    dt.Rows.Add(item.Id, item.Nome, item.email, item.nif, item.morada, item.data_nascimento);
 
-                dataGridView1.DataSource = dt;
+                    dataGridView1.DataSource = dt;
+                }
             }
         }
 
         private async void editarPicture_Click(object sender, EventArgs e)
         {
-            var client = new HttpClient();
-           UserDTO user = null;
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://localhost:7200");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            // 
-
             var response = await client.GetAsync($"/api/Funcionario/User/GetUser/{id}");
 
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
 
-                user = JsonConvert.DeserializeObject<UserDTO>(content);
+                var user = JsonConvert.DeserializeObject<UserDTO>(content);
 
                 if(user == null) 
                 {
@@ -183,6 +173,28 @@ namespace AscFrontEnd
             
                 return;
             }
+        }
+
+        private void button1_MouseMove(object sender, MouseEventArgs e)
+        {
+            button1.BackColor = Color.White; 
+            button1.ForeColor = Color.FromArgb(64, 64, 64);
+        }
+
+        private void button1_MouseLeave(object sender, EventArgs e)
+        {
+            button1.BackColor = Color.FromArgb(64, 64, 64);
+            button1.ForeColor = Color.White;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FuncionarioListagem_MouseMove(object sender, MouseEventArgs e)
+        {
+
         }
     }
 }

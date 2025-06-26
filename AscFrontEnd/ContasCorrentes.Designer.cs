@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.adiantaBtn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -50,7 +51,6 @@
             this.contaReceberTab = new System.Windows.Forms.TabPage();
             this.correnteTableCl = new System.Windows.Forms.DataGridView();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -74,6 +74,21 @@
             this.panel1.Size = new System.Drawing.Size(812, 89);
             this.panel1.TabIndex = 0;
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(668, 53);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(129, 33);
+            this.button1.TabIndex = 28;
+            this.button1.Text = "Atualizar";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.button1.MouseLeave += new System.EventHandler(this.button1_MouseLeave);
+            this.button1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.button1_MouseMove);
+            // 
             // adiantaBtn
             // 
             this.adiantaBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -86,6 +101,8 @@
             this.adiantaBtn.Text = "Adiantamento";
             this.adiantaBtn.UseVisualStyleBackColor = false;
             this.adiantaBtn.Click += new System.EventHandler(this.adiantaBtn_Click);
+            this.adiantaBtn.MouseLeave += new System.EventHandler(this.adiantaBtn_MouseLeave);
+            this.adiantaBtn.MouseMove += new System.Windows.Forms.MouseEventHandler(this.adiantaBtn_MouseMove);
             // 
             // label2
             // 
@@ -297,19 +314,6 @@
             // 
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(668, 53);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(129, 33);
-            this.button1.TabIndex = 28;
-            this.button1.Text = "Atualizar";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // ContasCorrentes
             // 

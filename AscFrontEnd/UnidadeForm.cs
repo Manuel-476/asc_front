@@ -14,6 +14,7 @@ using AscFrontEnd.DTOs.StaticsDto;
 using Newtonsoft.Json;
 using AscFrontEnd.DTOs.Artigo;
 using AscFrontEnd.Application;
+using AscFrontEnd.Application.Validacao;
 
 namespace AscFrontEnd
 {
@@ -24,16 +25,20 @@ namespace AscFrontEnd
         public UnidadeForm()
         {
             InitializeComponent();
+
+            httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            httpClient.BaseAddress = new Uri("http://localhost:7200/");
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         private async void button1_ClickAsync(object sender, EventArgs e)
         {
-            httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            httpClient.BaseAddress = new Uri("https://sua-api.com/");
-            httpClient.DefaultRequestHeaders.Accept.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
+            if (OutrasValidacoes.UnidadeCodigoExiste(codigoTxt.Text.ToString()))
+            {
+                return;
+            }
 
             if (!string.IsNullOrWhiteSpace(codigoTxt.Text.ToString()) || !string.IsNullOrWhiteSpace(descricaoTxt.Text.ToString()))
             {
@@ -49,7 +54,7 @@ namespace AscFrontEnd
 
 
 
-                var resposta = await httpClient.PostAsync("https://localhost:7200/api/Unidade", new StringContent(json, Encoding.UTF8, "application/json"));
+                var resposta = await httpClient.PostAsync("api/Unidade", new StringContent(json, Encoding.UTF8, "application/json"));
 
                 if (resposta.IsSuccessStatusCode)
                 {
@@ -64,6 +69,11 @@ namespace AscFrontEnd
 
                 WindowsConfig.LimparFormulario(this);
             }
+        }
+
+        private void UnidadeForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AscFrontEnd.Application.Validacao;
+using AscFrontEnd.DTOs.Funcionario;
 using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.DTOs.Stock;
 using Newtonsoft.Json;
@@ -22,14 +23,20 @@ namespace AscFrontEnd
         DataTable stockTable;
         int id;
         HttpClient client;
-        public Stock()
+
+        UserDTO _user;
+
+        public Stock(UserDTO user)
         {
             InitializeComponent();
 
             dados = new List<StockDTO>();
-            stockTable = new DataTable();
+          
             client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:7200");
+
+            _user = user;
+
+            client.BaseAddress = new Uri("http://localhost:7200");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
@@ -62,15 +69,17 @@ namespace AscFrontEnd
                 stockTable.Columns.Add("Qtd", typeof(int));
                 stockTable.Columns.Add("Estado", typeof(string));
 
-                // Adicionando linhas ao DataTable
-                foreach (var artigo in dados.Where(x=>x.artigo.Contains(pesqText.Text) || x.descricao.Contains(pesqText.Text)))
+                if (dados != null)
                 {
-                    string status = artigo.status == 0 ? "Nao Activo" : "Activo";
-                    stockTable.Rows.Add(artigo.id, artigo.artigo, artigo.descricao, artigo.qtd, status);
+                    // Adicionando linhas ao DataTable
+                    foreach (var artigo in dados.Where(x => x.artigo.Contains(pesqText.Text) || x.descricao.Contains(pesqText.Text)))
+                    {
+                        string status = artigo.status == 0 ? "Nao Activo" : "Activo";
+                        stockTable.Rows.Add(artigo.id, artigo.artigo, artigo.descricao, artigo.qtd, status);
 
-                    tabelaInventario.DataSource = stockTable;
+                        tabelaInventario.DataSource = stockTable;
+                    }
                 }
-
                 transferPicture.Enabled = false;
                 addStockPicture.Enabled = false;
                 removeStockPicture.Enabled = false;
@@ -84,7 +93,7 @@ namespace AscFrontEnd
 
         private async void Stock_Load(object sender, EventArgs e)
         {
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            stockTable = new DataTable();
             var response = await client.GetAsync($"api/Armazem/Stock/Artigo/{StaticProperty.empresaId}");
 
             if (response.IsSuccessStatusCode)
@@ -98,13 +107,25 @@ namespace AscFrontEnd
                 stockTable.Columns.Add("Qtd", typeof(int));
                 stockTable.Columns.Add("Estado", typeof(string));
 
-                // Adicionando linhas ao DataTable
-                foreach (var artigo in dados)
+                if (dados != null)
                 {
-                    string status = artigo.status == 0 ? "Nao Activo" : "Activo";
-                    stockTable.Rows.Add(artigo.id, artigo.artigo, artigo.descricao, artigo.qtd,status );
+                    // Adicionando linhas ao DataTable
+                    foreach (var artigo in dados)
+                    {
+                        string status = artigo.status == 0 ? "Nao Activo" : "Activo";
+                        stockTable.Rows.Add(artigo.id, artigo.artigo, artigo.descricao, artigo.qtd, status);
 
-                    tabelaInventario.DataSource = stockTable;
+                    }
+                        tabelaInventario.DataSource = stockTable;
+                }
+                if (_user.userPermissions.FirstOrDefault().Permission != null)
+                {
+                    if (!_user.userPermissions.Where(x => x.Permission.descricao == "Gerenciar movimentações de estoque.").Any())
+                    {
+                        transferPicture.Visible = false;
+                        addStockPicture.Visible = false;
+                        removeStockPicture.Visible = false;
+                    }
                 }
 
                 transferPicture.Enabled = false;
@@ -123,7 +144,7 @@ namespace AscFrontEnd
 
                 id = int.Parse(tabelaInventario.Rows[e.RowIndex].Cells[0].Value.ToString());
 
-                artigoTexto.Text ="Artigo: " + StaticProperty.artigos.Where(art => art.id == id).First().codigo;
+                artigoTexto.Text ="Artigo: " + StaticProperty.artigos != null && StaticProperty.artigos.Where(art => art.id == id && art.empresaId == StaticProperty.empresaId).Any()? StaticProperty.artigos.Where(art => art.id == id && art.empresaId == StaticProperty.empresaId).First().codigo : string.Empty;
             }
             catch
             {
@@ -142,7 +163,7 @@ namespace AscFrontEnd
         private void addStockPicture_Click(object sender, EventArgs e)
         {
             var dado = dados.Where(x => x.id == id).First();
-            var artigo = StaticProperty.artigos.Where(x => x.codigo == dado.artigo /*&& x.empresaId == 1*/).First();
+            var artigo = StaticProperty.artigos != null && StaticProperty.artigos.Where(x => x.codigo == dado.artigo && x.empresaId == StaticProperty.empresaId).Any() ? StaticProperty.artigos.Where(x => x.codigo == dado.artigo && x.empresaId == StaticProperty.empresaId).First() : new ArtigoDTO();
 
             IncrementarStock incrementar = new IncrementarStock(artigo,dado.qtd);
             incrementar.ShowDialog();
@@ -150,8 +171,8 @@ namespace AscFrontEnd
 
         private void removeStockPicture_Click(object sender, EventArgs e)
         {
-            var dado = dados.Where(x => x.id == id).First();
-            var artigo = StaticProperty.artigos.Where(x => x.codigo == dado.artigo /*&& x.empresaId == 1*/).First();
+            var dado = dados != null && dados.Where(x => x.id == id).Any() ? dados.Where(x => x.id == id).First() : new StockDTO();
+            var artigo = StaticProperty.artigos != null && StaticProperty.artigos.Where(x => x.codigo == dado.artigo && x.empresaId == StaticProperty.empresaId).Any() ? StaticProperty.artigos.Where(x => x.codigo == dado.artigo && x.empresaId == StaticProperty.empresaId).First() : new ArtigoDTO();
 
             DecrementarStock decrementar = new DecrementarStock(artigo, dado.qtd);
             decrementar.ShowDialog();

@@ -115,6 +115,7 @@ namespace AscFrontEnd.Application.Validacao
                 _processando = false;
             }
         }
+
         public static void TratarLeave(object sender, EventArgs e)
         {
             var textBox = sender as TextBox;
@@ -145,8 +146,6 @@ namespace AscFrontEnd.Application.Validacao
             }
         }
 
-
-
         // Métodos de validação ajustados
         public static bool IsPositiveFloat(string valor)
         {
@@ -171,6 +170,7 @@ namespace AscFrontEnd.Application.Validacao
 
             return podeConverter && (resultado >= 0 && resultado <= 100 || valor == "0" || valor.StartsWith("0.") || valor == ".");
         }
+
         public static void FormatarTextoComMilhar(object sender)
         {
             TextBox textBox = (TextBox)sender;
@@ -233,6 +233,19 @@ namespace AscFrontEnd.Application.Validacao
 
             }
             return isValid;
+        }
+
+        public static DateTime IsValidDataNascimento( DateTime dataNascimento) 
+        {
+            if(dataNascimento.Date.Year > DateTime.Now.AddYears(-18).Date.Year) 
+            {
+                MessageBox.Show("Não pode ser menor de 18 anos","Data não aceite",MessageBoxButtons.OK,MessageBoxIcon.Information);
+
+                return DateTime.Now.AddYears(-18).Date;
+            }
+
+            return dataNascimento;
+            
         }
 
     }

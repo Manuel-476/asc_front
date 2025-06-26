@@ -22,10 +22,18 @@ namespace AscFrontEnd
     {
         int id = 0;
         public List<FornecedorDTO> fornecedores;
+        HttpClient client;
         public FornecedorTable()
         {
             InitializeComponent();
             fornecedores = new List<FornecedorDTO>();
+
+
+            client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            client.BaseAddress = new Uri("http://localhost:7200/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         private void FornecedorTable_Load(object sender, EventArgs e)
@@ -38,15 +46,16 @@ namespace AscFrontEnd
                 dt.Columns.Add("pessoa", typeof(string));
                 dt.Columns.Add("localizacao", typeof(string));
 
-
+            if (StaticProperty.fornecedores != null)
+            {
                 // Adicionando linhas ao DataTable
                 foreach (var item in StaticProperty.fornecedores.Where(f => f.status == Status.activo && f.id != 1 && f.empresaid == StaticProperty.empresaId))
                 {
                     dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
 
-                    tabelaFornecedor.DataSource = dt;
                 }
-
+                    tabelaFornecedor.DataSource = dt;
+            }
                 editarPicture.Enabled = false;
         }
 
@@ -67,30 +76,28 @@ namespace AscFrontEnd
 
         private async void transformar_Click(object sender, EventArgs e)
         {
-            var fornecedor = StaticProperty.fornecedores.Where(f => f.id == id).First();
-
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://localhost:7200/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            if (fornecedor.nif == "999999999")
+            if (StaticProperty.fornecedores != null)
             {
-                fornecedor.nif = string.Empty;
-            }
-            // Conversão do objeto Film para JSON
-            string json = JsonSerializer.Serialize(fornecedor);
+                var fornecedor = StaticProperty.fornecedores.Where(f => f.id == id).First();
 
-            // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync($"api/Fornecedor/Transformacao/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
-            if (response.IsSuccessStatusCode)
-            {
-                MessageBox.Show($"O fornecedor {fornecedor.nome_fantasia} foi transformando em fornecedor", "Feito Com Sucesso", MessageBoxButtons.OK);
-            }
-            else
-            {
-                MessageBox.Show("Ocorreu um erro ao tentar Transformar cliente em cliente", "Erro", MessageBoxButtons.RetryCancel);
+
+                if (fornecedor.nif == "999999999")
+                {
+                    fornecedor.nif = string.Empty;
+                }
+                // Conversão do objeto Film para JSON
+                string json = JsonSerializer.Serialize(fornecedor);
+
+                // Envio dos dados para a API
+                HttpResponseMessage response = await client.PostAsync($"api/Fornecedor/Transformacao/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show($"O fornecedor {fornecedor.nome_fantasia} foi transformando em fornecedor", "Feito Com Sucesso", MessageBoxButtons.OK);
+                }
+                else
+                {
+                    MessageBox.Show("Ocorreu um erro ao tentar Transformar cliente em cliente", "Erro", MessageBoxButtons.RetryCancel);
+                }
             }
         }
 
@@ -125,57 +132,50 @@ namespace AscFrontEnd
 
         private async void eliminarPicture_Click(object sender, EventArgs e)
         {
-            string nome = StaticProperty.clientes.Where(c => c.id == id).First().nome_fantasia;
-
-
-            try
+            if (StaticProperty.clientes != null)
             {
-                    HttpResponseMessage response = null;
-                    var client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-                client.BaseAddress = new Uri("https://sua-api.com/");
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                string nome = StaticProperty.clientes.Where(c => c.id == id).First().nome_fantasia;
+                HttpResponseMessage response = new HttpResponseMessage();
+
+                try
+                {
 
                     // Conversão do objeto Film para JSON
                     string json = JsonSerializer.Serialize(id);
 
-                if (MessageBox.Show($"Tens certeza que pretendes eliminar {nome}", "Atencao", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
-                 {
-                    // Envio dos dados para a API
-                   
-
-                    if (hasBuyFornecedor(id)) 
-                    { 
-                        response = await client.DeleteAsync($"https://localhost:7200/api/Fornecedor/{id}");
-                    }
-                    else { response = await client.PutAsync($"https://localhost:7200/api/Fornecedor/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json")); }
-                    if (response.IsSuccessStatusCode)
+                    if (MessageBox.Show($"Tens certeza que pretendes eliminar {nome}", "Atencao", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
                     {
-                        MessageBox.Show("Fornecedor foi eliminado com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        // Envio dos dados para a API
+
+
+                        if (hasBuyFornecedor(id))
+                        {
+                            response = await client.DeleteAsync($"api/Fornecedor/{id}");
+                        }
+                        else { response = await client.PutAsync($"api/Fornecedor/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json")); }
+                        if (response.IsSuccessStatusCode)
+                        {
+                            MessageBox.Show("Fornecedor foi eliminado com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    else
+                    {
+                        return;
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    return;
+                    MessageBox.Show($"Erro ao desactivar fornecedor: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch (Exception ex)
-            {
-               MessageBox.Show($"Erro ao desactivar fornecedor: {ex.Message}", "Ocorreu um erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            
 
         }
 
         private async void pesqText_TextChanged(object sender, EventArgs e)
         {
-            var client = new HttpClient();
+           
             List<FornecedorDTO> dados = null;
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://sua-api.com/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
 
             DataTable dt = new DataTable();
             dt.Columns.Add("id", typeof(int));
@@ -185,19 +185,22 @@ namespace AscFrontEnd
             dt.Columns.Add("pessoa", typeof(string));
             dt.Columns.Add("localizacao", typeof(string));
 
-            var response = await client.GetAsync($"https://localhost:7200/api/Fornecedor/Search/{pesqText.Text}");
+            var response = await client.GetAsync($"api/Fornecedor/Search/{pesqText.Text}");
 
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
                 dados = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FornecedorDTO>>(content);
             }
-            // Adicionando linhas ao DataTable
-            foreach (var item in dados)
+            if (dados != null)
             {
-                dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
+                // Adicionando linhas ao DataTable
+                foreach (var item in dados)
+                {
+                    dt.Rows.Add(item.id, item.nome_fantasia, item.email, item.nif, item.pessoa, item.localizacao);
 
-                tabelaFornecedor.DataSource = dt;
+                    tabelaFornecedor.DataSource = dt;
+                }
             }
         }
 
@@ -216,6 +219,23 @@ namespace AscFrontEnd
             { return true; }
             else { return false; }
 
+        }
+
+        private void button1_MouseMove(object sender, MouseEventArgs e)
+        {
+            button1.BackColor = Color.White;
+            button1.ForeColor = Color.FromArgb(64, 64, 64);
+        }
+
+        private void button1_MouseLeave(object sender, EventArgs e)
+        {
+            button1.BackColor = Color.FromArgb(64, 64, 64);
+            button1.ForeColor = Color.White;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FornecedorTable_Load(this, EventArgs.Empty);
         }
     }
 }

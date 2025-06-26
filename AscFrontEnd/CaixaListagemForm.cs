@@ -44,12 +44,14 @@ namespace AscFrontEnd
                 editarPicture.Visible = false;
                 eliminarPicture.Visible = false;
 
-                // Adiciona linhas ao DataTable
-                foreach (var item in StaticProperty.caixas.Where(x => x.empresaId == StaticProperty.empresaId))
+                if (StaticProperty.caixas != null)
                 {
-                    dt.Rows.Add(item.id, item.codigo, item.descricao);
+                    // Adiciona linhas ao DataTable
+                    foreach (var item in StaticProperty.caixas.Where(x => x.empresaId == StaticProperty.empresaId))
+                    {
+                        dt.Rows.Add(item.id, item.codigo, item.descricao);
+                    }
                 }
-
                 // Define o DataSource do DataGridView (fora do loop)
                 dataGridView1.DataSource = dt;
 
@@ -71,11 +73,13 @@ namespace AscFrontEnd
             }
             else
             {
-                foreach (var item in StaticProperty.caixas.Where(x => x.empresaId == StaticProperty.empresaId))
+                if (StaticProperty.caixas != null)
                 {
-                    dt.Rows.Add(item.id, item.codigo, item.descricao);
+                    foreach (var item in StaticProperty.caixas.Where(x => x.empresaId == StaticProperty.empresaId))
+                    {
+                        dt.Rows.Add(item.id, item.codigo, item.descricao);
+                    }
                 }
-
                 dataGridView1.DataSource = dt;
 
                 dataGridView1.MultiSelect = false;
@@ -110,6 +114,18 @@ namespace AscFrontEnd
                 }
             }
             catch { return; }
+        }
+
+        private void btnActualizar_MouseMove(object sender, MouseEventArgs e)
+        {
+            btnActualizar.BackColor = Color.White;
+            btnActualizar.ForeColor = Color.Black;
+        }
+
+        private void btnActualizar_MouseLeave(object sender, EventArgs e)
+        {
+            btnActualizar.BackColor = Color.Transparent;
+            btnActualizar.ForeColor = Color.White;
         }
     }
 }

@@ -25,12 +25,20 @@ namespace AscFrontEnd
         List<FornecedorFilialDTO> filiais;
         DataTable dtFilial;
         Requisicoes _requisicoes;
+
+        HttpClient client;
         public Form1()
         {
             InitializeComponent();
             filiais = new List<FornecedorFilialDTO> ();
            
             _requisicoes = new Requisicoes ();
+
+            // Configuração do HttpClient
+           client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:7200/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         private async void cadastrarBtn_Click(object sender, EventArgs e)
@@ -52,17 +60,13 @@ namespace AscFrontEnd
                 fornecedorFiliais = filias
             };
 
-            // Configuração do HttpClient
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("https://sua-api.com/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
 
             // Conversão do objeto Film para JSON
             string json = JsonSerializer.Serialize(fornecedor);
 
             // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync("https://localhost:7200/api/Fornecedor", new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage response = await client.PostAsync("api/Fornecedor", new StringContent(json, Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
                 Console.WriteLine("Dados enviados com sucesso.");
@@ -126,18 +130,11 @@ namespace AscFrontEnd
                 empresaid = StaticProperty.empresaId
             };
 
-            // Configuração do HttpClient
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("https://sua-api.com/");
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
             // Conversão do objeto Film para JSON
             string json = JsonSerializer.Serialize(fornecedor);
 
             // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Fornecedor/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage response = await client.PostAsync($"api/Fornecedor/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Fornecedor Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
@@ -149,6 +146,9 @@ namespace AscFrontEnd
                 await _requisicoes.GetBanco();
 
                 await _requisicoes.GetCaixa();
+
+                pessoaCombo.Items.Clear();
+                espacoFiscalCombo.Items.Clear();
 
                 WindowsConfig.LimparFormulario(this);
 
@@ -223,6 +223,13 @@ namespace AscFrontEnd
 
         private void addFilialBtn_Click(object sender, EventArgs e)
         {
+            if (filiais.Any() && filiais.Where(x => x.codigo == codigotxt.Text).Any())
+            {
+                MessageBox.Show("Já adicionaste uma Filial com este código", "O código já existe", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
             int idFilais = tabelaFilial.Rows.Count;
             int id = 1;
 

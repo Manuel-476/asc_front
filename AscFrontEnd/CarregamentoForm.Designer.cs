@@ -73,7 +73,6 @@
             this.Name = "CarregamentoForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CarregamentoForm";
             this.Load += new System.EventHandler(this.CarregamentoForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

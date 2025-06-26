@@ -63,7 +63,7 @@ namespace AscFrontEnd
             var client = new HttpClient();
             try
             {
-                client.BaseAddress = new Uri("https://sua-api.com/");
+                client.BaseAddress = new Uri("http://localhost:7200/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -71,11 +71,11 @@ namespace AscFrontEnd
                 string json = System.Text.Json.JsonSerializer.Serialize(id);
 
                 // Envio dos dados para a API
-                HttpResponseMessage response = await client.PutAsync($"https://localhost:7200/api/ContaCorrente/AutorizacaoPagamento/{id}/{OpcaoBinaria.Sim}", new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage response = await client.PutAsync($"api/ContaCorrente/AutorizacaoPagamento/{id}/{OpcaoBinaria.Sim}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var responseVft = await client.GetAsync($"https://localhost:7200/api/Compra/VftByRelations");
+                    var responseVft = await client.GetAsync($"api/Compra/VftByRelations");
 
                     if (responseVft.IsSuccessStatusCode)
                     {

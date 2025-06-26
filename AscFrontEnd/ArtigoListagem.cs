@@ -1,4 +1,5 @@
 ﻿using AscFrontEnd.DTOs.Cliente;
+using AscFrontEnd.DTOs.Funcionario;
 using AscFrontEnd.DTOs.StaticsDto;
 using Newtonsoft.Json;
 using System;
@@ -21,17 +22,35 @@ namespace AscFrontEnd
         int id = 0;
         bool _multi = false;
         List<int> _artigoIds;
-        public ArtigoListagem()
+
+        UserDTO _user;
+        HttpClient client;
+        public ArtigoListagem(UserDTO user)
         {
             InitializeComponent();
+
+            _user = user;
+            client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:7200/");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         public ArtigoListagem(bool multi,List<int> artigoIds)
         {
             InitializeComponent();
 
+            client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:7200/");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
             _multi = multi;
             _artigoIds = artigoIds ?? new List<int>();
+
+
         }
 
         private void ArtigoListagem_Load(object sender, EventArgs e)
@@ -51,13 +70,16 @@ namespace AscFrontEnd
                 eliminarPicture.Visible = false;
 
                 // Adiciona linhas ao DataTable
-                foreach (var item in StaticProperty.artigos.Where(x => x.empresaId == StaticProperty.empresaId))
+                if (StaticProperty.artigos != null)
                 {
-                    dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario, item.mov_stock, item.mov_lote);
+                    foreach (var item in StaticProperty.artigos.Where(x => x.empresaId == StaticProperty.empresaId))
+                    {
+                        dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario, item.mov_stock, item.mov_lote);
+                    }
                 }
-
                 // Define o DataSource do DataGridView (fora do loop)
                 dataGridView1.DataSource = dt;
+                dataGridView1.ClearSelection();
 
                 // Seleciona automaticamente as linhas cujos IDs estão em _artigoIds
                 if (_artigoIds != null && _artigoIds.Any())
@@ -75,26 +97,37 @@ namespace AscFrontEnd
                 // Opcional: Garante que o DataGridView permita seleção múltipla
                 dataGridView1.MultiSelect = true;
             }
-            else 
+            else
             {
-                foreach (var item in StaticProperty.artigos.Where(x => x.empresaId == StaticProperty.empresaId))
+                if (StaticProperty.artigos != null)
                 {
-                    dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario, item.mov_stock, item.mov_lote);   
+                    foreach (var item in StaticProperty.artigos.Where(x => x.empresaId == StaticProperty.empresaId))
+                    {
+                        dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario, item.mov_stock, item.mov_lote);
+                    }
                 }
-
                 dataGridView1.DataSource = dt;
 
                 dataGridView1.MultiSelect = false;
             }
 
-                editarPicture.Enabled = false;
+            editarPicture.Enabled = false;
+
+            if (_user != null)
+            {
+                if (!_user.userPermissions.Where(x => x.Permission.descricao == "Editar artigo.").Any())
+                {
+                    editarPicture.Visible = false;
+                    eliminarPicture.Visible = false;
+
+                }
+            }
         }
 
         private async void pesqText_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            var response = await client.GetAsync($"https://localhost:7200/api/Artigo/Search/{pesqText.Text}");
+         
+            var response = await client.GetAsync($"api/Artigo/Search/{pesqText.Text}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -112,11 +145,14 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in dados.Where(x => x.empresaId == StaticProperty.empresaId))
+                if (dados != null)
                 {
-                    dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario, item.mov_stock, item.mov_lote);
+                    foreach (var item in dados.Where(x => x.empresaId == StaticProperty.empresaId))
+                    {
+                        dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario, item.mov_stock, item.mov_lote);
 
-                    dataGridView1.DataSource = dt;
+                        dataGridView1.DataSource = dt;
+                    }
                 }
             }
         }
@@ -128,8 +164,7 @@ namespace AscFrontEnd
 
         private async void pesqText_TextChanged(object sender, EventArgs e)
         {
-            var client = new HttpClient();
-            var response = await client.GetAsync($"https://localhost:7200/api/Artigo/Search/{pesqText.Text}");
+            var response = await client.GetAsync($"api/Artigo/Search/{pesqText.Text}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -147,11 +182,14 @@ namespace AscFrontEnd
 
 
                 // Adicionando linhas ao DataTable
-                foreach (var item in dados.Where(x => x.empresaId == StaticProperty.empresaId))
+                if (dados != null)
                 {
-                    dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario, item.mov_stock, item.mov_lote);
+                    foreach (var item in dados.Where(x => x.empresaId == StaticProperty.empresaId))
+                    {
+                        dt.Rows.Add(item.id, item.codigo, item.descricao, item.preco_unitario, item.mov_stock, item.mov_lote);
 
-                    dataGridView1.DataSource = dt;
+                        dataGridView1.DataSource = dt;
+                    }
                 }
             }
         }
@@ -160,37 +198,34 @@ namespace AscFrontEnd
         {
             try
             {
-                id = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
+                var rowsselected = dataGridView1.SelectedRows;
 
-                if (_multi)
+                _artigoIds.Clear();
+
+                foreach (DataGridViewRow row in rowsselected)
                 {
-                    var id = int.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
+                   var id = int.Parse(row.Cells[0].Value.ToString());
 
-                    if (!_artigoIds.Contains(id))
+                   _artigoIds.Add(id);
+
+
+                    if (
+                        StaticProperty.frs.Where(x => x.frArtigo.Where(f => f.artigoId == id).Any() && x.empresaId == StaticProperty.empresaId).FirstOrDefault() != null &&
+                        StaticProperty.fts.Where(x => x.ftArtigo.Where(f => f.artigoId == id).Any() && x.empresaId == StaticProperty.empresaId).FirstOrDefault() != null &&
+                        StaticProperty.fps.Where(x => x.fpArtigo.Where(f => f.artigoId == id).Any() && x.empresaId == StaticProperty.empresaId).FirstOrDefault() != null &&
+                        StaticProperty.ecls.Where(x => x.eclArtigo.Where(f => f.artigoId == id).Any() && x.empresaId == StaticProperty.empresaId).FirstOrDefault() != null &&
+                        StaticProperty.vfrs.Where(x => x.vfrArtigo.Where(f => f.artigoId == id).Any() && x.empresaId == StaticProperty.empresaId).FirstOrDefault() != null &&
+                        StaticProperty.vfts.Where(x => x.vftArtigo.Where(f => f.artigoId == id).Any() && x.empresaId == StaticProperty.empresaId).FirstOrDefault() != null &&
+                        StaticProperty.ecfs.Where(x => x.ecfArtigo.Where(f => f.artigoId == id).Any() && x.empresaId == StaticProperty.empresaId).FirstOrDefault() != null &&
+                        StaticProperty.cots.Where(x => x.cArtigo.Where(f => f.artigoId == id).Any() && x.empresaId == StaticProperty.empresaId).FirstOrDefault() != null &&
+                        StaticProperty.pcos.Where(x => x.pcArtigo.Where(f => f.artigoId == id).Any() && x.empresaId == StaticProperty.empresaId).FirstOrDefault() != null
+                    )
                     {
-                        _artigoIds.Add(id);
+                        editarPicture.Enabled = true;
                     }
-                    else
-                    {
-                        _artigoIds.Remove(id);
-                     }
+                    else { editarPicture.Enabled = false; }
+
                 }
-
-                if (StaticProperty.frs.Where(x => x.frArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() == null &&
-                   StaticProperty.fts.Where(x => x.ftArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() == null &&
-                   StaticProperty.fps.Where(x => x.fpArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() == null &&
-                   StaticProperty.ecls.Where(x => x.eclArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() != null &&
-                   StaticProperty.vfrs.Where(x => x.vfrArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() != null &&
-                   StaticProperty.vfts.Where(x => x.vftArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() != null &&
-                   StaticProperty.ecfs.Where(x => x.ecfArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() != null &&
-                   StaticProperty.cots.Where(x => x.cArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() != null &&
-                   StaticProperty.pcos.Where(x => x.pcArtigo.Where(f => f.artigoId == id).First().artigoId == id && x.empresaId == StaticProperty.empresaId).First() != null)
-                {
-                    editarPicture.Enabled = true;
-                }
-                else { editarPicture.Enabled = false; }
-
-
             }
             catch { return; }
         }
@@ -202,25 +237,22 @@ namespace AscFrontEnd
 
         private async void eliminarPicture_Click(object sender, EventArgs e)
         {
-            string documento = string.Empty;
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("https://sua-api.com/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+     
             try
             {
                 // Conversão do objeto Film para JSON
                 string json = System.Text.Json.JsonSerializer.Serialize(id);
 
                 // Envio dos dados para a API
-                HttpResponseMessage response = await client.PutAsync($"https://localhost:7200/api/Artigo/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json"));
+                HttpResponseMessage response = await client.PutAsync($"api/Artigo/disable/{id}", new StringContent(json, Encoding.UTF8, "application/json"));
 
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show($"Artigo desactivado com sucesso", "Feito Com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Artigo
-                    var responseArtigo = await client.GetAsync($"https://localhost:7200/api/Artigo");
+                    var responseArtigo = await client.GetAsync($"api/Artigo");
 
                     if (responseArtigo.IsSuccessStatusCode)
                     {
@@ -242,6 +274,23 @@ namespace AscFrontEnd
         public List<int> GetArtigoIdList()
         {
             return _artigoIds;
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            ArtigoListagem_Load(this, EventArgs.Empty);
+        }
+
+        private void btnActualizar_MouseMove(object sender, MouseEventArgs e)
+        {
+            btnActualizar.BackColor = Color.White;
+            btnActualizar.ForeColor = Color.Black;
+        }
+
+        private void btnActualizar_MouseLeave(object sender, EventArgs e)
+        {
+            btnActualizar.BackColor = Color.Transparent;
+            btnActualizar.ForeColor = Color.White;
         }
     }
 }

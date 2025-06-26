@@ -16,6 +16,7 @@ using AscFrontEnd.DTOs.StaticsDto;
 using AscFrontEnd.Application.Validacao;
 using System.Globalization;
 using AscFrontEnd.Application;
+using AscFrontEnd.DTOs.Funcionario;
 
 
 namespace AscFrontEnd
@@ -26,10 +27,14 @@ namespace AscFrontEnd
         string codigoIva = string.Empty;
         int localId;
         int armazemId = 0;
-        public Artigo()
+
+        UserDTO _user;
+
+        public Artigo(UserDTO user)
         {
             InitializeComponent();
 
+            _user = user;
 
             precotxt.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
             precotxt.TextChanged += ValidacaoForms.TratarTextChanged;
@@ -39,6 +44,10 @@ namespace AscFrontEnd
         {
             try {
                 int armazemId = 0;
+                if (OutrasValidacoes.ArtigoCodigoExiste(codigotxt.Text.ToString()))
+                {
+                    return;
+                }
                 if (movStockCheck.Checked)
                 {
                     if (StaticProperty.armazens.Where(arm => arm.codigo == armazemCombo.Text.ToString()).Any())
@@ -98,7 +107,7 @@ namespace AscFrontEnd
             // Configuração do HttpClient
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.BaseAddress = new Uri("http://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -106,13 +115,13 @@ namespace AscFrontEnd
             string json = JsonSerializer.Serialize(artigo);
 
             // Envio dos dados para a API
-            HttpResponseMessage response = await client.PostAsync($"https://localhost:7200/api/Artigo/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
+            HttpResponseMessage response = await client.PostAsync($"api/Artigo/{StaticProperty.funcionarioId}", new StringContent(json, Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Artigo Salvo Com Sucesso", "Feito Com Sucesso", MessageBoxButtons.OK);
 
                 // Artigo
-                var responseArtigo = await client.GetAsync($"https://localhost:7200/api/Artigo");
+                var responseArtigo = await client.GetAsync($"api/Artigo");
 
                 if (responseArtigo.IsSuccessStatusCode)
                 {
@@ -142,7 +151,7 @@ namespace AscFrontEnd
 
         private void listagem_Click(object sender, EventArgs e)
         {
-            ArtigoListagem artigoListagem = new ArtigoListagem();
+            ArtigoListagem artigoListagem = new ArtigoListagem(_user);
             artigoListagem.ShowDialog();
         }
 
@@ -183,41 +192,61 @@ namespace AscFrontEnd
 
         private void Artigo_Load(object sender, EventArgs e)
         {
-            foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == StaticProperty.empresaId).ToList())
+            if (StaticProperty.armazens !=null) 
             {
-                armazemCombo.Items.Add(item.codigo);
+                foreach (var item in StaticProperty.armazens.Where(arm => arm.empresaId == StaticProperty.empresaId).ToList())
+                {
+                    armazemCombo.Items.Add(item.codigo);
+                } 
             }
-            foreach (var item in StaticProperty.familias.Where(fam => fam.empresaId == StaticProperty.empresaId).ToList())
+            if (StaticProperty.familias != null)
             {
-                familiaCombo.Items.Add(item.codigo);
+                foreach (var item in StaticProperty.familias.Where(fam => fam.empresaId == StaticProperty.empresaId).ToList())
+                {
+                    familiaCombo.Items.Add(item.codigo);
+                }
             }
-            foreach (var item in StaticProperty.subFamilias.Where(fam => fam.empresaId == StaticProperty.empresaId).ToList())
+            if (StaticProperty.subFamilias != null)
             {
-                subFamiliaCombo.Items.Add(item.codigo);
+                foreach (var item in StaticProperty.subFamilias.Where(fam => fam.empresaId == StaticProperty.empresaId).ToList())
+                {
+                    subFamiliaCombo.Items.Add(item.codigo);
+                }
             }
-            foreach (var item in StaticProperty.modelos.Where(fam => fam.empresaId == StaticProperty.empresaId).ToList())
+            if (StaticProperty.modelos != null)
             {
-                modeloCombo.Items.Add(item.codigo);
+                foreach (var item in StaticProperty.modelos.Where(fam => fam.empresaId == StaticProperty.empresaId).ToList())
+                {
+                    modeloCombo.Items.Add(item.codigo);
+                }
             }
-            foreach (var item in StaticProperty.marcas.Where(fam => fam.empresaId == StaticProperty.empresaId).ToList())
+            if (StaticProperty.marcas != null)
             {
-                marcaCombo.Items.Add(item.codigo);
+                foreach (var item in StaticProperty.marcas.Where(fam => fam.empresaId == StaticProperty.empresaId).ToList())
+                {
+                    marcaCombo.Items.Add(item.codigo);
+                }
             }
-            foreach (var item in StaticProperty.ivas.Where(iva => iva.empresaId == 0 || iva.empresaId == StaticProperty.empresaId).ToList())
+            if (StaticProperty.ivas != null)
             {
-                ivaCombo.Items.Add(item.valorIva);
+                foreach (var item in StaticProperty.ivas.Where(iva => iva.empresaId == 0 || iva.empresaId == StaticProperty.empresaId).ToList())
+                {
+                    ivaCombo.Items.Add(item.valorIva);
+                }
             }
-            foreach (var item in StaticProperty.unidades.Where(x => x.empresaId == 0 ||  x.empresaId == StaticProperty.empresaId).ToList())
+            if (StaticProperty.unidades != null)
             {
-                comboUnCompra.Items.Add(item.codigo);
-                comboUnVenda.Items.Add(item.codigo);
+                foreach (var item in StaticProperty.unidades.Where(x => x.empresaId == 0 || x.empresaId == StaticProperty.empresaId).ToList())
+                {
+                    comboUnCompra.Items.Add(item.codigo);
+                    comboUnVenda.Items.Add(item.codigo);
+                }
             }
-
             mencaoCombo.Enabled = false;
             ivaCombo.Enabled = false;
 
             descricaoIvaTxt.Text = "";
-             
+
             regimeIvaCombo.Items.Add("Isento");
             regimeIvaCombo.Items.Add("Geral");
 
@@ -245,23 +274,29 @@ namespace AscFrontEnd
 
             string result = string.Empty;
 
-            armazemId = StaticProperty.armazens.Where(arm => arm.codigo == armazemCombo.SelectedItem && arm.empresaId == 1).First().id;
+            armazemId = StaticProperty.armazens.Where(arm => arm.codigo == armazemCombo.SelectedItem && arm.empresaId == StaticProperty.empresaId).Any()
+                       ? StaticProperty.armazens.Where(arm => arm.codigo == armazemCombo.SelectedItem && arm.empresaId == StaticProperty.empresaId).First().id : 0;
 
-            foreach (var item in StaticProperty.locationStores.Where(fam => fam.armazemId == armazemId).ToList())
+            localCombo.Items.Clear();
+
+            if (StaticProperty.locationStores != null && StaticProperty.locationArtigos != null)
             {
-                if (!StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id && x.qtd == 0).Any() && StaticProperty.locationArtigos.Any() && StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id).Any()) 
+                foreach (var item in StaticProperty.locationStores.Where(fam => fam.armazemId == armazemId).ToList())
                 {
-                    result = "Este armazem não tem localização disponível todas localizações já armazenam artigos";
+                    if (!StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id && x.qtd == 0).Any() && StaticProperty.locationArtigos.Any() && StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id).Any())
+                    {
+                        result = "Este armazem não tem localização disponível todas localizações já armazenam artigos";
+                    }
+                    else if (StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id && x.qtd == 0).Any() || !StaticProperty.locationArtigos.Any() || !StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id).Any())
+                    {
+                        localCombo.Items.Add(item.codigo);
+                        result = string.Empty;
+                    }
                 }
-                else if (StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id && x.qtd == 0).Any() || !StaticProperty.locationArtigos.Any()  || !StaticProperty.locationArtigos.Where(x => x.locationStoreId == item.id).Any())
+                if (!string.IsNullOrEmpty(result))
                 {
-                    localCombo.Items.Add(item.codigo);
-                    result = string.Empty;
+                    MessageBox.Show(result, "Sem Localização disponível", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            }
-            if (!string.IsNullOrEmpty(result))
-            {
-                MessageBox.Show(result, "Sem Localização disponível", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -374,6 +409,18 @@ namespace AscFrontEnd
             regimeIvaCombo.Items.Clear();
 
             Artigo_Load(this, EventArgs.Empty);
+        }
+
+        private void btnActualizar_MouseMove(object sender, MouseEventArgs e)
+        {
+            btnActualizar.BackColor = Color.White;
+            btnActualizar.ForeColor = Color.Black;
+        }
+
+        private void btnActualizar_MouseLeave(object sender, EventArgs e)
+        {
+            button3.BackColor = Color.Transparent;
+            button3.ForeColor = Color.White;
         }
     }
 }

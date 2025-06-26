@@ -17,6 +17,7 @@ using AscFrontEnd.Application;
 using AscFrontEnd.Application.Validacao;
 using System.Globalization;
 using static AscFrontEnd.DTOs.Enums.Enums;
+using AscFrontEnd.DTOs.Funcionario;
 
 namespace AscFrontEnd
 {
@@ -27,13 +28,17 @@ namespace AscFrontEnd
         AdiantamentoClienteDTO _adiantamentoCliente;
         DataTable _adiantamentoDataTable;
         Requisicoes _requisicoes;
+        UserDTO _user;
+        int idEntity = 0;
 
-        public AdiantamentoForm()
+        public AdiantamentoForm(UserDTO user)
         {
             InitializeComponent();
             _requisicoes = new Requisicoes();
             valorTxt.KeyPress += ValidacaoForms.TratarKeyPress; // Ajustado
             valorTxt.TextChanged += ValidacaoForms.TratarTextChanged;
+
+            _user = user;
         }
 
         private void AdiantamentoForm_Load(object sender, EventArgs e)
@@ -102,7 +107,7 @@ namespace AscFrontEnd
 
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
-            client.BaseAddress = new Uri("https://sua-api.com/");
+            client.BaseAddress = new Uri("http://localhost:7200/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -113,7 +118,7 @@ namespace AscFrontEnd
                 return;
             }
 
-            if (!OutrasValidacoes.SerieExist()) 
+            if (!OutrasValidacoes.SerieExist(_user)) 
             {
                 return;
             }
@@ -132,7 +137,7 @@ namespace AscFrontEnd
 
                 json = System.Text.Json.JsonSerializer.Serialize(_adiantamentoFornecedor);
 
-                response = await client.PostAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Fornecedor", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"api/ContaCorrente/Adiantamento/Fornecedor", new StringContent(json, Encoding.UTF8, "application/json"));
 
             }
 
@@ -152,7 +157,7 @@ namespace AscFrontEnd
 
                 json = System.Text.Json.JsonSerializer.Serialize(_adiantamentoCliente);
 
-                response = await client.PostAsync($"https://localhost:7200/api/ContaCorrente/Adiantamento/Cliente", new StringContent(json, Encoding.UTF8, "application/json"));
+                response = await client.PostAsync($"api/ContaCorrente/Adiantamento/Cliente", new StringContent(json, Encoding.UTF8, "application/json"));
             }
 
             // Envio dos dados para a API
@@ -185,37 +190,43 @@ namespace AscFrontEnd
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            _adiantamentoDataTable = new DataTable();
 
-            _adiantamentoDataTable.Columns.Add("Id",typeof(int));
-            _adiantamentoDataTable.Columns.Add("Documento", typeof(string));
-            _adiantamentoDataTable.Columns.Add("Valor", typeof(string));
-            _adiantamentoDataTable.Columns.Add("Data", typeof(DateTime));
+            if (StaticProperty.entityId > 0)
+            {
+                if (idEntity != StaticProperty.entityId)
+                {
+                    _adiantamentoDataTable = new DataTable();
 
-            if (StaticProperty.entityId > 0) 
-            { 
-              if (radioFornecedor.Checked) 
-              {
-                    nomeEntidade.Text = StaticProperty.fornecedores.Where(x => x.id == StaticProperty.entityId).First().nome_fantasia;
+                    _adiantamentoDataTable.Columns.Add("Id", typeof(int));
+                    _adiantamentoDataTable.Columns.Add("Documento", typeof(string));
+                    _adiantamentoDataTable.Columns.Add("Valor", typeof(string));
+                    _adiantamentoDataTable.Columns.Add("Data", typeof(DateTime));
 
-                    foreach (var item in StaticProperty.adiantamentoForns.Where(x => x.fornecedorId == StaticProperty.entityId && x.resolvido == OpcaoBinaria.Nao)) 
+
+                    idEntity = StaticProperty.entityId;
+                    if (radioFornecedor.Checked)
                     {
-                        _adiantamentoDataTable.Rows.Add(new object[] {item.id,item.documento,item.valorAdiantado.ToString("F2"),item.created_at});
-                    }
-              }
-              else if (radioCliente.Checked)
-              {
-                    nomeEntidade.Text = StaticProperty.clientes.Where(x => x.id == StaticProperty.entityId).First().nome_fantasia;
+                        nomeEntidade.Text = StaticProperty.fornecedores.Where(x => x.id == StaticProperty.entityId).First().nome_fantasia;
 
-                    foreach (var item in StaticProperty.adiantamentoClientes.Where(x => x.clienteId == StaticProperty.entityId && x.resolvido == OpcaoBinaria.Nao))
-                    {
-                        _adiantamentoDataTable.Rows.Add(new object[] { item.id, item.documento, item.valorAdiantado.ToString("F2"), item.created_at });
+                        foreach (var item in StaticProperty.adiantamentoForns.Where(x => x.fornecedorId == StaticProperty.entityId && x.resolvido == OpcaoBinaria.Nao))
+                        {
+                            _adiantamentoDataTable.Rows.Add(new object[] { item.id, item.documento, item.valorAdiantado.ToString("F2"), item.created_at });
+                        }
                     }
+                    else if (radioCliente.Checked)
+                    {
+                        nomeEntidade.Text = StaticProperty.clientes.Where(x => x.id == StaticProperty.entityId).First().nome_fantasia;
+
+                        foreach (var item in StaticProperty.adiantamentoClientes.Where(x => x.clienteId == StaticProperty.entityId && x.resolvido == OpcaoBinaria.Nao))
+                        {
+                            _adiantamentoDataTable.Rows.Add(new object[] { item.id, item.documento, item.valorAdiantado.ToString("F2"), item.created_at });
+                        }
+                    }
+
+                    adiantamentosTable.DataSource = _adiantamentoDataTable;
                 }
 
-                adiantamentosTable.DataSource = _adiantamentoDataTable;
             }
-
         }
 
         private void btnRegular_Click(object sender, EventArgs e)

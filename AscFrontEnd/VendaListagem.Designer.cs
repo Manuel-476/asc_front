@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VendaListagem));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnActualizar = new System.Windows.Forms.Button();
             this.logoPicture = new System.Windows.Forms.PictureBox();
             this.excelBtn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -65,6 +66,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.Controls.Add(this.btnActualizar);
             this.panel1.Controls.Add(this.logoPicture);
             this.panel1.Controls.Add(this.excelBtn);
             this.panel1.Controls.Add(this.label2);
@@ -72,6 +74,22 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(931, 83);
             this.panel1.TabIndex = 21;
+            // 
+            // btnActualizar
+            // 
+            this.btnActualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnActualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnActualizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnActualizar.ForeColor = System.Drawing.Color.White;
+            this.btnActualizar.Location = new System.Drawing.Point(745, 47);
+            this.btnActualizar.Name = "btnActualizar";
+            this.btnActualizar.Size = new System.Drawing.Size(178, 33);
+            this.btnActualizar.TabIndex = 32;
+            this.btnActualizar.Text = "Atualizar";
+            this.btnActualizar.UseVisualStyleBackColor = false;
+            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
+            this.btnActualizar.MouseLeave += new System.EventHandler(this.btnActualizar_MouseLeave);
+            this.btnActualizar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.btnActualizar_MouseMove);
             // 
             // logoPicture
             // 
@@ -88,12 +106,13 @@
             this.excelBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.excelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.excelBtn.ForeColor = System.Drawing.Color.White;
-            this.excelBtn.Location = new System.Drawing.Point(745, 47);
+            this.excelBtn.Location = new System.Drawing.Point(555, 47);
             this.excelBtn.Name = "excelBtn";
             this.excelBtn.Size = new System.Drawing.Size(183, 33);
             this.excelBtn.TabIndex = 16;
             this.excelBtn.Text = "Exportar";
             this.excelBtn.UseVisualStyleBackColor = false;
+            this.excelBtn.MouseMove += new System.Windows.Forms.MouseEventHandler(this.excelBtn_MouseMove);
             // 
             // label2
             // 
@@ -425,5 +444,6 @@
         private System.Windows.Forms.RadioButton radioGeral;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureAprovar;
+        private System.Windows.Forms.Button btnActualizar;
     }
 }

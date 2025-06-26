@@ -239,7 +239,6 @@
             this.Name = "TransferenciaArmazem";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "TransferenciaArmazem";
             this.Load += new System.EventHandler(this.TransferenciaArmazem_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

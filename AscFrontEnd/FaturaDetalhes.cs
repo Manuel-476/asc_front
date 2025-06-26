@@ -53,7 +53,7 @@ namespace AscFrontEnd
             _fr = fr;
             parcelas = new List<ParcelasFormaPagamentoDTO>();
             _client = new HttpClient();
-            _client.BaseAddress = new Uri("https://localhost:7200/");
+            _client.BaseAddress = new Uri("http://localhost:7200/");
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
 
             _documentoId = fr.id;
@@ -70,7 +70,7 @@ namespace AscFrontEnd
             _gr = gr;
             parcelas = new List<ParcelasFormaPagamentoDTO>();
             _client = new HttpClient();
-            _client.BaseAddress = new Uri("https://localhost:7200/");
+            _client.BaseAddress = new Uri("http://localhost:7200/");
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
 
             _documentoId = gr.id;
@@ -88,7 +88,7 @@ namespace AscFrontEnd
             parcelas = new List<ParcelasFormaPagamentoDTO>();
 
             _client = new HttpClient();
-            _client.BaseAddress = new Uri("https://localhost:7200/");
+            _client.BaseAddress = new Uri("http://localhost:7200/");
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
 
             _documentoId = vfr.id;
@@ -107,7 +107,7 @@ namespace AscFrontEnd
             parcelas = new List<ParcelasFormaPagamentoDTO>();
 
             _client = new HttpClient();
-            _client.BaseAddress = new Uri("https://localhost:7200/");
+            _client.BaseAddress = new Uri("http://localhost:7200/");
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
 
             _documentoId = vgr.id;
@@ -124,7 +124,7 @@ namespace AscFrontEnd
             _np = np;
             parcelas = new List<ParcelasFormaPagamentoDTO>();
             _client = new HttpClient();
-            _client.BaseAddress = new Uri("https://localhost:7200/");
+            _client.BaseAddress = new Uri("http://localhost:7200/");
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
 
             _documentoId = np.id;
@@ -141,7 +141,7 @@ namespace AscFrontEnd
             parcelas = new List<ParcelasFormaPagamentoDTO>();
 
             _client = new HttpClient();
-            _client.BaseAddress = new Uri("https://localhost:7200/");
+            _client.BaseAddress = new Uri("http://localhost:7200/");
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", StaticProperty.token);
 
             _documentoId = re.id;
@@ -165,27 +165,36 @@ namespace AscFrontEnd
             dt.Columns.Add("Deposito",typeof(string));
 
             formaPagamentoTable.DataSource = dt;
-            if (StaticProperty.formasPagamento != null && StaticProperty.formasPagamento.Any())
+            if (StaticProperty.formasPagamento != null)
             {
-                foreach (var item in StaticProperty.formasPagamento.Where(x => x.empresaId == StaticProperty.empresaId || x.empresaId == 0))
+                if (StaticProperty.formasPagamento.Any())
                 {
-                    formaPagamentoCombo.Items.Add(item.descricao);
+                    foreach (var item in StaticProperty.formasPagamento.Where(x => x.empresaId == StaticProperty.empresaId || x.empresaId == 0))
+                    {
+                        formaPagamentoCombo.Items.Add(item.descricao);
+                    }
                 }
             }
 
-            if (StaticProperty.bancos != null && StaticProperty.bancos.Any()) 
+            if (StaticProperty.bancos != null)
             {
-                foreach (var item in StaticProperty.bancos.Where(x => x.empresaId == StaticProperty.empresaId))
+                if (StaticProperty.bancos.Any())
                 {
-                    bancoCombo.Items.Add(item.descricao);
+                    foreach (var item in StaticProperty.bancos.Where(x => x.empresaId == StaticProperty.empresaId))
+                    {
+                        bancoCombo.Items.Add(item.descricao);
+                    }
                 }
             }
 
             if (StaticProperty.caixas != null)
             {
-                foreach (var item in StaticProperty.caixas.Where(x => x.empresaId == StaticProperty.empresaId))
+                if (StaticProperty.caixas.Any())
                 {
-                    caixaCombo.Items.Add(item.descricao);
+                    foreach (var item in StaticProperty.caixas.Where(x => x.empresaId == StaticProperty.empresaId))
+                    {
+                        caixaCombo.Items.Add(item.descricao);
+                    }
                 }
             }
 
